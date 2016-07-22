@@ -11,6 +11,7 @@ const babel = require('rollup-plugin-babel');
 const nodeResolve = require('rollup-plugin-node-resolve');
 const commonjs = require('rollup-plugin-commonjs');
 const rename = require('gulp-rename');
+const DepLinker = require('dep-linker');
 
 const sass = require('gulp-sass');
 const autoprefixer = require('autoprefixer');
@@ -30,8 +31,13 @@ const paths = {
   },
   demo: {
     src: './demo',
+    dep: './demo/dependencies',
   },
 };
+
+gulp.task('copy-dependencies', () => {
+  return DepLinker.copyDependenciesTo(paths.demo.dep);
+});
 
 gulp.task('build:src', () => {
   return rollup({
