@@ -3,41 +3,38 @@
           box-sizing: border-box;
   -webkit-border-radius: 3px;
           border-radius: 3px;
-  -webkit-box-shadow: 0 2px 0 0 #03928b;
-          box-shadow: 0 2px 0 0 #03928b;
+  -webkit-box-shadow: 0 2px 0 0 #137f7a;
+          box-shadow: 0 2px 0 0 #137f7a;
   -webkit-transition: 0.1s background-color linear;
   transition: 0.1s background-color linear;
   position: relative;
-  color: #fff;
+  color: white;
   background-color: #1aaba4;
   font-family: inherit;
   font-size: inherit;
   text-transform: none;
-  font-size: 20px;
+  font-size: 18px;
   letter-spacing: 0.05em;
   padding: 1em 2.5em;
   text-align: center;
   border: 0; }
   .slv-button:active {
-    -webkit-box-shadow: 0 1px 0 0 #03928b;
-            box-shadow: 0 1px 0 0 #03928b;
+    -webkit-box-shadow: 0 1px 0 0 #137f7a;
+            box-shadow: 0 1px 0 0 #137f7a;
     top: 1px; }
   .slv-button:focus {
     outline: 0; }
 
 .slv-text-input {
   min-height: 4em;
-  width: 335px;
-  margin: 6px 0 4px;
+  width: auto;
+  margin: 0;
   padding: 10px;
-  font-family: inherit;
-  font-size: inherit;
+  font-family: Europa, Arial, sans-serif;
+  font-size: 18px;
   background-color: transparent;
+  border: 2px solid transparent;
   border-bottom-color: #424f66;
-  border-bottom-style: solid;
-  border-width: 0;
-  border-bottom-width: 1px;
-  border-color: #434f69;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   color: #434f69;
@@ -50,7 +47,10 @@
   -webkit-rtl-ordering: logical;
   -webkit-user-select: text; }
   .slv-text-input:focus {
-    outline: 0; }
+    outline: 0;
+    border: 2px dashed #AAAAAA;
+    -webkit-border-radius: 5px;
+            border-radius: 5px; }
 
 .slv-ContactForm {
   position: relative;
@@ -68,12 +68,16 @@
 
 .slv-ContactForm-question-legend {
   font-size: 24px;
-  padding: 37px 27px 0 50px; }
+  padding-left: 10vw;
+  margin: 0; }
 
 .slv-ContactForm-question-answerBox {
-  padding: 37px 27px 0 50px; }
+  padding-top: 37px;
+  padding-right: 7px;
+  padding-bottom: .4em;
+  padding-left: 10vw; }
 
 .slv-ContactForm-question-answerButton {
-  padding-left: 50px; }
+  padding-left: 10vw; }
 
 /*# sourceMappingURL=slv-contact.css.map */

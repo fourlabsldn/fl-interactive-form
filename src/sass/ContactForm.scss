@@ -19,12 +19,17 @@
 
 
 .slv-ContactForm-question-legend {
-  font-size: 24px;
-  padding: 37px 27px 0 50px;
+  font-size: $s-font-medium-large;
+  padding-left: $s-left-padding;
+  margin: 0;
 }
+
 .slv-ContactForm-question-answerBox {
-  padding: 37px 27px 0 50px;
+  padding-top: 37px;
+  padding-right: 7px;
+  padding-bottom: .4em;
+  padding-left: $s-left-padding;
 }
 .slv-ContactForm-question-answerButton {
-  padding-left: 50px;
+  padding-left: $s-left-padding;
 }
