@@ -1,4 +1,7 @@
 import assert from 'fl-assert';
+import AnimationManager from './utils/AnimationManager';
+
+const FOCUS_CLASS = 'js-slv-focus';
 
 export default class QuestionsNavigator {
   constructor(container, questionsClass) {
@@ -6,6 +9,9 @@ export default class QuestionsNavigator {
     this.activeClass = `${this.questionsClass}--active`;
     this.container = container;
     this.questions = Array.from(container.querySelectorAll(`.${questionsClass}`));
+    this.animations = new AnimationManager();
+    Object.preventExtensions(this);
+
     this.setActive(this.questions[2]);
   }
 
@@ -19,6 +25,9 @@ export default class QuestionsNavigator {
 
     this.questions.forEach(q => q.classList.remove(this.activeClass));
     question.classList.add(this.activeClass);
+
+    const focusEl = question.querySelector(`.${FOCUS_CLASS}`);
+    if (focusEl) { focusEl.focus(); }
 
     this.scrollIntoView(question, this.container);
   }
@@ -36,9 +45,9 @@ export default class QuestionsNavigator {
     const cantScrollMore = containerScrollBeforeChange === container.scrollTop;
 
     if (elementInView || cantScrollMore) { return; }
-    requestAnimationFrame(() => {
-      this.scrollIntoView(el, container);
-    });
+
+    const animationName = 'scrollIntoView';
+    this.animations.schedule(() => this.scrollIntoView(el, container), animationName);
   }
 
   getActiveQuestionIndex() {

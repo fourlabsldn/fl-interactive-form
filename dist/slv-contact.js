@@ -94,6 +94,68 @@ var createClass = function () {
   };
 }();
 
+/**
+ * Handled calling requestAnimationFrame and makes it easy to perform an
+ * animation a reduced amount of frames per second by jumping frames.
+ * @class AnimationManager
+ */
+var AnimationManager = function () {
+  function AnimationManager() {
+    classCallCheck(this, AnimationManager);
+
+    this.animations = {};
+  }
+
+  /**
+   * Cancels a scheduled animation frame
+   * @public
+   * @method cancel
+   * @param  {String} animationName Animation name set with scheduleAnimation
+   * @return {void}
+   */
+
+
+  createClass(AnimationManager, [{
+    key: "cancel",
+    value: function cancel(animationName) {
+      cancelAnimationFrame(this.animations[animationName]);
+    }
+
+    /**
+     * Will call animationFunction after a frameDelay amount of frames.
+     * @public
+     * @method schedule
+     * @param  {Function} animationFunction
+     * @param  {String} animationName - Optional, but you need one if you want to
+     * be able to cancel it afterwards
+     * @param  {Int} frameDelay - Optional. animationFunction will be called
+     * immediately if it is not provided.
+     * @return {void}
+     */
+
+  }, {
+    key: "schedule",
+    value: function schedule(animationFunction) {
+      var _this = this;
+
+      var animationName = arguments.length <= 1 || arguments[1] === undefined ? Math.random().toString() : arguments[1];
+      var frameDelay = arguments.length <= 2 || arguments[2] === undefined ? 0 : arguments[2];
+
+      this.cancel(animationName);
+      if (frameDelay > 0) {
+        this.animations[animationName] = requestAnimationFrame(function () {
+          return _this.schedule(animationFunction, animationName, frameDelay - 1);
+        });
+      } else {
+        this.animations[animationName] = requestAnimationFrame(animationFunction);
+      }
+    }
+  }]);
+  return AnimationManager;
+}();
+
+var FOCUS_CLASS = 'js-slv-focus';
+
 var QuestionsNavigator = function () {
   function QuestionsNavigator(container, questionsClass) {
     classCallCheck(this, QuestionsNavigator);
@@ -102,6 +164,9 @@ var QuestionsNavigator = function () {
     this.activeClass = this.questionsClass + '--active';
     this.container = container;
     this.questions = Array.from(container.querySelectorAll('.' + questionsClass));
+    this.animations = new AnimationManager();
+    Object.preventExtensions(this);
+
     this.setActive(this.questions[2]);
   }
 
@@ -125,6 +190,11 @@ var QuestionsNavigator = function () {
       });
       question.classList.add(this.activeClass);
 
+      var focusEl = question.querySelector('.' + FOCUS_CLASS);
+      if (focusEl) {
+        focusEl.focus();
+      }
+
       this.scrollIntoView(question, this.container);
     }
   }, {
@@ -146,9 +216,11 @@ var QuestionsNavigator = function () {
       if (elementInView || cantScrollMore) {
         return;
       }
-      requestAnimationFrame(function () {
-        _this2.scrollIntoView(el, container);
-      });
+
+      var animationName = 'scrollIntoView';
+      this.animations.schedule(function () {
+        return _this2.scrollIntoView(el, container);
+      }, animationName);
     }
   }, {
     key: 'getActiveQuestionIndex',
