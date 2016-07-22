@@ -1,0 +1,58 @@
+.slv-button {
+  box-sizing: border-box;
+  border-radius: 3px;
+  box-shadow: 0 2px 0 0 #03928b;
+  transition: 0.1s background-color linear;
+  position: relative;
+  color: #fff;
+  background-color: #1aaba4;
+
+  font-family: inherit;
+  font-size: inherit;
+
+  text-transform: none;
+  font-size: 20px;
+  letter-spacing: 0.05em;
+  padding: 1em 2.5em;
+  text-align: center;
+  border: 0;
+  &:active {
+      box-shadow: 0 1px 0 0 #03928b;
+      top: 1px;
+  }
+  &:focus {
+      outline: 0;
+  }
+}
+
+.slv-text-input {
+  min-height: 4em;
+  width: 335px;
+  margin: 6px 0 4px;
+  padding: 10px;
+
+  font-family: inherit;
+  font-size: inherit;
+
+  background-color: rgba(0, 0, 0, 0);
+  border-bottom-color: rgb(66, 79, 102);
+  border-bottom-style: solid;
+  border-width: 0;
+  border-bottom-width: 1px;
+  border-color: rgb(67, 79, 105);
+  box-sizing: border-box;
+  color: rgb(67, 79, 105);
+  display: inline-block;
+
+  overflow-x: auto;
+  overflow-y: auto;
+  resize: none;
+  white-space: pre-wrap;
+  -webkit-font-smoothing: subpixel-antialiased;
+  -webkit-rtl-ordering: logical;
+  -webkit-user-select: text;
+
+  &:focus {
+    outline: 0;
+  }
+}
