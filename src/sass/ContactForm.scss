@@ -6,30 +6,36 @@
 
   font-family: Europa, Arial, sans-serif;
   font-size: 16px;
+  padding-bottom: 60vh;
 }
 
 .slv-ContactForm-question {
   opacity: .1;
+  transform: scale(.9);
 }
 
 .slv-ContactForm-question--active {
   opacity: 1;
   margin: 5em auto;
+  transform: scale(1);
 }
 
 
 .slv-ContactForm-question-legend {
   font-size: $s-font-medium-large;
   padding-left: $s-left-padding;
+  padding-right: $s-right-padding;
   margin: 0;
 }
 
 .slv-ContactForm-question-answerBox {
   padding-top: 37px;
-  padding-right: 7px;
+  padding-right: $s-right-padding;
   padding-bottom: .4em;
   padding-left: $s-left-padding;
 }
 .slv-ContactForm-question-answerButton {
   padding-left: $s-left-padding;
+  padding-right: $s-right-padding;
+  text-align: right;
 }

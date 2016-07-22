@@ -1,6 +1,6 @@
 .slv-text-input {
   min-height: 4em;
-  width: auto;
+  width: 100%;
   margin: 0;
   padding: 10px;
 
@@ -10,7 +10,8 @@
   background-color: transparent;
   border: 2px solid transparent;
   border-bottom-color: $c-secondary;
-
+  border-radius: 5px;
+  
   box-sizing: border-box;
   color: $c-primary-text;
   display: inline-block;
@@ -26,7 +27,6 @@
   &:focus {
     outline: 0;
     border: 2px dashed $c-secondary-text;
-    border-radius: 5px;
   }
 
   &:placeholder-shown {
