@@ -20,6 +20,13 @@ $c-accent-text: white;
 // Component-specific measures;
 $s-navigation-height: 3rem;
 
+@mixin hide-scrollbar() {
+  &::-webkit-scrollbar {
+    visibility: hidden;
+    width: 0;
+  }
+}
+
 @mixin fl-if-button() {
   display: inline-block;
   box-sizing: border-box;

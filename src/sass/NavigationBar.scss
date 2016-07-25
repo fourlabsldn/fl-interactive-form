@@ -10,6 +10,8 @@
 }
 
 .fl-if_NavigationBar-button {
+  @include fl-if-button();
   font-size: $s-font-small;
   padding: .5em 1em;
+  margin: 0 .2em;
 }

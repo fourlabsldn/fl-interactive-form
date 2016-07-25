@@ -20,8 +20,18 @@
   width: 100%;
   max-height: -webkit-calc(100% - 3rem);
   max-height: calc(100% - 3rem);
+  padding: 1px 0;
   overflow: auto;
   text-align: right; }
+  .fl-if_Form-questions::-webkit-scrollbar {
+    visibility: hidden;
+    width: 0; }
+
+.fl-if_FormField:first-child {
+  margin-top: 50vh; }
+
+.fl-if_FormField:last-child {
+  margin-bottom: 50vh; }
 
 .fl-if_FormField--active {
   opacity: 1;
@@ -113,7 +123,33 @@
   height: 3rem; }
 
 .fl-if_NavigationBar-button {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  -webkit-border-radius: 3px;
+          border-radius: 3px;
+  -webkit-box-shadow: 0 2px 0 0 #137f7a;
+          box-shadow: 0 2px 0 0 #137f7a;
+  -webkit-transition: .1s background-color linear;
+  transition: .1s background-color linear;
+  position: relative;
+  color: white;
+  background-color: #1aaba4;
+  font-family: Europa, Arial, sans-serif;
+  text-transform: none;
+  font-size: 18px;
+  letter-spacing: .05em;
+  padding: 1em 2.5em;
+  text-align: center;
+  border: 0;
   font-size: 16px;
-  padding: .5em 1em; }
+  padding: .5em 1em;
+  margin: 0 .2em; }
+  .fl-if_NavigationBar-button:active {
+    -webkit-box-shadow: 0 1px 0 0 #137f7a;
+            box-shadow: 0 1px 0 0 #137f7a;
+    top: 1px; }
+  .fl-if_NavigationBar-button:focus {
+    outline: 0; }
 
 /*# sourceMappingURL=slv-contact.css.map */

@@ -3,6 +3,14 @@
   // opacity: .1;
   // transform: scale(.9);
 
+  &:first-child {
+    margin-top: 50vh;
+  }
+
+  &:last-child {
+    margin-bottom: 50vh;
+  }
+
   &--active {
     opacity: 1;
     margin: 5em auto;
