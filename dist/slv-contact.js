@@ -23677,71 +23677,21 @@ var Text = function (_ReactBEM) {
   _inherits(Text, _ReactBEM);
 
   function Text() {
-    _classCallCheck(this, Text);
-
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(Text).apply(this, arguments));
-  }
-
-  _createClass(Text, [{
-    key: 'render',
-    value: function render() {
-      return React.createElement('input', {
-        className: this.bemClass,
-        type: 'text',
-        defaultValue: this.props.value,
-        placeholder: this.props.placeholder
-      });
-    }
-  }]);
-
-  return Text;
-}(ReactBEM);
-
-var Textarea = function (_ReactBEM) {
-  _inherits(Textarea, _ReactBEM);
-
-  function Textarea() {
-    _classCallCheck(this, Textarea);
-
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(Textarea).apply(this, arguments));
-  }
-
-  _createClass(Textarea, [{
-    key: 'render',
-    value: function render() {
-      return React.createElement('textarea', {
-        className: this.bemClass,
-        type: 'text',
-        defaultValue: this.props.value,
-        placeholder: this.props.placeholder
-      });
-    }
-  }]);
-
-  return Textarea;
-}(ReactBEM);
-
-var inputTypes = { Text: Text, Textarea: Textarea };
-
-var FormField = function (_ReactBEM) {
-  _inherits(FormField, _ReactBEM);
-
-  function FormField() {
     var _Object$getPrototypeO;
 
-    _classCallCheck(this, FormField);
+    _classCallCheck(this, Text);
 
     for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
 
-    var _this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(FormField)).call.apply(_Object$getPrototypeO, [this].concat(args)));
+    var _this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(Text)).call.apply(_Object$getPrototypeO, [this].concat(args)));
 
     _this.componentWillReceiveProps = _this.componentWillReceiveProps.bind(_this);
     return _this;
   }
 
-  _createClass(FormField, [{
+  _createClass(Text, [{
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
       var _this2 = this;
@@ -23761,34 +23711,16 @@ var FormField = function (_ReactBEM) {
   }, {
     key: 'render',
     value: function render() {
-      assert(typeof inputTypes[this.props.config.type] !== 'undefined', 'Invalid input type: ' + this.props.config.type);
-
-      var input = React.createElement(inputTypes[this.props.config.type], {
-        value: this.props.config.answer,
-        placeholder: this.props.config.placeholder,
-        appControl: this.props.appControl,
-        // used to focus on the input when component is set to active
-        ref: 'input'
-      });
-
-      var classNames = [this.bemClass];
-      if (this.props.config.active) {
-        classNames.push(this.bemState('active'));
-      }
-
       return React.createElement(
         'div',
-        { className: classNames.join(' ') },
-        React.createElement(
-          'p',
-          { className: this.bemSubComponent('legend') },
-          this.props.config.question
-        ),
-        React.createElement(
-          'div',
-          { className: this.bemSubComponent('input') },
-          input
-        ),
+        { className: this.bemClass },
+        React.createElement('input', {
+          className: this.bemSubComponent('input'),
+          ref: 'input',
+          type: 'text',
+          defaultValue: this.props.question,
+          placeholder: this.props.placeholder
+        }),
         React.createElement(
           'div',
           { className: this.bemSubComponent('okButtonContainer') },
@@ -23798,6 +23730,109 @@ var FormField = function (_ReactBEM) {
             'Click me'
           )
         )
+      );
+    }
+  }]);
+
+  return Text;
+}(ReactBEM);
+
+var Textarea = function (_ReactBEM) {
+  _inherits(Textarea, _ReactBEM);
+
+  function Textarea() {
+    var _Object$getPrototypeO;
+
+    _classCallCheck(this, Textarea);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    var _this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(Textarea)).call.apply(_Object$getPrototypeO, [this].concat(args)));
+
+    _this.componentWillReceiveProps = _this.componentWillReceiveProps.bind(_this);
+    return _this;
+  }
+
+  _createClass(Textarea, [{
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      var _this2 = this;
+
+      // Focus element when turned active
+      if (nextProps.config.active) {
+        (function () {
+          var inputEl = ReactDOM.findDOMNode(_this2.refs.input);
+
+          // We need a timeout to make the focus work.
+          setTimeout(function () {
+            return inputEl.focus();
+          }, 15);
+        })();
+      }
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return React.createElement(
+        'div',
+        { className: this.bemClass },
+        React.createElement('textarea', {
+          className: this.bemSubComponent('input'),
+          ref: 'input',
+          type: 'text',
+          defaultValue: this.props.question,
+          placeholder: this.props.placeholder
+        }),
+        React.createElement(
+          'div',
+          { className: this.bemSubComponent('okButtonContainer') },
+          React.createElement(
+            'button',
+            { className: this.bemSubComponent('okButton') },
+            'Click me'
+          )
+        )
+      );
+    }
+  }]);
+
+  return Textarea;
+}(ReactBEM);
+
+var inputTypes = { Text: Text, Textarea: Textarea };
+
+var FormField = function (_ReactBEM) {
+  _inherits(FormField, _ReactBEM);
+
+  function FormField() {
+    _classCallCheck(this, FormField);
+
+    return _possibleConstructorReturn(this, Object.getPrototypeOf(FormField).apply(this, arguments));
+  }
+
+  _createClass(FormField, [{
+    key: 'render',
+    value: function render() {
+      assert(typeof inputTypes[this.props.config.type] !== 'undefined', 'Invalid input type: ' + this.props.config.type);
+
+      var classNames = this.props.config.active ? [this.bemClass, this.bemState('active')] : [this.bemClass];
+
+      var inputProps = {
+        config: this.props.config,
+        appControl: this.props.appControl
+      };
+
+      return React.createElement(
+        'div',
+        { className: classNames.join(' ') },
+        React.createElement(
+          'p',
+          { className: this.bemSubComponent('legend') },
+          this.props.config.question
+        ),
+        React.createElement(inputTypes[this.props.config.type], inputProps)
       );
     }
   }]);
