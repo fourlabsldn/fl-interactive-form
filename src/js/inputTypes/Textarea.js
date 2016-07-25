@@ -3,7 +3,12 @@ import ReactBEM from '../ReactBEM';
 
 export default class Textarea extends ReactBEM {
   render() {
-    const val = this.props.value;
-    return <textarea className={this.bemClass} value={val} />;
+    return (
+      <textarea
+        className={this.bemClass}
+        type="text"
+        defaultValue={this.props.value}
+        placeholder={this.props.placeholder}
+      />);
   }
 }

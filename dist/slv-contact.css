@@ -34,18 +34,20 @@
   transition: transform .4s ease-in-out, -webkit-transform .4s ease-in-out; }
 
 .fl-if_FormField {
-  opacity: .2;
   -webkit-transform: scale(0.98);
       -ms-transform: scale(0.98);
           transform: scale(0.98);
   margin: 1em 0;
   -webkit-transition: all .3s ease-in-out;
-  transition: all .3s ease-in-out; }
+  transition: all .3s ease-in-out;
+  opacity: .2;
+  pointer-events: none; }
   .fl-if_FormField:first-child {
     margin-top: 10vh; }
   .fl-if_FormField:last-child {
     margin-bottom: 10vh; }
   .fl-if_FormField--active {
+    pointer-events: all;
     opacity: 1;
     -webkit-transform: scale(1);
         -ms-transform: scale(1);

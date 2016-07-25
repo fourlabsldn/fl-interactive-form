@@ -5,6 +5,7 @@ import translationManager from './utils/translationManager';
 import clone from './utils/clone';
 import NavigationBar from './NavigationBar';
 import AnimationManager from './utils/AnimationManager';
+import throttle from './utils/throttle';
 
 export default class Form extends ReactBEM {
   constructor(...args) {
@@ -14,7 +15,7 @@ export default class Form extends ReactBEM {
     this.processConfig = this.processConfig.bind(this);
     this.exportConfig = this.exportConfig.bind(this);
     this.setActiveQuestion = this.setActiveQuestion.bind(this);
-    this.focusQuestion = this.focusQuestion.bind(this);
+    this.focusQuestion = throttle(this.focusQuestion.bind(this), 250);
     this.focusQuestionWithIndex = this.focusQuestionWithIndex.bind(this);
     this.keyNavigation = this.keyNavigation.bind(this);
 
@@ -124,15 +125,18 @@ export default class Form extends ReactBEM {
     return this.state.config.questions.findIndex(q => q.active === true);
   }
 
-  keyNavigation(e) {
-    console.log('Event', e);
+  keyNavigation(e) { // eslint-disable-line complexity
     const up = 38;
     const down = 40;
-    // const right = 39;
-    // const left = 37;
+    const tab = 9;
+
     if (e.keyCode === up) {
       this.focusQuestion('prev');
     } else if (e.keyCode === down) {
+      this.focusQuestion('next');
+    } else if (e.keyCode === tab && e.shiftKey) {
+      this.focusQuestion('prev');
+    } else if (e.keyCode === tab) {
       this.focusQuestion('next');
     } else {
       return true;

@@ -31,7 +31,10 @@ export default class FormField extends ReactBEM {
     const input = React.createElement(
       inputTypes[this.props.config.type],
       {
+        value: this.props.config.answer,
+        placeholder: this.props.config.placeholder,
         appControl: this.props.appControl,
+        // used to focus on the input when component is set to active
         ref: 'input',
       }
     );

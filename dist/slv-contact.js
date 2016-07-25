@@ -23685,8 +23685,12 @@ var Text = function (_ReactBEM) {
   _createClass(Text, [{
     key: 'render',
     value: function render() {
-      var val = this.props.value;
-      return React.createElement('input', { className: this.bemClass, type: 'text', value: val });
+      return React.createElement('input', {
+        className: this.bemClass,
+        type: 'text',
+        defaultValue: this.props.value,
+        placeholder: this.props.placeholder
+      });
     }
   }]);
 
@@ -23705,8 +23709,12 @@ var Textarea = function (_ReactBEM) {
   _createClass(Textarea, [{
     key: 'render',
     value: function render() {
-      var val = this.props.value;
-      return React.createElement('textarea', { className: this.bemClass, value: val });
+      return React.createElement('textarea', {
+        className: this.bemClass,
+        type: 'text',
+        defaultValue: this.props.value,
+        placeholder: this.props.placeholder
+      });
     }
   }]);
 
@@ -23755,7 +23763,10 @@ var FormField = function (_ReactBEM) {
       assert(typeof inputTypes[this.props.config.type] !== 'undefined', 'Invalid input type: ' + this.props.config.type);
 
       var input = React.createElement(inputTypes[this.props.config.type], {
+        value: this.props.config.answer,
+        placeholder: this.props.config.placeholder,
         appControl: this.props.appControl,
+        // used to focus on the input when component is set to active
         ref: 'input'
       });
 
@@ -24032,6 +24043,36 @@ var AnimationManager = function () {
   return AnimationManager;
 }();
 
+function throttle(fn) {
+  var _this = this;
+
+  var threshhold = arguments.length <= 1 || arguments[1] === undefined ? 250 : arguments[1];
+  var scope = arguments[2];
+
+  var last = void 0;
+  var deferTimer = void 0;
+  return function () {
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    var context = scope || _this;
+
+    var now = +new Date();
+    if (last && now < last + threshhold) {
+      // hold on to it
+      clearTimeout(deferTimer);
+      deferTimer = setTimeout(function () {
+        last = now;
+        fn.apply(context, args);
+      }, threshhold);
+    } else {
+      last = now;
+      fn.apply(context, args);
+    }
+  };
+}
+
 var Form = function (_ReactBEM) {
   _inherits(Form, _ReactBEM);
 
@@ -24050,7 +24091,7 @@ var Form = function (_ReactBEM) {
     _this.processConfig = _this.processConfig.bind(_this);
     _this.exportConfig = _this.exportConfig.bind(_this);
     _this.setActiveQuestion = _this.setActiveQuestion.bind(_this);
-    _this.focusQuestion = _this.focusQuestion.bind(_this);
+    _this.focusQuestion = throttle(_this.focusQuestion.bind(_this), 250);
     _this.focusQuestionWithIndex = _this.focusQuestionWithIndex.bind(_this);
     _this.keyNavigation = _this.keyNavigation.bind(_this);
 
@@ -24227,14 +24268,18 @@ var Form = function (_ReactBEM) {
   }, {
     key: 'keyNavigation',
     value: function keyNavigation(e) {
-      console.log('Event', e);
+      // eslint-disable-line complexity
       var up = 38;
       var down = 40;
-      // const right = 39;
-      // const left = 37;
+      var tab = 9;
+
       if (e.keyCode === up) {
         this.focusQuestion('prev');
       } else if (e.keyCode === down) {
+        this.focusQuestion('next');
+      } else if (e.keyCode === tab && e.shiftKey) {
+        this.focusQuestion('prev');
+      } else if (e.keyCode === tab) {
         this.focusQuestion('next');
       } else {
         return true;
