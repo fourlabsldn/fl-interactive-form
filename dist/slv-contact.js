@@ -185,41 +185,53 @@ var QuestionsNavigator = function () {
       });
       assert(questionIndex !== -1, 'Question not found in questions array.');
 
+      var questionTop = this.getTop(question);
       this.questions.forEach(function (q) {
         return q.classList.remove(_this.activeClass);
       });
       question.classList.add(this.activeClass);
 
+      // Focus element but keep scroll position
       var focusEl = question.querySelector('.' + FOCUS_CLASS);
       if (focusEl) {
         focusEl.focus();
       }
 
+      // Put scroll position the same position it was before.
+      this.container.scrollTop = this.container.scrollTop + this.getTop(question) - questionTop;
+
+      // smoothly scroll into view.
       this.scrollIntoView(question, this.container);
+    }
+  }, {
+    key: 'getFinalScrollPos',
+    value: function getFinalScrollPos(el, container) {
+      // Let's have some extra displacement to position the question in the middle.
+      var extra = Math.max(0, (container.clientHeight - el.clientHeight) / 2) - 20;
+      return container.scrollTop + this.getTop(el) - this.getTop(container) - extra;
     }
   }, {
     key: 'scrollIntoView',
     value: function scrollIntoView(el, container) {
+      var initialScroll = arguments.length <= 2 || arguments[2] === undefined ? container.scrollTop : arguments[2];
+
       var _this2 = this;
 
-      var end = this.getTop(el) - 10;
-      var diff = end - this.getTop(container);
-      var containerScrollBeforeChange = container.scrollTop;
+      var finalScroll = arguments.length <= 3 || arguments[3] === undefined ? this.getFinalScrollPos(el, container) : arguments[3];
+      var frameNumber = arguments.length <= 4 || arguments[4] === undefined ? 1 : arguments[4];
 
-      var smoothedStepSize = Math.floor(diff / 5);
-      var stepSize = Math.sign(smoothedStepSize) * Math.max(1, Math.abs(smoothedStepSize));
-      container.scrollTop = container.scrollTop + stepSize; // eslint-disable-line no-param-reassign
+      var totalFrames = 30;
+      var totalScroll = finalScroll - initialScroll;
+      var percentageCompleted = frameNumber / totalFrames;
+      var nextPercentage = percentageCompleted * (2 - percentageCompleted);
+      container.scrollTop = initialScroll + totalScroll * nextPercentage; // eslint-disable-line no-param-reassign, max-len
 
-      var elementInView = containerScrollBeforeChange + stepSize === end;
-      var cantScrollMore = containerScrollBeforeChange === container.scrollTop;
-
-      if (elementInView || cantScrollMore) {
+      if (frameNumber >= totalFrames) {
         return;
       }
-
       var animationName = 'scrollIntoView';
       this.animations.schedule(function () {
-        return _this2.scrollIntoView(el, container);
+        return _this2.scrollIntoView(el, container, initialScroll, finalScroll, frameNumber + 1);
       }, animationName);
     }
   }, {

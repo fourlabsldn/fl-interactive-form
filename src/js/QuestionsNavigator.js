@@ -23,31 +23,47 @@ export default class QuestionsNavigator {
     const questionIndex = this.questions.findIndex(q => q === question);
     assert(questionIndex !== -1, 'Question not found in questions array.');
 
+    const questionTop = this.getTop(question);
     this.questions.forEach(q => q.classList.remove(this.activeClass));
     question.classList.add(this.activeClass);
 
+
+    // Focus element but keep scroll position
     const focusEl = question.querySelector(`.${FOCUS_CLASS}`);
     if (focusEl) { focusEl.focus(); }
 
+    // Put scroll position the same position it was before.
+    this.container.scrollTop = this.container.scrollTop + this.getTop(question) - questionTop;
+
+    // smoothly scroll into view.
     this.scrollIntoView(question, this.container);
   }
 
-  scrollIntoView(el, container) {
-    const end = this.getTop(el) - 10;
-    const diff = end - this.getTop(container);
-    const containerScrollBeforeChange = container.scrollTop;
+  getFinalScrollPos(el, container) {
+    // Let's have some extra displacement to position the question in the middle.
+    const extra = Math.max(0, (container.clientHeight - el.clientHeight) / 2) - 20;
+    return container.scrollTop + this.getTop(el) - this.getTop(container) - extra;
+  }
 
-    const smoothedStepSize = Math.floor(diff / 5);
-    const stepSize = Math.sign(smoothedStepSize) * Math.max(1, Math.abs(smoothedStepSize));
-    container.scrollTop = container.scrollTop + stepSize;  // eslint-disable-line no-param-reassign
+  scrollIntoView(
+    el,
+    container,
+    initialScroll = container.scrollTop,
+    finalScroll = this.getFinalScrollPos(el, container),
+    frameNumber = 1
+  ) {
+    const totalFrames = 30;
+    const totalScroll = finalScroll - initialScroll;
+    const percentageCompleted = (frameNumber / totalFrames);
+    const nextPercentage = percentageCompleted * (2 - percentageCompleted);
+    container.scrollTop = initialScroll + totalScroll * nextPercentage; // eslint-disable-line no-param-reassign, max-len
 
-    const elementInView = (containerScrollBeforeChange + stepSize) === end;
-    const cantScrollMore = containerScrollBeforeChange === container.scrollTop;
-
-    if (elementInView || cantScrollMore) { return; }
-
+    if (frameNumber >= totalFrames) { return; }
     const animationName = 'scrollIntoView';
-    this.animations.schedule(() => this.scrollIntoView(el, container), animationName);
+    this.animations.schedule(
+      () => this.scrollIntoView(el, container, initialScroll, finalScroll, frameNumber + 1),
+      animationName
+    );
   }
 
   getActiveQuestionIndex() {
