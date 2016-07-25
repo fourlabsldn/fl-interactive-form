@@ -11,6 +11,7 @@ export default class Form extends ReactBEM {
     this.importConfig = this.importConfig.bind(this);
     this.exportConfig = this.exportConfig.bind(this);
     this.importConfig();
+    this.state.activeQuestionKey = this.state.questions[0].key;
   }
 
   /**
@@ -40,13 +41,25 @@ export default class Form extends ReactBEM {
       focusPreviousQuestion: () => null,
     };
 
+    const questions = this.state.questions.map(q => {
+      return (
+        <FormField
+          config={q}
+          appControl={appControl}
+          key={q.key}
+          active={this.state.activeQuestionKey === q.key}
+        />);
+    });
+
     return (
       <div className={this.bemClass} >
-        <div className={this.bemSubComponent('questions')} >
-          {this.state.questions.map(q => {
-            return <FormField config={q} appControl={appControl} key={q.key} />;
-          })}
+
+        <div className={this.bemSubComponent('questionsViewBox')} >
+          <div className={this.bemSubComponent('questions')} >
+            {questions}
+          </div>
         </div>
+
         <NavigationBar appControl={appControl} />
       </div>
     );

@@ -21,14 +21,17 @@ $s-navigation-height: 3rem;
   }
 }
 
-
-.fl-if_Form-questions {
-  @include hide-scrollbar();
+.fl-if_Form-questionsViewBox {
   display: block;
   width: 100%;
   max-height: calc(100% - #{$s-navigation-height});
-  padding: 1px 0; // Get rid of margin collapsing
+  overflow: hidden;
+}
 
-  overflow: auto;
+.fl-if_Form-questions {
+  display: block;
+  width: 100%;
   text-align: right;
+  padding: 1px 0; // Get rid of margin collapsing
+  will-change: transform;
 }

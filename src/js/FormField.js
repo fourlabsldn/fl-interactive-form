@@ -19,8 +19,13 @@ export default class FormField extends ReactBEM {
       { appControl: this.props.appControl }
     );
 
+    const classNames = [this.bemClass];
+    if (this.props.active) {
+      classNames.push(this.bemState('active'));
+    }
+
     return (
-      <div className={this.bemClass}>
+      <div className={classNames.join(' ')}>
         <p className={this.bemSubComponent('legend')}>Legend for the question</p>
 
         <div className={this.bemSubComponent('input')}>
@@ -38,4 +43,5 @@ export default class FormField extends ReactBEM {
 FormField.PropTypes = {
   config: React.PropTypes.object.isRequired,
   appControl: React.PropTypes.object.isRequired,
+  active: React.PropTypes.bool,
 };

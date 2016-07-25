@@ -15,30 +15,34 @@
     -webkit-box-sizing: border-box;
             box-sizing: border-box; }
 
-.fl-if_Form-questions {
+.fl-if_Form-questionsViewBox {
   display: block;
   width: 100%;
   max-height: -webkit-calc(100% - 3rem);
   max-height: calc(100% - 3rem);
+  overflow: hidden; }
+
+.fl-if_Form-questions {
+  display: block;
+  width: 100%;
+  text-align: right;
   padding: 1px 0;
-  overflow: auto;
-  text-align: right; }
-  .fl-if_Form-questions::-webkit-scrollbar {
-    visibility: hidden;
-    width: 0; }
+  will-change: transform; }
 
-.fl-if_FormField:first-child {
-  margin-top: 50vh; }
-
-.fl-if_FormField:last-child {
-  margin-bottom: 50vh; }
-
-.fl-if_FormField--active {
-  opacity: 1;
-  margin: 5em auto;
-  -webkit-transform: scale(1);
-      -ms-transform: scale(1);
-          transform: scale(1); }
+.fl-if_FormField {
+  opacity: .2;
+  margin: 1em 0;
+  -webkit-transition: all .3s ease-in-out;
+  transition: all .3s ease-in-out; }
+  .fl-if_FormField:first-child {
+    margin-top: 50vh; }
+  .fl-if_FormField:last-child {
+    margin-bottom: 50vh; }
+  .fl-if_FormField--active {
+    opacity: 1;
+    -webkit-transform: scale(1);
+        -ms-transform: scale(1);
+            transform: scale(1); }
 
 .fl-if_FormField-legend {
   font-size: 24px;

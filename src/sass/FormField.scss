@@ -1,7 +1,9 @@
 
 .fl-if_FormField {
-  // opacity: .1;
+  opacity: .2;
   // transform: scale(.9);
+  margin: 1em 0;
+  transition: all .3s ease-in-out;
 
   &:first-child {
     margin-top: 50vh;
@@ -13,7 +15,7 @@
 
   &--active {
     opacity: 1;
-    margin: 5em auto;
+    // margin: 5em auto;
     transform: scale(1);
   }
 }

@@ -7,56 +7,54 @@
   <link rel="stylesheet" href="https://use.typekit.net/c/147cf3/1w;brandon-grotesque,2,Y2h:W:i1,Y2k:W:i3,Y2m:W:i4,Y2p:W:i5,Y2r:W:i7,Y2t:W:i9,Y2g:W:n1,Y2j:W:n3,Y2l:W:n4,Y2n:W:n5,Y2q:W:n7,Y2s:W:n9;europa,2,X9L:W:i3,X9M:W:i4,X9N:W:i7,X9H:W:n3,X9J:W:n4,X9K:W:n7/d" media="all" />
   <script src="./dependencies/x-div/dist/x-div.js"> </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  .page-section {
+    display: block;
+    position: relative;
+    width: 98vw;
+    height: 99vh;
+    margin: auto;
+    padding: 0;
+    background-color: yellow;
+  }
+  </style>
 </head>
 <body>
+<div class="page-section">
+  <x-div
+    data-controller="../dist/slv-contact.js"
+    data-config='{
+      "questions": [{
+        "question": "Legend for the question",
+        "answer": "Question answer",
+        "placeholder": "I would like to talk about...",
+        "type": "Text"
+      }, {
+        "question": "Legend for the question",
+        "answer": "Question answer",
+        "placeholder": "I would like to talk about...",
+        "type": "Textarea"
+      }, {
+        "question": "Legend for the question",
+        "answer": "Question answer",
+        "placeholder": "I would like to talk about...",
+        "type": "Text"
+      }, {
+        "question": "Legend for the question",
+        "answer": "Question answer",
+        "placeholder": "I would like to talk about...",
+        "type": "Textarea"
+      }]
+    }'
+  />
+</div>
 
 
-  <x-div data-controller="../dist/slv-contact.js" class="slv-ContactForm">
-    <div class="slv-ContactForm-questionsContainer">
-      <div class="slv-ContactForm-spacing"></div>
-
-      <div class="slv-ContactForm-question">
-        <p class="slv-ContactForm-question-legend">Legend for the question</p>
-
-        <div class="slv-ContactForm-question-answerBox">
-          <input type="text" placeholder="I'd like to talk about..." class="slv-text-input js-slv-focus"></input>
-        </div>
-
-        <div class="slv-ContactForm-question-answerButton">
-          <button class="slv-button ">Click me</button>
-        </div>
-      </div>
-
-      <div class="slv-ContactForm-question">
-        <p class="slv-ContactForm-question-legend">Legend for the question</p>
-
-        <div class="slv-ContactForm-question-answerBox">
-          <input  type="text" placeholder="I'd like to talk about..." class="slv-text-input js-slv-focus"></input>
-        </div>
-
-        <div class="slv-ContactForm-question-answerButton">
-          <button class="slv-button">Click me</button>
-        </div>
-      </div>
-
-      <div class="slv-ContactForm-question">
-        <p class="slv-ContactForm-question-legend">Legend for the question</p>
-
-        <div class="slv-ContactForm-question-answerBox">
-          <input  type="text" placeholder="I'd like to talk about..." class="slv-text-input js-slv-focus"></input>
-        </div>
-
-        <div class="slv-ContactForm-question-answerButton">
-          <button class="slv-button ">Click me</button>
-        </div>
-      </div>
-      <div class="slv-ContactForm-spacing"></div>
-    </div>
-
-    <div class="slv-ContactForm-navigation">
-      <button class="slv-button slv-ContactForm-navigation-button js-slv-nextQuestion">Next</button>
-      <button class="slv-button slv-ContactForm-navigation-button js-slv-prevQuestion">Prev</button>
-    </div>
-  </x-div>
 </body>
 </html>

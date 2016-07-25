@@ -23731,9 +23731,14 @@ var FormField = function (_ReactBEM) {
 
       var input = React.createElement(inputTypes[this.props.config.type], { appControl: this.props.appControl });
 
+      var classNames = [this.bemClass];
+      if (this.props.active) {
+        classNames.push(this.bemState('active'));
+      }
+
       return React.createElement(
         'div',
-        { className: this.bemClass },
+        { className: classNames.join(' ') },
         React.createElement(
           'p',
           { className: this.bemSubComponent('legend') },
@@ -23762,7 +23767,8 @@ var FormField = function (_ReactBEM) {
 
 FormField.PropTypes = {
   config: React.PropTypes.object.isRequired,
-  appControl: React.PropTypes.object.isRequired
+  appControl: React.PropTypes.object.isRequired,
+  active: React.PropTypes.bool
 };
 
 var clone = (function (a) {
@@ -23828,6 +23834,7 @@ var Form = function (_ReactBEM) {
     _this.importConfig = _this.importConfig.bind(_this);
     _this.exportConfig = _this.exportConfig.bind(_this);
     _this.importConfig();
+    _this.state.activeQuestionKey = _this.state.questions[0].key;
     return _this;
   }
 
@@ -23878,6 +23885,8 @@ var Form = function (_ReactBEM) {
   }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       var appControl = {
         focusNextQuestion: function focusNextQuestion() {
           return null;
@@ -23887,15 +23896,26 @@ var Form = function (_ReactBEM) {
         }
       };
 
+      var questions = this.state.questions.map(function (q) {
+        return React.createElement(FormField, {
+          config: q,
+          appControl: appControl,
+          key: q.key,
+          active: _this2.state.activeQuestionKey === q.key
+        });
+      });
+
       return React.createElement(
         'div',
         { className: this.bemClass },
         React.createElement(
           'div',
-          { className: this.bemSubComponent('questions') },
-          this.state.questions.map(function (q) {
-            return React.createElement(FormField, { config: q, appControl: appControl, key: q.key });
-          })
+          { className: this.bemSubComponent('questionsViewBox') },
+          React.createElement(
+            'div',
+            { className: this.bemSubComponent('questions') },
+            questions
+          )
         ),
         React.createElement(NavigationBar, { appControl: appControl })
       );
