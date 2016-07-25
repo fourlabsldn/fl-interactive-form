@@ -17,6 +17,7 @@ export default class Form extends ReactBEM {
     this.focusQuestion = this.focusQuestion.bind(this);
     this.focusQuestionWithIndex = this.focusQuestionWithIndex.bind(this);
 
+    this.animations = new AnimationManager();
     this.state = {
       config: this.processConfig(this.props.config),
     };
@@ -25,14 +26,13 @@ export default class Form extends ReactBEM {
   componentDidMount() {
     const centerActiveQuestion =
       () => this.focusQuestionWithIndex(this.getActiveQuestionIndex());
-    const animation = new AnimationManager();
 
     window.addEventListener(
       'resize',
-      () => animation.schedule(centerActiveQuestion, 'formResize', 20)
+      () => this.animations.schedule(centerActiveQuestion, 'formResize', 20)
     );
 
-    animation.schedule(() => this.setActiveQuestion(0), '', 30);
+    this.animations.schedule(() => this.setActiveQuestion(0), '', 30);
   }
 
   /**
@@ -70,8 +70,8 @@ export default class Form extends ReactBEM {
     const changedIndex = active + (next ? +1 : -1);
     // Restrict changed index between 0 and questionCount - 1
     const nextQuestionIndex = Math.max(0, Math.min(questionCount - 1, changedIndex));
-    this.focusQuestionWithIndex(nextQuestionIndex);
     this.setActiveQuestion(nextQuestionIndex);
+    this.focusQuestionWithIndex(nextQuestionIndex);
   }
 
   /**
@@ -87,14 +87,12 @@ export default class Form extends ReactBEM {
     const viewBoxHeight = this.refs.questionsViewBox.clientHeight;
     // how much lower than the container will it end up.
     const displacementFromContainerTop = Math.max(0, (viewBoxHeight - questionHeight) / 2);
-
-    const questionTop = questionToFocus.getBoundingClientRect().top;
     const viewBoxTop = this.refs.questionsViewBox.getBoundingClientRect().top;
-    const questionOffsetFromViewBox = questionTop - viewBoxTop;
+    const questionOffsetFromViewBox = questionToFocus.offsetTop - viewBoxTop;
 
     const translationYNeeded = displacementFromContainerTop - questionOffsetFromViewBox;
     const translationXNeeded = 0;
-    translationManager.addTranslation(
+    translationManager.setTranslation(
       this.refs.questions,
       translationXNeeded,
       translationYNeeded

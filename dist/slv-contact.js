@@ -23891,6 +23891,7 @@ var TranslationManager = function () {
       assert((typeof el === 'undefined' ? 'undefined' : _typeof$1(el)) === 'object', 'Invalid element provided: ' + el);
       el.setAttribute('data-x', translationX);
       el.setAttribute('data-y', translationY);
+      console.log('Set data-y: ', translationY);
       el.style.transform = 'translate3d(' + translationX + 'px, ' + translationY + 'px, 0)'; // eslint-disable-line no-param-reassign, max-len
     }
 
@@ -23907,7 +23908,7 @@ var TranslationManager = function () {
       assert((typeof el === 'undefined' ? 'undefined' : _typeof$1(el)) === 'object', 'Invalid element provided: ' + el);
       var currTranslationX = parseInt(el.getAttribute('data-x'), 10) || 0;
       var currTranslationY = parseInt(el.getAttribute('data-y'), 10) || 0;
-
+      console.log('Read data-y: ', el.getAttribute('data-y'));
       return {
         x: currTranslationX,
         y: currTranslationY
@@ -24054,6 +24055,7 @@ var Form = function (_ReactBEM) {
     _this.focusQuestion = _this.focusQuestion.bind(_this);
     _this.focusQuestionWithIndex = _this.focusQuestionWithIndex.bind(_this);
 
+    _this.animations = new AnimationManager();
     _this.state = {
       config: _this.processConfig(_this.props.config)
     };
@@ -24068,13 +24070,12 @@ var Form = function (_ReactBEM) {
       var centerActiveQuestion = function centerActiveQuestion() {
         return _this2.focusQuestionWithIndex(_this2.getActiveQuestionIndex());
       };
-      var animation = new AnimationManager();
 
       window.addEventListener('resize', function () {
-        return animation.schedule(centerActiveQuestion, 'formResize', 20);
+        return _this2.animations.schedule(centerActiveQuestion, 'formResize', 20);
       });
 
-      animation.schedule(function () {
+      this.animations.schedule(function () {
         return _this2.setActiveQuestion(0);
       }, '', 30);
     }
@@ -24142,8 +24143,8 @@ var Form = function (_ReactBEM) {
       var changedIndex = active + (next ? +1 : -1);
       // Restrict changed index between 0 and questionCount - 1
       var nextQuestionIndex = Math.max(0, Math.min(questionCount - 1, changedIndex));
-      this.focusQuestionWithIndex(nextQuestionIndex);
       this.setActiveQuestion(nextQuestionIndex);
+      this.focusQuestionWithIndex(nextQuestionIndex);
     }
 
     /**
@@ -24162,14 +24163,12 @@ var Form = function (_ReactBEM) {
       var viewBoxHeight = this.refs.questionsViewBox.clientHeight;
       // how much lower than the container will it end up.
       var displacementFromContainerTop = Math.max(0, (viewBoxHeight - questionHeight) / 2);
-
-      var questionTop = questionToFocus.getBoundingClientRect().top;
       var viewBoxTop = this.refs.questionsViewBox.getBoundingClientRect().top;
-      var questionOffsetFromViewBox = questionTop - viewBoxTop;
+      var questionOffsetFromViewBox = questionToFocus.offsetTop - viewBoxTop;
 
       var translationYNeeded = displacementFromContainerTop - questionOffsetFromViewBox;
       var translationXNeeded = 0;
-      translationManager.addTranslation(this.refs.questions, translationXNeeded, translationYNeeded);
+      translationManager.setTranslation(this.refs.questions, translationXNeeded, translationYNeeded);
     }
 
     /**
