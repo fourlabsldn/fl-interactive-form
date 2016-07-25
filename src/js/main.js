@@ -1,15 +1,9 @@
 /* globals xController */
-import QuestionsNavigator from './QuestionsNavigator';
+import ReactDOM from 'react-dom';
+import React from 'react';
+import Form from './Form';
 
 xController((xdiv) => {
-  const questionsContainer = xdiv.querySelector('.slv-ContactForm-questionsContainer');
-  const qn = new QuestionsNavigator(questionsContainer, 'slv-ContactForm-question');
-
-  const nextBtn = xdiv.querySelector('.js-slv-nextQuestion');
-  nextBtn.addEventListener('click', () => qn.setNextQuestionActive());
-
-  const prevBtn = xdiv.querySelector('.js-slv-prevQuestion');
-  prevBtn.addEventListener('click', () => qn.setPreviousQuestionActive());
-
-  return qn;
+  const config = JSON.parse(xdiv.dataset.config);
+  ReactDOM.render(<Form config={config} />, xdiv);
 });

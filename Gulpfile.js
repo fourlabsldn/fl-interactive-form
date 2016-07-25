@@ -12,6 +12,7 @@ const nodeResolve = require('rollup-plugin-node-resolve');
 const commonjs = require('rollup-plugin-commonjs');
 const rename = require('gulp-rename');
 const DepLinker = require('dep-linker');
+const replace = require('rollup-plugin-replace');
 
 const sass = require('gulp-sass');
 const autoprefixer = require('autoprefixer');
@@ -47,9 +48,19 @@ gulp.task('build:src', () => {
       nodeResolve({ jsnext: true, main: true }),
       commonjs(),
       babel({
+        runtimeHelpers: true,
         exclude: 'node_modules/**',
-        presets: ['es2015-rollup'],
+        plugins: [
+          'lodash',
+          'transform-async-to-generator', [
+            'transform-runtime', { polyfill: false, regenerator: true },
+          ],
+        ],
+        presets: ['es2015-rollup', 'react'],
       }),
+      // To fix a React compilation issue
+      // TODO: Change this from 'development' to 'production' during production
+      replace({ 'process.env.NODE_ENV': JSON.stringify('development') }),
     ],
   })
   // point to the entry file.
