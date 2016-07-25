@@ -17,6 +17,8 @@ $c-secondary-text: #AAAAAA;
 $c-accent: #1aaba4;
 $c-accent-text: white;
 
+// Component-specific measures;
+$s-navigation-height: 3rem;
 
 @mixin fl-if-button() {
   display: inline-block;

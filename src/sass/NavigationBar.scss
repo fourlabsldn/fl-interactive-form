@@ -1,0 +1,15 @@
+.fl-if_NavigationBar {
+  display: block;
+  position: relative;
+  width: 100%;
+  background-color: $c-primary;
+  border-top: 2px solid $c-primary-border;
+  text-align: right;
+  padding: .2em $s-right-padding;
+  height: $s-navigation-height;
+}
+
+.fl-if_NavigationBar-button {
+  font-size: $s-font-small;
+  padding: .5em 1em;
+}

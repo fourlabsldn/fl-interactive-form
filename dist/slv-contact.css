@@ -18,22 +18,10 @@
 .fl-if_Form-questions {
   display: block;
   width: 100%;
+  max-height: -webkit-calc(100% - 3rem);
+  max-height: calc(100% - 3rem);
   overflow: auto;
   text-align: right; }
-
-.slv-ContactForm-navigation {
-  display: block;
-  position: relative;
-  width: 100%;
-  background-color: #E6F7FE;
-  border-top: 2px solid #05587a;
-  text-align: right;
-  padding: 0.2em 5vw;
-  height: 3rem; }
-
-.slv-ContactForm-navigation-button {
-  font-size: 16px;
-  padding: .5em 1em; }
 
 .fl-if_FormField--active {
   opacity: 1;
@@ -113,5 +101,19 @@
   .fl-if_Text:focus, .fl-if_Textarea:focus {
     outline: 0;
     border: 2px dashed #AAAAAA; }
+
+.fl-if_NavigationBar {
+  display: block;
+  position: relative;
+  width: 100%;
+  background-color: #E6F7FE;
+  border-top: 2px solid #05587a;
+  text-align: right;
+  padding: 0.2em 5vw;
+  height: 3rem; }
+
+.fl-if_NavigationBar-button {
+  font-size: 16px;
+  padding: .5em 1em; }
 
 /*# sourceMappingURL=slv-contact.css.map */

@@ -2,6 +2,7 @@ import React from 'react';
 import ReactBEM from './ReactBEM';
 import FormField from './FormField';
 import clone from './utils/clone';
+import NavigationBar from './NavigationBar';
 
 
 export default class Form extends ReactBEM {
@@ -34,7 +35,11 @@ export default class Form extends ReactBEM {
   }
 
   render() {
-    const appControl = {};
+    const appControl = {
+      focusNextQuestion: () => null,
+      focusPreviousQuestion: () => null,
+    };
+
     return (
       <div className={this.bemClass} >
         <div className={this.bemSubComponent('questions')} >
@@ -42,6 +47,7 @@ export default class Form extends ReactBEM {
             return <FormField config={q} appControl={appControl} key={q.key} />;
           })}
         </div>
+        <NavigationBar appControl={appControl} />
       </div>
     );
   }

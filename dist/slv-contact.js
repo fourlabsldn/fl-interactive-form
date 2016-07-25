@@ -23769,6 +23769,48 @@ var clone = (function (a) {
   return JSON.parse(JSON.stringify(a));
 });
 
+var NavigationBar = function (_ReactBEM) {
+  _inherits(NavigationBar, _ReactBEM);
+
+  function NavigationBar() {
+    _classCallCheck(this, NavigationBar);
+
+    return _possibleConstructorReturn(this, Object.getPrototypeOf(NavigationBar).apply(this, arguments));
+  }
+
+  _createClass(NavigationBar, [{
+    key: 'render',
+    value: function render() {
+      return React.createElement(
+        'div',
+        { className: this.bemClass },
+        React.createElement(
+          'button',
+          {
+            className: this.bemSubComponent('button'),
+            onClick: this.props.appControl.focusPreviousQuestion
+          },
+          'Prev'
+        ),
+        React.createElement(
+          'button',
+          {
+            className: this.bemSubComponent('button'),
+            onClick: this.props.appControl.focusNextQuestion
+          },
+          'Next'
+        )
+      );
+    }
+  }]);
+
+  return NavigationBar;
+}(ReactBEM);
+
+NavigationBar.PropTypes = {
+  appControl: React.PropTypes.object.isRequired
+};
+
 var Form = function (_ReactBEM) {
   _inherits(Form, _ReactBEM);
 
@@ -23836,7 +23878,15 @@ var Form = function (_ReactBEM) {
   }, {
     key: 'render',
     value: function render() {
-      var appControl = {};
+      var appControl = {
+        focusNextQuestion: function focusNextQuestion() {
+          return null;
+        },
+        focusPreviousQuestion: function focusPreviousQuestion() {
+          return null;
+        }
+      };
+
       return React.createElement(
         'div',
         { className: this.bemClass },
@@ -23846,7 +23896,8 @@ var Form = function (_ReactBEM) {
           this.state.questions.map(function (q) {
             return React.createElement(FormField, { config: q, appControl: appControl, key: q.key });
           })
-        )
+        ),
+        React.createElement(NavigationBar, { appControl: appControl })
       );
     }
   }]);
