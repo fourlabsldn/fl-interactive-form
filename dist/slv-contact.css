@@ -35,6 +35,9 @@
 
 .fl-if_FormField {
   opacity: .2;
+  -webkit-transform: scale(0.98);
+      -ms-transform: scale(0.98);
+          transform: scale(0.98);
   margin: 1em 0;
   -webkit-transition: all .3s ease-in-out;
   transition: all .3s ease-in-out; }

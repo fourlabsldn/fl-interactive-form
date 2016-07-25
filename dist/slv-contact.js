@@ -23891,7 +23891,6 @@ var TranslationManager = function () {
       assert((typeof el === 'undefined' ? 'undefined' : _typeof$1(el)) === 'object', 'Invalid element provided: ' + el);
       el.setAttribute('data-x', translationX);
       el.setAttribute('data-y', translationY);
-      console.log('Set data-y: ', translationY);
       el.style.transform = 'translate3d(' + translationX + 'px, ' + translationY + 'px, 0)'; // eslint-disable-line no-param-reassign, max-len
     }
 
@@ -23908,7 +23907,6 @@ var TranslationManager = function () {
       assert((typeof el === 'undefined' ? 'undefined' : _typeof$1(el)) === 'object', 'Invalid element provided: ' + el);
       var currTranslationX = parseInt(el.getAttribute('data-x'), 10) || 0;
       var currTranslationY = parseInt(el.getAttribute('data-y'), 10) || 0;
-      console.log('Read data-y: ', el.getAttribute('data-y'));
       return {
         x: currTranslationX,
         y: currTranslationY
@@ -24054,6 +24052,7 @@ var Form = function (_ReactBEM) {
     _this.setActiveQuestion = _this.setActiveQuestion.bind(_this);
     _this.focusQuestion = _this.focusQuestion.bind(_this);
     _this.focusQuestionWithIndex = _this.focusQuestionWithIndex.bind(_this);
+    _this.keyNavigation = _this.keyNavigation.bind(_this);
 
     _this.animations = new AnimationManager();
     _this.state = {
@@ -24226,6 +24225,26 @@ var Form = function (_ReactBEM) {
       });
     }
   }, {
+    key: 'keyNavigation',
+    value: function keyNavigation(e) {
+      console.log('Event', e);
+      var up = 38;
+      var down = 40;
+      // const right = 39;
+      // const left = 37;
+      if (e.keyCode === up) {
+        this.focusQuestion('prev');
+      } else if (e.keyCode === down) {
+        this.focusQuestion('next');
+      } else {
+        return true;
+      }
+
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    }
+  }, {
     key: 'render',
     value: function render() {
       var appControl = {
@@ -24242,7 +24261,7 @@ var Form = function (_ReactBEM) {
 
       return React.createElement(
         'div',
-        { className: this.bemClass },
+        { className: this.bemClass, onKeyDown: this.keyNavigation },
         React.createElement(
           'div',
           { className: this.bemSubComponent('questionsViewBox'), ref: 'questionsViewBox' },

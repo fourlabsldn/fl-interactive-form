@@ -16,6 +16,7 @@ export default class Form extends ReactBEM {
     this.setActiveQuestion = this.setActiveQuestion.bind(this);
     this.focusQuestion = this.focusQuestion.bind(this);
     this.focusQuestionWithIndex = this.focusQuestionWithIndex.bind(this);
+    this.keyNavigation = this.keyNavigation.bind(this);
 
     this.animations = new AnimationManager();
     this.state = {
@@ -123,6 +124,25 @@ export default class Form extends ReactBEM {
     return this.state.config.questions.findIndex(q => q.active === true);
   }
 
+  keyNavigation(e) {
+    console.log('Event', e);
+    const up = 38;
+    const down = 40;
+    // const right = 39;
+    // const left = 37;
+    if (e.keyCode === up) {
+      this.focusQuestion('prev');
+    } else if (e.keyCode === down) {
+      this.focusQuestion('next');
+    } else {
+      return true;
+    }
+
+    e.preventDefault();
+    e.stopPropagation();
+    return false;
+  }
+
   render() {
     const appControl = {
       focusQuestion: this.focusQuestion,
@@ -138,7 +158,7 @@ export default class Form extends ReactBEM {
     });
 
     return (
-      <div className={this.bemClass} >
+      <div className={this.bemClass} onKeyDown={this.keyNavigation}>
 
         <div className={this.bemSubComponent('questionsViewBox')} ref="questionsViewBox">
           <div className={this.bemSubComponent('questions')} ref="questions" >

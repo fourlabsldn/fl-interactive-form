@@ -55,7 +55,6 @@ class TranslationManager {
     assert(typeof el === 'object', `Invalid element provided: ${el}`);
     el.setAttribute('data-x', translationX);
     el.setAttribute('data-y', translationY);
-    console.log('Set data-y: ', translationY);
     el.style.transform = `translate3d(${translationX}px, ${translationY}px, 0)`; // eslint-disable-line no-param-reassign, max-len
   }
 
@@ -69,7 +68,6 @@ class TranslationManager {
     assert(typeof el === 'object', `Invalid element provided: ${el}`);
     const currTranslationX = parseInt(el.getAttribute('data-x'), 10) || 0;
     const currTranslationY = parseInt(el.getAttribute('data-y'), 10) || 0;
-    console.log('Read data-y: ', el.getAttribute('data-y'));
     return {
       x: currTranslationX,
       y: currTranslationY,
