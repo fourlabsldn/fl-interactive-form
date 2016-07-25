@@ -20,7 +20,7 @@ export default class FormField extends ReactBEM {
     );
 
     const classNames = [this.bemClass];
-    if (this.props.active) {
+    if (this.props.config.active) {
       classNames.push(this.bemState('active'));
     }
 
@@ -43,5 +43,4 @@ export default class FormField extends ReactBEM {
 FormField.PropTypes = {
   config: React.PropTypes.object.isRequired,
   appControl: React.PropTypes.object.isRequired,
-  active: React.PropTypes.bool,
 };

@@ -34,4 +34,5 @@ $s-navigation-height: 3rem;
   text-align: right;
   padding: 1px 0; // Get rid of margin collapsing
   will-change: transform;
+  transition: transform .4s ease-in-out;
 }

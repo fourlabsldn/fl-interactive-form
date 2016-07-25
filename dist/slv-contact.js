@@ -23732,7 +23732,7 @@ var FormField = function (_ReactBEM) {
       var input = React.createElement(inputTypes[this.props.config.type], { appControl: this.props.appControl });
 
       var classNames = [this.bemClass];
-      if (this.props.active) {
+      if (this.props.config.active) {
         classNames.push(this.bemState('active'));
       }
 
@@ -23767,9 +23767,130 @@ var FormField = function (_ReactBEM) {
 
 FormField.PropTypes = {
   config: React.PropTypes.object.isRequired,
-  appControl: React.PropTypes.object.isRequired,
-  active: React.PropTypes.bool
+  appControl: React.PropTypes.object.isRequired
 };
+
+/**
+ * Transforms '-10.5px' into -10.5
+ * @method parseValue
+ * @param  {String} s
+ * @return {Number}
+ */
+
+function parseValue(s) {
+  if (!s) {
+    return 0;
+  }
+  if (typeof s === 'number') {
+    return s;
+  }
+  assert(typeof s === 'string', 'Expected string and got ' + (typeof s === 'undefined' ? 'undefined' : _typeof$1(s)));
+  var matches = s.match(/\-?[0-9]+(\.[0-9]+)?/g) || [];
+  assert(matches.length < 2, 'Invalid string. More than one number found: ${s}');
+  return parseFloat(matches[0], 10) || 0;
+}
+
+var TranslationManager = function () {
+  function TranslationManager() {
+    _classCallCheck(this, TranslationManager);
+  }
+
+  _createClass(TranslationManager, [{
+    key: 'removeTranslation',
+
+
+    /**
+     * Transfers the translation values to top and left properties
+     * @public
+     * @method removeTranslation
+     * @param  {HTMLElement} el
+     * @return {void}
+     */
+    value: function removeTranslation(el) {
+      assert((typeof el === 'undefined' ? 'undefined' : _typeof$1(el)) === 'object', 'Invalid element provided: ' + el);
+      var styles = window.getComputedStyle(el);
+      var left = parseValue(styles.left);
+      var top = parseValue(styles.top);
+      var xTranslation = parseValue(el.getAttribute('data-x'));
+      var yTranslation = parseValue(el.getAttribute('data-y'));
+
+      /* eslint-disable no-param-reassign*/
+      el.style.top = top + yTranslation + 'px';
+      el.style.left = left + xTranslation + 'px';
+      el.style.transform = 'translate3d(0px, 0px, 0px)';
+      el.setAttribute('data-x', 0);
+      el.setAttribute('data-y', 0);
+      /* eslint-enable no-param-reassign*/
+    }
+
+    /**
+     * Adds a value to the X and another to the Y translation of an element
+     * @public
+     * @method addTranslation
+     * @param  {HTMLElement} el
+     * @param  {Int} increaseX - in Pixels
+     * @param  {Int} increaseY - in Pixels
+     */
+
+  }, {
+    key: 'addTranslation',
+    value: function addTranslation(el) {
+      var increaseX = arguments.length <= 1 || arguments[1] === undefined ? 0 : arguments[1];
+      var increaseY = arguments.length <= 2 || arguments[2] === undefined ? 0 : arguments[2];
+
+      assert((typeof el === 'undefined' ? 'undefined' : _typeof$1(el)) === 'object', 'Invalid element provided: ' + el);
+      var currentTranslation = this.getTranslation(el);
+      var newTranslationX = currentTranslation.x + increaseX;
+      var newTranslationY = currentTranslation.y + increaseY;
+
+      this.setTranslation(el, newTranslationX, newTranslationY);
+    }
+
+    /**
+     * @public
+     * @method setTranslation
+     * @param  {[type]} el [description]
+     * @param  {[type]} translationX = 0 [description]
+     * @param  {[type]} translationY = 0 [description]
+     */
+
+  }, {
+    key: 'setTranslation',
+    value: function setTranslation(el) {
+      var translationX = arguments.length <= 1 || arguments[1] === undefined ? 0 : arguments[1];
+      var translationY = arguments.length <= 2 || arguments[2] === undefined ? 0 : arguments[2];
+
+      assert((typeof el === 'undefined' ? 'undefined' : _typeof$1(el)) === 'object', 'Invalid element provided: ' + el);
+      el.setAttribute('data-x', translationX);
+      el.setAttribute('data-y', translationY);
+      el.style.transform = 'translate3d(' + translationX + 'px, ' + translationY + 'px, 0)'; // eslint-disable-line no-param-reassign, max-len
+    }
+
+    /**
+     * @private
+     * @method getTranslation
+     * @param  {HTMLElement} el
+     * @return {Object} { x, y }
+     */
+
+  }, {
+    key: 'getTranslation',
+    value: function getTranslation(el) {
+      assert((typeof el === 'undefined' ? 'undefined' : _typeof$1(el)) === 'object', 'Invalid element provided: ' + el);
+      var currTranslationX = parseInt(el.getAttribute('data-x'), 10) || 0;
+      var currTranslationY = parseInt(el.getAttribute('data-y'), 10) || 0;
+
+      return {
+        x: currTranslationX,
+        y: currTranslationY
+      };
+    }
+  }]);
+
+  return TranslationManager;
+}();
+
+var translationManager = new TranslationManager();
 
 var clone = (function (a) {
   return JSON.parse(JSON.stringify(a));
@@ -23817,6 +23938,67 @@ NavigationBar.PropTypes = {
   appControl: React.PropTypes.object.isRequired
 };
 
+/**
+ * Handled calling requestAnimationFrame and makes it easy to perform an
+ * animation a reduced amount of frames per second by jumping frames.
+ * @class AnimationManager
+ */
+var AnimationManager = function () {
+  function AnimationManager() {
+    _classCallCheck(this, AnimationManager);
+
+    this.animations = {};
+  }
+
+  /**
+   * Cancels a scheduled animation frame
+   * @public
+   * @method cancel
+   * @param  {String} animationName Animation name set with scheduleAnimation
+   * @return {void}
+   */
+
+
+  _createClass(AnimationManager, [{
+    key: "cancel",
+    value: function cancel(animationName) {
+      cancelAnimationFrame(this.animations[animationName]);
+    }
+
+    /**
+     * Will call animationFunction after a frameDelay amount of frames.
+     * @public
+     * @method schedule
+     * @param  {Function} animationFunction
+     * @param  {String} animationName - Optional, but you need one if you want to
+     * be able to cancel it afterwards
+     * @param  {Int} frameDelay - Optional. animationFunction will be called
+     * immediately if it is not provided.
+     * @return {void}
+     */
+
+  }, {
+    key: "schedule",
+    value: function schedule(animationFunction) {
+      var _this = this;
+
+      var animationName = arguments.length <= 1 || arguments[1] === undefined ? Math.random().toString() : arguments[1];
+      var frameDelay = arguments.length <= 2 || arguments[2] === undefined ? 0 : arguments[2];
+
+      this.cancel(animationName);
+      if (frameDelay > 0) {
+        this.animations[animationName] = requestAnimationFrame(function () {
+          return _this.schedule(animationFunction, animationName, frameDelay - 1);
+        });
+      } else {
+        this.animations[animationName] = requestAnimationFrame(animationFunction);
+      }
+    }
+  }]);
+
+  return AnimationManager;
+}();
+
 var Form = function (_ReactBEM) {
   _inherits(Form, _ReactBEM);
 
@@ -23831,24 +24013,45 @@ var Form = function (_ReactBEM) {
 
     var _this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(Form)).call.apply(_Object$getPrototypeO, [this].concat(args)));
 
-    _this.importConfig = _this.importConfig.bind(_this);
+    _this.componentDidMount = _this.componentDidMount.bind(_this);
+    _this.processConfig = _this.processConfig.bind(_this);
     _this.exportConfig = _this.exportConfig.bind(_this);
-    _this.importConfig();
-    _this.state.activeQuestionKey = _this.state.questions[0].key;
+    _this.setActiveQuestion = _this.setActiveQuestion.bind(_this);
+    _this.focusNextQuestion = _this.focusNextQuestion.bind(_this);
+    _this.focusQuestionWithIndex = _this.focusQuestionWithIndex.bind(_this);
+
+    _this.state = {
+      config: _this.processConfig(_this.props.config)
+    };
     return _this;
   }
 
-  /**
-   * Gets a config object from this.props and processes it.
-   * @private
-   * @method importConfig
-   * @return {void}
-   */
-
-
   _createClass(Form, [{
-    key: 'importConfig',
-    value: function importConfig() {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      this.setActiveQuestion(0);
+      var centerActiveQuestion = function centerActiveQuestion() {
+        return _this2.focusQuestionWithIndex(_this2.getActiveQuestionIndex());
+      };
+      var animation = new AnimationManager();
+
+      window.addEventListener('resize', function () {
+        return animation.schedule(centerActiveQuestion, 'formResize', 20);
+      });
+    }
+
+    /**
+     * Processes a config object from this.props and returns it.
+     * @private
+     * @method importConfig
+     * @return {Object}
+     */
+
+  }, {
+    key: 'processConfig',
+    value: function processConfig() {
       var conf = clone(this.props.config);
 
       // Add random key to all questions:
@@ -23877,31 +24080,101 @@ var Form = function (_ReactBEM) {
         }
       }
 
-      this.state = conf;
+      return conf;
     }
   }, {
     key: 'exportConfig',
-    value: function exportConfig() {}
+    value: function exportConfig() {
+      // To be implemented
+    }
+  }, {
+    key: 'focusNextQuestion',
+    value: function focusNextQuestion() {
+      var activeQuestionIndex = this.getActiveQuestionIndex();
+      var nextQuestionIndex = void 0;
+      if (activeQuestionIndex === -1) {
+        nextQuestionIndex = 0;
+      } else {
+        nextQuestionIndex = (activeQuestionIndex + 1) % this.state.config.questions.length;
+      }
+
+      this.focusQuestionWithIndex(nextQuestionIndex);
+      this.setActiveQuestion(nextQuestionIndex);
+    }
+  }, {
+    key: 'focusQuestionWithIndex',
+    value: function focusQuestionWithIndex(index) {
+      var questionToFocus = this.refs.questions.children[index];
+
+      var questionHeight = questionToFocus.clientHeight;
+      var viewBoxHeight = this.refs.questionsViewBox.clientHeight;
+      // how much lower than the container will it end up.
+      var displacementFromContainerTop = Math.max(0, (viewBoxHeight - questionHeight) / 2);
+
+      var questionTop = questionToFocus.getBoundingClientRect().top;
+      var viewBoxTop = this.refs.questionsViewBox.getBoundingClientRect().top;
+      var questionOffsetFromViewBox = questionTop - viewBoxTop;
+
+      var translationYNeeded = displacementFromContainerTop - questionOffsetFromViewBox;
+      var translationXNeeded = 0;
+      translationManager.addTranslation(this.refs.questions, translationXNeeded, translationYNeeded);
+    }
+  }, {
+    key: 'setActiveQuestion',
+    value: function setActiveQuestion() {
+      var index = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
+
+      var newConfig = clone(this.state.config);
+      var _iteratorNormalCompletion2 = true;
+      var _didIteratorError2 = false;
+      var _iteratorError2 = undefined;
+
+      try {
+        for (var _iterator2 = newConfig.questions[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+          var q = _step2.value;
+
+          q.active = false;
+        }
+      } catch (err) {
+        _didIteratorError2 = true;
+        _iteratorError2 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion2 && _iterator2.return) {
+            _iterator2.return();
+          }
+        } finally {
+          if (_didIteratorError2) {
+            throw _iteratorError2;
+          }
+        }
+      }
+
+      newConfig.questions[index].active = true;
+      this.setState({ config: newConfig });
+    }
+  }, {
+    key: 'getActiveQuestionIndex',
+    value: function getActiveQuestionIndex() {
+      return this.state.config.questions.findIndex(function (q) {
+        return q.active === true;
+      });
+    }
   }, {
     key: 'render',
     value: function render() {
-      var _this2 = this;
-
       var appControl = {
-        focusNextQuestion: function focusNextQuestion() {
-          return null;
-        },
+        focusNextQuestion: this.focusNextQuestion,
         focusPreviousQuestion: function focusPreviousQuestion() {
           return null;
         }
       };
 
-      var questions = this.state.questions.map(function (q) {
+      var questions = this.state.config.questions.map(function (q) {
         return React.createElement(FormField, {
           config: q,
           appControl: appControl,
-          key: q.key,
-          active: _this2.state.activeQuestionKey === q.key
+          key: q.key
         });
       });
 
@@ -23910,10 +24183,10 @@ var Form = function (_ReactBEM) {
         { className: this.bemClass },
         React.createElement(
           'div',
-          { className: this.bemSubComponent('questionsViewBox') },
+          { className: this.bemSubComponent('questionsViewBox'), ref: 'questionsViewBox' },
           React.createElement(
             'div',
-            { className: this.bemSubComponent('questions') },
+            { className: this.bemSubComponent('questions'), ref: 'questions' },
             questions
           )
         ),

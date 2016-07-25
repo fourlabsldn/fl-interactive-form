@@ -27,7 +27,11 @@
   width: 100%;
   text-align: right;
   padding: 1px 0;
-  will-change: transform; }
+  will-change: transform;
+  -webkit-transition: -webkit-transform .4s ease-in-out;
+  transition: -webkit-transform .4s ease-in-out;
+  transition: transform .4s ease-in-out;
+  transition: transform .4s ease-in-out, -webkit-transform .4s ease-in-out; }
 
 .fl-if_FormField {
   opacity: .2;
