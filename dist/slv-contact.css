@@ -116,7 +116,7 @@
   -webkit-font-smoothing: subpixel-antialiased;
   -webkit-rtl-ordering: logical;
   -webkit-user-select: text; }
-  .fl-if_Text:focus, .fl-if_Textarea:focus {
+  .fl-if_FormField--active .fl-if_Text, .fl-if_FormField--active .fl-if_Textarea {
     outline: 0;
     border: 2px dashed #AAAAAA; }
 

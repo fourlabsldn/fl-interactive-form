@@ -71,7 +71,7 @@
   -webkit-rtl-ordering: logical;
   -webkit-user-select: text;
 
-  &:focus {
+  .fl-if_FormField--active & {
     outline: 0;
     border: 2px dashed $c-secondary-text;
   }

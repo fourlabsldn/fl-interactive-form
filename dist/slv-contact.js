@@ -23719,17 +23719,45 @@ var FormField = function (_ReactBEM) {
   _inherits(FormField, _ReactBEM);
 
   function FormField() {
+    var _Object$getPrototypeO;
+
     _classCallCheck(this, FormField);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(FormField).apply(this, arguments));
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    var _this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(FormField)).call.apply(_Object$getPrototypeO, [this].concat(args)));
+
+    _this.componentWillReceiveProps = _this.componentWillReceiveProps.bind(_this);
+    return _this;
   }
 
   _createClass(FormField, [{
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      var _this2 = this;
+
+      if (nextProps.config.active) {
+        (function () {
+          var inputEl = ReactDOM.findDOMNode(_this2.refs.input);
+
+          // We need a timeout to make the focus work.
+          setTimeout(function () {
+            return inputEl.focus();
+          }, 15);
+        })();
+      }
+    }
+  }, {
     key: 'render',
     value: function render() {
       assert(typeof inputTypes[this.props.config.type] !== 'undefined', 'Invalid input type: ' + this.props.config.type);
 
-      var input = React.createElement(inputTypes[this.props.config.type], { appControl: this.props.appControl });
+      var input = React.createElement(inputTypes[this.props.config.type], {
+        appControl: this.props.appControl,
+        ref: 'input'
+      });
 
       var classNames = [this.bemClass];
       if (this.props.config.active) {

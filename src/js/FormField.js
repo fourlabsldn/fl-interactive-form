@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import ReactBEM from './ReactBEM';
 import assert from 'fl-assert';
 import Text from './inputTypes/Text';
@@ -7,6 +8,19 @@ import Textarea from './inputTypes/Textarea';
 const inputTypes = { Text, Textarea };
 
 export default class FormField extends ReactBEM {
+  constructor(...args) {
+    super(...args);
+    this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.config.active) {
+      const inputEl = ReactDOM.findDOMNode(this.refs.input);
+
+      // We need a timeout to make the focus work.
+      setTimeout(() => inputEl.focus(), 15);
+    }
+  }
 
   render() {
     assert(
@@ -16,7 +30,10 @@ export default class FormField extends ReactBEM {
 
     const input = React.createElement(
       inputTypes[this.props.config.type],
-      { appControl: this.props.appControl }
+      {
+        appControl: this.props.appControl,
+        ref: 'input',
+      }
     );
 
     const classNames = [this.bemClass];
