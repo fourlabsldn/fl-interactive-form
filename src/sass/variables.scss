@@ -16,3 +16,37 @@ $c-secondary-text: #AAAAAA;
 
 $c-accent: #1aaba4;
 $c-accent-text: white;
+
+
+@mixin fl-if-button() {
+  display: inline-block;
+  box-sizing: border-box;
+  border-radius: 3px;
+  box-shadow: 0 2px 0 0 darken($c-accent, 10%);
+  transition: .1s background-color linear;
+
+  position: relative;
+
+  color: $c-accent-text;
+  background-color: $c-accent;
+
+  font-family: $f-main;
+
+  text-transform: none;
+  font-size: $s-font-medium;
+
+  letter-spacing: .05em;
+  padding: 1em 2.5em;
+
+  text-align: center;
+  border: 0;
+
+  &:active {
+    box-shadow: 0 1px 0 0 darken($c-accent, 10%);
+    top: 1px;
+  }
+
+  &:focus {
+    outline: 0;
+  }
+}

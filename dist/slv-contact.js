@@ -23601,6 +23601,120 @@ ReactBEM.propTypes = {
   cssPrefix: React.PropTypes.string
 };
 
+// Bug checking function that will throw an error whenever
+// the condition sent to it is evaluated to false
+/**
+ * Processes the message and outputs the correct message if the condition
+ * is false. Otherwise it outputs null.
+ * @api private
+ * @method processCondition
+ * @param  {Boolean} condition - Result of the evaluated condition
+ * @param  {String} errorMessage - Message explainig the error in case it is thrown
+ * @return {String | null}  - Error message if there is an error, nul otherwise.
+ */
+function processCondition(condition, errorMessage) {
+  if (!condition) {
+    var completeErrorMessage = '';
+    var re = /at ([^\s]+)\s\(/g;
+    var stackTrace = new Error().stack;
+    var stackFunctions = [];
+
+    var funcName = re.exec(stackTrace);
+    while (funcName && funcName[1]) {
+      stackFunctions.push(funcName[1]);
+      funcName = re.exec(stackTrace);
+    }
+
+    // Number 0 is processCondition itself,
+    // Number 1 is assert,
+    // Number 2 is the caller function.
+    if (stackFunctions[2]) {
+      completeErrorMessage = stackFunctions[2] + ': ' + completeErrorMessage;
+    }
+
+    completeErrorMessage += errorMessage;
+    return completeErrorMessage;
+  }
+
+  return null;
+}
+
+/**
+ * Throws an error if the boolean passed to it evaluates to false.
+ * To be used like this:
+ * 		assert(myDate !== undefined, "Date cannot be undefined.");
+ * @api public
+ * @method assert
+ * @param  {Boolean} condition - Result of the evaluated condition
+ * @param  {String} errorMessage - Message explainig the error in case it is thrown
+ * @return void
+ */
+function assert(condition, errorMessage) {
+  var error = processCondition(condition, errorMessage);
+  if (typeof error === 'string') {
+    throw new Error(error);
+  }
+}
+
+/**
+ * Logs a warning if the boolean passed to it evaluates to false.
+ * To be used like this:
+ * 		assert.warn(myDate !== undefined, "No date provided.");
+ * @api public
+ * @method warn
+ * @param  {Boolean} condition - Result of the evaluated condition
+ * @param  {String} errorMessage - Message explainig the error in case it is thrown
+ * @return void
+ */
+assert.warn = function warn(condition, errorMessage) {
+  var error = processCondition(condition, errorMessage);
+  if (typeof error === 'string') {
+    console.warn(error);
+  }
+};
+
+var Text = function (_ReactBEM) {
+  _inherits(Text, _ReactBEM);
+
+  function Text() {
+    _classCallCheck(this, Text);
+
+    return _possibleConstructorReturn(this, Object.getPrototypeOf(Text).apply(this, arguments));
+  }
+
+  _createClass(Text, [{
+    key: 'render',
+    value: function render() {
+      var val = this.props.value;
+      return React.createElement('input', { className: this.bemClass, type: 'text', value: val });
+    }
+  }]);
+
+  return Text;
+}(ReactBEM);
+
+var Textarea = function (_ReactBEM) {
+  _inherits(Textarea, _ReactBEM);
+
+  function Textarea() {
+    _classCallCheck(this, Textarea);
+
+    return _possibleConstructorReturn(this, Object.getPrototypeOf(Textarea).apply(this, arguments));
+  }
+
+  _createClass(Textarea, [{
+    key: 'render',
+    value: function render() {
+      var val = this.props.value;
+      return React.createElement('textarea', { className: this.bemClass, value: val });
+    }
+  }]);
+
+  return Textarea;
+}(ReactBEM);
+
+var inputTypes = { Text: Text, Textarea: Textarea };
+
 var FormField = function (_ReactBEM) {
   _inherits(FormField, _ReactBEM);
 
@@ -23613,6 +23727,10 @@ var FormField = function (_ReactBEM) {
   _createClass(FormField, [{
     key: 'render',
     value: function render() {
+      assert(typeof inputTypes[this.props.config.type] !== 'undefined', 'Invalid input type: ' + this.props.config.type);
+
+      var input = React.createElement(inputTypes[this.props.config.type], { appControl: this.props.appControl });
+
       return React.createElement(
         'div',
         { className: this.bemClass },
@@ -23624,11 +23742,7 @@ var FormField = function (_ReactBEM) {
         React.createElement(
           'div',
           { className: this.bemSubComponent('input') },
-          React.createElement('input', {
-            type: 'text',
-            placeholder: this.props.config.placeholder,
-            className: 'slv-text-input js-slv-focus'
-          })
+          input
         ),
         React.createElement(
           'div',
@@ -23726,9 +23840,13 @@ var Form = function (_ReactBEM) {
       return React.createElement(
         'div',
         { className: this.bemClass },
-        this.state.questions.map(function (q) {
-          return React.createElement(FormField, { config: q, appControl: appControl, key: q.key });
-        })
+        React.createElement(
+          'div',
+          { className: this.bemSubComponent('questions') },
+          this.state.questions.map(function (q) {
+            return React.createElement(FormField, { config: q, appControl: appControl, key: q.key });
+          })
+        )
       );
     }
   }]);

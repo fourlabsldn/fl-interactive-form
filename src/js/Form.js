@@ -37,9 +37,11 @@ export default class Form extends ReactBEM {
     const appControl = {};
     return (
       <div className={this.bemClass} >
-        {this.state.questions.map(q => {
-          return <FormField config={q} appControl={appControl} key={q.key} />;
-        })}
+        <div className={this.bemSubComponent('questions')} >
+          {this.state.questions.map(q => {
+            return <FormField config={q} appControl={appControl} key={q.key} />;
+          })}
+        </div>
       </div>
     );
   }
