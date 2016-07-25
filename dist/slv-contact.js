@@ -23746,6 +23746,7 @@ var FormField = function (_ReactBEM) {
     value: function componentWillReceiveProps(nextProps) {
       var _this2 = this;
 
+      // Focus element when turned active
       if (nextProps.config.active) {
         (function () {
           var inputEl = ReactDOM.findDOMNode(_this2.refs.input);
@@ -23781,7 +23782,7 @@ var FormField = function (_ReactBEM) {
         React.createElement(
           'p',
           { className: this.bemSubComponent('legend') },
-          'Legend for the question'
+          this.props.config.question
         ),
         React.createElement(
           'div',

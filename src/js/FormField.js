@@ -14,6 +14,7 @@ export default class FormField extends ReactBEM {
   }
 
   componentWillReceiveProps(nextProps) {
+    // Focus element when turned active
     if (nextProps.config.active) {
       const inputEl = ReactDOM.findDOMNode(this.refs.input);
 
@@ -46,7 +47,7 @@ export default class FormField extends ReactBEM {
 
     return (
       <div className={classNames.join(' ')}>
-        <p className={this.bemSubComponent('legend')}>Legend for the question</p>
+        <p className={this.bemSubComponent('legend')}>{this.props.config.question}</p>
 
         <div className={this.bemSubComponent('input')}>
           {input}
