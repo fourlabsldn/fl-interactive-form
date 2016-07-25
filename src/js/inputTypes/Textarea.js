@@ -1,23 +1,7 @@
 import React from 'react';
-import ReactBEM from '../ReactBEM';
-import ReactDOM from 'react-dom';
+import Text from './Text';
 
-export default class Textarea extends ReactBEM {
-  constructor(...args) {
-    super(...args);
-    this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    // Focus element when turned active
-    if (nextProps.config.active) {
-      const inputEl = ReactDOM.findDOMNode(this.refs.input);
-
-      // We need a timeout to make the focus work.
-      setTimeout(() => inputEl.focus(), 15);
-    }
-  }
-
+export default class Textarea extends Text {
   render() {
     return (
       <div className={this.bemClass}>
@@ -27,10 +11,11 @@ export default class Textarea extends ReactBEM {
           type="text"
           defaultValue={this.props.question}
           placeholder={this.props.placeholder}
+          onKeyDown={this.keyListener}
         />
 
         <div className={this.bemSubComponent('okButtonContainer')}>
-          <button className={this.bemSubComponent('okButton')}>Click me</button>
+          {this.getOkButton()}
         </div>
       </ div>
     );

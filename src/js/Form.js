@@ -6,6 +6,20 @@ import clone from './utils/clone';
 import NavigationBar from './NavigationBar';
 import AnimationManager from './utils/AnimationManager';
 import throttle from './utils/throttle';
+import assert from 'fl-assert';
+
+// Completed questions will have a 'completed' attribute set to true and a valid
+// value.
+// Config example:
+const exampleConfig = { // eslint-disable-line
+  questions: [{
+    question: 'What is your name?',
+    placeholder: 'My name is...',
+    type: 'Text',
+    completed: 'false',
+    active: 'true',
+  }],
+};
 
 export default class Form extends ReactBEM {
   constructor(...args) {
@@ -19,6 +33,7 @@ export default class Form extends ReactBEM {
     this.focusQuestionWithIndex = this.focusQuestionWithIndex.bind(this);
     this.keyNavigation = this.keyNavigation.bind(this);
     this.wheelNavigation = this.wheelNavigation.bind(this);
+    this.setQuestionResponse = this.setQuestionResponse.bind(this);
 
     this.animations = new AnimationManager();
     this.state = {
@@ -50,6 +65,7 @@ export default class Form extends ReactBEM {
     // Add random key to all questions:
     for (const q of conf.questions) {
       q.key = String(Date.now() + Math.random());
+      q.completed = false;
     }
 
     return conf;
@@ -162,9 +178,28 @@ export default class Form extends ReactBEM {
     return false;
   }
 
+  /**
+   * @public
+   * @method setQuestionResponse
+   * @param  {String} questionKey
+   * @param  {} answerValue
+   * @return Promise - will be resolved after the status is updated.
+   */
+  setQuestionResponse(questionKey, answerValue) {
+    const newConfig = clone(this.state.config);
+    const question = newConfig.questions.find(q => q.key === questionKey);
+    assert(question !== undefined, `Did not find question with key: ${questionKey}`);
+
+    question.answer = answerValue;
+    question.completed = true;
+
+    return new Promise(resolve => this.setState({ config: newConfig }, resolve));
+  }
+
   render() {
     const appControl = {
       focusQuestion: this.focusQuestion,
+      setQuestionResponse: this.setQuestionResponse,
     };
 
     const questions = this.state.config.questions.map(q => {

@@ -127,6 +127,8 @@
     top: 1px; }
   .fl-if_Text-okButton:focus, .fl-if_Textarea-okButton:focus {
     outline: 0; }
+  .fl-if_Text-okButton--completed, .fl-if_Textarea-okButton--completed {
+    background-color: red; }
 
 .fl-if_NavigationBar {
   display: block;

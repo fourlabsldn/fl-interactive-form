@@ -45,4 +45,8 @@
 
 .fl-if_Text-okButton {
   @include fl-if-button();
+
+  &--completed {
+    background-color: red;
+  }
 }

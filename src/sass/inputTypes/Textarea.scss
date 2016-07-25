@@ -13,3 +13,7 @@
 .fl-if_Textarea-okButton {
   @extend .fl-if_Text-okButton;
 }
+
+.fl-if_Textarea-okButton--completed {
+  @extend .fl-if_Text-okButton--completed;
+}

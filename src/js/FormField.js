@@ -20,6 +20,7 @@ export default class FormField extends ReactBEM {
     const inputProps = {
       config: this.props.config,
       appControl: this.props.appControl,
+      key: this.props.config.key,
     };
 
     return (

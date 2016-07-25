@@ -6,6 +6,9 @@ export default class Text extends ReactBEM {
   constructor(...args) {
     super(...args);
     this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
+    this.keyListener = this.keyListener.bind(this);
+    this.sendResponse = this.sendResponse.bind(this);
+    this.getOkButton = this.getOkButton.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -18,6 +21,35 @@ export default class Text extends ReactBEM {
     }
   }
 
+  keyListener(e) {
+    const enterKey = 13;
+    // Allow for line-break holding shift key
+    if (e.keyCode === enterKey && !e.shiftKey) {
+      this.sendResponse();
+    }
+  }
+
+  async sendResponse() {
+    await this.props.appControl.setQuestionResponse(
+      this.props.config.key,
+      this.refs.input.value
+    );
+
+    this.props.appControl.focusQuestion('next');
+  }
+
+  getOkButton() {
+    const butonClasses = this.props.config.completed
+      ? [this.bemSubComponent('okButton'), this.bemSubComponentState('okButton', 'completed')]
+      : [this.bemSubComponent('okButton')];
+    const btnClassName = butonClasses.join(' ');
+    return (
+      <button className={btnClassName} onClick={this.sendResponse} >
+        Ok
+      </button>
+    );
+  }
+
   render() {
     return (
       <div className={this.bemClass}>
@@ -27,10 +59,11 @@ export default class Text extends ReactBEM {
           type="text"
           defaultValue={this.props.question}
           placeholder={this.props.placeholder}
+          onKeyDown={this.keyListener}
         />
 
         <div className={this.bemSubComponent('okButtonContainer')}>
-          <button className={this.bemSubComponent('okButton')}>Click me</button>
+          {this.getOkButton()}
         </div>
       </ div>
     );

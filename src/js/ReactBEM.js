@@ -32,6 +32,13 @@ class ReactBEM extends React.Component {
     }
     return className;
   }
+
+  bemSubComponentState(...args) {
+    const state = args.pop();
+    const subComponentClass = this.bemSubComponent(args);
+    const subComponentState = `${subComponentClass}--${state}`;
+    return subComponentState;
+  }
 }
 
 function lowerCaseFirstLetter(word) {
