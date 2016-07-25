@@ -14,7 +14,7 @@ export default class Form extends ReactBEM {
     this.processConfig = this.processConfig.bind(this);
     this.exportConfig = this.exportConfig.bind(this);
     this.setActiveQuestion = this.setActiveQuestion.bind(this);
-    this.focusNextQuestion = this.focusNextQuestion.bind(this);
+    this.focusQuestion = this.focusQuestion.bind(this);
     this.focusQuestionWithIndex = this.focusQuestionWithIndex.bind(this);
 
     this.state = {
@@ -23,7 +23,6 @@ export default class Form extends ReactBEM {
   }
 
   componentDidMount() {
-    this.setActiveQuestion(0);
     const centerActiveQuestion =
       () => this.focusQuestionWithIndex(this.getActiveQuestionIndex());
     const animation = new AnimationManager();
@@ -32,6 +31,8 @@ export default class Form extends ReactBEM {
       'resize',
       () => animation.schedule(centerActiveQuestion, 'formResize', 20)
     );
+
+    animation.schedule(() => this.setActiveQuestion(0), '', 30);
   }
 
   /**
@@ -55,19 +56,30 @@ export default class Form extends ReactBEM {
     // To be implemented
   }
 
-  focusNextQuestion() {
-    const activeQuestionIndex = this.getActiveQuestionIndex();
-    let nextQuestionIndex;
-    if (activeQuestionIndex === -1) {
-      nextQuestionIndex = 0;
-    } else {
-      nextQuestionIndex = (activeQuestionIndex + 1) % this.state.config.questions.length;
-    }
-
+  /**
+   * @public
+   * Moves the focus to the next or previous question
+   * @method focusQuestion
+   * @param  {String} prevNext
+   * @return {void}
+   */
+  focusQuestion(prevNext) {
+    const next = prevNext === 'next';
+    const active = this.getActiveQuestionIndex();
+    const questionCount = this.state.config.questions.length;
+    const changedIndex = active + (next ? +1 : -1);
+    // Restrict changed index between 0 and questionCount - 1
+    const nextQuestionIndex = Math.max(0, Math.min(questionCount - 1, changedIndex));
     this.focusQuestionWithIndex(nextQuestionIndex);
     this.setActiveQuestion(nextQuestionIndex);
   }
 
+  /**
+   * @private
+   * @method focusQuestionWithIndex
+   * @param  {Int} index
+   * @return {void}
+   */
   focusQuestionWithIndex(index) {
     const questionToFocus = this.refs.questions.children[index];
 
@@ -89,6 +101,11 @@ export default class Form extends ReactBEM {
     );
   }
 
+  /**
+   * @private
+   * @method setActiveQuestion
+   * @param  {Int} index
+   */
   setActiveQuestion(index = 0) {
     const newConfig = clone(this.state.config);
     for (const q of newConfig.questions) {
@@ -99,14 +116,18 @@ export default class Form extends ReactBEM {
     this.setState({ config: newConfig });
   }
 
+  /**
+   * @private
+   * @method getActiveQuestionIndex
+   * @return {Int}
+   */
   getActiveQuestionIndex() {
     return this.state.config.questions.findIndex(q => q.active === true);
   }
 
   render() {
     const appControl = {
-      focusNextQuestion: this.focusNextQuestion,
-      focusPreviousQuestion: () => null,
+      focusQuestion: this.focusQuestion,
     };
 
     const questions = this.state.config.questions.map(q => {

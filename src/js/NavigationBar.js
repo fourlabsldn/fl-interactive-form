@@ -8,14 +8,14 @@ export default class NavigationBar extends ReactBEM {
 
         <button
           className={this.bemSubComponent('button')}
-          onClick={this.props.appControl.focusPreviousQuestion}
+          onClick={() => this.props.appControl.focusQuestion('prev')}
         >
           Prev
         </button>
 
         <button
           className={this.bemSubComponent('button')}
-          onClick={this.props.appControl.focusNextQuestion}
+          onClick={() => this.props.appControl.focusQuestion('next')}
         >
           Next
         </button>

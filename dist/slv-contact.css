@@ -39,9 +39,9 @@
   -webkit-transition: all .3s ease-in-out;
   transition: all .3s ease-in-out; }
   .fl-if_FormField:first-child {
-    margin-top: 50vh; }
+    margin-top: 10vh; }
   .fl-if_FormField:last-child {
-    margin-bottom: 50vh; }
+    margin-bottom: 10vh; }
   .fl-if_FormField--active {
     opacity: 1;
     -webkit-transform: scale(1);

@@ -23908,6 +23908,8 @@ var NavigationBar = function (_ReactBEM) {
   _createClass(NavigationBar, [{
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       return React.createElement(
         'div',
         { className: this.bemClass },
@@ -23915,7 +23917,9 @@ var NavigationBar = function (_ReactBEM) {
           'button',
           {
             className: this.bemSubComponent('button'),
-            onClick: this.props.appControl.focusPreviousQuestion
+            onClick: function onClick() {
+              return _this2.props.appControl.focusQuestion('prev');
+            }
           },
           'Prev'
         ),
@@ -23923,7 +23927,9 @@ var NavigationBar = function (_ReactBEM) {
           'button',
           {
             className: this.bemSubComponent('button'),
-            onClick: this.props.appControl.focusNextQuestion
+            onClick: function onClick() {
+              return _this2.props.appControl.focusQuestion('next');
+            }
           },
           'Next'
         )
@@ -24017,7 +24023,7 @@ var Form = function (_ReactBEM) {
     _this.processConfig = _this.processConfig.bind(_this);
     _this.exportConfig = _this.exportConfig.bind(_this);
     _this.setActiveQuestion = _this.setActiveQuestion.bind(_this);
-    _this.focusNextQuestion = _this.focusNextQuestion.bind(_this);
+    _this.focusQuestion = _this.focusQuestion.bind(_this);
     _this.focusQuestionWithIndex = _this.focusQuestionWithIndex.bind(_this);
 
     _this.state = {
@@ -24031,7 +24037,6 @@ var Form = function (_ReactBEM) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      this.setActiveQuestion(0);
       var centerActiveQuestion = function centerActiveQuestion() {
         return _this2.focusQuestionWithIndex(_this2.getActiveQuestionIndex());
       };
@@ -24040,6 +24045,10 @@ var Form = function (_ReactBEM) {
       window.addEventListener('resize', function () {
         return animation.schedule(centerActiveQuestion, 'formResize', 20);
       });
+
+      animation.schedule(function () {
+        return _this2.setActiveQuestion(0);
+      }, '', 30);
     }
 
     /**
@@ -24084,23 +24093,38 @@ var Form = function (_ReactBEM) {
     }
   }, {
     key: 'exportConfig',
-    value: function exportConfig() {
-      // To be implemented
-    }
-  }, {
-    key: 'focusNextQuestion',
-    value: function focusNextQuestion() {
-      var activeQuestionIndex = this.getActiveQuestionIndex();
-      var nextQuestionIndex = void 0;
-      if (activeQuestionIndex === -1) {
-        nextQuestionIndex = 0;
-      } else {
-        nextQuestionIndex = (activeQuestionIndex + 1) % this.state.config.questions.length;
-      }
+    value: function exportConfig() {}
+    // To be implemented
 
+
+    /**
+     * @public
+     * Moves the focus to the next or previous question
+     * @method focusQuestion
+     * @param  {String} prevNext
+     * @return {void}
+     */
+
+  }, {
+    key: 'focusQuestion',
+    value: function focusQuestion(prevNext) {
+      var next = prevNext === 'next';
+      var active = this.getActiveQuestionIndex();
+      var questionCount = this.state.config.questions.length;
+      var changedIndex = active + (next ? +1 : -1);
+      // Restrict changed index between 0 and questionCount - 1
+      var nextQuestionIndex = Math.max(0, Math.min(questionCount - 1, changedIndex));
       this.focusQuestionWithIndex(nextQuestionIndex);
       this.setActiveQuestion(nextQuestionIndex);
     }
+
+    /**
+     * @private
+     * @method focusQuestionWithIndex
+     * @param  {Int} index
+     * @return {void}
+     */
+
   }, {
     key: 'focusQuestionWithIndex',
     value: function focusQuestionWithIndex(index) {
@@ -24119,6 +24143,13 @@ var Form = function (_ReactBEM) {
       var translationXNeeded = 0;
       translationManager.addTranslation(this.refs.questions, translationXNeeded, translationYNeeded);
     }
+
+    /**
+     * @private
+     * @method setActiveQuestion
+     * @param  {Int} index
+     */
+
   }, {
     key: 'setActiveQuestion',
     value: function setActiveQuestion() {
@@ -24153,6 +24184,13 @@ var Form = function (_ReactBEM) {
       newConfig.questions[index].active = true;
       this.setState({ config: newConfig });
     }
+
+    /**
+     * @private
+     * @method getActiveQuestionIndex
+     * @return {Int}
+     */
+
   }, {
     key: 'getActiveQuestionIndex',
     value: function getActiveQuestionIndex() {
@@ -24164,10 +24202,7 @@ var Form = function (_ReactBEM) {
     key: 'render',
     value: function render() {
       var appControl = {
-        focusNextQuestion: this.focusNextQuestion,
-        focusPreviousQuestion: function focusPreviousQuestion() {
-          return null;
-        }
+        focusQuestion: this.focusQuestion
       };
 
       var questions = this.state.config.questions.map(function (q) {
