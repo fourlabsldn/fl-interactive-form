@@ -24044,11 +24044,22 @@ var AnimationManager = function () {
   return AnimationManager;
 }();
 
+/**
+ * @public
+ * @method throttle
+ * @param  {Function} fn
+ * @param  {Int} threshhold - Number of milliseconds
+ * @param  {Object} scope - this object
+ * @param  {Boolean} defer - whether to execute the callback after the delay has finished
+ * @return {Function}
+ */
 function throttle(fn) {
+  var threshhold = arguments.length <= 1 || arguments[1] === undefined ? 250 : arguments[1];
+
   var _this = this;
 
-  var threshhold = arguments.length <= 1 || arguments[1] === undefined ? 250 : arguments[1];
   var scope = arguments[2];
+  var defer = arguments.length <= 3 || arguments[3] === undefined ? true : arguments[3];
 
   var last = void 0;
   var deferTimer = void 0;
@@ -24063,10 +24074,13 @@ function throttle(fn) {
     if (last && now < last + threshhold) {
       // hold on to it
       clearTimeout(deferTimer);
-      deferTimer = setTimeout(function () {
-        last = now;
-        fn.apply(context, args);
-      }, threshhold);
+
+      if (defer) {
+        deferTimer = setTimeout(function () {
+          last = now;
+          fn.apply(context, args);
+        }, threshhold);
+      }
     } else {
       last = now;
       fn.apply(context, args);
@@ -24092,9 +24106,10 @@ var Form = function (_ReactBEM) {
     _this.processConfig = _this.processConfig.bind(_this);
     _this.exportConfig = _this.exportConfig.bind(_this);
     _this.setActiveQuestion = _this.setActiveQuestion.bind(_this);
-    _this.focusQuestion = throttle(_this.focusQuestion.bind(_this), 250);
+    _this.focusQuestion = throttle(_this.focusQuestion.bind(_this), 250, _this, false);
     _this.focusQuestionWithIndex = _this.focusQuestionWithIndex.bind(_this);
     _this.keyNavigation = _this.keyNavigation.bind(_this);
+    _this.wheelNavigation = _this.wheelNavigation.bind(_this);
 
     _this.animations = new AnimationManager();
     _this.state = {
@@ -24291,6 +24306,23 @@ var Form = function (_ReactBEM) {
       return false;
     }
   }, {
+    key: 'wheelNavigation',
+    value: function wheelNavigation(e) {
+      if (!e.deltaY) {
+        return true;
+      }
+
+      if (e.deltaY > 0) {
+        this.focusQuestion('next');
+      } else {
+        this.focusQuestion('prev');
+      }
+
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    }
+  }, {
     key: 'render',
     value: function render() {
       var appControl = {
@@ -24307,7 +24339,11 @@ var Form = function (_ReactBEM) {
 
       return React.createElement(
         'div',
-        { className: this.bemClass, onKeyDown: this.keyNavigation },
+        {
+          className: this.bemClass,
+          onKeyDown: this.keyNavigation,
+          onWheel: this.wheelNavigation
+        },
         React.createElement(
           'div',
           { className: this.bemSubComponent('questionsViewBox'), ref: 'questionsViewBox' },

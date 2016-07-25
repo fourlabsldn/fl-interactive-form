@@ -15,9 +15,10 @@ export default class Form extends ReactBEM {
     this.processConfig = this.processConfig.bind(this);
     this.exportConfig = this.exportConfig.bind(this);
     this.setActiveQuestion = this.setActiveQuestion.bind(this);
-    this.focusQuestion = throttle(this.focusQuestion.bind(this), 250);
+    this.focusQuestion = throttle(this.focusQuestion.bind(this), 250, this, false);
     this.focusQuestionWithIndex = this.focusQuestionWithIndex.bind(this);
     this.keyNavigation = this.keyNavigation.bind(this);
+    this.wheelNavigation = this.wheelNavigation.bind(this);
 
     this.animations = new AnimationManager();
     this.state = {
@@ -147,6 +148,20 @@ export default class Form extends ReactBEM {
     return false;
   }
 
+  wheelNavigation(e) {
+    if (!e.deltaY) { return true; }
+
+    if (e.deltaY > 0) {
+      this.focusQuestion('next');
+    } else {
+      this.focusQuestion('prev');
+    }
+
+    e.preventDefault();
+    e.stopPropagation();
+    return false;
+  }
+
   render() {
     const appControl = {
       focusQuestion: this.focusQuestion,
@@ -162,7 +177,11 @@ export default class Form extends ReactBEM {
     });
 
     return (
-      <div className={this.bemClass} onKeyDown={this.keyNavigation}>
+      <div
+        className={this.bemClass}
+        onKeyDown={this.keyNavigation}
+        onWheel={this.wheelNavigation}
+      >
 
         <div className={this.bemSubComponent('questionsViewBox')} ref="questionsViewBox">
           <div className={this.bemSubComponent('questions')} ref="questions" >
