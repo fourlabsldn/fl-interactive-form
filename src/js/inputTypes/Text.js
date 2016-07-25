@@ -35,7 +35,10 @@ export default class Text extends ReactBEM {
       this.refs.input.value
     );
 
-    this.props.appControl.focusQuestion('next');
+    // Now we wait for the animation to finish before going to
+    // the next question.
+    const animDuration = 500;
+    setTimeout(() => this.props.appControl.focusQuestion('next'), animDuration);
   }
 
   getOkButton() {

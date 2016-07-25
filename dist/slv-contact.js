@@ -25255,6 +25255,9 @@ var Text = function (_ReactBEM) {
     key: 'sendResponse',
     value: function () {
       var _ref = _asyncToGenerator(_regeneratorRuntime.mark(function _callee() {
+        var _this3 = this;
+
+        var animDuration;
         return _regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -25264,9 +25267,15 @@ var Text = function (_ReactBEM) {
 
               case 2:
 
-                this.props.appControl.focusQuestion('next');
+                // Now we wait for the animation to finish before going to
+                // the next question.
+                animDuration = 500;
 
-              case 3:
+                setTimeout(function () {
+                  return _this3.props.appControl.focusQuestion('next');
+                }, animDuration);
+
+              case 4:
               case 'end':
                 return _context.stop();
             }

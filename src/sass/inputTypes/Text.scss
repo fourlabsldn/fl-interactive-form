@@ -40,13 +40,37 @@
   padding-left: $s-left-padding;
   padding-right: $s-right-padding;
   padding-top: 37px;
-  text-align: right;
+  text-align: center;
+}
+
+@keyframes fadeIn {
+  0% { transform: translateY(.3em); opacity: 0;}
+  100% {transform: translateY(0%); opacity: 1;}
 }
 
 .fl-if_Text-okButton {
   @include fl-if-button();
 
+  transition: all .3s ease;
+
+  // The transition to all of these properties in part
+  // of the completed animation
   &--completed {
-    background-color: red;
+    background-color: $c-valid;
+    padding-right: 3.5em;
+
+    &::after {
+      content: '✓';
+      font-weight: bold;
+      font-size: 1.8em;
+      line-height: .1em;
+      display: inline-block;
+      overflow: visible;
+
+      position: absolute;
+      right: .8em;
+      top: .8em;
+      animation: fadeIn.5s ease-out forwards;
+    }
   }
 }

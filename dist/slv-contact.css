@@ -1,3 +1,4 @@
+@charset "UTF-8";
 .fl-if_Form {
   display: block;
   position: relative;
@@ -99,7 +100,27 @@
   padding-left: 10vw;
   padding-right: 5vw;
   padding-top: 37px;
-  text-align: right; }
+  text-align: center; }
+
+@-webkit-keyframes fadeIn {
+  0% {
+    -webkit-transform: translateY(0.3em);
+            transform: translateY(0.3em);
+    opacity: 0; }
+  100% {
+    -webkit-transform: translateY(0%);
+            transform: translateY(0%);
+    opacity: 1; } }
+
+@keyframes fadeIn {
+  0% {
+    -webkit-transform: translateY(0.3em);
+            transform: translateY(0.3em);
+    opacity: 0; }
+  100% {
+    -webkit-transform: translateY(0%);
+            transform: translateY(0%);
+    opacity: 1; } }
 
 .fl-if_Text-okButton, .fl-if_Textarea-okButton {
   display: inline-block;
@@ -120,7 +141,9 @@
   letter-spacing: .05em;
   padding: 1em 2.5em;
   text-align: center;
-  border: 0; }
+  border: 0;
+  -webkit-transition: all .3s ease;
+  transition: all .3s ease; }
   .fl-if_Text-okButton:active, .fl-if_Textarea-okButton:active {
     -webkit-box-shadow: 0 1px 0 0 #137f7a;
             box-shadow: 0 1px 0 0 #137f7a;
@@ -128,7 +151,20 @@
   .fl-if_Text-okButton:focus, .fl-if_Textarea-okButton:focus {
     outline: 0; }
   .fl-if_Text-okButton--completed, .fl-if_Textarea-okButton--completed {
-    background-color: red; }
+    background-color: #00bcd4;
+    padding-right: 3.5em; }
+    .fl-if_Text-okButton--completed::after, .fl-if_Textarea-okButton--completed::after {
+      content: '✓';
+      font-weight: bold;
+      font-size: 1.8em;
+      line-height: .1em;
+      display: inline-block;
+      overflow: visible;
+      position: absolute;
+      right: .8em;
+      top: .8em;
+      -webkit-animation: fadeIn 0.5s ease-out forwards;
+              animation: fadeIn 0.5s ease-out forwards; }
 
 .fl-if_NavigationBar {
   display: block;
