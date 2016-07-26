@@ -106,4 +106,4 @@ gulp.task('watch', [
   'watch:build:src',
 ]);
 
-gulp.task('dev', ['build', 'watch']);
+gulp.task('dev', ['copy-dependencies', 'build', 'watch']);
