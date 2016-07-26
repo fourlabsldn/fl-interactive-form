@@ -1,23 +1,20 @@
 import React from 'react';
 import ReactBEM from './ReactBEM';
-import FormField from './FormField';
-import translationManager from './utils/translationManager';
 import clone from './utils/clone';
-import NavigationBar from './NavigationBar';
-import AnimationManager from './utils/AnimationManager';
-import throttle from './utils/throttle';
 import assert from 'fl-assert';
+import FormUI from './FormUI';
 
-// Completed questions will have a 'completed' attribute set to true and a valid
-// value.
+// The form will receive a config object which will describe the form fields.
+// The form config contains an array of questions. The UI state object will
+// mirror this questions array but will have the UI attributes for each form
+// component.
+
 // Config example:
 const exampleConfig = { // eslint-disable-line
   questions: [{
     question: 'What is your name?',
     placeholder: 'My name is...',
     type: 'Text',
-    completed: 'false',
-    active: 'true',
   }],
 };
 
@@ -25,32 +22,14 @@ export default class Form extends ReactBEM {
   constructor(...args) {
     super(...args);
 
-    this.componentDidMount = this.componentDidMount.bind(this);
-    this.processConfig = this.processConfig.bind(this);
+    // private
+    this.generateInitialState = this.generateInitialState.bind(this);
     this.exportConfig = this.exportConfig.bind(this);
-    this.setActiveQuestion = this.setActiveQuestion.bind(this);
-    this.focusQuestion = throttle(this.focusQuestion.bind(this), 250, this, false);
-    this.focusQuestionWithIndex = this.focusQuestionWithIndex.bind(this);
-    this.keyNavigation = this.keyNavigation.bind(this);
-    this.wheelNavigation = this.wheelNavigation.bind(this);
+
+    // public
     this.setQuestionResponse = this.setQuestionResponse.bind(this);
 
-    this.animations = new AnimationManager();
-    this.state = {
-      config: this.processConfig(this.props.config),
-    };
-  }
-
-  componentDidMount() {
-    const centerActiveQuestion =
-      () => this.focusQuestionWithIndex(this.getActiveQuestionIndex());
-
-    window.addEventListener(
-      'resize',
-      () => this.animations.schedule(centerActiveQuestion, 'formResize', 20)
-    );
-
-    this.animations.schedule(() => this.setActiveQuestion(0), '', 30);
+    this.state = this.generateInitialState(this.props.config);
   }
 
   /**
@@ -59,123 +38,19 @@ export default class Form extends ReactBEM {
    * @method importConfig
    * @return {Object}
    */
-  processConfig() {
-    const conf = clone(this.props.config);
+  generateInitialState() {
+    const config = clone(this.props.config);
 
-    // Add random key to all questions:
-    for (const q of conf.questions) {
+    // Add a random key to all questions:
+    for (const q of config.questions) {
       q.key = String(Date.now() + Math.random());
-      q.completed = false;
     }
 
-    return conf;
+    return { config };
   }
 
   exportConfig() {
     // To be implemented
-  }
-
-  /**
-   * @public
-   * Moves the focus to the next or previous question
-   * @method focusQuestion
-   * @param  {String} prevNext
-   * @return {void}
-   */
-  focusQuestion(prevNext) {
-    const next = prevNext === 'next';
-    const active = this.getActiveQuestionIndex();
-    const questionCount = this.state.config.questions.length;
-    const changedIndex = active + (next ? +1 : -1);
-    // Restrict changed index between 0 and questionCount - 1
-    const nextQuestionIndex = Math.max(0, Math.min(questionCount - 1, changedIndex));
-    this.setActiveQuestion(nextQuestionIndex);
-    this.focusQuestionWithIndex(nextQuestionIndex);
-  }
-
-  /**
-   * @private
-   * @method focusQuestionWithIndex
-   * @param  {Int} index
-   * @return {void}
-   */
-  focusQuestionWithIndex(index) {
-    const questionToFocus = this.refs.questions.children[index];
-
-    const questionHeight = questionToFocus.clientHeight;
-    const viewBoxHeight = this.refs.questionsViewBox.clientHeight;
-    // how much lower than the container will it end up.
-    const displacementFromContainerTop = Math.max(0, (viewBoxHeight - questionHeight) / 2);
-    const viewBoxTop = this.refs.questionsViewBox.getBoundingClientRect().top;
-    const questionOffsetFromViewBox = questionToFocus.offsetTop - viewBoxTop;
-
-    const translationYNeeded = displacementFromContainerTop - questionOffsetFromViewBox;
-    const translationXNeeded = 0;
-    translationManager.setTranslation(
-      this.refs.questions,
-      translationXNeeded,
-      translationYNeeded
-    );
-  }
-
-  /**
-   * @private
-   * @method setActiveQuestion
-   * @param  {Int} index
-   */
-  setActiveQuestion(index = 0) {
-    const newConfig = clone(this.state.config);
-    for (const q of newConfig.questions) {
-      q.active = false;
-    }
-
-    newConfig.questions[index].active = true;
-    this.setState({ config: newConfig });
-  }
-
-  /**
-   * @private
-   * @method getActiveQuestionIndex
-   * @return {Int}
-   */
-  getActiveQuestionIndex() {
-    return this.state.config.questions.findIndex(q => q.active === true);
-  }
-
-  keyNavigation(e) { // eslint-disable-line complexity
-    const up = 38;
-    const down = 40;
-    const tab = 9;
-
-    if (e.keyCode === up) {
-      this.focusQuestion('prev');
-    } else if (e.keyCode === down) {
-      this.focusQuestion('next');
-    } else if (e.keyCode === tab && e.shiftKey) {
-      this.focusQuestion('prev');
-    } else if (e.keyCode === tab) {
-      this.focusQuestion('next');
-    } else {
-      return true;
-    }
-
-    e.preventDefault();
-    e.stopPropagation();
-    return false;
-  }
-
-  wheelNavigation(e) {
-    if (!e.deltaY) { return true; }
-
-    if (e.deltaY > 0) {
-      this.focusQuestion('next');
-    } else {
-      this.focusQuestion('prev');
-    }
-
-    e.preventDefault();
-    e.stopPropagation();
-    return false;
   }
 
   /**
@@ -186,47 +61,21 @@ export default class Form extends ReactBEM {
    * @return Promise - will be resolved after the status is updated.
    */
   setQuestionResponse(questionKey, answerValue) {
-    const newConfig = clone(this.state.config);
-    const question = newConfig.questions.find(q => q.key === questionKey);
-    assert(question !== undefined, `Did not find question with key: ${questionKey}`);
+    const qIndex = this.state.config.questions.findIndex(q => q.key === questionKey);
+    assert(qIndex !== -1, `Did not find question with key: ${questionKey}`);
 
-    question.answer = answerValue;
-    question.completed = true;
+    const newConfig = clone(this.state.config);
+    newConfig.questions[qIndex].answer = answerValue;
 
     return new Promise(resolve => this.setState({ config: newConfig }, resolve));
   }
 
   render() {
     const appControl = {
-      focusQuestion: this.focusQuestion,
       setQuestionResponse: this.setQuestionResponse,
     };
 
-    const questions = this.state.config.questions.map(q => {
-      return (
-        <FormField
-          config={q}
-          appControl={appControl}
-          key={q.key}
-        />);
-    });
-
-    return (
-      <div
-        className={this.bemClass}
-        onKeyDown={this.keyNavigation}
-        onWheel={this.wheelNavigation}
-      >
-
-        <div className={this.bemSubComponent('questionsViewBox')} ref="questionsViewBox">
-          <div className={this.bemSubComponent('questions')} ref="questions" >
-            {questions}
-          </div>
-        </div>
-
-        <NavigationBar appControl={appControl} />
-      </div>
-    );
+    return <FormUI config={this.state.config} appControl={appControl} />;
   }
 }
 

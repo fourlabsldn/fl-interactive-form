@@ -13,11 +13,12 @@ export default class FormField extends ReactBEM {
       `Invalid input type: ${this.props.config.type}`
     );
 
-    const classNames = this.props.config.active
+    const classNames = this.props.ui.active
       ? [this.bemClass, this.bemState('active')]
       : [this.bemClass];
 
     const inputProps = {
+      ui: this.props.ui,
       config: this.props.config,
       appControl: this.props.appControl,
       key: this.props.config.key,
@@ -33,6 +34,7 @@ export default class FormField extends ReactBEM {
 }
 
 FormField.PropTypes = {
+  ui: React.PropTypes.object.isRequired,
   config: React.PropTypes.object.isRequired,
   appControl: React.PropTypes.object.isRequired,
 };

@@ -13,7 +13,7 @@ export default class Text extends ReactBEM {
 
   componentWillReceiveProps(nextProps) {
     // Focus element when turned active
-    if (nextProps.config.active) {
+    if (nextProps.ui.active) {
       const inputEl = ReactDOM.findDOMNode(this.refs.input);
 
       // We need a timeout to make the focus work.
@@ -30,9 +30,14 @@ export default class Text extends ReactBEM {
   }
 
   async sendResponse() {
-    await this.props.appControl.setQuestionResponse(
+    this.props.appControl.setQuestionResponse(
       this.props.config.key,
       this.refs.input.value
+    );
+
+    await this.props.appControl.setQuestionCompleted(
+      this.props.config.key,
+      true
     );
 
     // Now we wait for the animation to finish before going to
@@ -42,7 +47,7 @@ export default class Text extends ReactBEM {
   }
 
   getOkButton() {
-    const butonClasses = this.props.config.completed
+    const butonClasses = this.props.ui.completed
       ? [this.bemSubComponent('okButton'), this.bemSubComponentState('okButton', 'completed')]
       : [this.bemSubComponent('okButton')];
     const btnClassName = butonClasses.join(' ');
@@ -72,3 +77,9 @@ export default class Text extends ReactBEM {
     );
   }
 }
+
+Text.PropTypes = {
+  ui: React.PropTypes.object.isRequired,
+  config: React.PropTypes.object.isRequired,
+  appControl: React.PropTypes.object.isRequired,
+};

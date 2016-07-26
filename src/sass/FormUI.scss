@@ -1,6 +1,6 @@
 $s-navigation-height: 3rem;
 
-.fl-if_Form {
+.fl-if_FormUI {
   display: block;
   position: relative;
 
@@ -21,14 +21,14 @@ $s-navigation-height: 3rem;
   }
 }
 
-.fl-if_Form-questionsViewBox {
+.fl-if_FormUI-questionsViewBox {
   display: block;
   width: 100%;
   max-height: calc(100% - #{$s-navigation-height});
   overflow: hidden;
 }
 
-.fl-if_Form-questions {
+.fl-if_FormUI-questions {
   display: block;
   width: 100%;
   text-align: right;
