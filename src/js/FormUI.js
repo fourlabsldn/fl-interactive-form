@@ -4,6 +4,7 @@ import FormField from './FormField';
 import translationManager from './utils/translationManager';
 import clone from './utils/clone';
 import NavigationBar from './NavigationBar';
+import SubmitButton from './SubmitButton';
 import AnimationManager from './utils/AnimationManager';
 import throttle from './utils/throttle';
 import assert from 'fl-assert';
@@ -20,10 +21,10 @@ export default class FormUI extends ReactBEM {
     this.focusQuestionWithIndex = this.focusQuestionWithIndex.bind(this);
     this.keyNavigation = this.keyNavigation.bind(this);
     this.wheelNavigation = this.wheelNavigation.bind(this);
+    this.setActiveQuestion = this.setActiveQuestion.bind(this);
 
     // public
     this.focusQuestion = throttle(this.focusQuestion.bind(this), 250, this, false);
-    this.setActiveQuestion = this.setActiveQuestion.bind(this);
     this.setQuestionCompleted = this.setQuestionCompleted.bind(this);
 
     this.animations = new AnimationManager();
@@ -37,16 +38,14 @@ export default class FormUI extends ReactBEM {
    * @return {Object}
    */
   generateInitialState() {
+    const createUiObj = (objKey) => {
+      return { key: objKey, active: false, complete: false };
+    };
+
     // Create a ui object to control questions
     const ui = {};
-    ui.questions = this.props.config.questions.map(q => {
-      return {
-        key: q.key,
-        active: false,
-        complete: false,
-      };
-    });
-
+    ui.submitButton = createUiObj('submit');
+    ui.questions = this.props.config.questions.map(q => createUiObj(q.key));
     return { ui };
   }
 
@@ -80,30 +79,41 @@ export default class FormUI extends ReactBEM {
    */
   focusQuestion(prevNext) {
     const next = prevNext === 'next';
-    const active = this.getActiveQuestionIndex();
     const questionCount = this.state.ui.questions.length;
+
+    const activeIndex = this.getActiveQuestionIndex();
+    const submitButtonActive = (activeIndex === -1);
+    const active = submitButtonActive ? questionCount : activeIndex;
+
     const changedIndex = active + (next ? +1 : -1);
-    // Restrict changed index between 0 and questionCount - 1
-    const nextQuestionIndex = Math.max(0, Math.min(questionCount - 1, changedIndex));
+    // Restrict changed index between 0 and questionCount.
+    // If the index is "questionCount" the focus will be the submit button.
+    const nextQuestionIndex = Math.max(0, Math.min(questionCount, changedIndex));
     this.setActiveQuestion(nextQuestionIndex);
     this.focusQuestionWithIndex(nextQuestionIndex);
   }
 
   /**
+   * Focuses a question or the submit button.
    * @private
    * @method focusQuestionWithIndex
    * @param  {Int} index
    * @return {void}
    */
   focusQuestionWithIndex(index) {
-    const questionToFocus = this.refs.questions.children[index];
+    let elToFocus;
+    if (index === this.state.ui.questions.length) {
+      elToFocus = this.refs.submitButton;
+    } else {
+      elToFocus = this.refs.questions.children[index];
+    }
 
-    const questionHeight = questionToFocus.clientHeight;
+    const questionHeight = elToFocus.clientHeight;
     const viewBoxHeight = this.refs.questionsViewBox.clientHeight;
     // how much lower than the container will it end up.
     const displacementFromContainerTop = Math.max(0, (viewBoxHeight - questionHeight) / 2);
     const viewBoxTop = this.refs.questionsViewBox.getBoundingClientRect().top;
-    const questionOffsetFromViewBox = questionToFocus.offsetTop - viewBoxTop;
+    const questionOffsetFromViewBox = elToFocus.offsetTop - viewBoxTop;
 
     const translationYNeeded = displacementFromContainerTop - questionOffsetFromViewBox;
     const translationXNeeded = 0;
@@ -117,15 +127,23 @@ export default class FormUI extends ReactBEM {
   /**
    * @private
    * @method setActiveQuestion
-   * @param  {Int} index
+   * @param  {String} index
    */
-  setActiveQuestion(index = 0) {
+  setActiveQuestion(index) {
     const ui = clone(this.state.ui);
+
+    // set everyone not active
+    ui.submitButton.active = false;
     for (const q of ui.questions) {
       q.active = false;
     }
 
-    ui.questions[index].active = true;
+    if (index === ui.questions.length) {
+      ui.submitButton.active = true;
+    } else {
+      ui.questions[index].active = true;
+    }
+
     this.setState({ ui });
   }
 
@@ -207,7 +225,6 @@ export default class FormUI extends ReactBEM {
   render() {
     const uiControl = {
       focusQuestion: this.focusQuestion,
-      setActiveQuestion: this.setActiveQuestion,
       setQuestionCompleted: this.setQuestionCompleted,
     };
 
@@ -237,6 +254,12 @@ export default class FormUI extends ReactBEM {
         <div className={this.bemSubComponent('questionsViewBox')} ref="questionsViewBox">
           <div className={this.bemSubComponent('questions')} ref="questions" >
             {questions}
+
+            <SubmitButton
+              ui={this.state.ui.submitButton}
+              appControl={appControl}
+              ref="submitButton"
+            />
           </div>
         </div>
 

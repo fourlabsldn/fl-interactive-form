@@ -1,0 +1,21 @@
+.fl-if_SubmitButton {
+  transition: all .3s ease;
+  display: block;
+  text-align: center;
+  opacity: 0;
+  margin-bottom: 50vh;
+
+  &--active {
+    opacity: 1;
+  }
+}
+
+.fl-if_SubmitButton-button {
+  @include fl-if-button();
+  transition: all .3s ease;
+
+  transform: translateY(20px);
+  .fl-if_SubmitButton--active & {
+    transform: translateY(0);
+  }
+}

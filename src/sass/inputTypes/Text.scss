@@ -30,6 +30,10 @@
   font-smoothing: subpixel-antialiased;
   user-select: text;
 
+  &:focus {
+    outline: 0;
+  }
+
   .fl-if_FormField--active & {
     outline: 0;
     border: 2px dashed $c-secondary-text;
