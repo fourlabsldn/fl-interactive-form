@@ -25,6 +25,7 @@ export default class FormUI extends ReactBEM {
     this.setActiveFieldIndex = this.setActiveFieldIndex.bind(this);
     this.getFormFields = this.getFormFields.bind(this);
     this.getFieldNode = this.getFieldNode.bind(this);
+    this.handleScroll = this.handleScroll.bind(this);
 
     // public
     this.focusQuestion = throttle(this.focusQuestion.bind(this), 250, this, false);
@@ -95,11 +96,7 @@ export default class FormUI extends ReactBEM {
     const el = this.getFieldNode(newActiveIndex);
 
     this.focusElement(el);
-
-    setTimeout(() => {
-      console.log('Timeout executed');
-      this.setActiveFieldIndex(newActiveIndex);
-    }, 200);
+    this.setActiveFieldIndex(newActiveIndex);
   }
 
   /**
@@ -110,6 +107,7 @@ export default class FormUI extends ReactBEM {
    * @return {void}
    */
   focusElement(elToFocus) {
+    return;
     const questionHeight = elToFocus.clientHeight;
     const viewBoxHeight = this.refs.questionsViewBox.clientHeight;
     // how much lower than the container will it end up.
@@ -216,6 +214,7 @@ export default class FormUI extends ReactBEM {
    * @param  {[Event} e
    */
   wheelNavigation(e) {
+    return;
     if (!e.deltaY) { return true; }
 
     if (e.deltaY > 0) {
@@ -227,6 +226,40 @@ export default class FormUI extends ReactBEM {
     e.preventDefault();
     e.stopPropagation();
     return false;
+  }
+
+  handleScroll() {
+    const viewBoxTop = this.refs.questionsViewBox.getBoundingClientRect().top;
+    const viewBoxHeight = this.refs.questionsViewBox.clientHeight;
+
+    // It's not actually the center, it's a bit above.
+    const boxCenter = viewBoxTop + viewBoxHeight / 3;
+
+    let closestToCenter = {
+      distance: null,
+      index: null,
+    };
+
+
+    const fieldCount = this.getFormFields();
+    for (let i = 0; i < fieldCount.length; i++) {
+      const fieldEl = this.getFieldNode(i);
+      const fieldElTop = fieldEl.getBoundingClientRect().top;
+      const fieldDistanceToCenter = Math.abs(boxCenter - fieldElTop);
+
+      if (typeof closestToCenter.distance !== 'number'
+        || fieldDistanceToCenter < closestToCenter.distance) {
+        closestToCenter = {
+          distance: fieldDistanceToCenter,
+          index: i,
+        };
+      }
+    }
+
+    const activeIndex = this.getActiveFieldIndex();
+    if (closestToCenter.index !== activeIndex) {
+      this.setActiveFieldIndex(closestToCenter.index);
+    }
   }
 
   /**
@@ -273,7 +306,9 @@ export default class FormUI extends ReactBEM {
       <div
         className={this.bemClass}
         onKeyDown={this.keyNavigation}
-        onWheel={this.wheelNavigation}
+        onScroll={() => {
+          this.animations.schedule(this.handleScroll, 'scroll', 3);
+        }}
       >
 
         <div className={this.bemSubComponent('questionsViewBox')} ref="questionsViewBox">

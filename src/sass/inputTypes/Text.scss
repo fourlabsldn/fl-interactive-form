@@ -1,5 +1,4 @@
 .fl-if_Text {
-  padding-top: 37px;
   padding-right: $s-right-padding;
   padding-bottom: .4em;
   padding-left: $s-left-padding;
@@ -43,8 +42,13 @@
 .fl-if_Text-okButtonContainer {
   padding-left: $s-left-padding;
   padding-right: $s-right-padding;
-  padding-top: 37px;
   text-align: center;
+
+  margin: 37px 0 0;
+
+  @media(max-height: $screen-tiny-height) {
+    margin: 10px 0 0
+  }
 }
 
 @keyframes fadeIn {

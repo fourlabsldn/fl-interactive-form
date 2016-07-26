@@ -25,7 +25,7 @@ $s-navigation-height: 3rem;
   display: block;
   width: 100%;
   max-height: calc(100% - #{$s-navigation-height});
-  overflow: hidden;
+  overflow: auto;
 }
 
 .fl-if_FormUI-questions {
@@ -33,6 +33,5 @@ $s-navigation-height: 3rem;
   width: 100%;
   text-align: right;
   padding: 1px 1px 50vh; // Get rid of margin collapsing
-  will-change: transform;
-  transition: transform .4s ease-in-out;
+  // transition: transform .4s ease-in-out;
 }

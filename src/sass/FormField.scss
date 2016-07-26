@@ -28,6 +28,11 @@
   font-size: $s-font-medium-large;
   padding-left: $s-left-padding;
   padding-right: $s-right-padding;
-  margin: 0;
   text-align: left;
+
+  margin: 0 0 37px;
+
+  @media(max-height: $screen-tiny-height) {
+    margin: 0 0 10px;
+  }
 }

@@ -17,8 +17,11 @@ export default class Text extends ReactBEM {
     if (nextProps.ui.active) {
       const inputEl = ReactDOM.findDOMNode(this.refs.input);
 
+      // Already has the focus
+      if (window.activeElement === inputEl) { return; }
+
       // We need a timeout to make the focus work.
-      setTimeout(() => inputEl.focus(), 15);
+      // setTimeout(() => inputEl.focus(), 15);
     }
   }
 
@@ -61,7 +64,6 @@ export default class Text extends ReactBEM {
     const okBtnClasses = this.props.ui.completed
       ? `${this.bemSubComponent('okButton')} ${this.bemSubComponentState('okButton', 'completed')}`
       : `${this.bemSubComponent('okButton')}`;
-
 
     return (
       <div className={this.bemClass}>

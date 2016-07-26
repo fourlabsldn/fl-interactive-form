@@ -22,6 +22,9 @@ $c-valid: #00bcd4;
 // Component-specific measures;
 $s-navigation-height: 3rem;
 
+// Screen sizes
+$screen-tiny-height: 500px;
+
 @mixin hide-scrollbar() {
   &::-webkit-scrollbar {
     visibility: hidden;
