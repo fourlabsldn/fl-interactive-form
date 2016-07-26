@@ -240,7 +240,7 @@ export default class FormUI extends ReactBEM {
           </div>
         </div>
 
-        <NavigationBar appControl={appControl} />
+        <NavigationBar appControl={appControl} ui={this.state.ui} />
       </div>
     );
   }

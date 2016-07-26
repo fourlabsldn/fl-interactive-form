@@ -9,6 +9,38 @@
   height: $s-navigation-height;
 }
 
+.fl-if_NavigationBar-progress {
+  display: inline-block;
+  float:left;
+  width: 40%;
+}
+
+.fl-if_NavigationBar-progress-percentage {
+  display: block;
+  font-size: .8rem;
+  line-height: 1.5rem;
+  text-align: center;
+}
+
+.fl-if_NavigationBar-progress-bar {
+  display: block;
+  border-radius: .5rem;
+  background-color: transparentize($c-accent, .8);
+}
+
+.fl-if_NavigationBar-progress-bar-fill {
+  display: block;
+  background-color: $c-valid;
+  height: .5rem;
+  border-radius: .3rem;
+  transition: all .2s ease;
+}
+
+.fl-if_NavigationBar-buttons {
+  display: inline-block;
+  float:right;
+}
+
 .fl-if_NavigationBar-button {
   @include fl-if-button();
   font-size: $s-font-small;
