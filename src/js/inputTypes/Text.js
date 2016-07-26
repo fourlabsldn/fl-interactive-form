@@ -21,7 +21,7 @@ export default class Text extends ReactBEM {
       if (window.activeElement === inputEl) { return; }
 
       // We need a timeout to make the focus work.
-      // setTimeout(() => inputEl.focus(), 15);
+      setTimeout(() => inputEl.focus(), 15);
     }
   }
 

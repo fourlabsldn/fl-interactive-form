@@ -26,6 +26,7 @@ export default class FormUI extends ReactBEM {
     this.getFormFields = this.getFormFields.bind(this);
     this.getFieldNode = this.getFieldNode.bind(this);
     this.handleScroll = this.handleScroll.bind(this);
+    this.setQuestionActive = this.setQuestionActive.bind(this);
 
     // public
     this.focusQuestion = throttle(this.focusQuestion.bind(this), 250, this, false);
@@ -180,6 +181,17 @@ export default class FormUI extends ReactBEM {
   }
 
   /**
+   * @public
+   * @method setQuestionActive
+   * @param  {[type]} questionKey [description]
+   */
+  setQuestionActive(questionKey) {
+    const formFields = this.getFormFields();
+    const qIndex = formFields.findIndex(q => q.key === questionKey);
+    this.setActiveFieldIndex(qIndex);
+  }
+
+  /**
    * @private
    * @method keyNavigation
    * @param  {[Event} e
@@ -230,12 +242,7 @@ export default class FormUI extends ReactBEM {
 
   handleScroll() {
     const viewBoxTop = this.refs.questionsViewBox.getBoundingClientRect().top;
-    const viewBoxHeight = this.refs.questionsViewBox.clientHeight;
-
-    // It's not actually the center, it's a bit above.
-    const boxCenter = viewBoxTop + viewBoxHeight / 3;
-
-    let closestToCenter = {
+    let closestToTop = {
       distance: null,
       index: null,
     };
@@ -245,20 +252,20 @@ export default class FormUI extends ReactBEM {
     for (let i = 0; i < fieldCount.length; i++) {
       const fieldEl = this.getFieldNode(i);
       const fieldElTop = fieldEl.getBoundingClientRect().top;
-      const fieldDistanceToCenter = Math.abs(boxCenter - fieldElTop);
+      const fieldDistanceToTop = Math.abs(viewBoxTop - fieldElTop);
 
-      if (typeof closestToCenter.distance !== 'number'
-        || fieldDistanceToCenter < closestToCenter.distance) {
-        closestToCenter = {
-          distance: fieldDistanceToCenter,
+      if (typeof closestToTop.distance !== 'number'
+        || fieldDistanceToTop < closestToTop.distance) {
+        closestToTop = {
+          distance: fieldDistanceToTop,
           index: i,
         };
       }
     }
 
     const activeIndex = this.getActiveFieldIndex();
-    if (closestToCenter.index !== activeIndex) {
-      this.setActiveFieldIndex(closestToCenter.index);
+    if (closestToTop.index !== activeIndex) {
+      this.setActiveFieldIndex(closestToTop.index);
     }
   }
 
@@ -284,6 +291,7 @@ export default class FormUI extends ReactBEM {
     const uiControl = {
       focusQuestion: this.focusQuestion,
       setQuestionCompleted: this.setQuestionCompleted,
+      setQuestionActive: this.setQuestionActive,
     };
 
     const appControl = new Proxy(this.props.appControl, {
