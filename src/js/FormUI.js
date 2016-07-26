@@ -7,6 +7,7 @@ import NavigationBar from './NavigationBar';
 import SubmitButton from './SubmitButton';
 import AnimationManager from './utils/AnimationManager';
 import throttle from './utils/throttle';
+import debounce from './utils/debounce';
 import assert from 'fl-assert';
 
 
@@ -65,9 +66,11 @@ export default class FormUI extends ReactBEM {
       this.focusElement(el);
     };
 
+    const centerDebounced = debounce(centerActiveQuestion, 50);
+
     window.addEventListener(
       'resize',
-      () => this.animations.schedule(centerActiveQuestion, 'formResize', 20)
+      () => this.animations.schedule(centerDebounced, 'formResize', 20)
     );
 
     // Make first question active.
