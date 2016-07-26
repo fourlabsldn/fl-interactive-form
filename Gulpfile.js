@@ -18,7 +18,7 @@ const sass = require('gulp-sass');
 const autoprefixer = require('autoprefixer');
 const postcss = require('gulp-postcss');
 
-const moduleName = 'slv-contact';
+const moduleName = 'fl-interactive-form';
 const paths = {
   js: {
     src: './src/js/**/*',
