@@ -148,6 +148,9 @@ export default class FormUI extends ReactBEM {
     const down = 40;
     const tab = 9;
 
+    if (e.ctrlKey) { return; }
+    if (e.shiftKey && e.keyCode !== tab) { return; }
+
     if (e.keyCode === up) {
       this.focusQuestion('prev');
     } else if (e.keyCode === down) {
@@ -157,12 +160,11 @@ export default class FormUI extends ReactBEM {
     } else if (e.keyCode === tab) {
       this.focusQuestion('next');
     } else {
-      return true;
+      return;
     }
 
     e.preventDefault();
     e.stopPropagation();
-    return false;
   }
 
   /**
