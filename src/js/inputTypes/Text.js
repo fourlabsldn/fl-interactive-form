@@ -8,7 +8,8 @@ export default class Text extends ReactBEM {
     this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
     this.keyListener = this.keyListener.bind(this);
     this.sendResponse = this.sendResponse.bind(this);
-    this.getOkButton = this.getOkButton.bind(this);
+
+    this.inputEl = 'input';
   }
 
   componentWillReceiveProps(nextProps) {
@@ -25,6 +26,8 @@ export default class Text extends ReactBEM {
     const enterKey = 13;
     // Allow for line-break holding shift key
     if (e.keyCode === enterKey && !e.shiftKey) {
+      e.preventDefault();
+      e.stopPropagation();
       this.sendResponse();
     }
   }
@@ -46,32 +49,36 @@ export default class Text extends ReactBEM {
     setTimeout(() => this.props.appControl.focusQuestion('next'), animDuration);
   }
 
-  getOkButton() {
-    const butonClasses = this.props.ui.completed
-      ? [this.bemSubComponent('okButton'), this.bemSubComponentState('okButton', 'completed')]
-      : [this.bemSubComponent('okButton')];
-    const btnClassName = butonClasses.join(' ');
-    return (
-      <button className={btnClassName} onClick={this.sendResponse} >
-        Ok
-      </button>
-    );
-  }
-
   render() {
+    const InputEl = this.inputEl;
+    const handleInputChange = () => {
+      if (this.props.ui.active) {
+        // set inactive
+        this.props.appControl.setQuestionCompleted(this.props.config.key, false);
+      }
+    };
+
+    const okBtnClasses = this.props.ui.completed
+      ? `${this.bemSubComponent('okButton')} ${this.bemSubComponentState('okButton', 'completed')}`
+      : `${this.bemSubComponent('okButton')}`;
+
+
     return (
       <div className={this.bemClass}>
-        <input
+        <InputEl
           className={this.bemSubComponent('input')}
           ref="input"
           type="text"
           defaultValue={this.props.question}
           placeholder={this.props.placeholder}
           onKeyDown={this.keyListener}
+          onChange={handleInputChange}
         />
 
         <div className={this.bemSubComponent('okButtonContainer')}>
-          {this.getOkButton()}
+          <button className={okBtnClasses} onClick={this.sendResponse} >
+            Ok
+          </button>
         </div>
       </ div>
     );
