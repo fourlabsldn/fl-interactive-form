@@ -92,7 +92,11 @@ export default class FormUI extends ReactBEM {
     const el = this.getFieldNode(newActiveIndex);
 
     this.focusElement(el);
-    this.setActiveFieldIndex(newActiveIndex);
+
+    setTimeout(() => {
+      console.log('Timeout executed');
+      this.setActiveFieldIndex(newActiveIndex);
+    }, 200);
   }
 
   /**
