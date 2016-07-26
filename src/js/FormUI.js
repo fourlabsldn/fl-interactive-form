@@ -18,10 +18,12 @@ export default class FormUI extends ReactBEM {
     // private
     this.componentDidMount = this.componentDidMount.bind(this);
     this.generateInitialState = this.generateInitialState.bind(this);
-    this.focusQuestionWithIndex = this.focusQuestionWithIndex.bind(this);
+    this.focusElement = this.focusElement.bind(this);
     this.keyNavigation = this.keyNavigation.bind(this);
     this.wheelNavigation = this.wheelNavigation.bind(this);
-    this.setActiveQuestion = this.setActiveQuestion.bind(this);
+    this.setActiveFieldIndex = this.setActiveFieldIndex.bind(this);
+    this.getFormFields = this.getFormFields.bind(this);
+    this.getFieldNode = this.getFieldNode.bind(this);
 
     // public
     this.focusQuestion = throttle(this.focusQuestion.bind(this), 250, this, false);
@@ -57,8 +59,11 @@ export default class FormUI extends ReactBEM {
    */
   componentDidMount() {
     // Center active question on resize
-    const centerActiveQuestion =
-      () => this.focusQuestionWithIndex(this.getActiveQuestionIndex());
+    const centerActiveQuestion = () => {
+      const activeIndex = this.getActiveFieldIndex();
+      const el = this.getFieldNode(activeIndex);
+      this.focusElement(el);
+    };
 
     window.addEventListener(
       'resize',
@@ -66,7 +71,7 @@ export default class FormUI extends ReactBEM {
     );
 
     // Make first question active.
-    this.animations.schedule(() => this.setActiveQuestion(0), '', 30);
+    this.animations.schedule(() => this.setActiveFieldIndex(0), '', 30);
   }
 
   /**
@@ -79,35 +84,25 @@ export default class FormUI extends ReactBEM {
    */
   focusQuestion(prevNext) {
     const next = prevNext === 'next';
-    const questionCount = this.state.ui.questions.length;
+    const fieldCount = this.getFormFields().length;
+    const activeIndex = this.getActiveFieldIndex();
+    const changedIndex = activeIndex + (next ? +1 : -1);
+    const newActiveIndex = Math.max(0, Math.min(fieldCount - 1, changedIndex));
 
-    const activeIndex = this.getActiveQuestionIndex();
-    const submitButtonActive = (activeIndex === -1);
-    const active = submitButtonActive ? questionCount : activeIndex;
+    const el = this.getFieldNode(newActiveIndex);
 
-    const changedIndex = active + (next ? +1 : -1);
-    // Restrict changed index between 0 and questionCount.
-    // If the index is "questionCount" the focus will be the submit button.
-    const nextQuestionIndex = Math.max(0, Math.min(questionCount, changedIndex));
-    this.setActiveQuestion(nextQuestionIndex);
-    this.focusQuestionWithIndex(nextQuestionIndex);
+    this.focusElement(el);
+    this.setActiveFieldIndex(newActiveIndex);
   }
 
   /**
    * Focuses a question or the submit button.
    * @private
-   * @method focusQuestionWithIndex
-   * @param  {Int} index
+   * @method focusElement
+   * @param  {HTMLElement} el
    * @return {void}
    */
-  focusQuestionWithIndex(index) {
-    let elToFocus;
-    if (index === this.state.ui.questions.length) {
-      elToFocus = this.refs.submitButton;
-    } else {
-      elToFocus = this.refs.questions.children[index];
-    }
-
+  focusElement(elToFocus) {
     const questionHeight = elToFocus.clientHeight;
     const viewBoxHeight = this.refs.questionsViewBox.clientHeight;
     // how much lower than the container will it end up.
@@ -126,10 +121,10 @@ export default class FormUI extends ReactBEM {
 
   /**
    * @private
-   * @method setActiveQuestion
+   * @method setActiveFieldIndex
    * @param  {String} index
    */
-  setActiveQuestion(index) {
+  setActiveFieldIndex(index) {
     const ui = clone(this.state.ui);
 
     // set everyone not active
@@ -138,13 +133,31 @@ export default class FormUI extends ReactBEM {
       q.active = false;
     }
 
-    if (index === ui.questions.length) {
+    const formFields = this.getFormFields();
+    const newActiveField = formFields[index];
+
+    if (newActiveField.key === ui.submitButton.key) {
       ui.submitButton.active = true;
     } else {
-      ui.questions[index].active = true;
+      const questionIndex = ui.questions.findIndex(q => q.key === newActiveField.key);
+      assert(questionIndex !== -1, `Invalid question index ${index}`);
+      ui.questions[questionIndex].active = true;
     }
 
     this.setState({ ui });
+  }
+
+  /**
+   * Returns an array containing all form questions and the submit button.
+   * @method getFormFields
+   * @return {Array}
+   */
+  getFormFields() {
+    const formFields = [
+      ... this.state.ui.questions,
+      this.state.ui.submitButton,
+    ];
+    return formFields;
   }
 
   /**
@@ -152,8 +165,13 @@ export default class FormUI extends ReactBEM {
    * @method getActiveQuestionIndex
    * @return {Int}
    */
-  getActiveQuestionIndex() {
-    return this.state.ui.questions.findIndex(q => q.active === true);
+  getActiveFieldIndex() {
+    const formFields = this.getFormFields();
+    return formFields.findIndex(f => f.active === true);
+  }
+
+  getFieldNode(index) {
+    return this.refs.questions.children[index];
   }
 
   /**
