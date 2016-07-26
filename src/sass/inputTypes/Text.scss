@@ -50,8 +50,12 @@
 
 .fl-if_Text-okButton {
   @include fl-if-button();
-
   transition: all .3s ease;
+  opacity: 0;
+
+  .fl-if_FormField--active & {
+    opacity: 1;
+  }
 
   // The transition to all of these properties in part
   // of the completed animation
