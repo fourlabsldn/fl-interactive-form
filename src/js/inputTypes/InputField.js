@@ -26,7 +26,7 @@ export default class InputField extends ReactBEM {
     }
   }
 
-  async keyListener(e) { // eslint-disable-line complexity
+  keyListener(e) { // eslint-disable-line complexity
     const up = 38;
     const down = 40;
     const tab = 9;
@@ -53,7 +53,8 @@ export default class InputField extends ReactBEM {
     e.preventDefault();
     e.stopPropagation();
 
-    this.sendResponseWithAnimation(this.getResponse(), jumpDirection);
+    const response = this.getResponse();
+    this.sendResponseWithAnimation(response, jumpDirection);
   }
 
 
@@ -80,7 +81,8 @@ export default class InputField extends ReactBEM {
 
   // To be overriden by subclasses
   getResponse() {
-    return this.refs.focusElement.value;
+    console.log('Getting response from wrong place');
+    return ReactDOM.findDOMNode(this.refs.focusElement).value;
   }
 
   // To be overriden by subclasses

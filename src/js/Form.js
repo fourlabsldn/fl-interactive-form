@@ -50,6 +50,7 @@ export default class Form extends ReactBEM {
   }
 
   exportConfig() {
+    console.log(this.state);
     // To be implemented
   }
 
@@ -73,6 +74,7 @@ export default class Form extends ReactBEM {
   render() {
     const appControl = {
       setQuestionResponse: this.setQuestionResponse,
+      exportConfig: this.exportConfig,
     };
 
     return <FormUI config={this.state.config} appControl={appControl} />;

@@ -22,7 +22,11 @@ export default class SubmitButton extends ReactBEM {
 
     return (
       <div className={buttonClass}>
-        <button className={this.bemSubComponent('button')} ref="button">
+        <button
+          className={this.bemSubComponent('button')}
+          ref="button"
+          onClick={this.props.appControl.exportConfig}
+        >
           Submit
         </button>
       </div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import InputField from './InputField';
 
 export default class TextBox extends InputField {
@@ -8,7 +9,9 @@ export default class TextBox extends InputField {
   }
 
   getResponse() {
-    return this.refs.focusElement.value;
+    const response = ReactDOM.findDOMNode(this.refs.focusElement).value;
+    console.log('response', response);
+    return response;
   }
 
   render() {
@@ -31,7 +34,7 @@ export default class TextBox extends InputField {
 
           onKeyDown={this.keyListener}
           onChange={handleInputChange}
-          onBlur={this.sendResponse}
+          onBlur={() => this.sendResponse()}
         />
       </ div>
     );
