@@ -3,7 +3,11 @@ import InputField from './InputField';
 
 export default class RadioBtns extends InputField {
   getResponse() {
-    return this.refs.focusElement.value;
+    return this.props.config.answer;
+  }
+
+  isValidResponse(response) {
+    return this.props.config.options[response] !== undefined;
   }
 
   render() {
@@ -15,24 +19,19 @@ export default class RadioBtns extends InputField {
     };
 
     const options = this.props.config.options.map((option, index) => {
-      const inputId = `${this.props.config.key}${index}`;
+      const optionClasses = [this.bemSubComponent('option')];
+      if (index === this.getResponse()) {
+        optionClasses.push(this.bemSubComponentState('option', 'selected'));
+      }
+
       return (
         <div
-          className={this.bemSubComponent('optionWrapper')}
+          className={optionClasses.join(' ')}
           key={`${this.props.config.key}${index}`}
+          onClick={() => this.sendResponseWithAnimation(index, 'next')}
+          ref={index === 0 ? 'focusElement' : null}
         >
-          <input
-            className={this.bemSubComponent('option', 'input')}
-            type="radio"
-            name={this.props.config.key}
-            id={inputId}
-          />
-          <label
-            htmlFor={inputId}
-            className={this.bemSubComponent('option')}
-          >
-            {option}
-          </label>
+          {option}
         </div>
       );
     });

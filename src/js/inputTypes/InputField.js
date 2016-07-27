@@ -10,6 +10,7 @@ export default class InputField extends ReactBEM {
     this.getResponse = this.getResponse.bind(this);
     this.isValidResponse = this.isValidResponse.bind(this);
     this.sendResponse = this.sendResponse.bind(this);
+    this.sendResponseWithAnimation = this.sendResponseWithAnimation.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -52,8 +53,19 @@ export default class InputField extends ReactBEM {
     e.preventDefault();
     e.stopPropagation();
 
+    this.sendResponseWithAnimation(this.getResponse(), jumpDirection);
+  }
+
+
+  /**
+   * Saves question response and animates according to the validation outcome.
+   * @method sendResponseWithAnimation
+   * @param  {String} jumpDirection
+   * @return {Promise}
+   */
+  async sendResponseWithAnimation(response, jumpDirection = 'next') {
     const previouseCompletedState = this.props.ui.completed;
-    await this.sendResponse();
+    await this.sendResponse(response);
 
     // Now there will be a render pass and this element will be set to completed
     // we wait for the animation to finish before going to the next question.
@@ -65,6 +77,7 @@ export default class InputField extends ReactBEM {
     setTimeout(() => this.props.appControl.focusQuestion(jumpDirection), animDuration);
   }
 
+
   // To be overriden by subclasses
   getResponse() {
     return this.refs.focusElement.value;
@@ -75,8 +88,7 @@ export default class InputField extends ReactBEM {
     return !!response;
   }
 
-  async sendResponse() {
-    const response = this.getResponse();
+  async sendResponse(response = this.getResponse()) {
     if (!this.isValidResponse(response)) {
       // TODO: show error.
       console.log('Invalid response');
