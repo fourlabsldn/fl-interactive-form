@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactBEM from './ReactBEM';
+import ReactBEM from '../ReactBEM';
 
 export default class SubmitButton extends ReactBEM {
   constructor(...args) {

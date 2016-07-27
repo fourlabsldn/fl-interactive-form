@@ -1,13 +1,11 @@
 import React from 'react';
 import ReactBEM from './ReactBEM';
 import FormField from './FormField';
-import translationManager from './utils/translationManager';
 import clone from './utils/clone';
 import NavigationBar from './NavigationBar';
-import SubmitButton from './SubmitButton';
+import SubmitButton from './inputTypes/SubmitButton';
 import AnimationManager from './utils/AnimationManager';
 import throttle from './utils/throttle';
-import debounce from './utils/debounce';
 import assert from 'fl-assert';
 
 
@@ -19,7 +17,6 @@ export default class FormUI extends ReactBEM {
     // private
     this.componentDidMount = this.componentDidMount.bind(this);
     this.generateInitialState = this.generateInitialState.bind(this);
-    this.focusElement = this.focusElement.bind(this);
     this.setActiveFieldIndex = this.setActiveFieldIndex.bind(this);
     this.getFormFields = this.getFormFields.bind(this);
     this.getFieldNode = this.getFieldNode.bind(this);
@@ -59,20 +56,6 @@ export default class FormUI extends ReactBEM {
    * @return {void}
    */
   componentDidMount() {
-    // Center active question on resize
-    const centerActiveQuestion = () => {
-      const activeIndex = this.getActiveFieldIndex();
-      const el = this.getFieldNode(activeIndex);
-      this.focusElement(el);
-    };
-
-    const centerDebounced = debounce(centerActiveQuestion, 50);
-
-    window.addEventListener(
-      'resize',
-      () => this.animations.schedule(centerDebounced, 'formResize', 20)
-    );
-
     // Make first question active.
     this.animations.schedule(() => this.setActiveFieldIndex(0), '', 30);
   }
@@ -91,36 +74,7 @@ export default class FormUI extends ReactBEM {
     const activeIndex = this.getActiveFieldIndex();
     const changedIndex = activeIndex + (next ? +1 : -1);
     const newActiveIndex = Math.max(0, Math.min(fieldCount - 1, changedIndex));
-
-    const el = this.getFieldNode(newActiveIndex);
-
-    this.focusElement(el);
     this.setActiveFieldIndex(newActiveIndex);
-  }
-
-  /**
-   * Focuses a question or the submit button.
-   * @private
-   * @method focusElement
-   * @param  {HTMLElement} el
-   * @return {void}
-   */
-  focusElement(elToFocus) {
-    return;
-    const questionHeight = elToFocus.clientHeight;
-    const viewBoxHeight = this.refs.questionsViewBox.clientHeight;
-    // how much lower than the container will it end up.
-    const displacementFromContainerTop = Math.max(0, (viewBoxHeight - questionHeight) / 2);
-    const viewBoxTop = this.refs.questionsViewBox.getBoundingClientRect().top;
-    const questionOffsetFromViewBox = elToFocus.offsetTop - viewBoxTop;
-
-    const translationYNeeded = displacementFromContainerTop - questionOffsetFromViewBox;
-    const translationXNeeded = 0;
-    translationManager.setTranslation(
-      this.refs.questions,
-      translationXNeeded,
-      translationYNeeded
-    );
   }
 
   /**

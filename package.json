@@ -32,6 +32,7 @@
     "gulp-sass": "^2.3.1",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-watch": "^4.3.6",
+    "microevent": "^1.0.0",
     "react": "^15.1.0",
     "react-dom": "^15.1.0",
     "rollup-plugin-babel": "^2.6.1",
