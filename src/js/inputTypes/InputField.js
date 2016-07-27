@@ -2,7 +2,7 @@ import React from 'react';
 import ReactBEM from '../ReactBEM';
 import ReactDOM from 'react-dom';
 
-export default class Text extends ReactBEM {
+export default class InputField extends ReactBEM {
   constructor(...args) {
     super(...args);
     this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
@@ -77,7 +77,7 @@ export default class Text extends ReactBEM {
   }
 }
 
-Text.PropTypes = {
+InputField.PropTypes = {
   ui: React.PropTypes.object.isRequired,
   config: React.PropTypes.object.isRequired,
   appControl: React.PropTypes.object.isRequired,

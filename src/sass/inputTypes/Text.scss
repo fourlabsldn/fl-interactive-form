@@ -7,7 +7,7 @@
 .fl-if_Text-input {
   min-height: 4em;
   width: 100%;
-  margin: 0;
+  margin: 0 0 37px;
   padding: 10px;
 
   font-family: $f-main;
@@ -38,51 +38,51 @@
     border: 2px dashed $c-secondary-text;
   }
 }
-
-.fl-if_Text-okButtonContainer {
-  padding-left: $s-left-padding;
-  padding-right: $s-right-padding;
-  text-align: center;
-
-  margin: 37px 0 0;
-
-  @media(max-height: $screen-tiny-height) {
-    margin: 10px 0 0
-  }
-}
-
-@keyframes fadeIn {
-  0% { transform: translateY(.3em); opacity: 0;}
-  100% {transform: translateY(0%); opacity: 1;}
-}
-
-.fl-if_Text-okButton {
-  @include fl-if-button();
-  transition: all .3s ease;
-  opacity: 0;
-
-  .fl-if_FormField--active & {
-    opacity: 1;
-  }
-
-  // The transition to all of these properties in part
-  // of the completed animation
-  &--completed {
-    background-color: $c-valid;
-    padding-right: 3.5em;
-
-    &::after {
-      content: '✓';
-      font-weight: bold;
-      font-size: 1.8em;
-      line-height: .1em;
-      display: inline-block;
-      overflow: visible;
-
-      position: absolute;
-      right: .8em;
-      top: .8em;
-      animation: fadeIn.5s ease-out forwards;
-    }
-  }
-}
+// 
+// .fl-if_Text-okButtonContainer {
+//   padding-left: $s-left-padding;
+//   padding-right: $s-right-padding;
+//   text-align: center;
+//
+//   margin: 37px 0 0;
+//
+//   @media(max-height: $screen-tiny-height) {
+//     margin: 10px 0 0
+//   }
+// }
+//
+// @keyframes fadeIn {
+//   0% { transform: translateY(.3em); opacity: 0;}
+//   100% {transform: translateY(0%); opacity: 1;}
+// }
+//
+// .fl-if_Text-okButton {
+//   @include fl-if-button();
+//   transition: all .3s ease;
+//   opacity: 0;
+//
+//   .fl-if_FormField--active & {
+//     opacity: 1;
+//   }
+//
+//   // The transition to all of these properties in part
+//   // of the completed animation
+//   &--completed {
+//     background-color: $c-valid;
+//     padding-right: 3.5em;
+//
+//     &::after {
+//       content: '✓';
+//       font-weight: bold;
+//       font-size: 1.8em;
+//       line-height: .1em;
+//       display: inline-block;
+//       overflow: visible;
+//
+//       position: absolute;
+//       right: .8em;
+//       top: .8em;
+//       animation: fadeIn.5s ease-out forwards;
+//     }
+//   }
+// }
