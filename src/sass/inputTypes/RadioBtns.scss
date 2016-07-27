@@ -15,6 +15,9 @@
   position: absolute;
 }
 
+$c-radio-checked-bg: rgba($c-valid-2, .2);
+$c-radio-checked-hover-bg: darken($c-radio-checked-bg, 10%);
+
 .fl-if_RadioBtns-option {
   display: inline-block;
   border: 1px solid $c-primary-border;
@@ -24,13 +27,32 @@
   padding: .2em .5em;
   width: 100%;
 
-  &:hover {
-    background-color: $c-secondary;
-    color: $c-secondary-text;
+  .fl-if_RadioBtns-option-input:checked ~ & {
+    background-color: $c-radio-checked-bg;
+
+    &::before {
+      background: linear-gradient($c-valid, lighten($c-valid, 10%));
+    }
+
+    &:hover {
+      background-color: $c-radio-checked-hover-bg;
+    }
   }
 
-  .fl-if_RadioBtns-option-input:checked ~ & {
-    background-color: $c-primary-border;
-    color: $c-secondary-text;
+  &::before {
+    content: ' ';
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    border-radius: 4px;
+    background: linear-gradient(lighten($c-secondary-text, 20%), lighten($c-secondary-text, 10%));
+    border: 1px solid $c-primary-border;
+    position: relative;
+    top: .1em;
+    margin-right: .5em;
+  }
+
+  &:hover {
+    background-color: rgba($c-secondary, .1);
   }
 }
