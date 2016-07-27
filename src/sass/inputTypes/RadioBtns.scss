@@ -1,6 +1,11 @@
 .fl-if_RadioBtns {
   display: inline-block;
   min-width: 13em;
+  pointer-events: none;
+
+  .fl-if_FormField--active & {
+    pointer-events: all;
+  }
 }
 
 
@@ -29,7 +34,9 @@ $c-radio-checked-hover-bg: darken($c-radio-checked-bg, 10%);
     margin-right: .5em;
   }
 
-  &:hover {
+  &:hover,
+  &:focus {
+    outline: 0;
     background-color: rgba($c-secondary, .1);
   }
 }
