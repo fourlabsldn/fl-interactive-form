@@ -20,8 +20,6 @@ export default class FormUI extends ReactBEM {
     this.componentDidMount = this.componentDidMount.bind(this);
     this.generateInitialState = this.generateInitialState.bind(this);
     this.focusElement = this.focusElement.bind(this);
-    this.keyNavigation = this.keyNavigation.bind(this);
-    this.wheelNavigation = this.wheelNavigation.bind(this);
     this.setActiveFieldIndex = this.setActiveFieldIndex.bind(this);
     this.getFormFields = this.getFormFields.bind(this);
     this.getFieldNode = this.getFieldNode.bind(this);
@@ -191,55 +189,6 @@ export default class FormUI extends ReactBEM {
     this.setActiveFieldIndex(qIndex);
   }
 
-  /**
-   * @private
-   * @method keyNavigation
-   * @param  {[Event} e
-   */
-  keyNavigation(e) { // eslint-disable-line complexity
-    const up = 38;
-    const down = 40;
-    const tab = 9;
-
-    if (e.ctrlKey) { return; }
-    if (e.shiftKey && e.keyCode !== tab) { return; }
-
-    if (e.keyCode === up) {
-      this.focusQuestion('prev');
-    } else if (e.keyCode === down) {
-      this.focusQuestion('next');
-    } else if (e.keyCode === tab && e.shiftKey) {
-      this.focusQuestion('prev');
-    } else if (e.keyCode === tab) {
-      this.focusQuestion('next');
-    } else {
-      return;
-    }
-
-    e.preventDefault();
-    e.stopPropagation();
-  }
-
-  /**
-   * @private
-   * @method wheelNavigation
-   * @param  {[Event} e
-   */
-  wheelNavigation(e) {
-    return;
-    if (!e.deltaY) { return true; }
-
-    if (e.deltaY > 0) {
-      this.focusQuestion('next');
-    } else {
-      this.focusQuestion('prev');
-    }
-
-    e.preventDefault();
-    e.stopPropagation();
-    return false;
-  }
-
   handleScroll() {
     const viewBoxTop = this.refs.questionsViewBox.getBoundingClientRect().top;
     const viewBoxHeight = this.refs.questionsViewBox.clientHeight;
@@ -317,7 +266,6 @@ export default class FormUI extends ReactBEM {
     return (
       <div
         className={this.bemClass}
-        onKeyDown={this.keyNavigation}
         onScroll={() => {
           this.animations.schedule(this.handleScroll, 'scroll', 3);
         }}

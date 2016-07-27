@@ -7,72 +7,90 @@ export default class InputField extends ReactBEM {
     super(...args);
     this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
     this.keyListener = this.keyListener.bind(this);
+    this.getResponse = this.getResponse.bind(this);
+    this.isValidResponse = this.isValidResponse.bind(this);
     this.sendResponse = this.sendResponse.bind(this);
-
-    this.inputEl = 'input';
   }
 
   componentWillReceiveProps(nextProps) {
     // Focus element when turned active
     if (nextProps.ui.active) {
-      const inputEl = ReactDOM.findDOMNode(this.refs.input);
+      const focusElement = ReactDOM.findDOMNode(this.refs.focusElement);
 
       // Already has the focus
-      if (window.activeElement === inputEl) { return; }
+      if (window.activeElement === focusElement) { return; }
 
       // We need a timeout to make the focus work.
-      setTimeout(() => inputEl.focus(), 15);
+      setTimeout(() => focusElement.focus(), 15);
     }
   }
 
-  keyListener(e) {
-    const enterKey = 13;
-    // Allow for line-break holding shift key
-    if (e.keyCode === enterKey && !e.shiftKey) {
-      e.preventDefault();
-      e.stopPropagation();
-      this.sendResponse();
+  async keyListener(e) { // eslint-disable-line complexity
+    const up = 38;
+    const down = 40;
+    const tab = 9;
+    const enter = 13;
+
+    if (e.ctrlKey) { return; }
+    if (e.shiftKey && e.keyCode !== tab) { return; }
+
+    let jumpDirection;
+    if (e.keyCode === enter) {
+      jumpDirection = 'next';
+    } else if (e.keyCode === up) {
+      jumpDirection = 'prev';
+    } else if (e.keyCode === down) {
+      jumpDirection = 'next';
+    } else if (e.keyCode === tab && e.shiftKey) {
+      jumpDirection = 'prev';
+    } else if (e.keyCode === tab) {
+      jumpDirection = 'next';
+    } else {
+      return;
     }
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    const previouseCompletedState = this.props.ui.completed;
+    await this.sendResponse();
+
+    // Now there will be a render pass and this element will be set to completed
+    // we wait for the animation to finish before going to the next question.
+    let animDuration = 0;
+    if (!previouseCompletedState && this.props.ui.completed) {
+      animDuration = 500;
+    }
+
+    setTimeout(() => this.props.appControl.focusQuestion(jumpDirection), animDuration);
+  }
+
+  // To be overriden by subclasses
+  getResponse() {
+    return this.refs.focusElement.value;
+  }
+
+  // To be overriden by subclasses
+  isValidResponse(response) {
+    return !!response;
   }
 
   async sendResponse() {
+    const response = this.getResponse();
+    if (!this.isValidResponse(response)) {
+      // TODO: show error.
+      console.log('Invalid response');
+      return;
+    }
+
     this.props.appControl.setQuestionResponse(
       this.props.config.key,
-      this.refs.input.value
+      response
     );
 
     await this.props.appControl.setQuestionCompleted(
       this.props.config.key,
       true
-    );
-
-    // Now we wait for the animation to finish before going to
-    // the next question.
-    const animDuration = 500;
-    setTimeout(() => this.props.appControl.focusQuestion('next'), animDuration);
-  }
-
-  render() {
-    const InputEl = this.inputEl;
-    const handleInputChange = () => {
-      if (this.props.ui.active) {
-        // set inactive
-        this.props.appControl.setQuestionCompleted(this.props.config.key, false);
-      }
-    };
-
-    return (
-      <div className={this.bemClass}>
-        <InputEl
-          className={this.bemSubComponent('input')}
-          ref="input"
-          type="text"
-          defaultValue={this.props.question}
-          placeholder={this.props.placeholder}
-          onKeyDown={this.keyListener}
-          onChange={handleInputChange}
-        />
-      </ div>
     );
   }
 }
