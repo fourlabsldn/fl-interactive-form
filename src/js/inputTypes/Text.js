@@ -37,9 +37,3 @@ export default class Text extends InputField {
     );
   }
 }
-
-Text.PropTypes = {
-  ui: React.PropTypes.object.isRequired,
-  config: React.PropTypes.object.isRequired,
-  appControl: React.PropTypes.object.isRequired,
-};
