@@ -242,7 +242,9 @@ export default class FormUI extends ReactBEM {
 
   handleScroll() {
     const viewBoxTop = this.refs.questionsViewBox.getBoundingClientRect().top;
-    let closestToTop = {
+    const viewBoxHeight = this.refs.questionsViewBox.clientHeight;
+    const viewBoxCenter = viewBoxTop + viewBoxHeight / 2;
+    let closestToCenter = {
       distance: null,
       index: null,
     };
@@ -252,20 +254,22 @@ export default class FormUI extends ReactBEM {
     for (let i = 0; i < fieldCount.length; i++) {
       const fieldEl = this.getFieldNode(i);
       const fieldElTop = fieldEl.getBoundingClientRect().top;
-      const fieldDistanceToTop = Math.abs(viewBoxTop - fieldElTop);
+      const fieldHeight = fieldEl.clientHeight;
+      const fieldCenter = fieldElTop + fieldHeight / 2;
+      const fieldDistanceToCenter = Math.abs(viewBoxCenter - fieldCenter);
 
-      if (typeof closestToTop.distance !== 'number'
-        || fieldDistanceToTop < closestToTop.distance) {
-        closestToTop = {
-          distance: fieldDistanceToTop,
+      if (typeof closestToCenter.distance !== 'number'
+        || fieldDistanceToCenter < closestToCenter.distance) {
+        closestToCenter = {
+          distance: fieldDistanceToCenter,
           index: i,
         };
       }
     }
 
     const activeIndex = this.getActiveFieldIndex();
-    if (closestToTop.index !== activeIndex) {
-      this.setActiveFieldIndex(closestToTop.index);
+    if (closestToCenter.index !== activeIndex) {
+      this.setActiveFieldIndex(closestToCenter.index);
     }
   }
 
