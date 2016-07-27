@@ -34,6 +34,7 @@ export default class TextBox extends InputField {
           onKeyDown={this.keyListener}
           onChange={handleInputChange}
           onBlur={() => this.sendResponse()}
+          disabled={!this.props.ui.active}
         />
       </ div>
     );

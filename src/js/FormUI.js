@@ -59,6 +59,17 @@ export default class FormUI extends ReactBEM {
   componentDidMount() {
     // Make first question active.
     this.animations.schedule(() => this.slideFieldToCenter(0), '', 30);
+
+
+    const centerActiveQuestion = () => {
+      const active = this.getActiveFieldIndex();
+      this.slideFieldToCenter(active);
+    };
+
+    window.addEventListener(
+      'resize',
+      () => this.animations.schedule(centerActiveQuestion, 'formResize', 20)
+    );
   }
 
   /**
