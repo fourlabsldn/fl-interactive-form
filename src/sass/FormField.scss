@@ -4,6 +4,9 @@
   margin: 1em 0;
   transition: all .3s ease-in-out;
 
+  padding-right: $s-right-padding;
+  padding-left: $s-left-padding;
+  text-align: left;
   //Inactive styles
   opacity: .2;
 
@@ -25,9 +28,7 @@
 
 .fl-if_FormField-legend {
   font-size: $s-font-medium-large;
-  padding-left: $s-left-padding;
-  padding-right: $s-right-padding;
-  padding-top: 0;
+  padding: 0;
   text-align: left;
   position: relative;
 
@@ -40,7 +41,7 @@
 
 .fl-if_FormField-okIcon {
   position: absolute;
-  left: calc(#{$s-left-padding} - 1.2em);
+  left: - 1.3em;
   top: .12em;
   color: $c-valid-2;
   opacity: 0;

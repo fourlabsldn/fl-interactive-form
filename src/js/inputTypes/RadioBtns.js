@@ -1,7 +1,7 @@
 import React from 'react';
 import InputField from './InputField';
 
-export default class Radio extends InputField {
+export default class RadioBtns extends InputField {
   getResponse() {
     return this.refs.focusElement.value;
   }
@@ -15,17 +15,25 @@ export default class Radio extends InputField {
     };
 
     const options = this.props.config.options.map((option, index) => {
+      const inputId = `${this.props.config.key}${index}`;
       return (
-        <span
-          className={this.bemSubComponent('option')}
+        <div
+          className={this.bemSubComponent('optionWrapper')}
           key={`${this.props.config.key}${index}`}
         >
           <input
+            className={this.bemSubComponent('option', 'input')}
             type="radio"
             name={this.props.config.key}
+            id={inputId}
           />
-          {option}
-        </span>
+          <label
+            htmlFor={inputId}
+            className={this.bemSubComponent('option')}
+          >
+            {option}
+          </label>
+        </div>
       );
     });
 

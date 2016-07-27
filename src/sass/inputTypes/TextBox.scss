@@ -1,10 +1,8 @@
-.fl-if_Text {
-  padding-right: $s-right-padding;
-  padding-bottom: .4em;
-  padding-left: $s-left-padding;
+.fl-if_TextBox {
+  padding: 0 0 .4em;
 }
 
-.fl-if_Text-input {
+.fl-if_TextBox-input {
   min-height: 4em;
   width: 100%;
   margin: 0 0 37px;
@@ -45,7 +43,7 @@
   }
 }
 //
-// .fl-if_Text-okButtonContainer {
+// .fl-if_TextBox-okButtonContainer {
 //   padding-left: $s-left-padding;
 //   padding-right: $s-right-padding;
 //   text-align: center;
@@ -62,7 +60,7 @@
 //   100% {transform: translateY(0%); opacity: 1;}
 // }
 //
-// .fl-if_Text-okButton {
+// .fl-if_TextBox-okButton {
 //   @include fl-if-button();
 //   transition: all .3s ease;
 //   opacity: 0;

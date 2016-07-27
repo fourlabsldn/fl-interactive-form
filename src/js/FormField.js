@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactBEM from './ReactBEM';
 import assert from 'fl-assert';
-import Text from './inputTypes/Text';
-import Textarea from './inputTypes/Textarea';
-import Radio from './inputTypes/Radio';
+import TextBox from './inputTypes/TextBox';
+import TextArea from './inputTypes/TextArea';
+import RadioBtns from './inputTypes/RadioBtns';
 
-const inputTypes = { Text, Textarea, Radio };
+const inputTypes = { TextBox, TextArea, RadioBtns };
 
 export default class FormField extends ReactBEM {
   constructor(...args) {
@@ -43,28 +43,28 @@ export default class FormField extends ReactBEM {
     let inputType;
     switch (this.props.config.type) {
       case 'EmailBox':
-        inputType = 'Text';
+        inputType = 'TextBox';
         break;
       case 'NumberBox':
-        inputType = 'Text';
+        inputType = 'TextBox';
         break;
       case 'TelephoneBox':
-        inputType = 'Text';
+        inputType = 'TextBox';
         break;
       case 'TextBox':
-        inputType = 'Text';
+        inputType = 'TextBox';
         break;
       case 'TextArea':
         inputType = 'TextArea';
         break;
       case 'Checkboxes':
-        inputType = 'Radio';
+        inputType = 'RadioBtns';
         break;
       case 'Dropdown':
-        inputType = 'Radio';
+        inputType = 'RadioBtns';
         break;
       case 'RadioBtns':
-        inputType = 'Radio';
+        inputType = 'RadioBtns';
         break;
       default:
         assert(false, `Invalid type ${this.props.config.type}`);

@@ -1,7 +1,7 @@
 import React from 'react';
 import InputField from './InputField';
 
-export default class Text extends InputField {
+export default class TextBox extends InputField {
   constructor(...args) {
     super(...args);
     this.inputEl = 'input';

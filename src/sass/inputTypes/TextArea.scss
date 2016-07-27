@@ -1,0 +1,19 @@
+.fl-if_TextArea {
+  @extend .fl-if_TextBox;
+}
+
+.fl-if_TextArea-input {
+  @extend .fl-if_TextBox-input;
+}
+
+// .fl-if_TextArea-okButtonContainer {
+//   @extend .fl-if_TextBox-okButtonContainer;
+// }
+//
+// .fl-if_TextArea-okButton {
+//   @extend .fl-if_TextBox-okButton;
+// }
+//
+// .fl-if_TextArea-okButton--completed {
+//   @extend .fl-if_TextBox-okButton--completed;
+// }

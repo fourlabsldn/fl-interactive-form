@@ -1,0 +1,36 @@
+.fl-if_RadioBtns {
+  display: inline-block;
+  min-width: 13em;
+}
+
+.fl-if_RadioBtns-optionWrapper {
+  display: block;
+  background-color: transparent;
+  border: 0;
+  text-align: left;
+}
+
+.fl-if_RadioBtns-option-input {
+  visibility: hidden;
+  position: absolute;
+}
+
+.fl-if_RadioBtns-option {
+  display: inline-block;
+  border: 1px solid $c-primary-border;
+  border-radius: 4px;
+  text-align: left;
+  margin: .2em 0;
+  padding: .2em .5em;
+  width: 100%;
+
+  &:hover {
+    background-color: $c-secondary;
+    color: $c-secondary-text;
+  }
+
+  .fl-if_RadioBtns-option-input:checked ~ & {
+    background-color: $c-primary-border;
+    color: $c-secondary-text;
+  }
+}
