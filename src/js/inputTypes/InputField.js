@@ -93,7 +93,7 @@ export default class InputField extends ReactBEM {
   async sendResponse(response = this.getResponse()) {
     if (!this.isValidResponse(response)) {
       // TODO: show error.
-      console.log('Invalid response');
+      // console.log('Invalid response');
       return;
     }
 

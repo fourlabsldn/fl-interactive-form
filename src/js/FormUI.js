@@ -22,6 +22,7 @@ export default class FormUI extends ReactBEM {
     this.getFieldNode = this.getFieldNode.bind(this);
     this.handleScroll = this.handleScroll.bind(this);
     this.setQuestionActive = this.setQuestionActive.bind(this);
+    this.slideFieldToCenter = this.slideFieldToCenter.bind(this);
 
     // public
     this.focusQuestion = throttle(this.focusQuestion.bind(this), 250, this, false);
@@ -57,7 +58,7 @@ export default class FormUI extends ReactBEM {
    */
   componentDidMount() {
     // Make first question active.
-    this.animations.schedule(() => this.setActiveFieldIndex(0), '', 30);
+    this.animations.schedule(() => this.slideFieldToCenter(0), '', 30);
   }
 
   /**
@@ -74,7 +75,19 @@ export default class FormUI extends ReactBEM {
     const activeIndex = this.getActiveFieldIndex();
     const changedIndex = activeIndex + (next ? +1 : -1);
     const newActiveIndex = Math.max(0, Math.min(fieldCount - 1, changedIndex));
+    this.slideFieldToCenter(newActiveIndex);
     this.setActiveFieldIndex(newActiveIndex);
+  }
+
+  /**
+   * @private
+   */
+  slideFieldToCenter(fieldIndex) {
+    assert(typeof fieldIndex === 'number', 'Invalid field index');
+    const node = this.getFieldNode(fieldIndex);
+    const viewBoxheight = this.refs.questionsViewBox.clientHeight;
+    const distanceFromTop = Math.max(0, (viewBoxheight - node.clientHeight) / 2);
+    this.refs.questionsViewBox.scrollTop = node.offsetTop - distanceFromTop;
   }
 
   /**

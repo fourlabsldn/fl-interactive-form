@@ -30,7 +30,6 @@ export default class RadioBtns extends InputField {
           key={`${this.props.config.key}${index}`}
           onClick={() => this.sendResponseWithAnimation(index, 'next')}
           ref={index === 0 ? 'focusElement' : null}
-          tabIndex="0"
         >
           {option}
         </div>

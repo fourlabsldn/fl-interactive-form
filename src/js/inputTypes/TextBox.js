@@ -10,7 +10,6 @@ export default class TextBox extends InputField {
 
   getResponse() {
     const response = ReactDOM.findDOMNode(this.refs.focusElement).value;
-    console.log('response', response);
     return response;
   }
 
