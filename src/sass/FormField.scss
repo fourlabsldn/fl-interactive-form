@@ -27,11 +27,26 @@
   font-size: $s-font-medium-large;
   padding-left: $s-left-padding;
   padding-right: $s-right-padding;
+  padding-top: 0;
   text-align: left;
+  position: relative;
 
   margin: 0 0 37px;
 
   @media(max-height: $screen-tiny-height) {
     margin: 0 0 10px;
+  }
+}
+
+.fl-if_FormField-okIcon {
+  position: absolute;
+  left: calc(#{$s-left-padding} - 1.2em);
+  top: .12em;
+  color: $c-valid-2;
+  opacity: 0;
+  transition: opacity .4s ease-in-out;
+
+  .fl-if_FormField--completed & {
+    opacity: 1;
   }
 }

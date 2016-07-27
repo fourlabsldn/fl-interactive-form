@@ -28,8 +28,10 @@ export default class Text extends InputField {
           type="text"
           defaultValue={this.props.question}
           placeholder={this.props.placeholder}
+
           onKeyDown={this.keyListener}
           onChange={handleInputChange}
+          onBlur={this.sendResponse}
         />
       </ div>
     );

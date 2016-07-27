@@ -24,9 +24,13 @@ export default class FormField extends ReactBEM {
       `Invalid input type: ${this.props.config.type}`
     );
 
-    const classNames = this.props.ui.active
-      ? [this.bemClass, this.bemState('active')]
-      : [this.bemClass];
+    const classNames = [this.bemClass];
+    if (this.props.ui.active) {
+      classNames.push(this.bemState('active'));
+    }
+    if (this.props.ui.completed) {
+      classNames.push(this.bemState('completed'));
+    }
 
     const inputProps = {
       ui: this.props.ui,
@@ -37,7 +41,10 @@ export default class FormField extends ReactBEM {
 
     return (
       <div className={classNames.join(' ')} onClick={this.handleClick}>
-        <p className={this.bemSubComponent('legend')}>{this.props.config.question}</p>
+        <p className={this.bemSubComponent('legend')}>
+          <i className={`fa fa-check-circle ${this.bemSubComponent('okIcon')}`} />
+          {this.props.config.question}
+        </p>
         {React.createElement(inputTypes[this.props.config.type], inputProps)}
       </div>
     );
