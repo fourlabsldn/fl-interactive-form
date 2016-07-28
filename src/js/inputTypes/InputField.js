@@ -13,19 +13,6 @@ export default class InputField extends ReactBEM {
     this.sendResponseWithAnimation = this.sendResponseWithAnimation.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    // Focus element when turned active
-    if (nextProps.ui.active) {
-      const focusElement = ReactDOM.findDOMNode(this.refs.focusElement);
-
-      // Already has the focus
-      if (window.activeElement === focusElement) { return; }
-
-      // We need a timeout to make the focus work.
-      setTimeout(() => focusElement.focus(), 15);
-    }
-  }
-
   keyListener(e) { // eslint-disable-line complexity
     const up = 38;
     const down = 40;

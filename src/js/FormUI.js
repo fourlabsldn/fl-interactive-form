@@ -8,6 +8,9 @@ import AnimationManager from './utils/AnimationManager';
 import throttle from './utils/throttle';
 import assert from 'fl-assert';
 
+const constants = {
+  SCROLL_SLIDE: 'scrollSlide',
+};
 
 // Takes care of the UI part of things.
 export default class FormUI extends ReactBEM {
@@ -20,7 +23,7 @@ export default class FormUI extends ReactBEM {
     this.setActiveFieldIndex = this.setActiveFieldIndex.bind(this);
     this.getFormFields = this.getFormFields.bind(this);
     this.getFieldNode = this.getFieldNode.bind(this);
-    this.handleScroll = this.handleScroll.bind(this);
+    this.handleScroll = throttle(this.handleScroll.bind(this), 100);
     this.setQuestionActive = this.setQuestionActive.bind(this);
     this.slideFieldToCenter = this.slideFieldToCenter.bind(this);
 
@@ -96,9 +99,39 @@ export default class FormUI extends ReactBEM {
   slideFieldToCenter(fieldIndex) {
     assert(typeof fieldIndex === 'number', 'Invalid field index');
     const node = this.getFieldNode(fieldIndex);
-    const viewBoxheight = this.refs.questionsViewBox.clientHeight;
+    const viewBox = this.refs.questionsViewBox;
+
+    const viewBoxheight = viewBox.clientHeight;
     const distanceFromTop = Math.max(0, (viewBoxheight - node.clientHeight) / 2);
-    this.refs.questionsViewBox.scrollTop = node.offsetTop - distanceFromTop;
+
+    const targetScroll = node.offsetTop - distanceFromTop;
+    const initialScroll = viewBox.scrollTop;
+    const scrollDistance = targetScroll - initialScroll;
+
+    const animDuration = 500; // in milliseconds
+    // fps * animDuration / millisecondsPerSecond
+    const totalFrames = 60 * animDuration / 1000;
+    let f = 0; // frame number
+    const doSliding = () => {
+      // scroll progress percentage from 0 to 1
+      const p = f / totalFrames;
+
+      // ease-in-out formula
+      const displacementPercentage = p < 0.5 ? 2 * p * p : -1 + (4 - 2 * p) * p;
+      const displacement = scrollDistance * displacementPercentage;
+      viewBox.scrollTop = initialScroll + displacement;
+
+      f += 1;
+
+      if (f < totalFrames) {
+        this.animations.schedule(doSliding, constants.SCROLL_SLIDE, 0);
+      } else {
+        const focusEl = node.querySelector('.fl-if_focusMe');
+        if (focusEl) { focusEl.focus(); }
+      }
+    };
+
+    doSliding();
   }
 
   /**
@@ -197,6 +230,7 @@ export default class FormUI extends ReactBEM {
     const activeIndex = this.getActiveFieldIndex();
     if (closestToCenter.index !== activeIndex) {
       this.setActiveFieldIndex(closestToCenter.index);
+      // this.slideFieldToCenter(closestToCenter.index);
     }
   }
 

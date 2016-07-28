@@ -25,7 +25,7 @@ export default class TextBox extends InputField {
     return (
       <div className={this.bemClass}>
         <InputEl
-          className={this.bemSubComponent('input')}
+          className={`${this.bemSubComponent('input')} fl-if_focusMe`}
           ref="focusElement"
           type="text"
           defaultValue={this.props.question}
