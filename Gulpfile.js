@@ -51,9 +51,8 @@ gulp.task('build:src', () => {
         runtimeHelpers: true,
         exclude: 'node_modules/**',
         plugins: [
-          'lodash',
           'transform-async-to-generator', [
-            'transform-runtime', { polyfill: false, regenerator: true },
+            'transform-runtime', { polyfill: true, regenerator: true },
           ],
         ],
         presets: ['es2015-rollup', 'react'],

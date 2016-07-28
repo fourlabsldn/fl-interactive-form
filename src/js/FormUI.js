@@ -219,17 +219,10 @@ export default class FormUI extends ReactBEM {
   }
 
   render() {
-    const uiControl = {
-      focusQuestion: this.focusQuestion,
-      setQuestionCompleted: this.setQuestionCompleted,
-      setQuestionActive: this.setQuestionActive,
-    };
-
-    const appControl = new Proxy(this.props.appControl, {
-      get: (target, property) => {
-        return target[property] ? target[property] : uiControl[property];
-      },
-    });
+    const appControl = this.props.appControl;
+    appControl.focusQuestion = this.focusQuestion;
+    appControl.setQuestionCompleted = this.setQuestionCompleted;
+    appControl.setQuestionActive = this.setQuestionActive;
 
     const questions = this.props.config.questions.map((q, index) => {
       return (
