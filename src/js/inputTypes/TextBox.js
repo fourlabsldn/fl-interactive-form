@@ -10,7 +10,7 @@ export default class TextBox extends InputField {
   }
 
   getResponse() {
-    const response = ReactDOM.findDOMNode(this.refs.focusElement).value;
+    const response = ReactDOM.findDOMNode(this.refs.input).value;
     return response;
   }
 
@@ -27,7 +27,7 @@ export default class TextBox extends InputField {
       <div className={this.bemClass}>
         <InputEl
           className={`${this.bemSubComponent('input')} ${globals.FOCUS_CLASS}`}
-          ref="focusElement"
+          ref="input"
           type="text"
           defaultValue={this.props.question}
           placeholder={this.props.placeholder}

@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactBEM from '../ReactBEM';
-import ReactDOM from 'react-dom';
 
 export default class InputField extends ReactBEM {
   constructor(...args) {
@@ -67,8 +66,7 @@ export default class InputField extends ReactBEM {
 
   // To be overriden by subclasses
   getResponse() {
-    console.log('Getting response from wrong place');
-    return ReactDOM.findDOMNode(this.refs.focusElement).value;
+    throw new Error('Standard class not overriden');
   }
 
   // To be overriden by subclasses

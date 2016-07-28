@@ -108,13 +108,11 @@ export default class FormUI extends ReactBEM {
 
     try {
       await scrollSlide(viewBox, targetScroll, animationDuration);
-      console.log('success');
       const focusEl = node.querySelector(`.${globals.FOCUS_CLASS}`);
       if (focusEl) {
         setTimeout(() => focusEl.focus(), 10);
       }
     } catch (e) {
-      console.log(e);
       // nothing
     }
   }
