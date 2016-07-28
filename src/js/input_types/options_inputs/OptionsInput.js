@@ -1,15 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import InputField from './InputField';
-import globals from '../utils/globals';
+import ReactBEM from '../../ReactBEM';
+import globals from '../../utils/globals';
 
-export default class RadioBtns extends InputField {
-  getResponse() {
-    return this.props.config.answer;
-  }
-
-  isValidResponse(response) {
-    return this.props.config.options[response] !== undefined;
+export default class OptionsInput extends ReactBEM {
+  constructor(...args) {
+    super(...args);
+    this.render = this.render.bind(this);
+    this.generateOptions = this.generateOptions.bind(this);
   }
 
   /**
@@ -27,8 +25,6 @@ export default class RadioBtns extends InputField {
     const container = ReactDOM.findDOMNode(this);
     const options = Array.from(container.querySelectorAll(`.${globals.FOCUS_CLASS}`));
     const focusedIndex = options.findIndex(p => p === document.activeElement);
-    const focus = (el) => setTimeout(() => el.focus(), 10);
-
 
     const goUp = (e.keyCode === up) || (e.keyCode === tab && e.shiftKey);
     const goDown = (e.keyCode === down) || (e.keyCode === tab);
@@ -45,14 +41,14 @@ export default class RadioBtns extends InputField {
       }
     } else if (goUp) {
       if (options[focusedIndex - 1]) {
-        focus(options[focusedIndex - 1]);
+        this.props.appControl.focus(options[focusedIndex - 1]);
         skipJump = true;
       } else {
         jumpDirection = 'prev';
       }
     } else if (goDown) {
       if (options[focusedIndex + 1]) {
-        focus(options[focusedIndex + 1]);
+        this.props.appControl.focus(options[focusedIndex + 1]);
         skipJump = true;
       } else {
         jumpDirection = 'next';
@@ -66,42 +62,28 @@ export default class RadioBtns extends InputField {
 
     if (!skipJump) {
       const response = this.getResponse();
-      this.sendResponseWithAnimation(response, jumpDirection);
+      this.saveResponseAndJumpToQuestion(response, jumpDirection);
     }
   }
 
+  /**
+   * To be overriden by subclasses
+   * @method generateOptions
+   * @param  {Array} optionsArray
+   * @return {Array<ReactElement>}
+   */
+  generateOptions(options) {
+    throw new Error('Should be implemented by subclass');
+  }
+
   render() {
-    const handleInputChange = () => {
-      if (this.props.ui.active) {
-        // set inactive
-        this.props.appControl.setQuestionCompleted(this.props.config.key, false);
-      }
-    };
-
-    const options = this.props.config.options.map((option, index) => {
-      const optionClasses = [this.bemSubComponent('option'), globals.FOCUS_CLASS];
-      if (index === this.getResponse()) {
-        optionClasses.push(this.bemSubComponentState('option', 'selected'));
-      }
-
-      return (
-        <div
-          className={optionClasses.join(' ')}
-          key={`${this.props.config.key}${index}`}
-          onClick={() => this.sendResponseWithAnimation(index, 'next')}
-          tabIndex="0"
-        >
-          {option}
-        </div>
-      );
-    });
+    const options = this.generateOptions(this.props.config.options);
 
     return (
       <div
         className={this.bemClass}
         onKeyDown={this.keyListener}
-        onChange={handleInputChange}
-        onBlur={this.sendResponse}
+        onBlur={this.saveResponse}
       >
         {options}
       </ div>

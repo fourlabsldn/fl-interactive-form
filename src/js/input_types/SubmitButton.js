@@ -5,7 +5,7 @@ import globals from '../utils/globals';
 export default class SubmitButton extends InputField {
   constructor(...args) {
     super(...args);
-    this.sendResponse = () => null;
+    this.saveResponse = () => null;
     this.getResponse = () => null;
   }
 

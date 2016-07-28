@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactBEM from './ReactBEM';
 import assert from 'fl-assert';
-import TextBox from './inputTypes/TextBox';
-import TextArea from './inputTypes/TextArea';
-import RadioBtns from './inputTypes/RadioBtns';
+import TextBox from './input_types/text_inputs/TextBox';
+import TextArea from './input_types/text_inputs/TextArea';
+import RadioBtns from './input_types/options_inputs/RadioBtns';
 
 const inputTypes = { TextBox, TextArea, RadioBtns };
 

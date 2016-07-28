@@ -1,12 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import InputField from './InputField';
-import globals from '../utils/globals';
+import InputField from '../InputField';
+import globals from '../../utils/globals';
 
-export default class TextBox extends InputField {
+/**
+ * @abstract @class
+ */
+export default class TextInput extends InputField {
   constructor(...args) {
     super(...args);
-    this.inputEl = 'input';
+    this.render = this.render.bind(this);
+    this.inputEl = null; // To be set by subclasses
   }
 
   getResponse() {
@@ -28,13 +32,13 @@ export default class TextBox extends InputField {
         <InputEl
           className={`${this.bemSubComponent('input')} ${globals.FOCUS_CLASS}`}
           ref="input"
-          type="text"
+          type={this.type}
           defaultValue={this.props.question}
           placeholder={this.props.placeholder}
 
           onKeyDown={this.keyListener}
           onChange={handleInputChange}
-          onBlur={() => this.sendResponse()}
+          onBlur={() => this.saveResponse()}
           disabled={!this.props.ui.active}
         />
       </ div>

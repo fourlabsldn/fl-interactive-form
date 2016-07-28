@@ -5,7 +5,7 @@ import clone from './utils/clone';
 import globals from './utils/globals';
 import scrollSlide from './utils/scrollSlide';
 import NavigationBar from './NavigationBar';
-import SubmitButton from './inputTypes/SubmitButton';
+import SubmitButton from './input_types/SubmitButton';
 import AnimationManager from './utils/AnimationManager';
 import throttle from './utils/throttle';
 import assert from 'fl-assert';
@@ -29,6 +29,7 @@ export default class FormUI extends ReactBEM {
     // public
     this.focusQuestion = throttle(this.focusQuestion.bind(this), 250, this, false);
     this.setQuestionCompleted = this.setQuestionCompleted.bind(this);
+    this.focus = this.focus.bind(this);
 
     this.animations = new AnimationManager();
     this.state = this.generateInitialState(this.props.config);
@@ -110,7 +111,7 @@ export default class FormUI extends ReactBEM {
       await scrollSlide(viewBox, targetScroll, animationDuration);
       const focusEl = node.querySelector(`.${globals.FOCUS_CLASS}`);
       if (focusEl) {
-        setTimeout(() => focusEl.focus(), 10);
+        this.focus(focusEl);
       }
     } catch (e) {
       // nothing
@@ -235,11 +236,31 @@ export default class FormUI extends ReactBEM {
     return new Promise(resolve => this.setState({ ui }, resolve));
   }
 
+
+  /**
+   * Focus and prevent viewBox from scrolling
+   * @public
+   * @method focus
+   * @param  {HTMLElement} element
+   * @return {void}
+   */
+  focus(element) {
+    if (!element) { return; }
+    const currScrollPosition = this.refs.viewBox.scrollTop;
+    const focus = () => {
+      element.focus();
+      this.refs.viewBox.scrollTop = currScrollPosition;
+    };
+
+    setTimeout(focus, 10);
+  }
+
   render() {
     const appControl = this.props.appControl;
     appControl.focusQuestion = this.focusQuestion;
     appControl.setQuestionCompleted = this.setQuestionCompleted;
     appControl.setQuestionActive = this.setQuestionActive;
+    appControl.focus = this.focus;
 
     const questions = this.props.config.questions.map((q, index) => {
       return (
