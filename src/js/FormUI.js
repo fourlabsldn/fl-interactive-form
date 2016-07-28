@@ -246,10 +246,10 @@ export default class FormUI extends ReactBEM {
    */
   focus(element) {
     if (!element) { return; }
-    const currScrollPosition = this.refs.viewBox.scrollTop;
+    const currScrollPosition = this.refs.questionsViewBox.scrollTop;
     const focus = () => {
       element.focus();
-      this.refs.viewBox.scrollTop = currScrollPosition;
+      this.refs.questionsViewBox.scrollTop = currScrollPosition;
     };
 
     setTimeout(focus, 10);

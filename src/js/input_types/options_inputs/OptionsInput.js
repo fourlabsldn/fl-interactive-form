@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ReactBEM from '../../ReactBEM';
+import InputField from '../InputField';
 import globals from '../../utils/globals';
 
-export default class OptionsInput extends ReactBEM {
+export default class OptionsInput extends InputField {
   constructor(...args) {
     super(...args);
     this.render = this.render.bind(this);
