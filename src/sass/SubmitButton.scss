@@ -18,4 +18,8 @@
   .fl-if_SubmitButton--active & {
     transform: translateY(0);
   }
+
+  &:focus {
+    filter: brightness(110%);
+  }
 }
