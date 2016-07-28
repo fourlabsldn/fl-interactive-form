@@ -48,7 +48,7 @@ $c-radio-checked-hover-bg: darken($c-radio-checked-bg, 10%);
     background: linear-gradient($c-valid, lighten($c-valid, 10%));
   }
 
-  &:hover {
+  &:hover, &:focus {
     background-color: $c-radio-checked-hover-bg;
   }
 }
