@@ -1,18 +1,12 @@
 import React from 'react';
-import ReactBEM from '../ReactBEM';
+import InputField from './InputField';
+import globals from '../utils/globals';
 
-export default class SubmitButton extends ReactBEM {
+export default class SubmitButton extends InputField {
   constructor(...args) {
     super(...args);
-    this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    // Focus element when turned active
-    if (nextProps.ui.active) {
-      // We need a timeout to make the focus work.
-      setTimeout(() => this.refs.button.focus(), 15);
-    }
+    this.sendResponse = () => null;
+    this.getResponse = () => null;
   }
 
   render() {
@@ -21,9 +15,12 @@ export default class SubmitButton extends ReactBEM {
       : `${this.bemClass}`;
 
     return (
-      <div className={buttonClass}>
+      <div
+        className={buttonClass}
+        onKeyDown={this.keyListener}
+      >
         <button
-          className={this.bemSubComponent('button')}
+          className={`${this.bemSubComponent('button')} ${globals.FOCUS_CLASS}`}
           ref="button"
           onClick={this.props.appControl.exportConfig}
           tabIndex="0"
