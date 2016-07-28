@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import InputField from './InputField';
+import globals from '../utils/globals';
 
 export default class TextBox extends InputField {
   constructor(...args) {
@@ -25,7 +26,7 @@ export default class TextBox extends InputField {
     return (
       <div className={this.bemClass}>
         <InputEl
-          className={`${this.bemSubComponent('input')} fl-if_focusMe`}
+          className={`${this.bemSubComponent('input')} ${globals.FOCUS_CLASS}`}
           ref="focusElement"
           type="text"
           defaultValue={this.props.question}

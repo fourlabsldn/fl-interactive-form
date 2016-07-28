@@ -2,15 +2,14 @@ import React from 'react';
 import ReactBEM from './ReactBEM';
 import FormField from './FormField';
 import clone from './utils/clone';
+import globals from './utils/globals';
+import scrollSlide from './utils/scrollSlide';
 import NavigationBar from './NavigationBar';
 import SubmitButton from './inputTypes/SubmitButton';
 import AnimationManager from './utils/AnimationManager';
 import throttle from './utils/throttle';
 import assert from 'fl-assert';
 
-const constants = {
-  SCROLL_SLIDE: 'scrollSlide',
-};
 
 // Takes care of the UI part of things.
 export default class FormUI extends ReactBEM {
@@ -96,7 +95,7 @@ export default class FormUI extends ReactBEM {
   /**
    * @private
    */
-  slideFieldToCenter(fieldIndex) {
+  async slideFieldToCenter(fieldIndex) {
     assert(typeof fieldIndex === 'number', 'Invalid field index');
     const node = this.getFieldNode(fieldIndex);
     const viewBox = this.refs.questionsViewBox;
@@ -105,33 +104,19 @@ export default class FormUI extends ReactBEM {
     const distanceFromTop = Math.max(0, (viewBoxheight - node.clientHeight) / 2);
 
     const targetScroll = node.offsetTop - distanceFromTop;
-    const initialScroll = viewBox.scrollTop;
-    const scrollDistance = targetScroll - initialScroll;
+    const animationDuration = 500;
 
-    const animDuration = 500; // in milliseconds
-    // fps * animDuration / millisecondsPerSecond
-    const totalFrames = 60 * animDuration / 1000;
-    let f = 0; // frame number
-    const doSliding = () => {
-      // scroll progress percentage from 0 to 1
-      const p = f / totalFrames;
-
-      // ease-in-out formula
-      const displacementPercentage = p < 0.5 ? 2 * p * p : -1 + (4 - 2 * p) * p;
-      const displacement = scrollDistance * displacementPercentage;
-      viewBox.scrollTop = initialScroll + displacement;
-
-      f += 1;
-
-      if (f < totalFrames) {
-        this.animations.schedule(doSliding, constants.SCROLL_SLIDE, 0);
-      } else {
-        const focusEl = node.querySelector('.fl-if_focusMe');
-        if (focusEl) { focusEl.focus(); }
+    try {
+      await scrollSlide(viewBox, targetScroll, animationDuration);
+      console.log('success');
+      const focusEl = node.querySelector(`.${globals.FOCUS_CLASS}`);
+      if (focusEl) {
+        setTimeout(() => focusEl.focus(), 10);
       }
-    };
-
-    doSliding();
+    } catch (e) {
+      console.log(e);
+      // nothing
+    }
   }
 
   /**

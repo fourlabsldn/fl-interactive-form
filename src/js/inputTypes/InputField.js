@@ -5,7 +5,6 @@ import ReactDOM from 'react-dom';
 export default class InputField extends ReactBEM {
   constructor(...args) {
     super(...args);
-    this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
     this.keyListener = this.keyListener.bind(this);
     this.getResponse = this.getResponse.bind(this);
     this.isValidResponse = this.isValidResponse.bind(this);
