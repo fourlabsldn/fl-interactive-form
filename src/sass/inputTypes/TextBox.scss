@@ -12,16 +12,12 @@
   font-size: $s-font-medium-large;
 
   background-color: transparent;
-  border: 2px solid transparent;
-  border-bottom-color: $c-secondary;
+  border: 2px dashed $c-secondary-text;
   border-radius: 5px;
 
-  box-sizing: border-box;
   color: $c-primary-text;
   display: inline-block;
 
-  overflow-x: auto;
-  overflow-y: auto;
   resize: none;
   white-space: pre-wrap;
   font-smoothing: subpixel-antialiased;
@@ -35,7 +31,6 @@
 
   .fl-if_FormField--active & {
     outline: 0;
-    border: 2px dashed $c-secondary-text;
   }
 
   .fl-if_FormField--completed.fl-if_FormField--active & {
