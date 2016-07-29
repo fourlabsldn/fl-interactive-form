@@ -29,7 +29,7 @@ export default class InputField extends ReactBEM {
       animDuration = 500;
     }
 
-    setTimeout(() => this.props.appControl.focusQuestion(jumpDirection), animDuration);
+    setTimeout(() => this.props.appControl.goToField(jumpDirection), animDuration);
   }
 
 

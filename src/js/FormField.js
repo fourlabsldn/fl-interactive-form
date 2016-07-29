@@ -15,7 +15,7 @@ export default class FormField extends ReactBEM {
 
   handleClick() {
     if (!this.props.ui.active) {
-      this.props.appControl.setQuestionActive(this.props.config.key);
+      this.props.appControl.setFieldActive(this.props.config.key);
     }
   }
 

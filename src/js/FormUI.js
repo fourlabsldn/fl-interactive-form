@@ -1,13 +1,15 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import ReactBEM from './ReactBEM';
 import FormField from './FormField';
+import NavigationBar from './NavigationBar';
+
 import clone from './utils/clone';
 import globals from './utils/globals';
-import scrollSlide from './utils/scrollSlide';
-import NavigationBar from './NavigationBar';
-import SubmitButton from './input_types/SubmitButton';
-import AnimationManager from './utils/AnimationManager';
 import throttle from './utils/throttle';
+import scrollSlide from './utils/scrollSlide';
+import AnimationManager from './utils/AnimationManager';
+import SubmitButton from './input_types/SubmitButton';
 import assert from 'fl-assert';
 
 // Takes care of the UI part of things.
@@ -16,35 +18,35 @@ export default class FormUI extends ReactBEM {
     super(...args);
 
     // private
-    this.componentDidMount = this.componentDidMount.bind(this);
-    this.generateInitialState = this.generateInitialState.bind(this);
-    this.setActiveFieldIndex = this.setActiveFieldIndex.bind(this);
-    this.getFormFields = this.getFormFields.bind(this);
-    this.getFieldNode = this.getFieldNode.bind(this);
     this.onWheel = this.onWheel.bind(this);
-    this.setQuestionActive = this.setQuestionActive.bind(this);
-    this.slideFieldToCenter = this.slideFieldToCenter.bind(this);
-    this.touchStart = this.touchStart.bind(this);
+    this.onScroll = throttle(this.onScroll.bind(this), 250, this, true);
     this.touchEnd = this.touchEnd.bind(this);
     this.touchMove = this.touchMove.bind(this);
+    this.touchStart = this.touchStart.bind(this);
+    this.getFieldNode = this.getFieldNode.bind(this);
+    this.getFormFields = this.getFormFields.bind(this);
+    this.setFieldActive = this.setFieldActive.bind(this);
+    this.componentDidMount = this.componentDidMount.bind(this);
+    this.getActiveFieldKey = this.getActiveFieldKey.bind(this);
+    this.slideFieldToCenter = this.slideFieldToCenter.bind(this);
     this.processTouchDisplacement = this.processTouchDisplacement.bind(this);
-    this.onScroll = throttle(this.onScroll.bind(this), 250, this, true);
 
     // public
-    this.focusQuestion = throttle(this.focusQuestion.bind(this), 250, this, false);
-    this.setQuestionCompleted = this.setQuestionCompleted.bind(this);
     this.focus = this.focus.bind(this);
+    this.setQuestionCompleted = this.setQuestionCompleted.bind(this);
+    this.goToField = throttle(this.goToField.bind(this), 250, this, false);
 
     // instance globals
-    this.appControl = this.props.appControl;
-    this.appControl.focusQuestion = this.focusQuestion;
-    this.appControl.setQuestionCompleted = this.setQuestionCompleted;
-    this.appControl.setQuestionActive = this.setQuestionActive;
-    this.appControl.focus = this.focus;
-
     this.initialTouchY = null;
     this.animatingScroll = false;
     this.animations = new AnimationManager();
+
+    this.appControl = this.props.appControl;
+    this.appControl.focus = this.focus;
+    this.appControl.goToField = this.goToField;
+    this.appControl.setQuestionCompleted = this.setQuestionCompleted;
+    this.appControl.setFieldActive = this.setFieldActive;
+
     this.state = this.generateInitialState(this.props.config);
   }
 
@@ -74,11 +76,11 @@ export default class FormUI extends ReactBEM {
    */
   componentDidMount() {
     // Make first question active.
-    this.animations.schedule(() => this.focusQuestion('next'), '', 30);
+    this.animations.schedule(() => this.goToField('next'), '', 30);
 
 
     const centerActiveQuestion = () => {
-      const active = this.getActiveFieldIndex();
+      const active = this.getActiveFieldKey();
       this.slideFieldToCenter(active);
     };
 
@@ -89,30 +91,88 @@ export default class FormUI extends ReactBEM {
   }
 
   /**
+   * Returns an array containing all form questions and the submit button.
+   * @method getFormFields
+   * @return {Array}
+   */
+  getFormFields() {
+    const formFields = [
+      ... this.state.ui.questions,
+      this.state.ui.submitButton,
+    ];
+    return formFields;
+  }
+
+  /**
+   * @private
+   * @return {String}
+   */
+  getActiveFieldKey() {
+    const formFields = this.getFormFields();
+    const active = formFields.find(f => f.active === true);
+    return active ? active.key : undefined;
+  }
+
+  /**
+   * @private
+   * @method getFieldNode
+   * @param  {String} key
+   * @return {HTMLElement}
+   */
+  getFieldNode(key) {
+    return ReactDOM.findDOMNode(this.refs[key]);
+  }
+
+  /**
+   * element.focus() but with some extras
+   * Focuses and prevent viewBox from scrolling
+   * @public
+   * @method focus
+   * @param  {HTMLElement} element
+   * @return {void}
+   */
+  focus(element) {
+    if (!element) { return; }
+    const currScrollPosition = this.refs.questionsViewBox.scrollTop;
+    const focus = () => {
+      element.focus();
+      this.refs.questionsViewBox.scrollTop = currScrollPosition;
+    };
+
+    setTimeout(focus, 10);
+  }
+
+
+  /**
    * @public
    * Moves the focus to the next or previous question by
    * setting it as active and moving it to the center of the viewport.
-   * @method focusQuestion
+   * @method goToField
    * @param  {String} prevNext
    * @return {void}
    */
-  focusQuestion(prevNext) {
+  goToField(prevNext) {
     const next = prevNext === 'next';
-    const fieldCount = this.getFormFields().length;
-    const activeIndex = this.getActiveFieldIndex();
+    const formFields = this.getFormFields();
+    const activeKey = this.getActiveFieldKey();
+    const activeIndex = formFields.findIndex(f => f.key === activeKey);
     const changedIndex = activeIndex + (next ? +1 : -1);
-    const newActiveIndex = Math.max(0, Math.min(fieldCount - 1, changedIndex));
-    this.slideFieldToCenter(newActiveIndex);
-    this.setActiveFieldIndex(newActiveIndex);
+    const newActiveIndex = Math.max(0, Math.min(formFields.length - 1, changedIndex));
+    const newActiveKey = formFields[newActiveIndex].key;
+    this.setFieldActive(newActiveKey);
+    this.slideFieldToCenter(newActiveKey).then(() => {
+      const node = this.getFieldNode(newActiveKey);
+      this.focus(node.querySelector(`.${globals.FOCUS_CLASS}`));
+    });
   }
 
   /**
    * @private
    */
-  async slideFieldToCenter(fieldIndex) {
+  async slideFieldToCenter(key) {
     this.animatingScroll = true;
-    assert(typeof fieldIndex === 'number', 'Invalid field index');
-    const node = this.getFieldNode(fieldIndex);
+    const node = this.getFieldNode(key);
+    assert(node, `No field found with key: ${key}`);
     const viewBox = this.refs.questionsViewBox;
 
     const viewBoxheight = viewBox.clientHeight;
@@ -134,71 +194,9 @@ export default class FormUI extends ReactBEM {
     }
   }
 
-  /**
-   * @private
-   * @method setActiveFieldIndex
-   * @param  {String} index
-   */
-  setActiveFieldIndex(index) {
-    const ui = clone(this.state.ui);
-
-    // set everyone not active
-    ui.submitButton.active = false;
-    for (const q of ui.questions) {
-      q.active = false;
-    }
-
-    const formFields = this.getFormFields();
-    const newActiveField = formFields[index];
-
-    if (newActiveField.key === ui.submitButton.key) {
-      ui.submitButton.active = true;
-    } else {
-      const questionIndex = ui.questions.findIndex(q => q.key === newActiveField.key);
-      assert(questionIndex !== -1, `Invalid question index ${index}`);
-      ui.questions[questionIndex].active = true;
-    }
-
-    this.setState({ ui });
-  }
-
-  /**
-   * Returns an array containing all form questions and the submit button.
-   * @method getFormFields
-   * @return {Array}
-   */
-  getFormFields() {
-    const formFields = [
-      ... this.state.ui.questions,
-      this.state.ui.submitButton,
-    ];
-    return formFields;
-  }
-
-  /**
-   * @private
-   * @method getActiveQuestionIndex
-   * @return {Int}
-   */
-  getActiveFieldIndex() {
-    const formFields = this.getFormFields();
-    return formFields.findIndex(f => f.active === true);
-  }
-
-  getFieldNode(index) {
-    return this.refs.questions.children[index];
-  }
-
-  /**
-   * @public
-   * @method setQuestionActive
-   * @param  {[type]} questionKey [description]
-   */
-  setQuestionActive(questionKey) {
-    const formFields = this.getFormFields();
-    const qIndex = formFields.findIndex(q => q.key === questionKey);
-    this.setActiveFieldIndex(qIndex);
-  }
+  // ==============================================================
+  //                     STATE HANDLERS
+  // ==============================================================
 
   /**
    * Sets a question as completed.
@@ -218,27 +216,35 @@ export default class FormUI extends ReactBEM {
     return new Promise(resolve => this.setState({ ui }, resolve));
   }
 
-
   /**
-   * Focus and prevent viewBox from scrolling
-   * @public
-   * @method focus
-   * @param  {HTMLElement} element
-   * @return {void}
+   * @private
+   * @method setFieldActive
+   * @param  {String} index
    */
-  focus(element) {
-    if (!element) { return; }
-    const currScrollPosition = this.refs.questionsViewBox.scrollTop;
-    const focus = () => {
-      element.focus();
-      this.refs.questionsViewBox.scrollTop = currScrollPosition;
-    };
+  setFieldActive(key) {
+    assert(this.refs[key], `Invalid key: ${key}`);
+    const ui = clone(this.state.ui);
 
-    setTimeout(focus, 10);
+    // set everyone not active
+    ui.submitButton.active = false;
+    for (const q of ui.questions) {
+      q.active = false;
+    }
+
+    if (key === ui.submitButton.key) {
+      ui.submitButton.active = true;
+    } else {
+      const questionIndex = ui.questions.findIndex(q => q.key === key);
+      assert(questionIndex !== -1, `Invalid question index ${questionIndex}`);
+      ui.questions[questionIndex].active = true;
+    }
+
+    this.setState({ ui });
   }
 
-
-  // //////////////////  Event Handlers   ////////////////////////
+  // ==============================================================
+  //                     EVENT HANDLERS
+  // ==============================================================
   /**
    * Scroll envent on questionsViewBox
    * @param  {Event} e
@@ -249,7 +255,7 @@ export default class FormUI extends ReactBEM {
     }
 
     const formFields = this.getFormFields();
-    const formNodes = formFields.map((f, i) => this.getFieldNode(i));
+    const formNodes = formFields.map(f => this.getFieldNode(f.key));
     const viewBoxHeight = this.refs.questionsViewBox.clientHeight;
     const viewBoxScroll = this.refs.questionsViewBox.scrollTop;
     const viewBoxCenter = viewBoxScroll + viewBoxHeight / 2;
@@ -269,7 +275,8 @@ export default class FormUI extends ReactBEM {
       return closestNodeIndex;
     }, 0);
 
-    this.setActiveFieldIndex(indexOfCenterNode);
+    const closestKey = formFields[indexOfCenterNode].key;
+    this.setFieldActive(closestKey);
   }
 
   /**
@@ -281,9 +288,9 @@ export default class FormUI extends ReactBEM {
     const wheelDelta = e.nativeEvent.wheelDelta;
     this.animations.schedule(() => {
       if (wheelDelta < 0) {
-        this.focusQuestion('next');
+        this.goToField('next');
       } else if (wheelDelta > 0) {
-        this.focusQuestion('prev');
+        this.goToField('prev');
       }
     }, 'scroll', 3);
   }
@@ -314,6 +321,10 @@ export default class FormUI extends ReactBEM {
     this.processTouchDisplacement(e);
   }
 
+  /**
+   * @param  {Event} e
+   * @return {void}
+   */
   processTouchDisplacement(e) {
     if (!this.trackingTouch) {
       return;
@@ -328,9 +339,9 @@ export default class FormUI extends ReactBEM {
 
     this.trackingTouch = false;
     if (displacement < 0) {
-      this.focusQuestion('next');
+      this.goToField('next');
     } else {
-      this.focusQuestion('prev');
+      this.goToField('prev');
     }
   }
 
@@ -342,6 +353,7 @@ export default class FormUI extends ReactBEM {
           ui={this.state.ui.questions[index]}
           appControl={this.appControl}
           key={q.key}
+          ref={q.key}
         />);
     });
 
@@ -362,7 +374,7 @@ export default class FormUI extends ReactBEM {
             <SubmitButton
               ui={this.state.ui.submitButton}
               appControl={this.appControl}
-              ref="submitButton"
+              ref={this.state.ui.submitButton.key}
             />
           </div>
         </div>

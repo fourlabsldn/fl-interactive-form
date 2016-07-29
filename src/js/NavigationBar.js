@@ -15,7 +15,7 @@ export default class NavigationBar extends ReactBEM {
       // Prevent button click from dismissing the keyboard on phones.
       e.preventDefault();
       e.stopPropagation();
-      this.props.appControl.focusQuestion(nextPrev);
+      this.props.appControl.goToField(nextPrev);
     };
 
     return (
