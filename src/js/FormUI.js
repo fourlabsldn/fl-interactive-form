@@ -28,6 +28,7 @@ export default class FormUI extends ReactBEM {
     this.touchEnd = this.touchEnd.bind(this);
     this.touchMove = this.touchMove.bind(this);
     this.processTouchDisplacement = this.processTouchDisplacement.bind(this);
+    this.onScroll = throttle(this.onScroll.bind(this), 250, this, true);
 
     // public
     this.focusQuestion = throttle(this.focusQuestion.bind(this), 250, this, false);
@@ -42,6 +43,7 @@ export default class FormUI extends ReactBEM {
     this.appControl.focus = this.focus;
 
     this.initialTouchY = null;
+    this.animatingScroll = false;
     this.animations = new AnimationManager();
     this.state = this.generateInitialState(this.props.config);
   }
@@ -108,6 +110,7 @@ export default class FormUI extends ReactBEM {
    * @private
    */
   async slideFieldToCenter(fieldIndex) {
+    this.animatingScroll = true;
     assert(typeof fieldIndex === 'number', 'Invalid field index');
     const node = this.getFieldNode(fieldIndex);
     const viewBox = this.refs.questionsViewBox;
@@ -126,6 +129,8 @@ export default class FormUI extends ReactBEM {
       }
     } catch (e) {
       // nothing
+    } finally {
+      this.animatingScroll = false;
     }
   }
 
@@ -234,7 +239,43 @@ export default class FormUI extends ReactBEM {
 
 
   // //////////////////  Event Handlers   ////////////////////////
+  /**
+   * Scroll envent on questionsViewBox
+   * @param  {Event} e
+   */
+  onScroll() {
+    if (this.animatingScroll) {
+      return;
+    }
 
+    const formFields = this.getFormFields();
+    const formNodes = formFields.map((f, i) => this.getFieldNode(i));
+    const viewBoxHeight = this.refs.questionsViewBox.clientHeight;
+    const viewBoxScroll = this.refs.questionsViewBox.scrollTop;
+    const viewBoxCenter = viewBoxScroll + viewBoxHeight / 2;
+
+    function distanceFromCenter(element) {
+      const elementCenter = element.clientHeight / 2 + element.offsetTop;
+      const elementDistance = viewBoxCenter - elementCenter;
+      const distance = Math.abs(elementDistance);
+      return distance;
+    }
+
+    let smallestDistance = distanceFromCenter(formNodes[0]);
+    const indexOfCenterNode = formNodes.reduce((closestIdx, node, nodeIdx) => {
+      const nodeDistance = distanceFromCenter(formNodes[nodeIdx]);
+      const closestNodeIndex = nodeDistance < smallestDistance ? nodeIdx : closestIdx;
+      smallestDistance = nodeDistance < smallestDistance ? nodeDistance : smallestDistance;
+      return closestNodeIndex;
+    }, 0);
+
+    this.setActiveFieldIndex(indexOfCenterNode);
+  }
+
+  /**
+   * Wheel envent on questionsViewBox
+   * @param  {Event} e
+   */
   onWheel(e) {
     e.preventDefault();
     const wheelDelta = e.nativeEvent.wheelDelta;
@@ -313,6 +354,7 @@ export default class FormUI extends ReactBEM {
           onTouchEnd={this.touchEnd}
           onTouchMove={this.touchMove}
           onWheel={this.onWheel}
+          onScroll={this.onScroll}
         >
           <div className={this.bemSubComponent('questions')} ref="questions" >
             {questions}
