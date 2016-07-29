@@ -12,6 +12,10 @@ import AnimationManager from './utils/AnimationManager';
 import SubmitButton from './input_types/SubmitButton';
 import assert from 'fl-assert';
 
+const IS_TOUCH_DEVICE = (('ontouchstart' in window)
+      || (navigator.MaxTouchPoints > 0)
+      || (navigator.msMaxTouchPoints > 0));
+
 // Takes care of the UI part of things.
 export default class FormUI extends ReactBEM {
   constructor(...args) {
@@ -151,7 +155,7 @@ export default class FormUI extends ReactBEM {
    * @param  {String} prevNext
    * @return {void}
    */
-  goToField(prevNext) {
+  async goToField(prevNext) {
     const next = prevNext === 'next';
     const formFields = this.getFormFields();
     const activeKey = this.getActiveFieldKey();
@@ -160,10 +164,17 @@ export default class FormUI extends ReactBEM {
     const newActiveIndex = Math.max(0, Math.min(formFields.length - 1, changedIndex));
     const newActiveKey = formFields[newActiveIndex].key;
     this.setFieldActive(newActiveKey);
-    this.slideFieldToCenter(newActiveKey).then(() => {
-      const node = this.getFieldNode(newActiveKey);
-      this.focus(node.querySelector(`.${globals.FOCUS_CLASS}`));
-    });
+
+    await this.slideFieldToCenter(newActiveKey);
+    const node = this.getFieldNode(newActiveKey);
+    const focusEl = node.querySelector(`.${globals.FOCUS_CLASS}`);
+
+    // On mobile devices we don't focus on input elements because
+    // the keyboard keeps changing the screen width, which can be quite annoying.
+    if (IS_TOUCH_DEVICE && focusEl.nodeName === 'INPUT') {
+      return;
+    }
+    this.focus(focusEl);
   }
 
   /**
