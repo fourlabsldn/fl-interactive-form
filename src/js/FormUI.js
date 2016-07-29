@@ -10,7 +10,6 @@ import AnimationManager from './utils/AnimationManager';
 import throttle from './utils/throttle';
 import assert from 'fl-assert';
 
-
 // Takes care of the UI part of things.
 export default class FormUI extends ReactBEM {
   constructor(...args) {
@@ -22,15 +21,27 @@ export default class FormUI extends ReactBEM {
     this.setActiveFieldIndex = this.setActiveFieldIndex.bind(this);
     this.getFormFields = this.getFormFields.bind(this);
     this.getFieldNode = this.getFieldNode.bind(this);
-    this.handleScroll = throttle(this.handleScroll.bind(this), 100);
+    this.onWheel = this.onWheel.bind(this);
     this.setQuestionActive = this.setQuestionActive.bind(this);
     this.slideFieldToCenter = this.slideFieldToCenter.bind(this);
+    this.touchStart = this.touchStart.bind(this);
+    this.touchEnd = this.touchEnd.bind(this);
+    this.touchMove = this.touchMove.bind(this);
+    this.processTouchDisplacement = this.processTouchDisplacement.bind(this);
 
     // public
     this.focusQuestion = throttle(this.focusQuestion.bind(this), 250, this, false);
     this.setQuestionCompleted = this.setQuestionCompleted.bind(this);
     this.focus = this.focus.bind(this);
 
+    // instance globals
+    this.appControl = this.props.appControl;
+    this.appControl.focusQuestion = this.focusQuestion;
+    this.appControl.setQuestionCompleted = this.setQuestionCompleted;
+    this.appControl.setQuestionActive = this.setQuestionActive;
+    this.appControl.focus = this.focus;
+
+    this.initialTouchY = null;
     this.animations = new AnimationManager();
     this.state = this.generateInitialState(this.props.config);
   }
@@ -61,7 +72,7 @@ export default class FormUI extends ReactBEM {
    */
   componentDidMount() {
     // Make first question active.
-    this.animations.schedule(() => this.slideFieldToCenter(0), '', 30);
+    this.animations.schedule(() => this.focusQuestion('next'), '', 30);
 
 
     const centerActiveQuestion = () => {
@@ -105,13 +116,13 @@ export default class FormUI extends ReactBEM {
     const distanceFromTop = Math.max(0, (viewBoxheight - node.clientHeight) / 2);
 
     const targetScroll = node.offsetTop - distanceFromTop;
-    const animationDuration = 500;
+    const animationDuration = 300;
 
     try {
       await scrollSlide(viewBox, targetScroll, animationDuration);
       const focusEl = node.querySelector(`.${globals.FOCUS_CLASS}`);
       if (focusEl) {
-        this.focus(focusEl);
+        // this.focus(focusEl);
       }
     } catch (e) {
       // nothing
@@ -184,40 +195,6 @@ export default class FormUI extends ReactBEM {
     this.setActiveFieldIndex(qIndex);
   }
 
-  handleScroll() {
-    const viewBoxTop = this.refs.questionsViewBox.getBoundingClientRect().top;
-    const viewBoxHeight = this.refs.questionsViewBox.clientHeight;
-    const viewBoxCenter = viewBoxTop + viewBoxHeight / 2;
-    let closestToCenter = {
-      distance: null,
-      index: null,
-    };
-
-
-    const fieldCount = this.getFormFields();
-    for (let i = 0; i < fieldCount.length; i++) {
-      const fieldEl = this.getFieldNode(i);
-      const fieldElTop = fieldEl.getBoundingClientRect().top;
-      const fieldHeight = fieldEl.clientHeight;
-      const fieldCenter = fieldElTop + fieldHeight / 2;
-      const fieldDistanceToCenter = Math.abs(viewBoxCenter - fieldCenter);
-
-      if (typeof closestToCenter.distance !== 'number'
-        || fieldDistanceToCenter < closestToCenter.distance) {
-        closestToCenter = {
-          distance: fieldDistanceToCenter,
-          index: i,
-        };
-      }
-    }
-
-    const activeIndex = this.getActiveFieldIndex();
-    if (closestToCenter.index !== activeIndex) {
-      this.setActiveFieldIndex(closestToCenter.index);
-      // this.slideFieldToCenter(closestToCenter.index);
-    }
-  }
-
   /**
    * Sets a question as completed.
    * @private
@@ -255,44 +232,100 @@ export default class FormUI extends ReactBEM {
     setTimeout(focus, 10);
   }
 
-  render() {
-    const appControl = this.props.appControl;
-    appControl.focusQuestion = this.focusQuestion;
-    appControl.setQuestionCompleted = this.setQuestionCompleted;
-    appControl.setQuestionActive = this.setQuestionActive;
-    appControl.focus = this.focus;
 
+  // //////////////////  Event Handlers   ////////////////////////
+
+  onWheel(e) {
+    e.preventDefault();
+    const wheelDelta = e.nativeEvent.wheelDelta;
+    this.animations.schedule(() => {
+      if (wheelDelta < 0) {
+        this.focusQuestion('next');
+      } else if (wheelDelta > 0) {
+        this.focusQuestion('prev');
+      }
+    }, 'scroll', 3);
+  }
+
+  /**
+   * Touch envent on questionsViewBox
+   * @param  {Event} e
+   */
+  touchStart(e) {
+    this.initialTouchY = e.changedTouches[0].pageY;
+    this.trackingTouch = true;
+  }
+
+  /**
+   * Touch envent on questionsViewBox
+   * @param  {Event} e
+   */
+  touchMove(e) {
+    e.preventDefault(); // Prevent scroll on mobile
+    this.processTouchDisplacement(e);
+  }
+
+  /**
+   * Touch envent on questionsViewBox
+   * @param  {Event} e
+   */
+  touchEnd(e) {
+    this.processTouchDisplacement(e);
+  }
+
+  processTouchDisplacement(e) {
+    if (!this.trackingTouch) {
+      return;
+    }
+
+    const currTouchY = e.changedTouches[0].pageY;
+    const displacement = currTouchY - this.initialTouchY;
+    const minTouchDisplacement = 80;
+    if (Math.abs(displacement) < minTouchDisplacement) {
+      return;
+    }
+
+    this.trackingTouch = false;
+    if (displacement < 0) {
+      this.focusQuestion('next');
+    } else {
+      this.focusQuestion('prev');
+    }
+  }
+
+  render() {
     const questions = this.props.config.questions.map((q, index) => {
       return (
         <FormField
           config={q}
           ui={this.state.ui.questions[index]}
-          appControl={appControl}
+          appControl={this.appControl}
           key={q.key}
         />);
     });
 
     return (
-      <div
-        className={this.bemClass}
-        onScroll={() => {
-          this.animations.schedule(this.handleScroll, 'scroll', 3);
-        }}
-      >
-
-        <div className={this.bemSubComponent('questionsViewBox')} ref="questionsViewBox">
+      <div className={this.bemClass}>
+        <div
+          className={this.bemSubComponent('questionsViewBox')}
+          ref="questionsViewBox"
+          onTouchStart={this.touchStart}
+          onTouchEnd={this.touchEnd}
+          onTouchMove={this.touchMove}
+          onWheel={this.onWheel}
+        >
           <div className={this.bemSubComponent('questions')} ref="questions" >
             {questions}
 
             <SubmitButton
               ui={this.state.ui.submitButton}
-              appControl={appControl}
+              appControl={this.appControl}
               ref="submitButton"
             />
           </div>
         </div>
 
-        <NavigationBar appControl={appControl} ui={this.state.ui} />
+        <NavigationBar appControl={this.appControl} ui={this.state.ui} />
       </div>
     );
   }
