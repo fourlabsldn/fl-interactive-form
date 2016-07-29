@@ -190,7 +190,7 @@ export default class FormUI extends ReactBEM {
     const distanceFromTop = Math.max(0, (viewBoxheight - node.clientHeight) / 2);
 
     const targetScroll = node.offsetTop - distanceFromTop;
-    const animationDuration = 300;
+    const animationDuration = 160;
 
     try {
       await scrollSlide(viewBox, targetScroll, animationDuration);

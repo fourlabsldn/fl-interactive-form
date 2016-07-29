@@ -54,6 +54,7 @@ gulp.task('build:src', () => {
           'transform-async-to-generator', [
             'transform-runtime', { polyfill: true, regenerator: true },
           ],
+          ['transform-es2015-classes', { loose: true }],
         ],
         presets: ['es2015-rollup', 'react'],
       }),

@@ -5,7 +5,7 @@
   <title>slv - contact demo</title>
   <link rel="stylesheet" href="../dist/fl-interactive-form.css">
   <!-- <link rel="stylesheet" href="https://use.typekit.net/c/147cf3/1w;brandon-grotesque,2,Y2h:W:i1,Y2k:W:i3,Y2m:W:i4,Y2p:W:i5,Y2r:W:i7,Y2t:W:i9,Y2g:W:n1,Y2j:W:n3,Y2l:W:n4,Y2n:W:n5,Y2q:W:n7,Y2s:W:n9;europa,2,X9L:W:i3,X9M:W:i4,X9N:W:i7,X9H:W:n3,X9J:W:n4,X9K:W:n7/d" media="all" /> -->
-  <script src="./dependencies/x-div/dist/x-div.js"> </script>
+  <!-- <script src="./dependencies/x-div/dist/x-div.js"> </script> -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
@@ -23,11 +23,17 @@
     padding: 0;
     background-color: yellow;
   }
+
+  #asdf {
+    width: 100%;
+    height: 100%;
+  }
   </style>
 </head>
 <body>
 <div class="page-section">
-  <x-div
+  <div
+    id="asdf"
     data-controller="../dist/fl-interactive-form.js"
     data-config='{
       "questions": [{
@@ -58,9 +64,18 @@
         "placeholder": "MMMMail"
       }]
     }'
+  >
+</div>
+
+  <script>
+    a = document.querySelector("#asdf");
+    function xController (callback) {
+      callback(a);
+    }
+  </script>
+  <script src="../dist/fl-interactive-form.js"></script>
 
 
-  />
 </div>
 
 

@@ -5,6 +5,6 @@ import React from 'react';
 import Form from './Form';
 
 xController((xdiv) => {
-  const config = JSON.parse(xdiv.dataset.config);
+  const config = JSON.parse(xdiv.getAttribute('data-config'));
   ReactDOM.render(<Form config={config} />, xdiv);
 });

@@ -1,4 +1,4 @@
-
+import './requestAnimationFramePolyfill';
 /**
  * Handled calling requestAnimationFrame and makes it easy to perform an
  * animation a reduced amount of frames per second by jumping frames.
