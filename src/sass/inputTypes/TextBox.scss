@@ -1,32 +1,5 @@
 .fl-if_TextBox {
   padding: 0 0 .4em;
-
-
-  &-error {
-    background-color: $c-error;
-    color: $c-error-text;
-    padding: .5em;
-    border-radius: 4px;
-    position: relative;
-    margin-top: 1em;
-    display: inline-block;
-
-    &::before {
-      $s-triangle-width: .5em;
-      $s-triangle-height: .5em;
-
-      content: '';
-      position: absolute;
-      background-color: transparent;
-      display: block;
-      width: 0;
-      top: -$s-triangle-height;
-      left: 1em;
-      border-style: solid;
-      border-color: $c-error transparent;
-      border-width: 0 $s-triangle-width $s-triangle-height;
-    }
-  }
 }
 
 .fl-if_TextBox-input {

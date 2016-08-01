@@ -53,12 +53,6 @@ export default class TextInput extends InputField {
       this.saveResponse();
     };
 
-
-    const errorMsg = this.props.ui.error;
-    const error = errorMsg
-      ? <div className={this.bemSubComponent('error')}> {errorMsg} </div>
-      : null;
-
     return (
       <div className={this.bemClass}>
         <InputEl
@@ -73,9 +67,6 @@ export default class TextInput extends InputField {
           onBlur={handleBlur}
           disabled={!this.props.ui.active}
         />
-        <br />
-        {error}
-
       </ div>
     );
   }

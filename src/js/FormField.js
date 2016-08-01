@@ -77,13 +77,24 @@ export default class FormField extends ReactBEM {
         assert(false, `Invalid type ${this.props.config.type}`);
     }
 
+
+    const errorMsg = this.props.ui.error;
+    const error = errorMsg
+      ? <div className={this.bemSubComponent('error')}> {errorMsg} </div>
+      : null;
+
     return (
       <div className={classNames.join(' ')} onClick={this.handleClick}>
+
         <p className={this.bemSubComponent('legend')}>
           <i className={`fa fa-check-circle ${this.bemSubComponent('okIcon')}`} />
           {this.props.config.title}
         </p>
+
         {React.createElement(inputTypes[inputType], inputProps)}
+
+        {error}
+
       </div>
     );
   }

@@ -39,15 +39,33 @@
   }
 }
 
-.fl-if_FormField-okIcon {
+.fl-if_FormField-error {
+  background-color: $c-error;
+  color: $c-error-text;
+  padding: .3em .5em;
+  border-radius: 4px;
   position: absolute;
-  left: - 1.3em;
-  top: .12em;
-  color: $c-valid-2;
-  opacity: 0;
-  transition: opacity .4s ease-in-out;
+  display: block;
+  margin-top: 1em;
+  font-size: .8em;
 
-  .fl-if_FormField--completed & {
-    opacity: 1;
+  border-color: darken($c-error, 15%);
+  border-style: solid;
+  border-width: 0 1px 3px;
+
+  &::before {
+    $s-triangle-width: .5em;
+    $s-triangle-height: .5em;
+
+    content: '';
+    position: absolute;
+    background-color: transparent;
+    display: block;
+    width: 0;
+    top: .1em - $s-triangle-height;
+    left: 1em;
+    border-style: solid;
+    border-color: $c-error transparent;
+    border-width: 0 $s-triangle-width $s-triangle-height;
   }
 }
