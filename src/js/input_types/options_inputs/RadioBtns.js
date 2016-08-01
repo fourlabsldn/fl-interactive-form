@@ -8,7 +8,13 @@ export default class RadioBtns extends OptionsInput {
   }
 
   validateResponse(response) {
-    return this.props.config.options[response] !== undefined;
+    if (
+      !this.isRequired() ||
+      this.props.config.options[response] !== undefined
+    ) {
+      return null;
+    }
+    return 'You must choose at lease one option';
   }
 
   generateOptions(options) {
