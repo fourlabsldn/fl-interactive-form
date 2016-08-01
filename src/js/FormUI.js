@@ -7,7 +7,6 @@ import NavigationBar from './NavigationBar';
 import clone from './utils/clone';
 import globals from './utils/globals';
 import throttle from './utils/throttle';
-import debounce from './utils/debounce';
 import scrollSlide from './utils/scrollSlide';
 import AnimationManager from './utils/AnimationManager';
 import SubmitButton from './input_types/SubmitButton';
@@ -384,10 +383,6 @@ export default class FormUI extends ReactBEM {
         />);
     });
 
-    const scroll = (e) => {
-      console.log('scroll');
-      this.onScroll(e);
-    };
 
     return (
       <div className={this.bemClass}>
@@ -398,7 +393,7 @@ export default class FormUI extends ReactBEM {
           onTouchEnd={this.touchEnd}
           onTouchMove={this.touchMove}
           onWheel={this.onWheel}
-          onScroll={scroll}
+          onScroll={this.onScroll}
         >
           <div className={this.bemSubComponent('questions')} ref="questions" >
             {questions}
