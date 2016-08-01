@@ -7,6 +7,7 @@ import NavigationBar from './NavigationBar';
 import clone from './utils/clone';
 import globals from './utils/globals';
 import throttle from './utils/throttle';
+import debounce from './utils/debounce';
 import scrollSlide from './utils/scrollSlide';
 import AnimationManager from './utils/AnimationManager';
 import SubmitButton from './input_types/SubmitButton';
@@ -297,14 +298,28 @@ export default class FormUI extends ReactBEM {
    */
   onWheel(e) {
     e.preventDefault();
-    const wheelDelta = e.nativeEvent.wheelDelta;
+
+    // Let's dismiss moves that are too small. They come from things like
+    // Apple's scroll innertia, which can mess things up. We want to move
+    // just one question per scroll if possible.
+    if (!e.deltaY || Math.abs(e.deltaY) < 2) {
+      return;
+    }
+
+    // Throttle the second part to a minimum of 500 milliseconds
+    if ((new Date() - this.lastWheelMove) < 350) {
+      return;
+    }
+    this.lastWheelMove = new Date();
+
+    const wheelDelta = e.deltaY;
     this.animations.schedule(() => {
-      if (wheelDelta < 0) {
+      if (wheelDelta > 0) {
         this.goToField('next');
-      } else if (wheelDelta > 0) {
+      } else if (wheelDelta < 0) {
         this.goToField('prev');
       }
-    }, 'scroll', 3);
+    }, 'scroll', 0);
   }
 
   /**
@@ -369,6 +384,11 @@ export default class FormUI extends ReactBEM {
         />);
     });
 
+    const scroll = (e) => {
+      console.log('scroll');
+      this.onScroll(e);
+    };
+
     return (
       <div className={this.bemClass}>
         <div
@@ -378,7 +398,7 @@ export default class FormUI extends ReactBEM {
           onTouchEnd={this.touchEnd}
           onTouchMove={this.touchMove}
           onWheel={this.onWheel}
-          onScroll={this.onScroll}
+          onScroll={scroll}
         >
           <div className={this.bemSubComponent('questions')} ref="questions" >
             {questions}
