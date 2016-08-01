@@ -7,6 +7,29 @@ export default class SubmitButton extends InputField {
     super(...args);
     this.saveResponse = () => null;
     this.getResponse = () => null;
+    this.onClick = this.onClick.bind(this);
+    this.onBlur = this.onBlur.bind(this);
+    this.initialState = {
+      error: '',
+      text: 'Submit',
+    };
+
+    this.state = this.initialState;
+  }
+
+  onClick() {
+    const errorCount = this.props.getErrorCount();
+
+    if (errorCount > 0) {
+      this.setState({
+        error: `${errorCount} answer${errorCount > 1 ? 's' : ''} need completing`,
+        text: 'Review',
+      });
+    }
+  }
+
+  onBlur() {
+    this.setState(this.initialState);
   }
 
   render() {
@@ -19,13 +42,15 @@ export default class SubmitButton extends InputField {
         className={buttonClass}
         onKeyDown={this.keyListener}
       >
+        {this.state.error}
         <button
           className={`${this.bemSubComponent('button')} ${globals.FOCUS_CLASS}`}
           ref="button"
-          onClick={this.props.appControl.exportConfig}
+          onClick={this.onClick}
+          onBlur={this.onBlur}
           tabIndex="0"
         >
-          Submit
+          {this.state.text}
         </button>
       </div>
     );
@@ -35,4 +60,5 @@ export default class SubmitButton extends InputField {
 SubmitButton.PropTypes = {
   appControl: React.PropTypes.object.isRequired,
   ui: React.PropTypes.object.isRequired,
+  getErrorCount: React.PropTypes.func.isRequired,
 };

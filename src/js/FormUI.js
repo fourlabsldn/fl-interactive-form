@@ -21,6 +21,8 @@ export default class FormUI extends ReactBEM {
   constructor(...args) {
     super(...args);
 
+
+
     // private
     this.onWheel = this.onWheel.bind(this);
     this.onScroll = throttle(this.onScroll.bind(this), 250, this, true);
@@ -29,6 +31,7 @@ export default class FormUI extends ReactBEM {
     this.touchStart = this.touchStart.bind(this);
     this.getFieldNode = this.getFieldNode.bind(this);
     this.getFormFields = this.getFormFields.bind(this);
+    this.getErrorCount = this.getErrorCount.bind(this);
     this.setFieldActive = this.setFieldActive.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
     this.getActiveFieldKey = this.getActiveFieldKey.bind(this);
@@ -204,6 +207,22 @@ export default class FormUI extends ReactBEM {
     } finally {
       this.animatingScroll = false;
     }
+  }
+
+  /**
+   * Used by submit button
+   * @public
+   * @method getErrorCount
+   * @return {Int}
+   */
+  getErrorCount() {
+    const fieldsWithError = this.props.config.questions.filter(q => {
+      const questionReactEl = this.refs[q.key];
+      const err = questionReactEl.getError();
+      return !!err;
+    });
+
+    return fieldsWithError.length;
   }
 
   // ==============================================================
@@ -402,6 +421,7 @@ export default class FormUI extends ReactBEM {
               ui={this.state.ui.submitButton}
               appControl={this.appControl}
               ref={this.state.ui.submitButton.key}
+              getErrorCount={this.getErrorCount}
             />
           </div>
         </div>

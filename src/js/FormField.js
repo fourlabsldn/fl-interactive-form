@@ -19,6 +19,12 @@ export default class FormField extends ReactBEM {
     }
   }
 
+  getError() {
+    const response = this.refs.input.getResponse();
+    const error = this.refs.input.validateResponse(response);
+    return error;
+  }
+
   render() {
     // assert(
     //   typeof inputTypes[this.props.config.type] !== 'undefined',
@@ -38,6 +44,7 @@ export default class FormField extends ReactBEM {
       config: this.props.config,
       appControl: this.props.appControl,
       key: this.props.config.key,
+      ref: 'input'
     };
 
     let inputType;
