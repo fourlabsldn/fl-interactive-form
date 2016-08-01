@@ -17,8 +17,8 @@ export default class SubmitButton extends InputField {
     this.state = this.initialState;
   }
 
-  onClick() {
-    const errorCount = this.props.getErrorCount();
+  async onClick() {
+    const errorCount = await this.props.validateAllFields();
 
     if (errorCount > 0) {
       this.setState({
@@ -60,5 +60,5 @@ export default class SubmitButton extends InputField {
 SubmitButton.PropTypes = {
   appControl: React.PropTypes.object.isRequired,
   ui: React.PropTypes.object.isRequired,
-  getErrorCount: React.PropTypes.func.isRequired,
+  validateAllFields: React.PropTypes.func.isRequired,
 };

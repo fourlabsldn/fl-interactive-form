@@ -26,6 +26,19 @@
   }
 }
 
+.fl-if_FormField-okIcon {
+  position: absolute;
+  left: - 1.3em;
+  top: .12em;
+  color: $c-valid-2;
+  opacity: 0;
+  transition: opacity .4s ease-in-out;
+
+  .fl-if_FormField--completed & {
+    opacity: 1;
+  }
+}
+
 .fl-if_FormField-legend {
   font-size: $s-font-medium-large;
   padding: 0;

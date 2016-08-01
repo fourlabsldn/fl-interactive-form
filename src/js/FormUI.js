@@ -29,7 +29,7 @@ export default class FormUI extends ReactBEM {
     this.touchStart = this.touchStart.bind(this);
     this.getFieldNode = this.getFieldNode.bind(this);
     this.getFormFields = this.getFormFields.bind(this);
-    this.getErrorCount = this.getErrorCount.bind(this);
+    this.validateAllFields = this.validateAllFields.bind(this);
     this.setFieldActive = this.setFieldActive.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
     this.getActiveFieldKey = this.getActiveFieldKey.bind(this);
@@ -210,19 +210,21 @@ export default class FormUI extends ReactBEM {
   }
 
   /**
-   * Used by submit button
+   * Used by submit button. Shows error and returns arror ammount
    * @public
-   * @method getErrorCount
+   * @method validateAllFields
    * @return {Int}
    */
-  getErrorCount() {
-    const fieldsWithError = this.props.config.questions.filter(q => {
-      const questionReactEl = this.refs[q.key];
-      const err = questionReactEl.getError();
-      return !!err;
-    });
+  async validateAllFields() {
+    let errors = 0;
 
-    return fieldsWithError.length;
+    for (const q of this.props.config.questions) {
+      const questionReactEl = this.refs[q.key];
+      const err = await questionReactEl.validate();
+      errors += err ? 1 : 0;
+    }
+
+    return errors;
   }
 
   // ==============================================================
@@ -430,7 +432,7 @@ export default class FormUI extends ReactBEM {
               ui={this.state.ui.submitButton}
               appControl={this.appControl}
               ref={this.state.ui.submitButton.key}
-              getErrorCount={this.getErrorCount}
+              validateAllFields={this.validateAllFields}
             />
           </div>
         </div>

@@ -11,6 +11,7 @@ export default class FormField extends ReactBEM {
   constructor(...args) {
     super(...args);
     this.handleClick = this.handleClick.bind(this);
+    this.validate = this.validate.bind(this);
   }
 
   handleClick() {
@@ -19,9 +20,17 @@ export default class FormField extends ReactBEM {
     }
   }
 
-  getError() {
+  /**
+   * Shows error and returns error message
+   * @method validate
+   * @return {String} Error message
+   */
+  async validate() {
     const response = this.refs.input.getResponse();
     const error = this.refs.input.validateResponse(response);
+    if (error) {
+      await this.refs.input.showError(error);
+    }
     return error;
   }
 
