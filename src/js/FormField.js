@@ -4,8 +4,8 @@ import assert from 'fl-assert';
 import TextBox from './input_types/text_inputs/TextBox';
 import TextArea from './input_types/text_inputs/TextArea';
 import RadioBtns from './input_types/options_inputs/RadioBtns';
-
-const inputTypes = { TextBox, TextArea, RadioBtns };
+import Checkboxes from './input_types/options_inputs/Checkboxes';
+const inputTypes = { TextBox, TextArea, RadioBtns, Checkboxes };
 
 export default class FormField extends ReactBEM {
   constructor(...args) {
@@ -58,7 +58,7 @@ export default class FormField extends ReactBEM {
         inputType = 'TextArea';
         break;
       case 'Checkboxes':
-        inputType = 'RadioBtns';
+        inputType = 'Checkboxes';
         break;
       case 'Dropdown':
         inputType = 'RadioBtns';
