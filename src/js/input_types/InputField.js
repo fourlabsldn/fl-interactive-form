@@ -69,20 +69,20 @@ export default class InputField extends ReactBEM {
    * @return {Promise}
    */
   async saveResponse(response = this.getResponse()) {
-    const err = this.validateResponse(response);
-    if (err) {
-      console.log('Invalid response:', err);
-      return;
-    }
-
     this.props.appControl.setQuestionResponse(
       this.props.config.key,
       response
     );
 
+    const err = this.validateResponse(response);
+    if (err) {
+      // Show validation error
+      console.log(err);
+    }
+
     await this.props.appControl.setQuestionCompleted(
       this.props.config.key,
-      true
+      !err
     );
   }
 
