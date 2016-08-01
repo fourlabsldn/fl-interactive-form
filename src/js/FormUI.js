@@ -45,11 +45,12 @@ export default class FormUI extends ReactBEM {
     this.animatingScroll = false;
     this.animations = new AnimationManager();
 
-    this.appControl = this.props.appControl;
-    this.appControl.focus = this.focus;
-    this.appControl.goToField = this.goToField;
-    this.appControl.setQuestionCompleted = this.setQuestionCompleted;
-    this.appControl.setFieldActive = this.setFieldActive;
+    this.appControl = Object.assign(this.props.appControl, {
+      focus: this.focus,
+      goToField: this.goToField,
+      setQuestionCompleted: this.setQuestionCompleted,
+      setFieldActive: this.setFieldActive,
+    });
 
     this.state = this.generateInitialState(this.props.config);
   }
