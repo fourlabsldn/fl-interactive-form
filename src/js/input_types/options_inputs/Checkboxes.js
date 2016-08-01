@@ -3,6 +3,11 @@ import OptionsInput from './OptionsInput';
 import globals from '../../utils/globals';
 
 export default class Checkboxes extends OptionsInput {
+  constructor(...args) {
+    super(...args);
+    this.checkboxClick = this.checkboxClick.bind(this);
+  }
+
   /**
    * @override
    * @method getResponse
@@ -25,29 +30,36 @@ export default class Checkboxes extends OptionsInput {
    * @return {Boolean}
    */
   isValidResponse(response) {
-    if (!Array.isArray(response)) {
-      return false;
-    }
-
-    // Make sure all responses are valid option indexes
-    for (const r of response) {
-      if (this.props.config.options[r] === undefined) {
-        return false;
-      }
-    }
-
-    return true;
+    return Array.isArray(response) &&
+      // correct length
+      response.length === this.props.config.options.length &&
+      // All values are boolean
+      response.reduce(
+        (valid, r) => valid && typeof r === 'boolean',
+        true
+      );
   }
 
-  generateOptions(options) {
-    const checkboxClick = (index) => {
-      console.log('Checkbox click');
-      const selectedOptions = this.getResponse();
-      // Toggle selection
-      selectedOptions[index] = !selectedOptions[index];
-      this.saveResponseAndJumpToQuestion(selectedOptions, 'next');
-    };
+  /**
+   * @private
+   * @method checkboxClick
+   * @param  {Int} index - clicked option index
+   * @return {void}
+   */
+  checkboxClick(index) {
+    const selectedOptions = this.getResponse();
+    // Toggle selection
+    selectedOptions[index] = !selectedOptions[index];
+    this.saveResponse(selectedOptions);
+  }
 
+  /**
+   * @override
+   * @method generateOptions
+   * @param  {Array<String>} options
+   * @return {Array<ReactDOMElements}
+   */
+  generateOptions(options) {
     const responses = this.getResponse();
     return options.map((option, index) => {
       const optionClasses = [this.bemSubComponent('option'), globals.FOCUS_CLASS];
@@ -60,7 +72,7 @@ export default class Checkboxes extends OptionsInput {
         <div
           className={optionClasses.join(' ')}
           key={`${this.props.config.key}${index}`}
-          onClick={() => checkboxClick(index)}
+          onClick={() => this.checkboxClick(index)}
           tabIndex="0"
         >
           {option}
