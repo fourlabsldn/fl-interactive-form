@@ -1,6 +1,7 @@
 import React from 'react';
 import OptionsInput from './OptionsInput';
 import globals from '../../utils/globals';
+import assert from 'fl-assert';
 
 export default class Checkboxes extends OptionsInput {
   constructor(...args) {
@@ -25,19 +26,34 @@ export default class Checkboxes extends OptionsInput {
 
   /**
    * @override
-   * @method isValidResponse
+   * @method validateResponse
    * @param  {Array<Bool>} response
-   * @return {Boolean}
+   * @return {String} - Error message.
    */
-  isValidResponse(response) {
-    return Array.isArray(response) &&
-      // correct length
-      response.length === this.props.config.options.length &&
-      // All values are boolean
-      response.reduce(
-        (valid, r) => valid && typeof r === 'boolean',
-        true
-      );
+  validateResponse(response) {
+    if (!this.isRequired()) { return null; }
+    if (!Array.isArray(response)) {
+      return 'This field must be filled';
+    }
+
+    assert(response.length === this.props.config.options.length,
+      `Invalid response array. Response of length ${response.length}
+       and options with length ${this.props.config.options.length}`);
+
+       // All values are boolean
+    assert(
+      response.reduce((valid, r) => valid && typeof r === 'boolean', true),
+      'Response array has non-boolean values'
+    );
+
+    // If it is required, it must contain at least on checked opiton;
+    const checkedOptionCount = response.filter(r => !!r).length;
+
+    if (checkedOptionCount === 0) {
+      return 'You must check at least one option.';
+    }
+
+    return null;
   }
 
   /**

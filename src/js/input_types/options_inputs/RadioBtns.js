@@ -7,7 +7,7 @@ export default class RadioBtns extends OptionsInput {
     return this.props.config.answer;
   }
 
-  isValidResponse(response) {
+  validateResponse(response) {
     return this.props.config.options[response] !== undefined;
   }
 

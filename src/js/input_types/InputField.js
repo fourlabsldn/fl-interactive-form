@@ -6,9 +6,10 @@ export default class InputField extends ReactBEM {
     super(...args);
     this.keyListener = this.keyListener.bind(this);
     this.getResponse = this.getResponse.bind(this);
-    this.isValidResponse = this.isValidResponse.bind(this);
+    this.validateResponse = this.validateResponse.bind(this);
     this.saveResponse = this.saveResponse.bind(this);
     this.saveResponseAndJumpToQuestion = this.saveResponseAndJumpToQuestion.bind(this);
+    this.isRequired = this.isRequired.bind(this);
   }
 
   /**
@@ -38,9 +39,27 @@ export default class InputField extends ReactBEM {
     throw new Error('Standard class not overriden');
   }
 
-  // To be overriden by subclasses
-  isValidResponse(response) {
-    return !!response;
+  /**
+   * @private
+   * @method isRequired
+   * @return {Boolean}
+   */
+  isRequired() {
+    return this.props.config.required;
+  }
+
+  /**
+   * @private
+   * @method validateResponse
+   * @param  {Array | String | Int} response
+   * @return {String} Returns an error message, if there is an error.
+   * If there is no error it returns a falsy value.
+   */
+  validateResponse(response) {
+    if (this.isRequired() && !response) {
+      return 'Field must be filled.';
+    }
+    return null;
   }
 
   /**
@@ -50,9 +69,9 @@ export default class InputField extends ReactBEM {
    * @return {Promise}
    */
   async saveResponse(response = this.getResponse()) {
-    if (!this.isValidResponse(response)) {
-      // TODO: show error.
-      console.log('Invalid response', response);
+    const err = this.validateResponse(response);
+    if (err) {
+      console.log('Invalid response:', err);
       return;
     }
 
