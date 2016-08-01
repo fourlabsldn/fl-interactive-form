@@ -39,6 +39,12 @@
   }
 }
 
+@keyframes bounce-in {
+  0% { transform: scale(0); }
+  30% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
 .fl-if_FormField-error {
   background-color: $c-error;
   color: $c-error-text;
@@ -48,11 +54,15 @@
   display: block;
   margin-top: 1em;
   font-size: .8em;
+  transform-origin: top left;
+  font-smoothing: antialiased;
+  text-shadow: rgba(0,0,0,.01) 0 0 1px;
 
   border-color: darken($c-error, 15%);
   border-style: solid;
   border-width: 0 1px 3px;
 
+  animation: bounce-in .3s ease-in-out forwards;
   &::before {
     $s-triangle-width: .5em;
     $s-triangle-height: .5em;
