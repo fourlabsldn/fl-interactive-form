@@ -56,6 +56,9 @@
 
 .fl-if_RadioBtns {
   @include options-input();
+  &-option::before{
+    border-radius: 50%;
+  }
 }
 
 .fl-if_Checkboxes {
