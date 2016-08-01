@@ -21,8 +21,6 @@ export default class FormUI extends ReactBEM {
   constructor(...args) {
     super(...args);
 
-
-
     // private
     this.onWheel = this.onWheel.bind(this);
     this.onScroll = throttle(this.onScroll.bind(this), 250, this, true);
@@ -40,8 +38,9 @@ export default class FormUI extends ReactBEM {
 
     // public
     this.focus = this.focus.bind(this);
-    this.setQuestionCompleted = this.setQuestionCompleted.bind(this);
     this.goToField = throttle(this.goToField.bind(this), 250, this, false);
+    this.setFieldError = this.setFieldError.bind(this);
+    this.setQuestionCompleted = this.setQuestionCompleted.bind(this);
 
     // instance globals
     this.initialTouchY = null;
@@ -53,6 +52,7 @@ export default class FormUI extends ReactBEM {
       goToField: this.goToField,
       setQuestionCompleted: this.setQuestionCompleted,
       setFieldActive: this.setFieldActive,
+      setFieldError: this.setFieldError,
     });
 
     this.state = this.generateInitialState(this.props.config);
@@ -271,6 +271,15 @@ export default class FormUI extends ReactBEM {
     }
 
     this.setState({ ui });
+  }
+
+  async setFieldError(key, message) {
+    assert(this.refs[key], `Invalid key: ${key}`);
+    const ui = clone(this.state.ui);
+    const field = ui.questions.find(q => q.key === key);
+    field.error = message;
+
+    await new Promise(resolve => this.setState({ ui }, resolve));
   }
 
   // ==============================================================

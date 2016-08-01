@@ -23,6 +23,10 @@ export default class InputField extends ReactBEM {
     const previouslyCompletedState = this.props.ui.completed;
     await this.saveResponse(response);
 
+    // We will not move to the next question if there is an error.
+    const err = this.validateResponse(response);
+    if (err) { return; }
+
     // Now there will be a render pass and this element will be set to completed
     // we wait for the animation to finish before going to the next question.
     let animDuration = 0;
@@ -55,7 +59,7 @@ export default class InputField extends ReactBEM {
    * @return {String} Returns an error message, if there is an error.
    * If there is no error it returns a falsy value.
    */
-  validateResponse(response) {
+  validateResponse(response = this.getResponse()) {
     if (this.isRequired() && !response) {
       return 'Field must be filled.';
     }
@@ -74,11 +78,9 @@ export default class InputField extends ReactBEM {
       response
     );
 
+    // Show error if there is any
     const err = this.validateResponse(response);
-    if (err) {
-      // Show validation error
-      console.log(err);
-    }
+    await this.showError(err);
 
     await this.props.appControl.setQuestionCompleted(
       this.props.config.key,
@@ -115,6 +117,10 @@ export default class InputField extends ReactBEM {
 
     const response = this.getResponse();
     this.saveResponseAndJumpToQuestion(response, jumpDirection);
+  }
+
+  async showError(message) {
+    return await this.props.appControl.setFieldError(this.props.config.key, message);
   }
 }
 

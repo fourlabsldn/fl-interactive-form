@@ -22,6 +22,17 @@ export default class TextInput extends InputField {
     return response;
   }
 
+  /**
+   * @override
+   */
+  validateResponse(response = this.getResponse()) {
+    if (this.props.config.required && !response) {
+      return 'This field must be completed.';
+    }
+
+    return false;
+  }
+
   render() {
     const InputEl = this.inputEl;
     const handleInputChange = () => {
@@ -30,6 +41,10 @@ export default class TextInput extends InputField {
         // set incomplete
         this.props.appControl.setQuestionCompleted(this.props.config.key, false);
       }
+
+      if (this.props.ui.error) {
+        this.showError(this.validateResponse());
+      }
     };
 
     const handleBlur = () => {
@@ -37,6 +52,12 @@ export default class TextInput extends InputField {
       this.changedSinceLastUpdate = false;
       this.saveResponse();
     };
+
+
+    const errorMsg = this.props.ui.error;
+    const error = errorMsg
+      ? <div className={this.bemSubComponent('error')}> {errorMsg} </div>
+      : null;
 
     return (
       <div className={this.bemClass}>
@@ -52,6 +73,9 @@ export default class TextInput extends InputField {
           onBlur={handleBlur}
           disabled={!this.props.ui.active}
         />
+        <br />
+        {error}
+
       </ div>
     );
   }
