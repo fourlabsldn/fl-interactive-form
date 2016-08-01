@@ -83,7 +83,6 @@ export default class OptionsInput extends InputField {
       <div
         className={this.bemClass}
         onKeyDown={this.keyListener}
-        onBlur={this.saveResponse}
       >
         {options}
       </ div>
