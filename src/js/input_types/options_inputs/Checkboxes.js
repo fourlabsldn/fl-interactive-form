@@ -41,6 +41,7 @@ export default class Checkboxes extends OptionsInput {
 
   generateOptions(options) {
     const checkboxClick = (index) => {
+      console.log('Checkbox click');
       const selectedOptions = this.getResponse();
       // Toggle selection
       selectedOptions[index] = !selectedOptions[index];

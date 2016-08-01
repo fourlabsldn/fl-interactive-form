@@ -11,6 +11,10 @@ export default class TextInput extends InputField {
     super(...args);
     this.render = this.render.bind(this);
     this.inputEl = null; // To be set by subclasses
+
+    // Make sure we just trigger a revalidarion on blur when there has been
+    // some change.
+    this.changedSinceLastUpdate = false;
   }
 
   getResponse() {
@@ -21,10 +25,17 @@ export default class TextInput extends InputField {
   render() {
     const InputEl = this.inputEl;
     const handleInputChange = () => {
+      this.changedSinceLastUpdate = true;
       if (this.props.ui.active) {
-        // set inactive
+        // set incomplete
         this.props.appControl.setQuestionCompleted(this.props.config.key, false);
       }
+    };
+
+    const handleBlur = () => {
+      if (!this.changedSinceLastUpdate) { return; }
+      this.changedSinceLastUpdate = false;
+      this.saveResponse();
     };
 
     return (
@@ -38,7 +49,7 @@ export default class TextInput extends InputField {
 
           onKeyDown={this.keyListener}
           onChange={handleInputChange}
-          onBlur={() => this.saveResponse()}
+          onBlur={handleBlur}
           disabled={!this.props.ui.active}
         />
       </ div>
