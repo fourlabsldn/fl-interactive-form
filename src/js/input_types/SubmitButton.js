@@ -18,11 +18,11 @@ export default class SubmitButton extends InputField {
   }
 
   async onClick() {
-    const errorCount = await this.props.validateAllFields();
+    const errorFields = await this.props.validateAllFields();
 
-    if (errorCount > 0) {
+    if (errorFields.length > 0) {
       this.setState({
-        error: `${errorCount} answer${errorCount > 1 ? 's' : ''} need completing`,
+        error: `${errorFields.length} answer${errorFields.length > 1 ? 's' : ''} need completing`,
         text: 'Review',
       });
     }

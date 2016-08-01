@@ -10,6 +10,9 @@ export default class InputField extends ReactBEM {
     this.saveResponse = this.saveResponse.bind(this);
     this.saveResponseAndJumpToQuestion = this.saveResponseAndJumpToQuestion.bind(this);
     this.isRequired = this.isRequired.bind(this);
+    this.keyPrev = this.keyPrev.bind(this);
+    this.keyNext = this.keyNext.bind(this);
+    this.keySelect = this.keySelect.bind(this);
   }
 
   /**
@@ -96,27 +99,36 @@ export default class InputField extends ReactBEM {
 
     if (e.ctrlKey) { return; }
     if (e.shiftKey && e.keyCode !== tab) { return; }
-
-    let jumpDirection;
     if (e.keyCode === enter) {
-      jumpDirection = 'next';
+      this.keySelect();
     } else if (e.keyCode === up) {
-      jumpDirection = 'prev';
+      this.keyPrev();
     } else if (e.keyCode === down) {
-      jumpDirection = 'next';
+      this.keyNext();
     } else if (e.keyCode === tab && e.shiftKey) {
-      jumpDirection = 'prev';
+      this.keyPrev();
     } else if (e.keyCode === tab) {
-      jumpDirection = 'next';
+      this.keyNext();
     } else {
       return;
     }
 
     e.preventDefault();
     e.stopPropagation();
+  }
 
+  keyPrev() {
     const response = this.getResponse();
-    this.saveResponseAndJumpToQuestion(response, jumpDirection);
+    this.saveResponseAndJumpToQuestion(response, 'prev');
+  }
+
+  keyNext() {
+    const response = this.getResponse();
+    this.saveResponseAndJumpToQuestion(response, 'next');
+  }
+
+  keySelect() {
+    this.keyNext();
   }
 
   async showError(message) {

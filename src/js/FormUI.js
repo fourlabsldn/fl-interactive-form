@@ -213,18 +213,27 @@ export default class FormUI extends ReactBEM {
    * Used by submit button. Shows error and returns arror ammount
    * @public
    * @method validateAllFields
-   * @return {Int}
+   * @return {Array<String>}  Object with keys of fields with error
    */
   async validateAllFields() {
-    let errors = 0;
+    const errorFields = [];
 
     for (const q of this.props.config.questions) {
       const questionReactEl = this.refs[q.key];
       const err = await questionReactEl.validate();
-      errors += err ? 1 : 0;
+      if (err) {
+        errorFields.push(q.key);
+      }
     }
 
-    return errors;
+    return errorFields;
+  }
+
+  async slideToFirstWithError() {
+    const errorFields = await this.validateAllFields();
+    if (errorFields.length > 0) {
+      this.slideFieldToCenter(errorFields[0]);
+    }
   }
 
   // ==============================================================
