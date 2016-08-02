@@ -26,6 +26,32 @@ $s-navigation-height: 3rem;
   width: 100%;
   max-height: calc(100% - #{$s-navigation-height});
   overflow: auto;
+
+  // // Hide scrollbar
+  // &::-webkit-scrollbar {
+  //   visibility: hidden;
+  //   width: 0;
+  // }
+
+
+  // Custom scrollbar
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar {
+    width: 3px;
+    height: 3px;
+    background-color: transparent
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: transparent;
+  }
+
+  &:hover::-webkit-scrollbar-thumb {
+    background-color: $c-accent;
+  }
 }
 
 .fl-if_FormUI-questions {
