@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactBEM from './ReactBEM';
+import Error from './Error';
 import assert from 'fl-assert';
 import TextBox from './input_types/text_inputs/TextBox';
 import TextArea from './input_types/text_inputs/TextArea';
@@ -89,7 +90,7 @@ export default class FormField extends ReactBEM {
 
     const errorMsg = this.props.ui.error;
     const error = errorMsg
-      ? <div className={this.bemSubComponent('error')}> {errorMsg} </div>
+      ? <Error speechBubble> {errorMsg} </ Error>
       : null;
 
     return (

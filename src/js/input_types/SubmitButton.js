@@ -1,4 +1,5 @@
 import React from 'react';
+import Error from '../Error';
 import InputField from './InputField';
 import globals from '../utils/globals';
 
@@ -25,7 +26,21 @@ export default class SubmitButton extends InputField {
         error: `${errorFields.length} answer${errorFields.length > 1 ? 's' : ''} need completing`,
         text: 'Review',
       });
+    } else {
+      this.props.appControl.showThankYouScreen('Thank you!');
     }
+  }
+
+  keySelect() {
+    this.onClick();
+  }
+
+  keyPrev() {
+    this.props.appControl.goToField('prev');
+  }
+
+  keyNext() {
+    return;
   }
 
   onBlur() {
@@ -37,12 +52,18 @@ export default class SubmitButton extends InputField {
       ? `${this.bemClass} ${this.bemState('active')}`
       : `${this.bemClass}`;
 
+    const error = this.state.error
+      ? <Error>{this.state.error}</Error>
+      : null;
+
     return (
       <div
         className={buttonClass}
         onKeyDown={this.keyListener}
       >
-        {this.state.error}
+
+        {error}
+
         <button
           className={`${this.bemSubComponent('button')} ${globals.FOCUS_CLASS}`}
           ref="button"

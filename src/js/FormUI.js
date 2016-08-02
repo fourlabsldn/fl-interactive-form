@@ -53,6 +53,7 @@ export default class FormUI extends ReactBEM {
       setQuestionCompleted: this.setQuestionCompleted,
       setFieldActive: this.setFieldActive,
       setFieldError: this.setFieldError,
+      showThankYouScreen: this.showThankYouScreen.bind(this),
     });
 
     this.state = this.generateInitialState(this.props.config);
@@ -236,6 +237,10 @@ export default class FormUI extends ReactBEM {
     }
   }
 
+  showThankYouScreen(message, state = 'end') {
+    this.setState({ splash: { message, state } });
+  }
+
   // ==============================================================
   //                     STATE HANDLERS
   // ==============================================================
@@ -410,7 +415,7 @@ export default class FormUI extends ReactBEM {
     }
   }
 
-  render() {
+  buildForm() {
     const questions = this.props.config.questions.map((q, index) => {
       return (
         <FormField
@@ -449,6 +454,25 @@ export default class FormUI extends ReactBEM {
         <NavigationBar appControl={this.appControl} ui={this.state.ui} />
       </div>
     );
+  }
+
+  buildSplashScreen({ message, state } = this.state.splash) {
+    const classes = [this.bemClass, this.bemState(state)].join(' ');
+    return (
+      <div className={classes}>
+        <div className={this.bemSubComponent('splashMessage')}>
+          {message}
+        </div>
+      </div>
+    );
+  }
+
+  render() {
+    if (this.state.splash) {
+      return this.buildSplashScreen();
+    } else {
+      return this.buildForm();
+    }
   }
 }
 

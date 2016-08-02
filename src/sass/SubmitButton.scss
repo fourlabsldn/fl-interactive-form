@@ -4,9 +4,15 @@
   text-align: center;
   opacity: 0;
   margin-bottom: 500px;
+  position: relative;
 
   &--active {
     opacity: 1;
+  }
+
+  & .fl-if_Error {
+    position: relative;
+    margin: 0 auto .5em;
   }
 }
 
@@ -22,4 +28,8 @@
   &:focus {
     filter: brightness(110%);
   }
+}
+
+.fl-if_SubmitButton-error {
+
 }
