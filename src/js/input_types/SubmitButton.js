@@ -19,8 +19,13 @@ export default class SubmitButton extends InputField {
   }
 
   async onClick() {
-    const errorFields = await this.props.validateAllFields();
+    // If there is already an error being shown.
+    if (this.state.error) {
+      this.props.appControl.slideToFirstWithError();
+      return;
+    }
 
+    const errorFields = await this.props.validateAllFields();
     if (errorFields.length > 0) {
       this.setState({
         error: `${errorFields.length} answer${errorFields.length > 1 ? 's' : ''} need completing`,

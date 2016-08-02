@@ -34,7 +34,9 @@ export default class FormUI extends ReactBEM {
     this.componentDidMount = this.componentDidMount.bind(this);
     this.getActiveFieldKey = this.getActiveFieldKey.bind(this);
     this.slideFieldToCenter = this.slideFieldToCenter.bind(this);
+    this.slideToFirstWithError = this.slideToFirstWithError.bind(this);
     this.processTouchDisplacement = this.processTouchDisplacement.bind(this);
+    this.showThankYouScreen = this.showThankYouScreen.bind(this);
 
     // public
     this.focus = this.focus.bind(this);
@@ -53,7 +55,8 @@ export default class FormUI extends ReactBEM {
       setQuestionCompleted: this.setQuestionCompleted,
       setFieldActive: this.setFieldActive,
       setFieldError: this.setFieldError,
-      showThankYouScreen: this.showThankYouScreen.bind(this),
+      showThankYouScreen: this.showThankYouScreen,
+      slideToFirstWithError: this.slideToFirstWithError,
     });
 
     this.state = this.generateInitialState(this.props.config);
@@ -230,9 +233,15 @@ export default class FormUI extends ReactBEM {
     return errorFields;
   }
 
+
+  /**
+   * @method slideToFirstWithError
+   * @return {Promise}
+   */
   async slideToFirstWithError() {
     const errorFields = await this.validateAllFields();
     if (errorFields.length > 0) {
+      this.setFieldActive(errorFields[0]);
       this.slideFieldToCenter(errorFields[0]);
     }
   }
