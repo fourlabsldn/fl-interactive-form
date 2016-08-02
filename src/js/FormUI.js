@@ -380,7 +380,12 @@ export default class FormUI extends ReactBEM {
    */
   touchStart(e) {
     this.initialTouchY = e.changedTouches[0].pageY;
-    this.trackingTouch = true;
+    this.lastMoveY = this.initialTouchY;
+    this.lastMoveTime = new Date();
+    this.lastMoveScrollValue = this.refs.questionsViewBox.scrollTop;
+    this.currY = this.lastMoveY;
+    this.animatingScroll = true;
+    this.processTouchDisplacement();
   }
 
   /**
@@ -388,36 +393,48 @@ export default class FormUI extends ReactBEM {
    * @param  {Event} e
    */
   touchMove(e) {
-    e.preventDefault(); // Prevent scroll on mobile
-    this.processTouchDisplacement(e);
+    e.preventDefault();
+    // Track Y
+    this.currY = e.changedTouches[0].pageY;
   }
 
   /**
    * Touch envent on questionsViewBox
    * @param  {Event} e
    */
-  touchEnd(e) {
-    this.processTouchDisplacement(e);
+  touchEnd() {
+    this.animations.cancel('touchScroll');
   }
 
   /**
    * @param  {Event} e
    * @return {void}
    */
-  processTouchDisplacement(e) {
-    if (!this.trackingTouch) {
+  processTouchDisplacement() {
+    const maxTouchSpeed = 0.9; // px/ms
+    const maxTotalDisplacement = 130;
+
+    const displacement = this.lastMoveY - this.currY;
+    const currTime = new Date;
+    // Make sure we never divide by 0
+    const timeElapsed = Math.max(1, currTime - this.lastMoveTime);
+    const touchSpeed = displacement / timeElapsed;
+    this.lastMoveY = this.currY;
+    this.lastMoveTime = new Date();
+
+    const totalDisplacement = Math.abs(this.initialTouchY - this.currY);
+    if (Math.abs(touchSpeed) < maxTouchSpeed && totalDisplacement < maxTotalDisplacement) {
+      const newScrollValue = this.lastMoveScrollValue + displacement;
+      this.lastMoveScrollValue = newScrollValue;
+      this.refs.questionsViewBox.scrollTop = newScrollValue;
+      this.animations.schedule(this.processTouchDisplacement, 'touchScroll', 0);
       return;
     }
 
-    const currTouchY = e.changedTouches[0].pageY;
-    const displacement = currTouchY - this.initialTouchY;
-    const minTouchDisplacement = 80;
-    if (Math.abs(displacement) < minTouchDisplacement) {
-      return;
-    }
+    this.animations.cancel('touchScroll');
+    this.animatingScroll = false;
 
-    this.trackingTouch = false;
-    if (displacement < 0) {
+    if (displacement > 0) {
       this.goToField('next');
     } else {
       this.goToField('prev');
