@@ -1,5 +1,7 @@
 @mixin options-input() {
   display: inline-block;
+  position: relative;
+  width: 100%;
   pointer-events: none;
 
   .fl-if_FormField--active & {
@@ -11,17 +13,20 @@
 
   &-option {
     display: inline-block;
+
     position: relative;
     background-color: transparent;
+    width: 100%;
+    padding: .2em .5em .2em 2em;
+    margin: .2em 0;
     border: 1px solid $c-primary-border;
     border-radius: 4px;
-    margin: .2em 0;
-    padding: .2em .5em .2em 2em;
-    width: 100%;
 
     font-size: $s-font-small;
     font-family: $f-main;
     text-align: left;
+    white-space: normal;
+    line-height: 1.4em;
 
     appearance: none;
     cursor: pointer;
@@ -31,7 +36,7 @@
       content: ' ';
       display: inline-block;
       position: absolute;
-      top: .2em;
+      top: .27em;
       left: .4em;
       width: 1em;
       height: 1em;
@@ -75,8 +80,23 @@
 .fl-if_Dropdown {
   @include options-input();
 
+  &::before {
+    content: ' ';
+    display: block;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-color: grey transparent;
+    border-width: .5em .4em 0;
+    position: absolute;
+    right: .8em;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+  }
+
   &-option {
-    line-height: 1.4em; // To account for the before element of other option inputs
-    width: 20em;
+    padding-left: 1em;
+    padding-right: 2em;
   }
 }
