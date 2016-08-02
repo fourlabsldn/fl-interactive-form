@@ -24,6 +24,7 @@ const paths = {
   js: {
     src: './src/js/**/*',
     main: './src/js/main.js',
+    es3: './src/js/es3-form.js',
     dest: './dist/',
   },
   sass: {
@@ -41,7 +42,13 @@ gulp.task('copy-dependencies', () => {
   return DepLinker.copyDependenciesTo(paths.demo.dep);
 });
 
-gulp.task('build:src', () => {
+gulp.task('build:src:es3-form', () => {
+  // Copy es3 form builder.
+  gulp.src(paths.js.es3)
+  .pipe(gulp.dest(paths.js.dest));
+});
+
+gulp.task('build:src:react-form', () => {
   return rollup({
     entry: paths.js.main,
     sourceMap: true,
@@ -79,8 +86,14 @@ gulp.task('build:src', () => {
   .pipe(gulp.dest(paths.js.dest));
 });
 
+gulp.task('build:src', [
+  'build:src:react-form',
+  'build:src:es3-form',
+]);
+
 gulp.task('watch:build:src', () => {
-  gulp.watch(paths.js.src, ['build:src']);
+  gulp.watch(paths.js.main, ['build:src:react-form']);
+  gulp.watch(paths.js.es3, ['build:src:es3-form']);
 });
 
 

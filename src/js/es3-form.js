@@ -1,16 +1,9 @@
 /* eslint-env es6: false */
-/* eslint-disable no-var, comma-dangle, vars-on-top */
+/* eslint-disable no-var, comma-dangle, vars-on-top, prefer-template */
 /* globals xController */
 
-xController((xdiv) => {
-  const config = JSON.parse(xdiv.getAttribute('data-config'));
-  var form = es3Form(config);
-  xdiv.appendChild(form);
-});
-
-
 function es3Form(config) {
-  var formWrapper = document.createelement('form');
+  var formWrapper = document.createElement('form');
   formWrapper.className = 'fl-if_FormUI';
 
   var questionEl;
@@ -19,9 +12,16 @@ function es3Form(config) {
     formWrapper.appendChild(questionEl);
   }
 
+  var submitBtnContainer = document.createElement('div');
+  submitBtnContainer.className = 'fl-if_FormField fl-if_FormField--active';
+
   var submitBtn = document.createElement('button');
-  submitBtn.type = 'submit';
-  formWrapper.appendChild(submitBtn);
+  submitBtn.setAttribute('type', 'submit');
+  submitBtn.innerHTML = 'Submit';
+  submitBtn.className = 'fl-if_NavigationBar-button';
+  submitBtnContainer.appendChild(submitBtn);
+
+  formWrapper.appendChild(submitBtnContainer);
   return formWrapper;
 }
 
@@ -44,10 +44,11 @@ var inputCreators = {
 
 function formField(config) {
   var wrapper = document.createElement('div');
-  wrapper.className = 'fl-if_FormField';
+  wrapper.className = 'fl-if_FormField fl-if_FormField--active';
 
   var legend = document.createElement('p');
   legend.className = 'fl-if_FormField-legend';
+  legend.innerHTML = config.title;
 
   var inputEl = inputCreators[config.type](config);
   wrapper.appendChild(legend);
@@ -65,7 +66,8 @@ var textInputTypes = {
 function createTextInput(config) {
   var tagName = config.type === 'TextArea' ? 'textarea' : 'input';
   var el = document.createElement(tagName);
-  el.type = textInputTypes[config.type];
+  el.className = 'fl-if_TextBox-input';
+  el.setAttribute('type', textInputTypes[config.type]);
   el.placeholder = config.placeholder;
   return el;
 }
@@ -74,15 +76,23 @@ function createOptionsInput(config) {
   var wrapper = document.createElement('div');
   wrapper.className = config.type === 'RadioBtns' ? 'fl-if_RadioBtns' : 'fl-if_Checkboxes';
 
+  var optionWrapper;
   var optionEl;
   var optionType = config.type === 'RadioBtns' ? 'radio' : 'checkbox';
   var optionName = config.title.replace(/\s'"/gi, '');
+  var optionLegend;
   for (var i = 0; i < config.options.length; i++) {
+    optionWrapper = document.createElement('label');
+    optionWrapper.className = wrapper.className + '-option';
+
     optionEl = document.createElement('input');
     optionEl.type = optionType;
     optionEl.name = optionName;
-    optionEl.innerHTML = config.options[i];
-    wrapper.appendChild(optionEl);
+    optionWrapper.appendChild(optionEl);
+
+    optionLegend = document.createTextNode(config.options[i]);
+    optionWrapper.appendChild(optionLegend);
+    wrapper.appendChild(optionWrapper);
   }
 
   return wrapper;
@@ -92,8 +102,10 @@ function createDropdownInput(config) {
   var wrapper = document.createElement('div');
   wrapper.className = 'fl-if_Dropdown';
 
-  var optionEl;
   var select = document.createElement('select');
+  wrapper.appendChild(select);
+
+  var optionEl;
   for (var i = 0; i < config.options.length; i++) {
     optionEl = document.createElement('option');
     optionEl.innerHTML = config.options[i];
@@ -101,3 +113,10 @@ function createDropdownInput(config) {
   }
   return wrapper;
 }
+
+// START HERE
+xController(function (xdiv) {
+  var config = JSON.parse(xdiv.getAttribute('data-config'));
+  var form = es3Form(config);
+  xdiv.appendChild(form);
+});
