@@ -8,14 +8,13 @@ import clone from './utils/clone';
 import globals from './utils/globals';
 import throttle from './utils/throttle';
 import scrollSlide from './utils/scrollSlide';
+import isMobile from './utils/isMobile';
 import AnimationManager from './utils/AnimationManager';
 import SubmitButton from './input_types/SubmitButton';
 import assert from 'fl-assert';
 
-const IS_TOUCH_DEVICE = (('ontouchstart' in window)
-      || (navigator.MaxTouchPoints > 0)
-      || (navigator.msMaxTouchPoints > 0));
-
+const IS_TOUCH_DEVICE = isMobile();
+console.log('IS_TOUCH_DEVICE', IS_TOUCH_DEVICE);
 // Takes care of the UI part of things.
 export default class FormUI extends ReactBEM {
   constructor(...args) {

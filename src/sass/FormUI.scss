@@ -27,22 +27,16 @@ $s-navigation-height: 3rem;
   max-height: calc(100% - #{$s-navigation-height});
   overflow: auto;
 
-  // // Hide scrollbar
-  // &::-webkit-scrollbar {
-  //   visibility: hidden;
-  //   width: 0;
-  // }
-
-
   // Custom scrollbar
   &::-webkit-scrollbar-track {
     background-color: transparent;
   }
 
   &::-webkit-scrollbar {
-    width: 3px;
+    width: 6px;
     height: 3px;
-    background-color: transparent
+    background-color: transparent;
+    cursor: auto;
   }
 
   &::-webkit-scrollbar-thumb {
