@@ -35,7 +35,6 @@ export default class Dropdown extends OptionsInput {
       return (
         <option
           key={`${this.props.config.key}${index}`}
-          onClick={() => this.checkboxClick(index)}
           tabIndex="0"
         >
           {option}
