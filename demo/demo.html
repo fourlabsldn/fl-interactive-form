@@ -18,11 +18,23 @@
     display: block;
     position: relative;
     width: 98vw;
-    height: 99vh;
+    height: 60vh;
     margin: auto;
-    padding: 0;
-    background-color: yellow;
+    padding: 1px;
   }
+
+  .page-section:nth-child(1) {
+    background-color: yellowgreen;
+  }
+
+  .page-section:nth-child(2) {
+    background-color: salmon;
+  }
+
+  .page-section:nth-child(3) {
+    background-color: chocolate;
+  }
+
 
   #asdf {
     width: 100%;
@@ -31,6 +43,11 @@
   </style>
 </head>
 <body>
+
+<div class="page-section">
+  <h1>Header of the first section</h1>
+</div>
+
 <div class="page-section">
   <div
     id="asdf"
@@ -67,6 +84,8 @@
   >
 </div>
 
+
+
   <script>
     a = document.querySelector("#asdf");
     function xController (callback) {
@@ -74,8 +93,9 @@
     }
   </script>
   <script src="../dist/fl-interactive-form.js"></script>
-
-
+</div>
+<div class="page-section">
+  <h1>Third section</h1>
 </div>
 
 
