@@ -14,6 +14,7 @@ const rename = require('gulp-rename');
 const DepLinker = require('dep-linker');
 const replace = require('rollup-plugin-replace');
 
+const es3ify = require('gulp-es3ify');
 const sass = require('gulp-sass');
 const autoprefixer = require('autoprefixer');
 const postcss = require('gulp-postcss');
@@ -69,6 +70,7 @@ gulp.task('build:src', () => {
   .pipe(buffer())
   // tell gulp-sourcemaps to load the inline sourcemap produced by rollup-stream.
   .pipe(sourcemaps.init({ loadMaps: true }))
+  .pipe(es3ify())
   // transform the code further here.
   .pipe(rename({ basename: moduleName }))
   // write the sourcemap alongside the output file.
