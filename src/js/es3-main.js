@@ -20,8 +20,8 @@ function es3Form(config) {
   formWrapper.className = 'fl-if_FormUI';
 
   var questionEl;
-  for (var i = 0; i < config.questions.length; i++) {
-    questionEl = formField(config.questions[i]);
+  for (var i = 0; i < config.length; i++) {
+    questionEl = formField(config[i]);
     formWrapper.appendChild(questionEl);
   }
 
@@ -130,8 +130,8 @@ function createDropdownInput(config) {
 // START HERE
 window.flInteractiveForm = {
   create: function create(config, targetElement) {
-    assert(typeof config === 'object',
-      'The first argument must be a configuration object');
+    assert(config && config.length !== undefined,
+      'The first argument must be a configuration array');
     assert(targetElement && typeof targetElement.setAttribute !== undefined,
       'The second argument must be an HTML Element');
 
