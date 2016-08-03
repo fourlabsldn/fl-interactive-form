@@ -234,9 +234,9 @@
       border-color: #b22222 transparent;
       border-width: 0 0.5em 0.5em; }
 
-.fl-if_TextBox {
+.fl-if_TextInput {
   padding: 0 0 .4em; }
-  .fl-if_TextBox-input {
+  .fl-if_TextInput-input {
     min-height: 4em;
     width: 100%;
     margin: 0;
@@ -259,53 +259,21 @@
             user-select: text;
     -webkit-transition: border-color .4s ease-in-out;
     transition: border-color .4s ease-in-out; }
-    .fl-if_TextBox-input:focus {
+    .fl-if_TextInput-input:focus {
       outline: 0; }
-    .fl-if_FormField--active .fl-if_TextBox-input {
+    .fl-if_FormField--active .fl-if_TextInput-input {
       outline: 0; }
-    .fl-if_FormField--completed.fl-if_FormField--active .fl-if_TextBox-input {
+    .fl-if_FormField--completed.fl-if_FormField--active .fl-if_TextInput-input {
       border-color: #00bcd4; }
 
-.fl-if_TextArea {
-  padding: 0 0 .4em; }
-  .fl-if_TextArea-input {
-    min-height: 4em;
-    width: 100%;
-    margin: 0;
-    padding: .1em 1em;
-    max-width: 25em;
-    font-family: Europa, Arial, sans-serif;
-    font-size: 24px;
-    background-color: transparent;
-    border: 2px dashed #AAAAAA;
-    -webkit-border-radius: 5px;
-            border-radius: 5px;
-    color: #434f69;
-    display: inline-block;
-    resize: none;
-    white-space: pre-wrap;
-    font-smoothing: subpixel-antialiased;
-    -webkit-user-select: text;
-       -moz-user-select: text;
-        -ms-user-select: text;
-            user-select: text;
-    -webkit-transition: border-color .4s ease-in-out;
-    transition: border-color .4s ease-in-out; }
-    .fl-if_TextArea-input:focus {
-      outline: 0; }
-    .fl-if_FormField--active .fl-if_TextArea-input {
-      outline: 0; }
-    .fl-if_FormField--completed.fl-if_FormField--active .fl-if_TextArea-input {
-      border-color: #00bcd4; }
-
-.fl-if_RadioBtns {
+.fl-if_OptionsInput {
   display: inline-block;
   position: relative;
   width: 100%;
   pointer-events: none; }
-  .fl-if_FormField--active .fl-if_RadioBtns {
+  .fl-if_FormField--active .fl-if_OptionsInput {
     pointer-events: all; }
-  .fl-if_RadioBtns-option {
+  .fl-if_OptionsInput-option {
     display: inline-block;
     position: relative;
     background-color: transparent;
@@ -328,7 +296,7 @@
        -moz-user-select: none;
         -ms-user-select: none;
             user-select: none; }
-    .fl-if_RadioBtns-option::before {
+    .fl-if_OptionsInput-option::before {
       content: ' ';
       display: inline-block;
       position: absolute;
@@ -336,157 +304,46 @@
       left: .4em;
       width: 1em;
       height: 1em;
-      -webkit-border-radius: 4px;
-              border-radius: 4px;
       background: -webkit-gradient(linear, left top, left bottom, from(#dddddd), to(#c4c4c4));
       background: -webkit-linear-gradient(#dddddd, #c4c4c4);
       background: linear-gradient(#dddddd, #c4c4c4);
       border: 1px solid #05587a; }
-    .fl-if_RadioBtns-option:hover, .fl-if_RadioBtns-option:focus {
+    .fl-if_OptionsInput-option:hover, .fl-if_OptionsInput-option:focus {
       outline: 0;
       background-color: rgba(66, 79, 102, 0.1); }
-  .fl-if_RadioBtns-option--selected {
-    background-color: rgba(0, 212, 166, 0.2); }
-    .fl-if_RadioBtns-option--selected::before {
-      background: #00bcd4;
-      background: -webkit-gradient(linear, left top, left bottom, from(#00bcd4), to(#08e3ff));
-      background: -webkit-linear-gradient(#00bcd4, #08e3ff);
-      background: linear-gradient(#00bcd4, #08e3ff); }
-    .fl-if_RadioBtns-option--selected:hover, .fl-if_RadioBtns-option--selected:focus {
-      background-color: rgba(0, 161, 126, 0.2); }
-  .fl-if_RadioBtns-option::before {
+  .fl-if_OptionsInput-radio:before {
     -webkit-border-radius: 50%;
             border-radius: 50%; }
-
-.fl-if_Checkboxes {
-  display: inline-block;
-  position: relative;
-  width: 100%;
-  pointer-events: none; }
-  .fl-if_FormField--active .fl-if_Checkboxes {
-    pointer-events: all; }
-  .fl-if_Checkboxes-option {
-    display: inline-block;
-    position: relative;
-    background-color: transparent;
-    width: 100%;
-    padding: .2em .5em .2em 2em;
-    margin: .2em 0;
-    border: 1px solid #05587a;
+  .fl-if_OptionsInput-checkbox:before {
     -webkit-border-radius: 4px;
-            border-radius: 4px;
-    font-size: 16px;
-    font-family: Europa, Arial, sans-serif;
-    text-align: left;
-    white-space: normal;
-    line-height: 1.4em;
-    -webkit-appearance: none;
-       -moz-appearance: none;
-            appearance: none;
-    cursor: pointer;
-    -webkit-user-select: none;
-       -moz-user-select: none;
-        -ms-user-select: none;
-            user-select: none; }
-    .fl-if_Checkboxes-option::before {
-      content: ' ';
-      display: inline-block;
-      position: absolute;
-      top: .27em;
-      left: .4em;
-      width: 1em;
-      height: 1em;
-      -webkit-border-radius: 4px;
-              border-radius: 4px;
-      background: -webkit-gradient(linear, left top, left bottom, from(#dddddd), to(#c4c4c4));
-      background: -webkit-linear-gradient(#dddddd, #c4c4c4);
-      background: linear-gradient(#dddddd, #c4c4c4);
-      border: 1px solid #05587a; }
-    .fl-if_Checkboxes-option:hover, .fl-if_Checkboxes-option:focus {
-      outline: 0;
-      background-color: rgba(66, 79, 102, 0.1); }
-  .fl-if_Checkboxes-option--selected {
+            border-radius: 4px; }
+  .fl-if_OptionsInput-option--selected {
     background-color: rgba(0, 212, 166, 0.2); }
-    .fl-if_Checkboxes-option--selected::before {
+    .fl-if_OptionsInput-option--selected::before {
       background: #00bcd4;
       background: -webkit-gradient(linear, left top, left bottom, from(#00bcd4), to(#08e3ff));
       background: -webkit-linear-gradient(#00bcd4, #08e3ff);
       background: linear-gradient(#00bcd4, #08e3ff); }
-    .fl-if_Checkboxes-option--selected:hover, .fl-if_Checkboxes-option--selected:focus {
+    .fl-if_OptionsInput-option--selected:hover, .fl-if_OptionsInput-option--selected:focus {
       background-color: rgba(0, 161, 126, 0.2); }
 
-.fl-if_Dropdown {
-  display: inline-block;
-  position: relative;
-  width: 100%;
-  pointer-events: none; }
-  .fl-if_FormField--active .fl-if_Dropdown {
-    pointer-events: all; }
-  .fl-if_Dropdown-option {
-    display: inline-block;
-    position: relative;
-    background-color: transparent;
-    width: 100%;
-    padding: .2em .5em .2em 2em;
-    margin: .2em 0;
-    border: 1px solid #05587a;
-    -webkit-border-radius: 4px;
-            border-radius: 4px;
-    font-size: 16px;
-    font-family: Europa, Arial, sans-serif;
-    text-align: left;
-    white-space: normal;
-    line-height: 1.4em;
-    -webkit-appearance: none;
-       -moz-appearance: none;
-            appearance: none;
-    cursor: pointer;
-    -webkit-user-select: none;
-       -moz-user-select: none;
-        -ms-user-select: none;
-            user-select: none; }
-    .fl-if_Dropdown-option::before {
-      content: ' ';
-      display: inline-block;
-      position: absolute;
-      top: .27em;
-      left: .4em;
-      width: 1em;
-      height: 1em;
-      -webkit-border-radius: 4px;
-              border-radius: 4px;
-      background: -webkit-gradient(linear, left top, left bottom, from(#dddddd), to(#c4c4c4));
-      background: -webkit-linear-gradient(#dddddd, #c4c4c4);
-      background: linear-gradient(#dddddd, #c4c4c4);
-      border: 1px solid #05587a; }
-    .fl-if_Dropdown-option:hover, .fl-if_Dropdown-option:focus {
-      outline: 0;
-      background-color: rgba(66, 79, 102, 0.1); }
-  .fl-if_Dropdown-option--selected {
-    background-color: rgba(0, 212, 166, 0.2); }
-    .fl-if_Dropdown-option--selected::before {
-      background: #00bcd4;
-      background: -webkit-gradient(linear, left top, left bottom, from(#00bcd4), to(#08e3ff));
-      background: -webkit-linear-gradient(#00bcd4, #08e3ff);
-      background: linear-gradient(#00bcd4, #08e3ff); }
-    .fl-if_Dropdown-option--selected:hover, .fl-if_Dropdown-option--selected:focus {
-      background-color: rgba(0, 161, 126, 0.2); }
-  .fl-if_Dropdown::before {
-    content: ' ';
-    display: block;
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-color: grey transparent;
-    border-width: .5em .4em 0;
-    position: absolute;
-    right: .8em;
-    top: 0;
-    bottom: 0;
-    margin: auto; }
-  .fl-if_Dropdown-option {
-    padding-left: 1em;
-    padding-right: 2em; }
+.fl-if_Dropdown::before {
+  content: ' ';
+  display: block;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-color: grey transparent;
+  border-width: .5em .4em 0;
+  position: absolute;
+  right: .8em;
+  top: 0;
+  bottom: 0;
+  margin: auto; }
+
+.fl-if_Dropdown-option {
+  padding-left: 1em;
+  padding-right: 2em; }
 
 .fl-if_NavigationBar {
   display: block;
