@@ -1,6 +1,6 @@
 import React from 'react';
 import OptionsInput from './OptionsInput';
-import globals from '../../utils/globals';
+import globals from '../../../utils/globals';
 
 export default class RadioBtns extends OptionsInput {
   getResponse() {

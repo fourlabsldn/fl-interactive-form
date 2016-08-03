@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import InputField from '../InputField';
-import globals from '../../utils/globals';
+import globals from '../../../utils/globals';
 
 export default class OptionsInput extends InputField {
   constructor(...args) {

@@ -1,7 +1,7 @@
 import React from 'react';
-import Error from '../Error';
+import Error from '../../react_helpers/Error';
 import InputField from './InputField';
-import globals from '../utils/globals';
+import globals from '../../utils/globals';
 
 export default class SubmitButton extends InputField {
   constructor(...args) {

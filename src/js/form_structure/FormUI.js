@@ -1,16 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ReactBEM from './ReactBEM';
-import FormField from './FormField';
+import ReactBEM from '../react_helpers/ReactBEM';
+import FormField from '../form_fields/FormField';
 import NavigationBar from './NavigationBar';
 
-import clone from './utils/clone';
-import globals from './utils/globals';
-import throttle from './utils/throttle';
-import scrollSlide from './utils/scrollSlide';
-import isMobile from './utils/isMobile';
-import AnimationManager from './utils/AnimationManager';
-import SubmitButton from './input_types/SubmitButton';
+import clone from '../utils/clone';
+import globals from '../utils/globals';
+import throttle from '../utils/throttle';
+import isMobile from '../utils/isMobile';
+import scrollSlide from '../utils/scrollSlide';
+import AnimationManager from '../utils/AnimationManager';
+import SubmitButton from '../form_fields/input_types/SubmitButton';
 import assert from 'fl-assert';
 
 const IS_TOUCH_DEVICE = isMobile();

@@ -1,8 +1,8 @@
 import React from 'react';
-import ReactBEM from './ReactBEM';
-import clone from './utils/clone';
 import assert from 'fl-assert';
 import FormUI from './FormUI';
+import ReactBEM from '../react_helpers/ReactBEM';
+import clone from '../utils/clone';
 
 // The form will receive a config object which will describe the form fields.
 // The form config contains an array of questions. The UI state object will

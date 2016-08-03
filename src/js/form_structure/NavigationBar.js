@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactBEM from './ReactBEM';
+import ReactBEM from '../react_helpers/ReactBEM';
 
 export default class NavigationBar extends ReactBEM {
 

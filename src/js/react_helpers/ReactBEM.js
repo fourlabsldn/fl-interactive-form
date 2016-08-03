@@ -1,5 +1,5 @@
 import React from 'react';
-import globals from './utils/globals';
+import globals from '../utils/globals';
 
 /**
  * This class automatically calculate element classes and

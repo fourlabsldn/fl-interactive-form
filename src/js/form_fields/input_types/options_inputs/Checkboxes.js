@@ -1,6 +1,6 @@
 import React from 'react';
 import OptionsInput from './OptionsInput';
-import globals from '../../utils/globals';
+import globals from '../../../utils/globals';
 import assert from 'fl-assert';
 
 export default class Checkboxes extends OptionsInput {
