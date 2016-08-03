@@ -45,7 +45,7 @@ var textInputTypes = {
 function createTextInput(config) {
   var tagName = config.type === 'TextArea' ? 'textarea' : 'input';
   var el = document.createElement(tagName);
-  el.className = 'fl-if_TextBox-input';
+  el.className = 'fl-if_TextInput-input';
   el.setAttribute('type', textInputTypes[config.type]);
   el.placeholder = config.placeholder;
   if (config.required) {
@@ -63,7 +63,9 @@ function createTextInput(config) {
 
 function createOptionsInput(config) {
   var wrapper = document.createElement('div');
-  wrapper.className = config.type === 'RadioBtns' ? 'fl-if_RadioBtns' : 'fl-if_Checkboxes';
+
+
+  wrapper.className = 'fl-if_OptionsInput';
 
   var options = [];
   var optionType = config.type === 'RadioBtns' ? 'radio' : 'checkbox';
@@ -74,6 +76,9 @@ function createOptionsInput(config) {
   for (var i = 0; i < config.options.length; i++) {
     optionWrapper = document.createElement('label');
     optionWrapper.className = wrapper.className + '-option';
+    optionWrapper.className += config.type === 'RadioBtns'
+      ? ' fl-if_OptionsInput-radio'
+      : ' fl-if_OptionsInput-checkbox';
 
     optionEl = document.createElement('input');
     optionEl.type = optionType;
@@ -105,7 +110,7 @@ function createOptionsInput(config) {
 
 function createDropdownInput(config) {
   var wrapper = document.createElement('div');
-  wrapper.className = 'fl-if_Dropdown';
+  wrapper.className = 'fl-if_Dropdown fl-if_OptionsInput';
 
   var select = document.createElement('select');
   wrapper.appendChild(select);
