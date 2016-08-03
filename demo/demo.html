@@ -37,7 +37,7 @@
   }
 
 
-  #asdf {
+  #formElement {
     width: 100%;
     height: 100%;
   }
@@ -49,12 +49,25 @@
   <h1>Header of the first section</h1>
 </div>
 
-<!-- data-controller="../dist/fl-interactive-form.js" -->
 <div class="page-section">
   <div
     id="asdf"
     data-controller="../dist/es3-form.js"
-    data-config='{
+    data-config=''
+  >
+</div>
+
+
+  <!--[if gte IE 8]>
+  <script src="../dist/fl-interactive-form-es3.js"></script>
+  <![endif]-->
+  <!--[if !IE]> -->
+  <script src="../dist/fl-interactive-form.js"></script>
+  <!-- <![endif]-->
+
+  <div id='formElement'> </div>
+  <script>
+    var config = {
       "questions": [{
         "required": true,
         "title": "Add a title",
@@ -82,27 +95,11 @@
         "type": "TextArea",
         "placeholder": "MMMMail"
       }]
-    }'
-  >
-</div>
+    };
 
-
-
-  <script>
-    a = document.querySelector("#asdf");
-    function xController (callback) {
-      callback(a);
-    }
+    var targetElement = document.querySelector('#formElement');
+    flInteractiveForm.create(config, targetElement);
   </script>
-
-
-
-  <!--[if gte IE 8]>
-  <script src="../dist/es3-form.js"></script>
-  <![endif]-->
-  <!--[if !IE]> -->
-  <script src="../dist/fl-interactive-form.js"></script>
-  <!-- <![endif]-->
 
 
 </div>

@@ -2,6 +2,19 @@
 /* eslint-disable no-var, comma-dangle, vars-on-top, prefer-template */
 /* globals xController */
 
+/**
+ *
+ *	Exports flInteractiveForm right down at the end of this file.
+ *	flInteractiveForm.create is used to create a form.
+ *
+ */
+
+function assert(condition, message) {
+  if (!condition) {
+    throw new Error(message);
+  }
+}
+
 function es3Form(config) {
   var formWrapper = document.createElement('form');
   formWrapper.className = 'fl-if_FormUI';
@@ -24,7 +37,6 @@ function es3Form(config) {
   formWrapper.appendChild(submitBtnContainer);
   return formWrapper;
 }
-
 
 /**
  * @method formField
@@ -114,9 +126,16 @@ function createDropdownInput(config) {
   return wrapper;
 }
 
+
 // START HERE
-xController(function (xdiv) {
-  var config = JSON.parse(xdiv.getAttribute('data-config'));
-  var form = es3Form(config);
-  xdiv.appendChild(form);
-});
+window.flInteractiveForm = {
+  create: function create(config, targetElement) {
+    assert(typeof config === 'object',
+      'The first argument must be a configuration object');
+    assert(targetElement && typeof targetElement.setAttribute === 'function',
+      'The second argument must be an HTML Element');
+
+    var form = es3Form(config);
+    targetElement.appendChild(form);
+  },
+};

@@ -14,7 +14,6 @@ import SubmitButton from '../form_fields/input_types/SubmitButton';
 import assert from 'fl-assert';
 
 const IS_TOUCH_DEVICE = isMobile();
-console.log('IS_TOUCH_DEVICE', IS_TOUCH_DEVICE);
 // Takes care of the UI part of things.
 export default class FormUI extends ReactBEM {
   constructor(...args) {

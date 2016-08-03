@@ -23,8 +23,8 @@ const moduleName = 'fl-interactive-form';
 const paths = {
   js: {
     src: './src/js/**/*',
-    main: './src/js/main.js',
-    es3: './src/js/es3-form.js',
+    main: './src/js/react-main.js',
+    es3: './src/js/es3-main.js',
     dest: './dist/',
   },
   sass: {
@@ -45,6 +45,10 @@ gulp.task('copy-dependencies', () => {
 gulp.task('build:src:es3-form', () => {
   // Copy es3 form builder.
   gulp.src(paths.js.es3)
+  .pipe(sourcemaps.init({ loadMaps: true }))
+  .pipe(es3ify())
+  // transform the code further here.
+  .pipe(rename({ basename: `${moduleName}-es3` }))
   .pipe(gulp.dest(paths.js.dest));
 });
 
@@ -77,7 +81,6 @@ gulp.task('build:src:react-form', () => {
   .pipe(buffer())
   // tell gulp-sourcemaps to load the inline sourcemap produced by rollup-stream.
   .pipe(sourcemaps.init({ loadMaps: true }))
-  .pipe(es3ify())
   // transform the code further here.
   .pipe(rename({ basename: moduleName }))
   // write the sourcemap alongside the output file.
