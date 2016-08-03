@@ -246,8 +246,13 @@ export default class FormUI extends ReactBEM {
 
   showThankYouScreen(message, state = 'end') {
     // Instead of doing that, let's just log the ouput
-    console.log(this.props.config);
-    // this.setState({ splash: { message, state } });
+    const formElement = ReactDOM.findDOMNode(this);
+    const submitEvent = new CustomEvent('submit', {
+      detail: this.props.config,
+      bubbles: true,
+      cancelable: true,
+    });
+    formElement.dispatchEvent(submitEvent);
   }
 
   // ==============================================================

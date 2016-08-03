@@ -10,15 +10,6 @@ export default class Dropdown extends OptionsInput {
     /** @override */
     this.bemClass = `fl-if_Dropdown ${this.bemClass}`;
   }
-  /**
-   * @override
-   * @method getResponse
-   * @return {Array<Boolean>} Each index corresponds to an option index
-   * selection value.
-   */
-  getResponse() {
-
-  }
 
   /**
    * @override

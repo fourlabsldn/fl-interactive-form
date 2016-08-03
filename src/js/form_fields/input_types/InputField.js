@@ -43,7 +43,7 @@ export default class InputField extends ReactBEM {
 
   // To be overriden by subclasses
   getResponse() {
-    throw new Error('Standard class not overriden');
+    return this.props.config.answer;
   }
 
   /**

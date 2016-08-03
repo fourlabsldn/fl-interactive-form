@@ -31754,7 +31754,7 @@ var InputField = function (_ReactBEM) {
 
 
   InputField.prototype.getResponse = function getResponse() {
-    throw new Error('Standard class not overriden');
+    return this.props.config.answer;
   };
 
   /**
@@ -32451,15 +32451,6 @@ var Dropdown = function (_OptionsInput) {
     _this.bemClass = 'fl-if_Dropdown ' + _this.bemClass;
     return _this;
   }
-  /**
-   * @override
-   * @method getResponse
-   * @return {Array<Boolean>} Each index corresponds to an option index
-   * selection value.
-   */
-
-
-  Dropdown.prototype.getResponse = function getResponse() {};
 
   /**
    * @override
@@ -33525,8 +33516,13 @@ var FormUI = function (_ReactBEM) {
     var state = arguments.length <= 1 || arguments[1] === undefined ? 'end' : arguments[1];
 
     // Instead of doing that, let's just log the ouput
-    console.log(this.props.config);
-    // this.setState({ splash: { message, state } });
+    var formElement = ReactDOM.findDOMNode(this);
+    var submitEvent = new CustomEvent('submit', {
+      detail: this.props.config,
+      bubbles: true,
+      cancelable: true
+    });
+    formElement.dispatchEvent(submitEvent);
   };
 
   // ==============================================================
