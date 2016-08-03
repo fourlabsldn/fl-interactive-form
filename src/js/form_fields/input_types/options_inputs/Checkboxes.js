@@ -78,7 +78,11 @@ export default class Checkboxes extends OptionsInput {
   generateOptions(options) {
     const responses = this.getResponse();
     return options.map((option, index) => {
-      const optionClasses = [this.bemSubComponent('option'), globals.FOCUS_CLASS];
+      const optionClasses = [
+        this.bemSubComponent('option'),
+        this.bemSubComponent('checkbox'), 
+        globals.FOCUS_CLASS,
+      ];
 
       if (responses[index]) {
         optionClasses.push(this.bemSubComponentState('option', 'selected'));

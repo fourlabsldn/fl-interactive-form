@@ -40,7 +40,6 @@
       left: .4em;
       width: 1em;
       height: 1em;
-      border-radius: 4px;
       background: linear-gradient(lighten($c-secondary-text, 20%), lighten($c-secondary-text, 10%));
       border: 1px solid $c-primary-border;
     }
@@ -50,6 +49,14 @@
       outline: 0;
       background-color: rgba($c-secondary, .1);
     }
+  }
+
+  &-radio:before {
+    border-radius: 50%;
+  }
+
+  &-checkbox:before {
+    border-radius: 4px;
   }
 
   &-option--selected {

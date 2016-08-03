@@ -19,7 +19,12 @@ export default class RadioBtns extends OptionsInput {
 
   generateOptions(options) {
     return options.map((option, index) => {
-      const optionClasses = [this.bemSubComponent('option'), globals.FOCUS_CLASS];
+      const optionClasses = [
+        this.bemSubComponent('option'),
+        this.bemSubComponent('radio'),
+        globals.FOCUS_CLASS,
+      ];
+
       if (index === this.getResponse()) {
         optionClasses.push(this.bemSubComponentState('option', 'selected'));
       }
