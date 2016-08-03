@@ -27,6 +27,7 @@
     "dep-linker": "^1.0.24",
     "fl-assert": "^1.0.10",
     "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0",
     "gulp-es3ify": "0.0.0",
     "gulp-postcss": "^6.1.1",
     "gulp-rename": "^1.2.2",

@@ -15,6 +15,7 @@ const DepLinker = require('dep-linker');
 const replace = require('rollup-plugin-replace');
 
 const es3ify = require('gulp-es3ify');
+const concat = require('gulp-concat');
 const sass = require('gulp-sass');
 const autoprefixer = require('autoprefixer');
 const postcss = require('gulp-postcss');
@@ -44,11 +45,10 @@ gulp.task('copy-dependencies', () => {
 
 gulp.task('build:src:es3-form', () => {
   // Copy es3 form builder.
-  gulp.src(paths.js.es3)
+  gulp.src([paths.js.es3, 'src/js/utils/ie8-polyfills.js'])
   .pipe(sourcemaps.init({ loadMaps: true }))
+  .pipe(concat(`${moduleName}-es3.js`))
   .pipe(es3ify())
-  // transform the code further here.
-  .pipe(rename({ basename: `${moduleName}-es3` }))
   .pipe(gulp.dest(paths.js.dest));
 });
 
