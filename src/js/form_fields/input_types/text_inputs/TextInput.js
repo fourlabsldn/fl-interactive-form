@@ -59,8 +59,8 @@ export default class TextInput extends InputField {
           className={`${this.bemSubComponent('input')} ${globals.FOCUS_CLASS}`}
           ref="input"
           type={this.type}
-          defaultValue={this.props.question}
-          placeholder={this.props.placeholder}
+          defaultValue={this.props.config.answer}
+          placeholder={this.props.config.placeholder}
 
           onKeyDown={this.keyListener}
           onChange={handleInputChange}
