@@ -2,13 +2,24 @@ import React from 'react';
 import ReactBEM from '../react_helpers/ReactBEM';
 import Error from '../react_helpers/Error';
 import assert from 'fl-assert';
+import EmailBox from './input_types/text_inputs/EmailBox';
 import TextBox from './input_types/text_inputs/TextBox';
 import TextArea from './input_types/text_inputs/TextArea';
 import RadioBtns from './input_types/options_inputs/RadioBtns';
 import Checkboxes from './input_types/options_inputs/Checkboxes';
 import Dropdown from './input_types/options_inputs/Dropdown';
 
-const inputTypes = { TextBox, TextArea, RadioBtns, Checkboxes, Dropdown };
+const inputTypes = {
+  TextBox,
+  TextArea,
+  RadioBtns,
+  Checkboxes,
+  Dropdown,
+  EmailBox,
+  NumberBox: TextBox,
+  TelephoneBox: TextBox,
+};
+
 
 export default class FormField extends ReactBEM {
   constructor(...args) {
@@ -56,40 +67,9 @@ export default class FormField extends ReactBEM {
       config: this.props.config,
       appControl: this.props.appControl,
       key: this.props.config.key,
-      ref: 'input'
+      ref: 'input',
     };
-
-    let inputType;
-    switch (this.props.config.type) {
-      case 'EmailBox':
-        inputType = 'TextBox';
-        break;
-      case 'NumberBox':
-        inputType = 'TextBox';
-        break;
-      case 'TelephoneBox':
-        inputType = 'TextBox';
-        break;
-      case 'TextBox':
-        inputType = 'TextBox';
-        break;
-      case 'TextArea':
-        inputType = 'TextArea';
-        break;
-      case 'Checkboxes':
-        inputType = 'Checkboxes';
-        break;
-      case 'Dropdown':
-        inputType = 'Dropdown';
-        break;
-      case 'RadioBtns':
-        inputType = 'RadioBtns';
-        break;
-      default:
-        assert(false, `Invalid type ${this.props.config.type}`);
-    }
-
-
+    const inputType = this.props.config.type;
     const errorMsg = this.props.ui.error;
     const error = errorMsg
       ? <Error speechBubble> {errorMsg} </ Error>

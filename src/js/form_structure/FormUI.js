@@ -245,7 +245,9 @@ export default class FormUI extends ReactBEM {
   }
 
   showThankYouScreen(message, state = 'end') {
-    this.setState({ splash: { message, state } });
+    // Instead of doing that, let's just log the ouput
+    console.log(this.props.config);
+    // this.setState({ splash: { message, state } });
   }
 
   // ==============================================================

@@ -19,7 +19,7 @@ export default class TextInput extends InputField {
 
   getResponse() {
     const response = ReactDOM.findDOMNode(this.refs.input).value;
-    return response;
+    return response.trim();
   }
 
   /**
