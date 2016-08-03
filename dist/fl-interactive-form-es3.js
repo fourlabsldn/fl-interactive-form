@@ -215,15 +215,17 @@ function es3Form(config) {
 
   formWrapper.triggerSubmit = function triggerSubmit(formData) {
     var evt = fakeEvent(formData);
-    listeners.forEach(function (listener) { listener(evt); });
+    for (var j = 0; j < listeners.length; j++) {
+      listeners[j](evt);
+    }
   };
 
   form.addEventListener('submit', function submitBtnClick(e) {
     var formData = clone(config);
 
-    formData.forEach(function (field, idx) {
-      field.answer = questions[idx].getValue(); // eslint-disable-line no-param-reassign
-    });
+    for (var j = 0; j < formData.length; j++) {
+      formData[j].answer = questions[j].getValue();
+    }
 
     formWrapper.triggerSubmit(formData);
 
