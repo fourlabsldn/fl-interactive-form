@@ -18,7 +18,9 @@
   .page-section {
     display: block;
     position: relative;
+    width: 100%;
     width: 98vw;
+    height: 500px;
     height: 60vh;
     margin: auto;
     padding: 1px;
@@ -45,27 +47,25 @@
 </head>
 <body>
 
-<div class="page-section">
-  <h1>Header of the first section</h1>
-</div>
+  <div class="page-section">
+    <h1>Header of the first section</h1>
+  </div>
 
-<div class="page-section">
-  <div
-    id="asdf"
-    data-controller="../dist/es3-form.js"
-    data-config=''
-  >
-</div>
+  <div class="page-section">
+    <div id='formElement'> </div>
+  </div>
 
+  <div class="page-section">
+    <h1>Third section</h1>
+  </div>
 
-  <!--[if gte IE 8]>
+  <!--[if IE 8]>
   <script src="../dist/fl-interactive-form-es3.js"></script>
   <![endif]-->
-  <!--[if !IE]> -->
+  <!--[if !IE 8]> -->
   <script src="../dist/fl-interactive-form.js"></script>
   <!-- <![endif]-->
 
-  <div id='formElement'> </div>
   <script>
     var config = {
       "questions": [{
@@ -100,13 +100,6 @@
     var targetElement = document.querySelector('#formElement');
     flInteractiveForm.create(config, targetElement);
   </script>
-
-
-</div>
-<div class="page-section">
-  <h1>Third section</h1>
-</div>
-
 
 </body>
 </html>

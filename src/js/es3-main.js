@@ -132,7 +132,7 @@ window.flInteractiveForm = {
   create: function create(config, targetElement) {
     assert(typeof config === 'object',
       'The first argument must be a configuration object');
-    assert(targetElement && typeof targetElement.setAttribute === 'function',
+    assert(targetElement && typeof targetElement.setAttribute !== undefined,
       'The second argument must be an HTML Element');
 
     var form = es3Form(config);
