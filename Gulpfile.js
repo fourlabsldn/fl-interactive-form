@@ -95,7 +95,7 @@ gulp.task('build:src', [
 ]);
 
 gulp.task('watch:build:src', () => {
-  gulp.watch(paths.js.main, ['build:src:react-form']);
+  gulp.watch(paths.js.src, ['build:src:react-form']);
   gulp.watch(paths.js.es3, ['build:src:es3-form']);
 });
 
