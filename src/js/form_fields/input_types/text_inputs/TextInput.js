@@ -15,6 +15,9 @@ export default class TextInput extends InputField {
     // Make sure we just trigger a revalidarion on blur when there has been
     // some change.
     this.changedSinceLastUpdate = false;
+
+    /* @override */
+    this.bemClass = `${this.modulePrefix}_TextInput`;
   }
 
   getResponse() {
@@ -26,7 +29,7 @@ export default class TextInput extends InputField {
    * @override
    */
   validateResponse(response = this.getResponse()) {
-    if (this.props.config.required && !response) {
+    if (this.isRequired() && !response) {
       return 'This field must be completed.';
     }
 

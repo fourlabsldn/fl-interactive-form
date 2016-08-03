@@ -8,6 +8,9 @@ export default class OptionsInput extends InputField {
     super(...args);
     this.render = this.render.bind(this);
     this.generateOptions = this.generateOptions.bind(this);
+
+    /* @override */
+    this.bemClass = `${this.modulePrefix}_OptionsInput`;
   }
 
   keyPrev() {

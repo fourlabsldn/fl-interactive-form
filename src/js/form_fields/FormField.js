@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactBEM from '../react_helpers/ReactBEM';
 import Error from '../react_helpers/Error';
-import assert from 'fl-assert';
+import TelephoneBox from './input_types/text_inputs/TelephoneBox';
+import NumberBox from './input_types/text_inputs/NumberBox';
 import EmailBox from './input_types/text_inputs/EmailBox';
 import TextBox from './input_types/text_inputs/TextBox';
 import TextArea from './input_types/text_inputs/TextArea';
@@ -16,8 +17,8 @@ const inputTypes = {
   Checkboxes,
   Dropdown,
   EmailBox,
-  NumberBox: TextBox,
-  TelephoneBox: TextBox,
+  NumberBox,
+  TelephoneBox,
 };
 
 

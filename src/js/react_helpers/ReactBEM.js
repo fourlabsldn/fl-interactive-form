@@ -17,6 +17,7 @@ class ReactBEM extends React.Component {
       this.bemClass = `${globals.modulePrefix}_${this.constructor.name}`;
     }
 
+    this.modulePrefix = globals.modulePrefix;
     this.bemState = this.bemState.bind(this);
     this.bemSubComponent = this.bemSubComponent.bind(this);
   }
