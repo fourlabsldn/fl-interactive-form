@@ -48,6 +48,9 @@ function createTextInput(config) {
   el.className = 'fl-if_TextBox-input';
   el.setAttribute('type', textInputTypes[config.type]);
   el.placeholder = config.placeholder;
+  if (config.required) {
+    el.setAttribute('required', true);
+  }
 
   el.getValue = function getValue() {
     return el.value;
