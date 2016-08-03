@@ -32471,9 +32471,8 @@ var Dropdown = function (_OptionsInput) {
   };
 
   Dropdown.prototype.onChange = function onChange() {
-    console.log(this.refs.selectionBox.value);
-    var selectedIndex = this.refs.selectionBox.value;
-    this.saveResponseAndJumpToQuestion(selectedIndex, 'next');
+    var selectedOption = this.refs.selectionBox.value;
+    this.saveResponseAndJumpToQuestion(selectedOption, 'next');
   };
 
   /**

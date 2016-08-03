@@ -26,9 +26,8 @@ export default class Dropdown extends OptionsInput {
   }
 
   onChange() {
-    console.log(this.refs.selectionBox.value);
-    const selectedIndex = this.refs.selectionBox.value;
-    this.saveResponseAndJumpToQuestion(selectedIndex, 'next');
+    const selectedOption = this.refs.selectionBox.value;
+    this.saveResponseAndJumpToQuestion(selectedOption, 'next');
   }
 
 
