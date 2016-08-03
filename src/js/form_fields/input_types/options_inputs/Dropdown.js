@@ -6,6 +6,7 @@ export default class Dropdown extends OptionsInput {
   constructor(...args) {
     super(...args);
 
+    this.onChange = this.onChange.bind(this);
     /** @override */
     this.bemClass = `fl-if_Dropdown ${this.bemClass}`;
   }
@@ -25,8 +26,18 @@ export default class Dropdown extends OptionsInput {
    * @param  {Array<Bool>} response
    * @return {String} - Error message.
    */
-  validateResponse(response) {
+  validateResponse(response = this.getResponse()) {
+    if (this.isRequired() && !response) {
+      return 'Please choose an option';
+    }
 
+    return false;
+  }
+
+  onChange() {
+    console.log(this.refs.selectionBox.value);
+    const selectedIndex = this.refs.selectionBox.value;
+    this.saveResponseAndJumpToQuestion(selectedIndex, 'next');
   }
 
 
@@ -55,6 +66,15 @@ export default class Dropdown extends OptionsInput {
       this.bemSubComponent('option'),
       globals.FOCUS_CLASS,
     ].join(' ');
-    return (<select className={classes}> {optionEls} </ select>);
+
+    return (
+      <select
+        className={classes}
+        onChange={this.onChange}
+        ref="selectionBox"
+      >
+        {optionEls}
+      </ select>
+    );
   }
 }

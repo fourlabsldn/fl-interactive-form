@@ -30,7 +30,7 @@ export default class Checkboxes extends OptionsInput {
    * @param  {Array<Bool>} response
    * @return {String} - Error message.
    */
-  validateResponse(response) {
+  validateResponse(response = this.getResponse()) {
     if (!this.isRequired()) { return null; }
     if (!Array.isArray(response)) {
       return 'This field must be filled';
@@ -80,7 +80,7 @@ export default class Checkboxes extends OptionsInput {
     return options.map((option, index) => {
       const optionClasses = [
         this.bemSubComponent('option'),
-        this.bemSubComponent('checkbox'), 
+        this.bemSubComponent('checkbox'),
         globals.FOCUS_CLASS,
       ];
 
