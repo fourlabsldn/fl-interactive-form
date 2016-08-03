@@ -1,5 +1,7 @@
 /* eslint-env es6: false */
-/* eslint-disable no-var, comma-dangle, vars-on-top, prefer-template */
+/* eslint-disable no-var, comma-dangle, vars-on-top, prefer-template,
+  prefer-arrow-callback, func-names
+*/
 /* globals xController */
 
 /**
@@ -9,34 +11,121 @@
  *
  */
 
+// ================= HELPERS ==================//
 function assert(condition, message) {
   if (!condition) {
     throw new Error(message);
   }
 }
 
-function es3Form(config) {
-  var formWrapper = document.createElement('form');
-  formWrapper.className = 'fl-if_FormUI';
+function clone(obj) {
+  return JSON.parse(JSON.stringify(obj));
+}
 
-  var questionEl;
-  for (var i = 0; i < config.length; i++) {
-    questionEl = formField(config[i]);
-    formWrapper.appendChild(questionEl);
+function fakeEvent(obj) {
+  return { detail: obj };
+}
+
+
+// ------------ END OF HELPERS ----------------//
+// ================= INPUTS ===================//
+//
+//   All inputs implement the `getValue` method.
+//
+
+// ---- TEXT INPUT
+var textInputTypes = {
+  TextArea: 'text',
+  TextBox: 'text',
+  EmailBox: 'email',
+  NumberBox: 'number',
+  TelephoneBox: 'telephone'
+};
+
+function createTextInput(config) {
+  var tagName = config.type === 'TextArea' ? 'textarea' : 'input';
+  var el = document.createElement(tagName);
+  el.className = 'fl-if_TextBox-input';
+  el.setAttribute('type', textInputTypes[config.type]);
+  el.placeholder = config.placeholder;
+
+  el.getValue = function getValue() {
+    return el.value;
+  };
+
+  return el;
+}
+
+// ---- RADIO AND CHECKBOX INPUT
+
+function createOptionsInput(config) {
+  var wrapper = document.createElement('div');
+  wrapper.className = config.type === 'RadioBtns' ? 'fl-if_RadioBtns' : 'fl-if_Checkboxes';
+
+  var options = [];
+  var optionType = config.type === 'RadioBtns' ? 'radio' : 'checkbox';
+  var optionName = config.title.replace(/\s'"/gi, '');
+  var optionEl;
+  var optionLegend;
+  var optionWrapper;
+  for (var i = 0; i < config.options.length; i++) {
+    optionWrapper = document.createElement('label');
+    optionWrapper.className = wrapper.className + '-option';
+
+    optionEl = document.createElement('input');
+    optionEl.type = optionType;
+    optionEl.name = optionName;
+    optionWrapper.appendChild(optionEl);
+
+    optionLegend = document.createTextNode(config.options[i]);
+    optionWrapper.appendChild(optionLegend);
+
+    wrapper.appendChild(optionWrapper);
+    options.push(optionEl);
   }
 
-  var submitBtnContainer = document.createElement('div');
-  submitBtnContainer.className = 'fl-if_FormField fl-if_FormField--active';
+  wrapper.getValue = function getValue() {
+    var value = [];
+    for (var j = 0; j < options.length; j++) {
+      if (options[j].checked) {
+        value.push(config.options[j]);
+      }
+    }
 
-  var submitBtn = document.createElement('button');
-  submitBtn.setAttribute('type', 'submit');
-  submitBtn.innerHTML = 'Submit';
-  submitBtn.className = 'fl-if_NavigationBar-button';
-  submitBtnContainer.appendChild(submitBtn);
+    return value;
+  };
 
-  formWrapper.appendChild(submitBtnContainer);
-  return formWrapper;
+  return wrapper;
 }
+
+// ---- DROPDOWN INPUT
+
+function createDropdownInput(config) {
+  var wrapper = document.createElement('div');
+  wrapper.className = 'fl-if_Dropdown';
+
+  var select = document.createElement('select');
+  wrapper.appendChild(select);
+
+  var optionEl;
+  for (var i = 0; i < config.options.length; i++) {
+    optionEl = document.createElement('option');
+    optionEl.innerHTML = config.options[i];
+    select.appendChild(optionEl);
+  }
+
+  wrapper.getValue = function getValue() {
+    return select.value;
+  };
+
+  return wrapper;
+}
+
+// ----------------- END OF INPUTS -------------------//
+// ================= FIELD FACTORY ===================//
+//
+//  Implements the `getValue` method to return the input value
+//
 
 /**
  * @method formField
@@ -65,77 +154,71 @@ function formField(config) {
   var inputEl = inputCreators[config.type](config);
   wrapper.appendChild(legend);
   wrapper.appendChild(inputEl);
+  wrapper.getValue = inputEl.getValue;
   return wrapper;
 }
 
-var textInputTypes = {
-  TextArea: 'text',
-  TextBox: 'text',
-  EmailBox: 'email',
-  NumberBox: 'number',
-  TelephoneBox: 'telephone'
-};
-function createTextInput(config) {
-  var tagName = config.type === 'TextArea' ? 'textarea' : 'input';
-  var el = document.createElement(tagName);
-  el.className = 'fl-if_TextBox-input';
-  el.setAttribute('type', textInputTypes[config.type]);
-  el.placeholder = config.placeholder;
-  return el;
-}
 
-function createOptionsInput(config) {
-  var wrapper = document.createElement('div');
-  wrapper.className = config.type === 'RadioBtns' ? 'fl-if_RadioBtns' : 'fl-if_Checkboxes';
+// ----------- END OF FIELD FACTORY  ---------------//
+// =============== FORM STRUCTURE ===================//
 
-  var optionWrapper;
-  var optionEl;
-  var optionType = config.type === 'RadioBtns' ? 'radio' : 'checkbox';
-  var optionName = config.title.replace(/\s'"/gi, '');
-  var optionLegend;
-  for (var i = 0; i < config.options.length; i++) {
-    optionWrapper = document.createElement('label');
-    optionWrapper.className = wrapper.className + '-option';
+function es3Form(config) {
+  var formWrapper = document.createElement('form');
+  formWrapper.className = 'fl-if_FormUI';
 
-    optionEl = document.createElement('input');
-    optionEl.type = optionType;
-    optionEl.name = optionName;
-    optionWrapper.appendChild(optionEl);
-
-    optionLegend = document.createTextNode(config.options[i]);
-    optionWrapper.appendChild(optionLegend);
-    wrapper.appendChild(optionWrapper);
+  var questions = [];
+  var questionEl;
+  for (var i = 0; i < config.length; i++) {
+    questionEl = formField(config[i]);
+    questions.push(questionEl);
+    formWrapper.appendChild(questionEl);
   }
 
-  return wrapper;
+  var submitBtnContainer = document.createElement('div');
+  submitBtnContainer.className = 'fl-if_FormField fl-if_FormField--active';
+
+  var submitBtn = document.createElement('button');
+  submitBtn.setAttribute('type', 'button');
+  submitBtn.innerHTML = 'Submit';
+  submitBtn.className = 'fl-if_NavigationBar-button';
+  submitBtnContainer.appendChild(submitBtn);
+
+
+  var listeners = [];
+  formWrapper.addEventListener = function customAddEventListener(event, callback) {
+    if (event === 'submit') {
+      listeners.push(callback);
+    }
+  };
+
+  formWrapper.triggerSubmit = function triggerSubmit(formData) {
+    var evt = fakeEvent(formData);
+    listeners.forEach(function (listener) { listener(evt); });
+  };
+
+  submitBtn.addEventListener('click', function submitBtnClick() {
+    var formData = clone(config);
+    formData.forEach(function (field, idx) {
+      field.answer = questions[idx].getValue(); // eslint-disable-line no-param-reassign
+    });
+
+    formWrapper.triggerSubmit(formData);
+  });
+
+  formWrapper.appendChild(submitBtnContainer);
+  return formWrapper;
 }
 
-function createDropdownInput(config) {
-  var wrapper = document.createElement('div');
-  wrapper.className = 'fl-if_Dropdown';
-
-  var select = document.createElement('select');
-  wrapper.appendChild(select);
-
-  var optionEl;
-  for (var i = 0; i < config.options.length; i++) {
-    optionEl = document.createElement('option');
-    optionEl.innerHTML = config.options[i];
-    select.appendChild(optionEl);
-  }
-  return wrapper;
-}
-
+// ----------- END OF FORM STRUCTURE  ---------------//
+// =============== GLOBAL OBJECT ===================//
 
 // START HERE
 window.flInteractiveForm = {
-  create: function create(config, targetElement) {
+  create: function create(config) {
     assert(config && config.length !== undefined,
       'The first argument must be a configuration array');
-    assert(targetElement && typeof targetElement.setAttribute !== undefined,
-      'The second argument must be an HTML Element');
 
     var form = es3Form(config);
-    targetElement.appendChild(form);
+    return form;
   },
 };
