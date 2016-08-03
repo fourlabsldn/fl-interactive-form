@@ -32649,7 +32649,7 @@ var RadioBtns = function (_OptionsInput) {
           className: optionClasses.join(' '),
           key: '' + _this2.props.config.key + index,
           onClick: function onClick() {
-            return _this2.saveResponseAndJumpToQuestion(index, 'next');
+            return _this2.saveResponseAndJumpToQuestion([index], 'next');
           },
           tabIndex: '0'
         },
@@ -33361,7 +33361,7 @@ var SubmitButton = function (_InputField) {
                   text: 'Review'
                 });
               } else {
-                this.props.appControl.showThankYouScreen('Thank you!');
+                this.props.appControl.triggerSubmit();
               }
 
             case 7:
@@ -33464,7 +33464,7 @@ var FormUI = function (_ReactBEM) {
     _this.slideFieldToCenter = _this.slideFieldToCenter.bind(_this);
     _this.slideToFirstWithError = _this.slideToFirstWithError.bind(_this);
     _this.processTouchDisplacement = _this.processTouchDisplacement.bind(_this);
-    _this.showThankYouScreen = _this.showThankYouScreen.bind(_this);
+    _this.triggerSubmit = _this.triggerSubmit.bind(_this);
 
     // public
     _this.focus = _this.focus.bind(_this);
@@ -33483,7 +33483,7 @@ var FormUI = function (_ReactBEM) {
       setQuestionCompleted: _this.setQuestionCompleted,
       setFieldActive: _this.setFieldActive,
       setFieldError: _this.setFieldError,
-      showThankYouScreen: _this.showThankYouScreen,
+      triggerSubmit: _this.triggerSubmit,
       slideToFirstWithError: _this.slideToFirstWithError
     });
 
@@ -33862,13 +33862,10 @@ var FormUI = function (_ReactBEM) {
     return slideToFirstWithError;
   }();
 
-  FormUI.prototype.showThankYouScreen = function showThankYouScreen(message) {
-    var state = arguments.length <= 1 || arguments[1] === undefined ? 'end' : arguments[1];
-
-    // Instead of doing that, let's just log the ouput
+  FormUI.prototype.triggerSubmit = function triggerSubmit() {
     var formElement = ReactDOM.findDOMNode(this);
     var submitEvent = new CustomEvent('submit', {
-      detail: this.props.config,
+      detail: this.props.config.questions,
       bubbles: true,
       cancelable: true
     });
@@ -33986,7 +33983,7 @@ var FormUI = function (_ReactBEM) {
       }, _callee5, this);
     }));
 
-    function setFieldError(_x4, _x5) {
+    function setFieldError(_x3, _x4) {
       return _ref5.apply(this, arguments);
     }
 
@@ -34145,7 +34142,7 @@ var FormUI = function (_ReactBEM) {
     }
   };
 
-  FormUI.prototype.buildForm = function buildForm() {
+  FormUI.prototype.render = function render() {
     var _this8 = this;
 
     var questions = this.props.config.questions.map(function (q, index) {
@@ -34186,32 +34183,6 @@ var FormUI = function (_ReactBEM) {
       ),
       React.createElement(NavigationBar, { appControl: this.appControl, ui: this.state.ui })
     );
-  };
-
-  FormUI.prototype.buildSplashScreen = function buildSplashScreen() {
-    var _ref6 = arguments.length <= 0 || arguments[0] === undefined ? this.state.splash : arguments[0];
-
-    var message = _ref6.message;
-    var state = _ref6.state;
-
-    var classes = [this.bemClass, this.bemState(state)].join(' ');
-    return React.createElement(
-      'div',
-      { className: classes },
-      React.createElement(
-        'div',
-        { className: this.bemSubComponent('splashMessage') },
-        message
-      )
-    );
-  };
-
-  FormUI.prototype.render = function render() {
-    if (this.state.splash) {
-      return this.buildSplashScreen();
-    } else {
-      return this.buildForm();
-    }
   };
 
   return FormUI;

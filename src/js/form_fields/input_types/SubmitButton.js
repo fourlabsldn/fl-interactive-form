@@ -32,7 +32,7 @@ export default class SubmitButton extends InputField {
         text: 'Review',
       });
     } else {
-      this.props.appControl.showThankYouScreen('Thank you!');
+      this.props.appControl.triggerSubmit();
     }
   }
 

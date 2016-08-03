@@ -33,7 +33,7 @@ export default class RadioBtns extends OptionsInput {
         <div
           className={optionClasses.join(' ')}
           key={`${this.props.config.key}${index}`}
-          onClick={() => this.saveResponseAndJumpToQuestion(index, 'next')}
+          onClick={() => this.saveResponseAndJumpToQuestion([index], 'next')}
           tabIndex="0"
         >
           {option}

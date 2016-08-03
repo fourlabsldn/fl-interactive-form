@@ -34,7 +34,7 @@ export default class FormUI extends ReactBEM {
     this.slideFieldToCenter = this.slideFieldToCenter.bind(this);
     this.slideToFirstWithError = this.slideToFirstWithError.bind(this);
     this.processTouchDisplacement = this.processTouchDisplacement.bind(this);
-    this.showThankYouScreen = this.showThankYouScreen.bind(this);
+    this.triggerSubmit = this.triggerSubmit.bind(this);
 
     // public
     this.focus = this.focus.bind(this);
@@ -53,7 +53,7 @@ export default class FormUI extends ReactBEM {
       setQuestionCompleted: this.setQuestionCompleted,
       setFieldActive: this.setFieldActive,
       setFieldError: this.setFieldError,
-      showThankYouScreen: this.showThankYouScreen,
+      triggerSubmit: this.triggerSubmit,
       slideToFirstWithError: this.slideToFirstWithError,
     });
 
@@ -244,11 +244,10 @@ export default class FormUI extends ReactBEM {
     }
   }
 
-  showThankYouScreen(message, state = 'end') {
-    // Instead of doing that, let's just log the ouput
+  triggerSubmit() {
     const formElement = ReactDOM.findDOMNode(this);
     const submitEvent = new CustomEvent('submit', {
-      detail: this.props.config,
+      detail: this.props.config.questions,
       bubbles: true,
       cancelable: true,
     });
@@ -446,7 +445,7 @@ export default class FormUI extends ReactBEM {
     }
   }
 
-  buildForm() {
+  render() {
     const questions = this.props.config.questions.map((q, index) => {
       return (
         <FormField
@@ -485,25 +484,6 @@ export default class FormUI extends ReactBEM {
         <NavigationBar appControl={this.appControl} ui={this.state.ui} />
       </div>
     );
-  }
-
-  buildSplashScreen({ message, state } = this.state.splash) {
-    const classes = [this.bemClass, this.bemState(state)].join(' ');
-    return (
-      <div className={classes}>
-        <div className={this.bemSubComponent('splashMessage')}>
-          {message}
-        </div>
-      </div>
-    );
-  }
-
-  render() {
-    if (this.state.splash) {
-      return this.buildSplashScreen();
-    } else {
-      return this.buildForm();
-    }
   }
 }
 
