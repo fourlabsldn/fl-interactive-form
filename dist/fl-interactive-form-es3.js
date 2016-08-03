@@ -108,9 +108,16 @@ function createDropdownInput(config) {
   wrapper.appendChild(select);
 
   var optionEl;
-  for (var i = 0; i < config.options.length; i++) {
+  for (var optionIndex = 0; optionIndex < config.options.length; optionIndex++) {
     optionEl = document.createElement('option');
-    optionEl.innerHTML = config.options[i];
+    optionEl.innerHTML = config.options[optionIndex];
+
+    for (var j = 0; j < config.disabledIndexes.length; j++) {
+      if (optionIndex === config.disabledIndexes[j]) {
+        optionEl.setAttribute('disabled', true);
+      }
+    }
+
     select.appendChild(optionEl);
   }
 
@@ -163,32 +170,39 @@ function formField(config) {
 // =============== FORM STRUCTURE ===================//
 
 function es3Form(config) {
-  var formWrapper = document.createElement('form');
-  formWrapper.className = 'fl-if_FormUI';
+  var form = document.createElement('form');
+  form.className = 'fl-if_FormUI';
 
   var questions = [];
   var questionEl;
   for (var i = 0; i < config.length; i++) {
     questionEl = formField(config[i]);
     questions.push(questionEl);
-    formWrapper.appendChild(questionEl);
+    form.appendChild(questionEl);
   }
 
   var submitBtnContainer = document.createElement('div');
   submitBtnContainer.className = 'fl-if_FormField fl-if_FormField--active';
 
   var submitBtn = document.createElement('button');
-  submitBtn.setAttribute('type', 'button');
+  submitBtn.setAttribute('type', 'submit');
   submitBtn.innerHTML = 'Submit';
   submitBtn.className = 'fl-if_NavigationBar-button';
   submitBtnContainer.appendChild(submitBtn);
+  form.appendChild(submitBtnContainer);
 
+  var formWrapper = document.createElement('div');
+  formWrapper.className = 'fl-if';
+  formWrapper.appendChild(form);
 
   var listeners = [];
   formWrapper.addEventListener = function customAddEventListener(event, callback) {
     if (event === 'submit') {
       listeners.push(callback);
+    } else {
+      return form.addEventListener(event, callback);
     }
+    return null;
   };
 
   formWrapper.triggerSubmit = function triggerSubmit(formData) {
@@ -196,16 +210,20 @@ function es3Form(config) {
     listeners.forEach(function (listener) { listener(evt); });
   };
 
-  submitBtn.addEventListener('click', function submitBtnClick() {
+  form.addEventListener('submit', function submitBtnClick(e) {
     var formData = clone(config);
+
     formData.forEach(function (field, idx) {
       field.answer = questions[idx].getValue(); // eslint-disable-line no-param-reassign
     });
 
     formWrapper.triggerSubmit(formData);
+
+    e.preventDefault();
+    e.stopPropagation();
+    return false;
   });
 
-  formWrapper.appendChild(submitBtnContainer);
   return formWrapper;
 }
 
