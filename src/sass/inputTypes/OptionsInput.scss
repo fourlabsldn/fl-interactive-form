@@ -1,4 +1,4 @@
-@mixin options-input() {
+.fl-if_OptionsInput {
   display: inline-block;
   position: relative;
   width: 100%;
@@ -67,20 +67,7 @@
   }
 }
 
-.fl-if_RadioBtns {
-  @include options-input();
-  &-option::before{
-    border-radius: 50%;
-  }
-}
-
-.fl-if_Checkboxes {
-  @include options-input();
-}
-
 .fl-if_Dropdown {
-  @include options-input();
-
   &::before {
     content: ' ';
     display: block;

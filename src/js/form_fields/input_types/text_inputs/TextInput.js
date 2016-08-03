@@ -16,7 +16,7 @@ export default class TextInput extends InputField {
     // some change.
     this.changedSinceLastUpdate = false;
 
-    /* @override */
+    /** @override */
     this.bemClass = `${this.modulePrefix}_TextInput`;
   }
 

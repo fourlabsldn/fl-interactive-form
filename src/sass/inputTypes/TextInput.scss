@@ -1,4 +1,4 @@
-@mixin text-input() {
+.fl-if_TextInput {
   padding: 0 0 .4em;
 
   &-input {
@@ -37,13 +37,4 @@
       border-color: $c-valid;
     }
   }
-}
-
-
-.fl-if_TextBox {
-  @include text-input();
-}
-
-.fl-if_TextArea {
-  @include text-input();
 }

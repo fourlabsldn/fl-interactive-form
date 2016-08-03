@@ -3,6 +3,12 @@ import OptionsInput from './OptionsInput';
 import globals from '../../../utils/globals';
 
 export default class Dropdown extends OptionsInput {
+  constructor(...args) {
+    super(...args);
+
+    /** @override */
+    this.bemClass = `fl-if_Dropdown ${this.bemClass}`;
+  }
   /**
    * @override
    * @method getResponse
@@ -45,7 +51,10 @@ export default class Dropdown extends OptionsInput {
       );
     });
 
-    const classes = [this.bemSubComponent('option'), globals.FOCUS_CLASS].join(' ');
+    const classes = [
+      this.bemSubComponent('option'),
+      globals.FOCUS_CLASS,
+    ].join(' ');
     return (<select className={classes}> {optionEls} </ select>);
   }
 }

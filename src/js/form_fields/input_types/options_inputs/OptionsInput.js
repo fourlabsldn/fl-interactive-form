@@ -9,7 +9,7 @@ export default class OptionsInput extends InputField {
     this.render = this.render.bind(this);
     this.generateOptions = this.generateOptions.bind(this);
 
-    /* @override */
+    /** @override */
     this.bemClass = `${this.modulePrefix}_OptionsInput`;
   }
 
