@@ -1,5 +1,7 @@
 /* globals xController */
 import 'babel-polyfill';
+import './utils/ie8-polyfills';
+import './utils/customEventsPolyfill';
 import ReactDOM from 'react-dom';
 import React from 'react';
 import assert from 'fl-assert';

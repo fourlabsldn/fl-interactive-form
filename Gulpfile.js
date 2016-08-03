@@ -54,6 +54,11 @@ gulp.task('build:src:es3-form', () => {
 
 gulp.task('build:src:react-form', () => {
   return rollup({
+    // Function names leak to the global namespace. To avoid that,
+    // let's just put everything within an immediate function, this way variables
+    // are all beautifully namespaced.
+    banner: '(function () {',
+    footer: '}());',
     entry: paths.js.main,
     sourceMap: true,
     plugins: [
