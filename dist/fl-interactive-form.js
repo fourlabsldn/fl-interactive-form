@@ -34186,7 +34186,7 @@ var NumberBox = function (_TextInput) {
     var _this = _possibleConstructorReturn(this, _TextInput.call.apply(_TextInput, [this].concat(args)));
 
     _this.inputEl = 'input';
-    _this.type = 'email';
+    _this.type = 'tel';
     return _this;
   }
 
