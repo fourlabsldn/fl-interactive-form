@@ -120,8 +120,8 @@
   top: .12em;
   color: #00D4A6;
   opacity: 0;
-  -webkit-transition: opacity .4s ease-in-out;
-  transition: opacity .4s ease-in-out; }
+  -webkit-transition: opacity .2s ease-in-out;
+  transition: opacity .2s ease-in-out; }
   .fl-if_FormField--completed .fl-if_FormField-okIcon {
     opacity: 1; }
 
