@@ -8,8 +8,10 @@ Generates a nice looking form that can be navigated using keyboard keys. Open So
   object from `form-builder` and a target element to create the form.
 
 ``` html
+  <link rel="stylesheet" href="../dist/fl-interactive-form.css">
+
   <!-- Where we will put the form -->
-  <div id='container' style="max-height: 100vh"> </div>
+  <div id="container" style="max-height: 100vh"> </div>
 
   <!-- Load the adequate form conditionally -->
   <!--[if IE 8]>
@@ -21,7 +23,7 @@ Generates a nice looking form that can be navigated using keyboard keys. Open So
 
   <!-- Build the form -->
   <script>
-    var config = ...
+    var config = [{ question: 'What is your name?', placeholder: 'My name is...', type: 'Text', }];
     var form = flInteractiveForm.create(config);
 
     form.addEventListener('submit', function logSubmission(e) {
