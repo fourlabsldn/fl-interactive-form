@@ -37,9 +37,7 @@ export default class Form extends ReactBEM {
    * @return {Object}
    */
   generateInitialState() {
-    const config = {
-      questions: clone(this.props.config),
-    };
+    const config = clone(this.props.config);
 
     // Add a random key to all questions:
     for (const q of config) {

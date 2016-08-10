@@ -36022,9 +36022,7 @@ var Form = function (_ReactBEM) {
 
 
   Form.prototype.generateInitialState = function generateInitialState() {
-    var config = {
-      questions: clone(this.props.config)
-    };
+    var config = clone(this.props.config);
 
     // Add a random key to all questions:
     var _iteratorNormalCompletion = true;
