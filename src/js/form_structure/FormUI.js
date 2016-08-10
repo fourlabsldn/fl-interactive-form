@@ -74,7 +74,7 @@ export default class FormUI extends ReactBEM {
     // Create a ui object to control questions
     const ui = {};
     ui.submitButton = createUiObj('submit');
-    ui.questions = this.props.config.questions.map(q => createUiObj(q.key));
+    ui.questions = this.props.config.map(q => createUiObj(q.key));
     return { ui };
   }
 
