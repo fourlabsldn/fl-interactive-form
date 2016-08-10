@@ -34657,6 +34657,11 @@ var Dropdown = function (_OptionsInput) {
         onChange: this.onChange,
         ref: 'selectionBox'
       },
+      React.createElement(
+        'option',
+        { value: '' },
+        'Select an option'
+      ),
       optionEls
     );
   };

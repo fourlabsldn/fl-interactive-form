@@ -63,6 +63,7 @@ export default class Dropdown extends OptionsInput {
         onChange={this.onChange}
         ref="selectionBox"
       >
+        <option value="">Select an option</option>
         {optionEls}
       </ select>
     );
