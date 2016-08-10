@@ -220,7 +220,7 @@ export default class FormUI extends ReactBEM {
   async validateAllFields() {
     const errorFields = [];
 
-    for (const q of this.props.config.questions) {
+    for (const q of this.props.config) {
       const questionReactEl = this.refs[q.key];
       const err = await questionReactEl.validate();
       if (err) {
@@ -247,7 +247,7 @@ export default class FormUI extends ReactBEM {
   triggerSubmit() {
     const formElement = ReactDOM.findDOMNode(this);
     const submitEvent = new CustomEvent('submit', {
-      detail: this.props.config.questions,
+      detail: this.props.config,
       bubbles: true,
       cancelable: true,
     });
@@ -446,7 +446,7 @@ export default class FormUI extends ReactBEM {
   }
 
   render() {
-    const questions = this.props.config.questions.map((q, index) => {
+    const questions = this.props.config.map((q, index) => {
       return (
         <FormField
           config={q}

@@ -35543,7 +35543,7 @@ var FormUI = function (_ReactBEM) {
               _didIteratorError = false;
               _iteratorError = undefined;
               _context3.prev = 4;
-              _iterator = _getIterator(this.props.config.questions);
+              _iterator = _getIterator(this.props.config);
 
             case 6:
               if (_iteratorNormalCompletion = (_step = _iterator.next()).done) {
@@ -35662,7 +35662,7 @@ var FormUI = function (_ReactBEM) {
   FormUI.prototype.triggerSubmit = function triggerSubmit() {
     var formElement = ReactDOM.findDOMNode(this);
     var submitEvent = new CustomEvent('submit', {
-      detail: this.props.config.questions,
+      detail: this.props.config,
       bubbles: true,
       cancelable: true
     });
@@ -35942,7 +35942,7 @@ var FormUI = function (_ReactBEM) {
   FormUI.prototype.render = function render() {
     var _this8 = this;
 
-    var questions = this.props.config.questions.map(function (q, index) {
+    var questions = this.props.config.map(function (q, index) {
       return React.createElement(FormField, {
         config: q,
         ui: _this8.state.ui.questions[index],
