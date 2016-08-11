@@ -266,7 +266,7 @@
     .fl-if_FormField--completed.fl-if_FormField--active .fl-if_TextInput-input {
       border-color: #00bcd4; }
 
-.fl-if_TextAreaInput {
+.fl-if_TextAreaInput-input {
   min-height: 8em;
   padding-top: .7em;
   padding-bottom: .7em; }

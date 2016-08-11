@@ -34133,7 +34133,7 @@ var TextInput = function (_InputField) {
       'div',
       { className: this.bemClass },
       React.createElement(InputEl, {
-        className: this.bemSubComponent('input') + ' ' + globals.FOCUS_CLASS,
+        className: this.bemSubComponent('input') + ' ' + this.className + ' ' + globals.FOCUS_CLASS,
         ref: 'input',
         type: this.type,
         defaultValue: this.props.config.answer,
@@ -34313,6 +34313,8 @@ var TextArea = function (_TextInput) {
     var _this = _possibleConstructorReturn(this, _TextInput.call.apply(_TextInput, [this].concat(args)));
 
     _this.inputEl = 'textarea';
+    // TODO: How to use this.bemSubComponent() corecctly?
+    _this.className = 'fl-if_TextAreaInput-input';
     return _this;
   }
 
