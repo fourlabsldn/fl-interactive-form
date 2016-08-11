@@ -34313,7 +34313,6 @@ var TextArea = function (_TextInput) {
     var _this = _possibleConstructorReturn(this, _TextInput.call.apply(_TextInput, [this].concat(args)));
 
     _this.inputEl = 'textarea';
-    _this.rows = '3';
     return _this;
   }
 
