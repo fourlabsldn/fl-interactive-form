@@ -45,15 +45,18 @@ export default class Form extends ReactBEM {
   /**
    * Processes a config object from this.props and returns it.
    * @private
+   * @pure
    * @method importConfig
+   * @param {Object} initialConfig - A configuration received as props.
+   * Possibly an object created by fl-form-builder
    * @return {Object}
    */
-  generateInitialState() {
+  generateInitialState(initialConfig) {
     const config = [];
 
     // Add a random key to all questions and set their initial
     // response to null
-    for (const q of this.props.config) {
+    for (const q of initialConfig) {
       const question = setAnswer(q, null); // This creates a new object
       question.key = String(Date.now() + Math.random());
       config.push(question);

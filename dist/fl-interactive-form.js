@@ -26556,12 +26556,15 @@ var Form = function (_ReactBEM) {
   /**
    * Processes a config object from this.props and returns it.
    * @private
+   * @pure
    * @method importConfig
+   * @param {Object} initialConfig - A configuration received as props.
+   * Possibly an object created by fl-form-builder
    * @return {Object}
    */
 
 
-  Form.prototype.generateInitialState = function generateInitialState() {
+  Form.prototype.generateInitialState = function generateInitialState(initialConfig) {
     var config = [];
 
     // Add a random key to all questions and set their initial
@@ -26571,7 +26574,7 @@ var Form = function (_ReactBEM) {
     var _iteratorError = undefined;
 
     try {
-      for (var _iterator = _getIterator(this.props.config), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+      for (var _iterator = _getIterator(initialConfig), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
         var q = _step.value;
 
         var question = setAnswer(q, null); // This creates a new object
