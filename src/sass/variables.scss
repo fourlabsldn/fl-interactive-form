@@ -27,6 +27,7 @@ $s-navigation-height: 3rem;
 
 // Screen sizes
 $screen-tiny-height: 500px;
+$screen-large-width: 1200px;
 
 @mixin hide-scrollbar() {
   &::-webkit-scrollbar {
@@ -65,5 +66,11 @@ $screen-tiny-height: 500px;
 
   &:focus {
     outline: 0;
+  }
+}
+
+@mixin large-screen() {
+  @media(min-width: $screen-large-width) {
+    @content
   }
 }

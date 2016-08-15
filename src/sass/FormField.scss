@@ -24,6 +24,12 @@
     // margin: 5em auto;
     transform: scale(1);
   }
+
+  @include large-screen {
+    min-width: 40em;
+    max-width: none;
+    width: 60%;
+  }
 }
 
 .fl-if_FormField-okIcon {

@@ -113,6 +113,11 @@
     -webkit-transform: scale(1);
         -ms-transform: scale(1);
             transform: scale(1); }
+  @media (min-width: 1200px) {
+    .fl-if_FormField {
+      min-width: 40em;
+      max-width: none;
+      width: 60%; } }
 
 .fl-if_FormField-okIcon {
   position: absolute;
@@ -241,7 +246,6 @@
     width: 100%;
     margin: 0;
     padding: .1em 1em;
-    max-width: 25em;
     font-family: Europa, Arial, sans-serif;
     font-size: 24px;
     background-color: transparent;
