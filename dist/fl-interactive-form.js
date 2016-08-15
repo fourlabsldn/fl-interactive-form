@@ -24882,7 +24882,10 @@ var RadioBtns = function (_OptionsInput) {
   }
 
   RadioBtns.prototype.getResponse = function getResponse() {
-    return this.props.config.answer;
+    // Even though radio buttons only have one response, all option
+    // input elements hold their responses in an array.
+    var anwerArray = this.props.config.answer;
+    return anwerArray ? anwerArray[0] : undefined;
   };
 
   RadioBtns.prototype.validateResponse = function validateResponse(response) {
@@ -24898,7 +24901,8 @@ var RadioBtns = function (_OptionsInput) {
     return options.map(function (option, index) {
       var optionClasses = [_this2.bemSubComponent('option'), _this2.bemSubComponent('radio'), globals.FOCUS_CLASS];
 
-      if (index === _this2.getResponse()) {
+      var response = _this2.getResponse();
+      if (index === response) {
         optionClasses.push(_this2.bemSubComponentState('option', 'selected'));
       }
 

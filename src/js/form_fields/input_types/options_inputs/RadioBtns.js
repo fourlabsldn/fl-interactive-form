@@ -4,7 +4,10 @@ import globals from '../../../utils/globals';
 
 export default class RadioBtns extends OptionsInput {
   getResponse() {
-    return this.props.config.answer;
+    // Even though radio buttons only have one response, all option
+    // input elements hold their responses in an array.
+    const anwerArray = this.props.config.answer;
+    return anwerArray ? anwerArray[0] : undefined;
   }
 
   validateResponse(response) {
@@ -25,7 +28,8 @@ export default class RadioBtns extends OptionsInput {
         globals.FOCUS_CLASS,
       ];
 
-      if (index === this.getResponse()) {
+      const response = this.getResponse();
+      if (index === response) {
         optionClasses.push(this.bemSubComponentState('option', 'selected'));
       }
 
