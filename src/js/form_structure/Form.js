@@ -16,6 +16,18 @@ const exampleConfig = [{
   type: 'Text',
 }];
 
+/**
+ * @pure
+ * @method setAnswer
+ * @param  {Object} qObj
+ * @param  {Any} answer
+ */
+function setAnswer(qObj, answer) {
+  const newQObj = clone(qObj);
+  newQObj.answer = answer;
+  return newQObj;
+}
+
 export default class Form extends ReactBEM {
   constructor(...args) {
     super(...args);
@@ -37,11 +49,14 @@ export default class Form extends ReactBEM {
    * @return {Object}
    */
   generateInitialState() {
-    const config = clone(this.props.config);
+    const config = [];
 
-    // Add a random key to all questions:
-    for (const q of config) {
-      q.key = String(Date.now() + Math.random());
+    // Add a random key to all questions and set their initial
+    // response to null
+    for (const q of this.props.config) {
+      const question = setAnswer(q, null); // This creates a new object
+      question.key = String(Date.now() + Math.random());
+      config.push(question);
     }
 
     return { config };

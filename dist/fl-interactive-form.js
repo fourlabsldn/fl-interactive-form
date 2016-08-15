@@ -26518,6 +26518,18 @@ FormUI.PropTypes = {
   appControl: React.PropTypes.object.isRequired
 };
 
+/**
+ * @pure
+ * @method setAnswer
+ * @param  {Object} qObj
+ * @param  {Any} answer
+ */
+function setAnswer(qObj, answer) {
+  var newQObj = clone(qObj);
+  newQObj.answer = answer;
+  return newQObj;
+}
+
 var Form = function (_ReactBEM) {
   _inherits(Form, _ReactBEM);
 
@@ -26550,18 +26562,21 @@ var Form = function (_ReactBEM) {
 
 
   Form.prototype.generateInitialState = function generateInitialState() {
-    var config = clone(this.props.config);
+    var config = [];
 
-    // Add a random key to all questions:
+    // Add a random key to all questions and set their initial
+    // response to null
     var _iteratorNormalCompletion = true;
     var _didIteratorError = false;
     var _iteratorError = undefined;
 
     try {
-      for (var _iterator = _getIterator(config), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+      for (var _iterator = _getIterator(this.props.config), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
         var q = _step.value;
 
-        q.key = String(Date.now() + Math.random());
+        var question = setAnswer(q, null); // This creates a new object
+        question.key = String(Date.now() + Math.random());
+        config.push(question);
       }
     } catch (err) {
       _didIteratorError = true;
