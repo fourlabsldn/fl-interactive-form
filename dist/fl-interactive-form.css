@@ -120,8 +120,8 @@
   top: .12em;
   color: #00D4A6;
   opacity: 0;
-  -webkit-transition: opacity .4s ease-in-out;
-  transition: opacity .4s ease-in-out; }
+  -webkit-transition: opacity .2s ease-in-out;
+  transition: opacity .2s ease-in-out; }
   .fl-if_FormField--completed .fl-if_FormField-okIcon {
     opacity: 1; }
 
@@ -265,6 +265,11 @@
       outline: 0; }
     .fl-if_FormField--completed.fl-if_FormField--active .fl-if_TextInput-input {
       border-color: #00bcd4; }
+
+.fl-if_TextAreaInput-input {
+  min-height: 8em;
+  padding-top: .7em;
+  padding-bottom: .7em; }
 
 .fl-if_OptionsInput {
   display: inline-block;

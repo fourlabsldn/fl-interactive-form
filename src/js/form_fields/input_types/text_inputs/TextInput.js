@@ -59,7 +59,7 @@ export default class TextInput extends InputField {
     return (
       <div className={this.bemClass}>
         <InputEl
-          className={`${this.bemSubComponent('input')} ${globals.FOCUS_CLASS}`}
+          className={`${this.bemSubComponent('input')} ${this.className} ${globals.FOCUS_CLASS}`}
           ref="input"
           type={this.type}
           defaultValue={this.props.config.answer}

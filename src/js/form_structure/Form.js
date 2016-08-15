@@ -10,13 +10,11 @@ import clone from '../utils/clone';
 // component.
 
 // Config example:
-const exampleConfig = { // eslint-disable-line
-  questions: [{
-    question: 'What is your name?',
-    placeholder: 'My name is...',
-    type: 'Text',
-  }],
-};
+const exampleConfig = [{
+  question: 'What is your name?',
+  placeholder: 'My name is...',
+  type: 'Text',
+}];
 
 export default class Form extends ReactBEM {
   constructor(...args) {
@@ -39,12 +37,10 @@ export default class Form extends ReactBEM {
    * @return {Object}
    */
   generateInitialState() {
-    const config = {
-      questions: clone(this.props.config),
-    };
+    const config = clone(this.props.config);
 
     // Add a random key to all questions:
-    for (const q of config.questions) {
+    for (const q of config) {
       q.key = String(Date.now() + Math.random());
     }
 
@@ -64,11 +60,11 @@ export default class Form extends ReactBEM {
    * @return Promise - will be resolved after the status is updated.
    */
   setQuestionResponse(questionKey, answerValue) {
-    const qIndex = this.state.config.questions.findIndex(q => q.key === questionKey);
+    const qIndex = this.state.config.findIndex(q => q.key === questionKey);
     assert(qIndex !== -1, `Did not find question with key: ${questionKey}`);
 
     const newConfig = clone(this.state.config);
-    newConfig.questions[qIndex].answer = answerValue;
+    newConfig[qIndex].answer = answerValue;
 
     return new Promise(resolve => this.setState({ config: newConfig }, resolve));
   }

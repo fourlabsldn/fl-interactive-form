@@ -32,7 +32,7 @@
   top: .12em;
   color: $c-valid-2;
   opacity: 0;
-  transition: opacity .4s ease-in-out;
+  transition: opacity .2s ease-in-out;
 
   .fl-if_FormField--completed & {
     opacity: 1;

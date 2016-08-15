@@ -23,6 +23,6 @@ export default class NumberBox extends TextInput {
   constructor(...args) {
     super(...args);
     this.inputEl = 'input';
-    this.type = 'email';
+    this.type = 'tel';
   }
 }
