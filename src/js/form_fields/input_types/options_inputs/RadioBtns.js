@@ -3,6 +3,10 @@ import OptionsInput from './OptionsInput';
 import globals from '../../../utils/globals';
 
 export default class RadioBtns extends OptionsInput {
+  /**
+   * @method getResponse
+   * @return {Int} Response index
+   */
   getResponse() {
     // Even though radio buttons only have one response, all option
     // input elements hold their responses in an array.

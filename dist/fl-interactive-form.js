@@ -24881,6 +24881,10 @@ var RadioBtns = function (_OptionsInput) {
     return _possibleConstructorReturn(this, _OptionsInput.apply(this, arguments));
   }
 
+  /**
+   * @method getResponse
+   * @return {Int} Response index
+   */
   RadioBtns.prototype.getResponse = function getResponse() {
     // Even though radio buttons only have one response, all option
     // input elements hold their responses in an array.
