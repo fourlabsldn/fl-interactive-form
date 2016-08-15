@@ -26190,7 +26190,7 @@ var FormUI = function (_ReactBEM) {
   FormUI.prototype.triggerSubmit = function triggerSubmit() {
     var formElement = ReactDOM.findDOMNode(this);
     var submitEvent = new CustomEvent('submit', {
-      detail: this.props.config,
+      detail: { answers: this.props.config },
       bubbles: true,
       cancelable: true
     });

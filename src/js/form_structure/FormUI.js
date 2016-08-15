@@ -247,7 +247,7 @@ export default class FormUI extends ReactBEM {
   triggerSubmit() {
     const formElement = ReactDOM.findDOMNode(this);
     const submitEvent = new CustomEvent('submit', {
-      detail: this.props.config,
+      detail: { answers: this.props.config },
       bubbles: true,
       cancelable: true,
     });

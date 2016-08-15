@@ -71,7 +71,7 @@
     var form = flInteractiveForm.create(config);
 
     form.addEventListener('submit', function logSubmission(e) {
-      var answers = e.detail;
+      var answers = e.detail.answers;
       console.log('Answer:', answers);
     })
 
