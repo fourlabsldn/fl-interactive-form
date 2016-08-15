@@ -26,7 +26,7 @@ export default class Dropdown extends OptionsInput {
   }
 
   onChange() {
-    const selectedOption = this.refs.selectionBox.value;
+    const selectedOption = this.refs.selectionBox.selectedIndex;
     this.saveResponseAndJumpToQuestion(selectedOption, 'next');
   }
 
@@ -57,13 +57,23 @@ export default class Dropdown extends OptionsInput {
       globals.FOCUS_CLASS,
     ].join(' ');
 
+    const additionalProps = {};
+
+    // If no answer was given, let's force the first option as selected
+    // because it might be a placeholder, which is set to disabled and would
+    // normally not be selected.
+    const currResponse = this.getResponse();
+    if (currResponse === null || currResponse === undefined) {
+      additionalProps.value = 0;
+    }
+
     return (
       <select
         className={classes}
         onChange={this.onChange}
         ref="selectionBox"
+        {...additionalProps}
       >
-        <option value="">Select an option</option>
         {optionEls}
       </ select>
     );

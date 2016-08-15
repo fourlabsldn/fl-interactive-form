@@ -24111,7 +24111,7 @@ module.exports = !$assign || interopDefault(require$$0$5)(function(){
 var _objectAssign$1 = interopDefault(_objectAssign);
 
 
-var require$$0$67 = Object.freeze({
+var require$$0$68 = Object.freeze({
   default: _objectAssign$1
 });
 
@@ -24119,7 +24119,7 @@ var es6_object_assign = createCommonjsModule(function (module) {
 // 19.1.3.1 Object.assign(target, source)
 var $export = interopDefault(require$$1$3);
 
-$export($export.S + $export.F, 'Object', {assign: interopDefault(require$$0$67)});
+$export($export.S + $export.F, 'Object', {assign: interopDefault(require$$0$68)});
 });
 
 interopDefault(es6_object_assign);
@@ -24131,15 +24131,20 @@ module.exports = interopDefault(require$$0$7).Object.assign;
 var assign$2 = interopDefault(assign$1);
 
 
-var require$$0$66 = Object.freeze({
+var require$$0$67 = Object.freeze({
 	default: assign$2
 });
 
 var assign = createCommonjsModule(function (module) {
-module.exports = { "default": interopDefault(require$$0$66), __esModule: true };
+module.exports = { "default": interopDefault(require$$0$67), __esModule: true };
 });
 
 var _Object$assign = interopDefault(assign);
+
+
+var require$$0$66 = Object.freeze({
+	default: _Object$assign
+});
 
 var globals = {
   modulePrefix: 'fl-if', // Interactive form
@@ -25052,6 +25057,34 @@ var Checkboxes = function (_OptionsInput) {
   return Checkboxes;
 }(OptionsInput);
 
+var _extends = createCommonjsModule(function (module, exports) {
+"use strict";
+
+exports.__esModule = true;
+
+var _assign = interopDefault(require$$0$66);
+
+var _assign2 = _interopRequireDefault(_assign);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = _assign2.default || function (target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i];
+
+    for (var key in source) {
+      if (Object.prototype.hasOwnProperty.call(source, key)) {
+        target[key] = source[key];
+      }
+    }
+  }
+
+  return target;
+};
+});
+
+var _extends$1 = interopDefault(_extends);
+
 var Dropdown = function (_OptionsInput) {
   _inherits(Dropdown, _OptionsInput);
 
@@ -25089,7 +25122,7 @@ var Dropdown = function (_OptionsInput) {
   };
 
   Dropdown.prototype.onChange = function onChange() {
-    var selectedOption = this.refs.selectionBox.value;
+    var selectedOption = this.refs.selectionBox.selectedIndex;
     this.saveResponseAndJumpToQuestion(selectedOption, 'next');
   };
 
@@ -25120,18 +25153,23 @@ var Dropdown = function (_OptionsInput) {
 
     var classes = [this.bemSubComponent('option'), globals.FOCUS_CLASS].join(' ');
 
+    var additionalProps = {};
+
+    // If no answer was given, let's force the first option as selected
+    // because it might be a placeholder, which is set to disabled and would
+    // normally not be selected.
+    var currResponse = this.getResponse();
+    if (currResponse === null || currResponse === undefined) {
+      additionalProps.value = 0;
+    }
+
     return React.createElement(
       'select',
-      {
+      _extends$1({
         className: classes,
         onChange: this.onChange,
         ref: 'selectionBox'
-      },
-      React.createElement(
-        'option',
-        { value: '' },
-        'Select an option'
-      ),
+      }, additionalProps),
       optionEls
     );
   };
@@ -25415,12 +25453,12 @@ module.exports = function stringify(it){ // eslint-disable-line no-unused-vars
 var stringify$2 = interopDefault(stringify$1);
 
 
-var require$$0$68 = Object.freeze({
+var require$$0$69 = Object.freeze({
   default: stringify$2
 });
 
 var stringify = createCommonjsModule(function (module) {
-module.exports = { "default": interopDefault(require$$0$68), __esModule: true };
+module.exports = { "default": interopDefault(require$$0$69), __esModule: true };
 });
 
 var _JSON$stringify = interopDefault(stringify);
