@@ -22553,7 +22553,7 @@ var FormUI = function (_ReactBEM) {
     key: 'goToField',
     value: function () {
       var _ref = asyncToGenerator(regeneratorRuntime.mark(function _callee(prevNext) {
-        var next, formFields, activeKey, activeIndex, changedIndex, newActiveIndex, newActiveKey, node, focusEl;
+        var next, formFields, activeKey, activeIndex, changedIndex, newActiveIndex, newActiveKey, node, focusEl, moduleJustLoaded;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -22580,17 +22580,19 @@ var FormUI = function (_ReactBEM) {
                 // On mobile devices we don't focus on input elements because
                 // the keyboard keeps changing the screen width, which can be quite annoying.
 
-                if (!(IS_TOUCH_DEVICE && focusEl.nodeName === 'INPUT')) {
-                  _context.next = 14;
+                moduleJustLoaded = activeKey === undefined;
+
+                if (!(moduleJustLoaded || IS_TOUCH_DEVICE && focusEl.nodeName === 'INPUT')) {
+                  _context.next = 15;
                   break;
                 }
 
                 return _context.abrupt('return');
 
-              case 14:
+              case 15:
                 this.focus(focusEl);
 
-              case 15:
+              case 16:
               case 'end':
                 return _context.stop();
             }

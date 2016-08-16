@@ -177,7 +177,8 @@ export default class FormUI extends ReactBEM {
 
     // On mobile devices we don't focus on input elements because
     // the keyboard keeps changing the screen width, which can be quite annoying.
-    if (IS_TOUCH_DEVICE && focusEl.nodeName === 'INPUT') {
+    const moduleJustLoaded = activeKey === undefined;
+    if (moduleJustLoaded || (IS_TOUCH_DEVICE && focusEl.nodeName === 'INPUT')) {
       return;
     }
     this.focus(focusEl);

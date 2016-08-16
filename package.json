@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "gulp dev"
+    "dev": "gulp dev",
     "demo": "gulp demo"
   },
   "author": "Lazamar @ FourLabs",
