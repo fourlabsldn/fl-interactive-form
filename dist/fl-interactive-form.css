@@ -415,7 +415,8 @@
   text-align: center;
   font-size: 16px;
   padding: .5em 1em;
-  margin: 0 .2em; }
+  margin: 0 .2em;
+  height: 2.5rem; }
   .fl-if_NavigationBar-button:active {
     border-bottom-width: 1px;
     top: 1px; }

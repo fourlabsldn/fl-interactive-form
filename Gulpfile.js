@@ -65,14 +65,9 @@ gulp.task('build:src:react-form', () => {
       nodeResolve({ jsnext: true, main: true }),
       commonjs(),
       babel({
-        runtimeHelpers: true,
         exclude: 'node_modules/**',
-        plugins: [
-          'transform-async-to-generator', [
-            'transform-runtime', { polyfill: true, regenerator: true },
-          ],
-          ['transform-es2015-classes', { loose: true }],
-        ],
+        babelrc: false,
+        plugins: ['transform-async-to-generator', 'external-helpers-2'],
         presets: ['es2015-rollup', 'react'],
       }),
       // To fix a React compilation issue
