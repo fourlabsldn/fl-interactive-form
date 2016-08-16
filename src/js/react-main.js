@@ -1,5 +1,5 @@
 /* globals xController */
-import 'babel-polyfill';
+// import 'babel-polyfill'; // Removing to avoid conflict in squarespace
 import './utils/ie8-polyfills';
 import './utils/customEventsPolyfill';
 import ReactDOM from 'react-dom';
