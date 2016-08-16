@@ -19,6 +19,7 @@ const concat = require('gulp-concat');
 const sass = require('gulp-sass');
 const autoprefixer = require('autoprefixer');
 const postcss = require('gulp-postcss');
+const browserSync = require('browser-sync').create();
 
 const moduleName = 'fl-interactive-form';
 const paths = {
@@ -26,16 +27,17 @@ const paths = {
     src: './src/js/**/*',
     main: './src/js/react-main.js',
     es3: './src/js/es3-main.js',
-    dest: './dist/',
+    dist: './dist/',
   },
   sass: {
     src: './src/sass/**/*',
     main: './src/sass/main.scss',
-    dest: './dist/',
+    dist: './dist/',
   },
   demo: {
-    src: './demo',
-    dep: './demo/dependencies',
+    main: './examples/all_field_types/index.html',
+    src: './examples/all_field_types',
+    dep: './examples/all_field_types/dependencies',
   },
 };
 
@@ -49,7 +51,7 @@ gulp.task('build:src:es3-form', () => {
   .pipe(sourcemaps.init({ loadMaps: true }))
   .pipe(concat(`${moduleName}-es3.js`))
   .pipe(es3ify())
-  .pipe(gulp.dest(paths.js.dest));
+  .pipe(gulp.dest(paths.js.dist));
 });
 
 gulp.task('build:src:react-form', () => {
@@ -86,7 +88,7 @@ gulp.task('build:src:react-form', () => {
   // write the sourcemap alongside the output file.
   .pipe(sourcemaps.write('.'))
   // and output to ./dist/main.js as normal.
-  .pipe(gulp.dest(paths.js.dest));
+  .pipe(gulp.dest(paths.js.dist));
 });
 
 gulp.task('build:src', [
@@ -107,7 +109,7 @@ gulp.task('build:sass', () => {
   .pipe(postcss([autoprefixer({ browsers: ['last 15 versions'] })]))
   .pipe(rename({ basename: moduleName }))
   .pipe(sourcemaps.write('.'))
-  .pipe(gulp.dest(paths.sass.dest));
+  .pipe(gulp.dest(paths.sass.dist));
 });
 
 gulp.task('watch:build:sass', () => {
@@ -125,3 +127,15 @@ gulp.task('watch', [
 ]);
 
 gulp.task('dev', ['copy-dependencies', 'build', 'watch']);
+gulp.task('demo', ['copy-dependencies', 'build', 'watch'], () => {
+  browserSync.init({
+    startPath: paths.demo.main,
+    server: {
+      baseDir: './',
+      directory: true,
+    },
+  });
+
+  gulp.watch(paths.demo.src).on('change', browserSync.reload);
+  gulp.watch(paths.js.dist).on('change', browserSync.reload);
+});
