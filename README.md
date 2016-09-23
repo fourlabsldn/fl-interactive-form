@@ -27,7 +27,7 @@ Generates a nice looking form that can be navigated using keyboard keys. Open So
     var form = flInteractiveForm.create(config);
 
     form.addEventListener('submit', function logSubmission(e) {
-      var answers = e.detail.answer;
+      var answers = e.detail.answers;
       console.log(answers);
     })
 
