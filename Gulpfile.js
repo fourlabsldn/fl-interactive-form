@@ -70,7 +70,7 @@ gulp.task('build:src:react-form', () => {
         exclude: 'node_modules/**',
         babelrc: false,
         plugins: ['transform-async-to-generator', 'external-helpers-2'],
-        presets: ['es2015-rollup', 'react'],
+        presets: ['es2017', 'react'],
       }),
       // To fix a React compilation issue
       // TODO: Change this from 'development' to 'production' during production
