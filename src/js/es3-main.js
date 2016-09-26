@@ -1,3 +1,4 @@
+/* globals define */
 /* eslint-env es6: false */
 /* eslint-disable no-var, comma-dangle, vars-on-top, prefer-template,
   prefer-arrow-callback, func-names
@@ -11,8 +12,8 @@
  *
  */
 
-// Wrap in an immediate function to namespace everything.
-(function () {
+// To be used with Require.js
+define(function () {
   // ================= HELPERS ==================//
   function assert(condition, message) {
     if (!condition) {
@@ -243,7 +244,7 @@
   // =============== GLOBAL OBJECT ===================//
 
   // START HERE
-  window.flInteractiveForm = {
+  var flInteractiveForm = {
     create: function create(config) {
       assert(config && config.length !== undefined,
         'The first argument must be a configuration array');
@@ -252,4 +253,7 @@
       return form;
     },
   };
-}());
+
+  window.flInteractiveForm = flInteractiveForm;
+  return flInteractiveForm;
+});

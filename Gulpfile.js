@@ -63,6 +63,9 @@ gulp.task('build:src:react-form', () => {
     footer: '}());',
     entry: paths.js.main,
     sourceMap: true,
+    format: 'umd',
+    moduleName: 'flInteractiveForm',
+    external: ['react', 'react-dom'],
     plugins: [
       nodeResolve({ jsnext: true, main: true }),
       commonjs(),

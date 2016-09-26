@@ -7,7 +7,7 @@ import React from 'react';
 import assert from 'fl-assert';
 import Form from './form_structure/Form';
 
-window.flInteractiveForm = {
+const flInteractiveForm = {
   create: (config) => {
     assert(config && config.length !== undefined,
       'The first argument must be a configuration array');
@@ -19,3 +19,5 @@ window.flInteractiveForm = {
     return targetElement;
   },
 };
+
+export default flInteractiveForm;
