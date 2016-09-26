@@ -8,7 +8,7 @@ export default class Dropdown extends OptionsInput {
 
     this.onChange = this.onChange.bind(this);
     /** @override */
-    this.bemClass = `fl-if_Dropdown ${this.bemClass}`;
+    this.bemClass = `${this.bemClass} fl-if_Dropdown`;
   }
 
   /**

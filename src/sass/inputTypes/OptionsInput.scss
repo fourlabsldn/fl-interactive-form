@@ -75,6 +75,7 @@
 }
 
 .fl-if_Dropdown {
+
   &::before {
     content: ' ';
     display: block;
@@ -91,7 +92,11 @@
   }
 
   &-option {
-    padding-left: 1em;
-    padding-right: 2em;
+    @extend .fl-if_OptionsInput-option;
+    border: 2px dashed $c-secondary-text;
+    color: $c-primary-text;
+    min-height: 4em;
+    padding: .1em 24px;
+    font-family: Europa, Arial, sans-serif;
   }
 }

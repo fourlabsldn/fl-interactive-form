@@ -282,7 +282,7 @@
   pointer-events: none; }
   .fl-if_FormField--active .fl-if_OptionsInput {
     pointer-events: all; }
-  .fl-if_OptionsInput-option {
+  .fl-if_OptionsInput-option, .fl-if_Dropdown-option {
     display: inline-block;
     position: relative;
     background-color: transparent;
@@ -305,7 +305,7 @@
        -moz-user-select: none;
         -ms-user-select: none;
             user-select: none; }
-    .fl-if_OptionsInput-option::before {
+    .fl-if_OptionsInput-option::before, .fl-if_Dropdown-option::before {
       content: ' ';
       display: inline-block;
       position: absolute;
@@ -317,7 +317,7 @@
       background: -webkit-linear-gradient(#dddddd, #c4c4c4);
       background: linear-gradient(#dddddd, #c4c4c4);
       border: 1px solid #05587a; }
-    .fl-if_OptionsInput-option:hover, .fl-if_OptionsInput-option:focus {
+    .fl-if_OptionsInput-option:hover, .fl-if_Dropdown-option:hover, .fl-if_OptionsInput-option:focus, .fl-if_Dropdown-option:focus {
       outline: 0;
       background-color: rgba(66, 79, 102, 0.1); }
   .fl-if_OptionsInput-radio:before {
@@ -351,8 +351,11 @@
   margin: auto; }
 
 .fl-if_Dropdown-option {
-  padding-left: 1em;
-  padding-right: 2em; }
+  border: 2px dashed #AAAAAA;
+  color: #434f69;
+  min-height: 4em;
+  padding: .1em 24px;
+  font-family: Europa, Arial, sans-serif; }
 
 .fl-if_NavigationBar {
   display: block;
