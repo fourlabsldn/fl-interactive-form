@@ -419,7 +419,12 @@
   font-size: 16px;
   padding: .5em 1em;
   margin: 0 .2em;
-  height: 2.5em; }
+  height: 2.5em;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none; }
   .fl-if_NavigationBar-button:active {
     border-bottom-width: 1px;
     top: 1px; }

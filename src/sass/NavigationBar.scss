@@ -39,7 +39,7 @@
 
 .fl-if_NavigationBar-buttons {
   display: inline-block;
-  float:right;
+  float: right;
 }
 
 .fl-if_NavigationBar-button {
@@ -48,4 +48,6 @@
   padding: .5em 1em;
   margin: 0 .2em;
   height: 2.5em;
+  cursor: pointer;
+  user-select: none;
 }

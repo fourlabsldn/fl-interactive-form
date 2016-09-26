@@ -23099,6 +23099,11 @@ class NavigationBar extends ReactBEM {
       return q.completed ? sum + 1 : sum;
     }, 0);
 
+    const activeQuestionIndex = this.props.ui.questions.findIndex(q => q.active);
+    const inactiveStyle = { pointerEvents: 'none', opacity: .5 };
+    const prevBtnStyle = activeQuestionIndex === 0 ? inactiveStyle : {};
+    const nextBtnStyle = activeQuestionIndex === -1 ? inactiveStyle : {};
+
     const percentageCompleted = Math.floor(completed * 100 / this.props.ui.questions.length);
 
     const btnClick = (e, nextPrev) => {
@@ -23136,7 +23141,8 @@ class NavigationBar extends ReactBEM {
           'button',
           {
             className: this.bemSubComponent('button'),
-            onClick: e => btnClick(e, 'prev')
+            onClick: e => btnClick(e, 'prev'),
+            style: prevBtnStyle
           },
           'Prev'
         ),
@@ -23144,7 +23150,8 @@ class NavigationBar extends ReactBEM {
           'button',
           {
             className: this.bemSubComponent('button'),
-            onClick: e => btnClick(e, 'next')
+            onClick: e => btnClick(e, 'next'),
+            style: nextBtnStyle
           },
           'Next'
         )
