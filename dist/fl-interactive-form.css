@@ -19,8 +19,8 @@
 .fl-if_FormUI-questionsViewBox {
   display: block;
   width: 100%;
-  max-height: -webkit-calc(100% - 3rem);
-  max-height: calc(100% - 3rem);
+  max-height: -webkit-calc(100% - 3em);
+  max-height: calc(100% - 3em);
   overflow: auto; }
   .fl-if_FormUI-questionsViewBox::-webkit-scrollbar-track {
     background-color: transparent; }
@@ -359,13 +359,14 @@
 
 .fl-if_NavigationBar {
   display: block;
-  position: relative;
+  position: absolute;
+  bottom: 0;
   width: 100%;
   background-color: #E6F7FE;
   border-top: 2px solid #05587a;
   text-align: right;
   padding: 0.2em 5vw;
-  height: 3rem; }
+  height: 3em; }
 
 .fl-if_NavigationBar-progress {
   display: inline-block;
@@ -374,22 +375,22 @@
 
 .fl-if_NavigationBar-progress-percentage {
   display: block;
-  font-size: .8rem;
-  line-height: 1.5rem;
+  font-size: .8em;
+  line-height: 1.5em;
   text-align: center; }
 
 .fl-if_NavigationBar-progress-bar {
   display: block;
-  -webkit-border-radius: .5rem;
-          border-radius: .5rem;
+  -webkit-border-radius: .5em;
+          border-radius: .5em;
   background-color: rgba(26, 171, 164, 0.2); }
 
 .fl-if_NavigationBar-progress-bar-fill {
   display: block;
   background-color: #00bcd4;
-  height: .5rem;
-  -webkit-border-radius: .3rem;
-          border-radius: .3rem;
+  height: .5em;
+  -webkit-border-radius: .3em;
+          border-radius: .3em;
   -webkit-transition: all .2s ease;
   transition: all .2s ease; }
 
@@ -419,7 +420,7 @@
   font-size: 16px;
   padding: .5em 1em;
   margin: 0 .2em;
-  height: 2.5rem; }
+  height: 2.5em; }
   .fl-if_NavigationBar-button:active {
     border-bottom-width: 1px;
     top: 1px; }

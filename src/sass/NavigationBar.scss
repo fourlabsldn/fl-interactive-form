@@ -1,6 +1,7 @@
 .fl-if_NavigationBar {
   display: block;
-  position: relative;
+  position: absolute;
+  bottom: 0;
   width: 100%;
   background-color: $c-primary;
   border-top: 2px solid $c-primary-border;
@@ -17,22 +18,22 @@
 
 .fl-if_NavigationBar-progress-percentage {
   display: block;
-  font-size: .8rem;
-  line-height: 1.5rem;
+  font-size: .8em;
+  line-height: 1.5em;
   text-align: center;
 }
 
 .fl-if_NavigationBar-progress-bar {
   display: block;
-  border-radius: .5rem;
+  border-radius: .5em;
   background-color: transparentize($c-accent, .8);
 }
 
 .fl-if_NavigationBar-progress-bar-fill {
   display: block;
   background-color: $c-valid;
-  height: .5rem;
-  border-radius: .3rem;
+  height: .5em;
+  border-radius: .3em;
   transition: all .2s ease;
 }
 
@@ -46,5 +47,5 @@
   font-size: $s-font-small;
   padding: .5em 1em;
   margin: 0 .2em;
-  height: 2.5rem;
+  height: 2.5em;
 }
