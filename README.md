@@ -16,7 +16,7 @@ Generates a nice looking form that can be navigated using keyboard keys. Open So
   <div id="container" style="height: 100vh"></div>
 
   <!-- RequireJS -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.min.js"></script>
   <!--[if lte IE 9]>
     <script type="text/javascript">
 
@@ -31,8 +31,8 @@ Generates a nice looking form that can be navigated using keyboard keys. Open So
     <script type="text/javascript">
       requirejs.config({
         paths: {
-          'react': 'https://cdnjs.cloudflare.com/ajax/libs/react/15.3.1/react.min',
-          'react-dom': 'https://cdnjs.cloudflare.com/ajax/libs/react/15.3.1/react-dom.min',
+          'react': '//cdnjs.cloudflare.com/ajax/libs/react/15.3.1/react.min',
+          'react-dom': '//cdnjs.cloudflare.com/ajax/libs/react/15.3.1/react-dom.min',
           'fl-interactive-form': '../../dist/fl-interactive-form',
         },
       });
