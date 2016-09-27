@@ -15,6 +15,8 @@ Generates a nice looking form that can be navigated using keyboard keys. Open So
   <!-- Where we will put the form -->
   <div id="container" style="height: 100vh"></div>
 
+  <!-- RequireJS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.min.js"></script>
   <!--[if lte IE 9]>
     <script type="text/javascript">
 

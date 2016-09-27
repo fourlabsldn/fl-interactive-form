@@ -12,8 +12,7 @@
   "dependencies": {
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
-    "requirejs": "^2.3.2",
-    "x-div": "^1.0.44"
+    "requirejs": "^2.3.2"
   },
   "devDependencies": {
     "autoprefixer": "^6.3.6",
