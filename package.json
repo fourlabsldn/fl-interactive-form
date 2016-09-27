@@ -10,6 +10,9 @@
   "author": "Lazamar @ FourLabs",
   "license": "ISC",
   "dependencies": {
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2",
+    "requirejs": "^2.3.2",
     "x-div": "^1.0.44"
   },
   "devDependencies": {
