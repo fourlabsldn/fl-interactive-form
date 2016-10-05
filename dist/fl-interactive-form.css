@@ -364,8 +364,7 @@
   background-color: #E6F7FE;
   border-top: 2px solid #05587a;
   text-align: right;
-  padding: 0.2em 5vw;
-  height: 3em; }
+  padding: 1em 5vw; }
 
 .fl-if_NavigationBar-progress {
   display: inline-block;
