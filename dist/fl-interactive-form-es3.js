@@ -26,7 +26,7 @@ define(function () {
   }
 
   function fakeEvent(answers) {
-    return { detail: { answers } };
+    return { detail: { answers: answers } };
   }
 
 
