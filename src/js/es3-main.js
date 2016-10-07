@@ -25,8 +25,8 @@ define(function () {
     return JSON.parse(JSON.stringify(obj));
   }
 
-  function fakeEvent(obj) {
-    return { detail: obj };
+  function fakeEvent(answers) {
+    return { detail: { answers } };
   }
 
 

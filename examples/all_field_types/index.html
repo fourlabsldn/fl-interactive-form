@@ -8,17 +8,18 @@
   <!-- RequireJS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.min.js"></script>
 
-  <!--[if lte IE 9]>
   <script type="text/javascript">
-      requirejs.config({
-          paths: {
-              'fl-interactive-form': '../../dist/fl-interactive-form-es3',
-          },
-      });
+
+  requirejs.config({
+    paths: {
+      'fl-interactive-form': '../../dist/fl-interactive-form-es3',
+    },
+  });
   </script>
+  <!--[if lte IE 9]>
   <![endif]-->
   <!--[if !lte IE 9]> -->
-    <script type="text/javascript">
+    <!-- <script type="text/javascript">
       requirejs.config({
         paths: {
           'react': 'https://cdnjs.cloudflare.com/ajax/libs/react/15.3.1/react.min',
@@ -26,7 +27,7 @@
           'fl-interactive-form': '../../dist/fl-interactive-form',
         },
       });
-    </script>
+    </script> -->
   <!-- <![endif]-->
 
   <style>
