@@ -49,6 +49,7 @@ define(function () {
     var tagName = config.type === 'TextArea' ? 'textarea' : 'input';
     var el = document.createElement(tagName);
     el.className = 'fl-if_TextInput-input';
+    el.setAttribute('name', config.title);
     el.setAttribute('type', textInputTypes[config.type]);
     el.placeholder = config.placeholder;
     if (config.required) {
@@ -234,20 +235,20 @@ define(function () {
       }
     };
 
-    form.addEventListener('submit', function submitBtnClick(e) {
-      var formData = clone(config);
-
-      for (var j = 0; j < formData.length; j++) {
-        formData[j].answer = questions[j].getValue();
-      }
-
-      formWrapper.triggerSubmit(formData);
-
-      // e.preventDefault();
-      // e.stopPropagation();
-      console.log('Not blocking anything')
-      return false;
-    });
+    // form.addEventListener('submit', function submitBtnClick(e) {
+    //   var formData = clone(config);
+    //
+    //   for (var j = 0; j < formData.length; j++) {
+    //     formData[j].answer = questions[j].getValue();
+    //   }
+    //
+    //   formWrapper.triggerSubmit(formData);
+    //
+    //   // e.preventDefault();
+    //   // e.stopPropagation();
+    //   console.log('Not blocking anything')
+    //   return false;
+    // });
 
     return formWrapper;
   }

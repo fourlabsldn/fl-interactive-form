@@ -8,17 +8,17 @@
   <!-- RequireJS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.min.js"></script>
 
+  <script type="text/javascript">
+  requirejs.config({
+    paths: {
+      'fl-interactive-form': '../../dist/fl-interactive-form-es3',
+    },
+  });
+  </script>
   <!--[if lte IE 9]>
-    <script type="text/javascript">
-      requirejs.config({
-        paths: {
-        'fl-interactive-form': '../../dist/fl-interactive-form-es3',
-        },
-      });
-    </script>
   <![endif]-->
   <!--[if !lte IE 9]> -->
-    <script type="text/javascript">
+    <!-- <script type="text/javascript">
       requirejs.config({
         paths: {
           'react': 'https://cdnjs.cloudflare.com/ajax/libs/react/15.3.1/react.min',
@@ -26,7 +26,7 @@
           'fl-interactive-form': '../../dist/fl-interactive-form',
         },
       });
-    </script>
+    </script> -->
   <!-- <![endif]-->
 
   <style>
@@ -71,6 +71,10 @@
 
   <div class="page-section">
     <h1>Header of the first section</h1>
+    <form action="http://localhost:8080/?test=2"  method="post">
+      <input type="text" name="name" placeholder="name">
+      <button type="submit">Submit</submit>
+    </form>
   </div>
 
   <div class="page-section">
@@ -84,9 +88,9 @@
   <script>
     require(['fl-interactive-form'], function (flInteractiveForm) {
       var config = [{"required": true,"title": "Your country of residence","type": "CountryDropdown"}, {"required":false,"title":"Answer a text question","type":"TextBox","placeholder":"Here lies a placeholder that should be shown"}, {"required":false,"title":"Radio Buttons box with a long question that will probably take more than one line to be completely represented in fullness.","type":"RadioBtns","options":["radio option number one","Radio option number 2","Another radio opiton","Third and last option in this radio buttons element","Remembering, this is not required."]},{"required":true,"title":"Title of a checkbox element","type":"Checkboxes","options":["First checkbox","Checkbox option number two","Remembering that on required checkboxes you must choose at least one option and no less than one."]},{"required":true,"title":"Would you like to choose a dropdown option? (Not optional)","type":"Dropdown","options":["Option number one","Option number two","Third option","--- divider ---","Option after divider."],"disabledIndexes":[0, 3]},{"required":true,"title":"Add your email (required)","type":"EmailBox","placeholder":"someone@something.com"},{"required":false,"title":"Don't forget to add a nice telephone number","type":"TelephoneBox","placeholder":"+44-075-1234-5678"},{"required":false,"title":"Add a number, like 1, or 3, or even 5, or 6, or 1 again.","type":"NumberBox","placeholder":"123"},{"required":true,"title":"Discuss at length the danger of the contemporary disregard to the structuralist view of semiology as the foundational paradigm in the ontology of meaning. (required)","type":"TextArea","placeholder":"Reeeally long text"}];
-      var targetUrl = 'http://myServer.co.uk/myEndpoint'; // This will be needed for IE 9 and below
+      var targetUrl = 'http://localhost:8080/?test=2'; // This will be needed for IE 9 and below
       var form = flInteractiveForm.create(config, targetUrl);
-
+      
       form.addEventListener('submit', function logSubmission(e) {
         var answers = e.detail.answers;
         console.log('Answer:', answers);
