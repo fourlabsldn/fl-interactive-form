@@ -43,7 +43,12 @@ Generates a nice looking form that can be navigated using keyboard keys. Open So
   <script>
     require(['fl-interactive-form'], function (flInteractiveForm) {
       var config = [{ question: 'What is your name?', placeholder: 'My name is...', type: 'Text', }];
-      var form = flInteractiveForm.create(config);
+      var targetUrl = 'http://google.com'; // This will be needed for IE 9 and below
+      // NOTE: In IE browsers 9 and below the submission will happen through
+      // form action. That means that the data may look a bit different.
+      // You can cancel the event and handle it in the `submit` event listener
+      // but that is discouraged as it is very error prone.
+      var form = flInteractiveForm.create(config, targetUrl);
 
       form.addEventListener('submit', function logSubmission(e) {
         var answers = e.detail.answers;
