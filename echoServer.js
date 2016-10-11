@@ -5,7 +5,7 @@ const http = require('http').Server(app); // eslint-disable-line new-cap
 const pretty = require('express-prettify');
 const bodyParser = require('body-parser');
 
-const PORT = 8080;
+const PORT = 5000;
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 

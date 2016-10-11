@@ -236,20 +236,20 @@ define(function () {
       }
     };
 
-    // form.addEventListener('submit', function submitBtnClick(e) {
-    //   var formData = clone(config);
-    //
-    //   for (var j = 0; j < formData.length; j++) {
-    //     formData[j].answer = questions[j].getValue();
-    //   }
-    //
-    //   formWrapper.triggerSubmit(formData);
-    //
-    //   // e.preventDefault();
-    //   // e.stopPropagation();
-    //   console.log('Not blocking anything')
-    //   return false;
-    // });
+    form.addEventListener('submit', function submitBtnClick(e) {
+      var formData = clone(config);
+
+      for (var j = 0; j < formData.length; j++) {
+        formData[j].answer = questions[j].getValue();
+      }
+
+      formWrapper.triggerSubmit(formData);
+
+      e.preventDefault();
+      e.stopPropagation();
+      console.log('Not blocking anything')
+      return false;
+    });
 
     return formWrapper;
   }

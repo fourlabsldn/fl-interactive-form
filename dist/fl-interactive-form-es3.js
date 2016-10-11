@@ -86,7 +86,7 @@ define(function () {
 
       optionEl = document.createElement('input');
       optionEl.type = optionType;
-      optionEl.name = optionName;
+      optionEl.setAttribute('name', optionName);
       optionWrapper.appendChild(optionEl);
 
       optionLegend = document.createTextNode(config.options[i]);
@@ -117,6 +117,7 @@ define(function () {
     wrapper.className = 'fl-if_Dropdown fl-if_OptionsInput';
 
     var select = document.createElement('select');
+    select.setAttribute('name', config.title);
     wrapper.appendChild(select);
 
     var optionEl;
@@ -235,20 +236,20 @@ define(function () {
       }
     };
 
-    // form.addEventListener('submit', function submitBtnClick(e) {
-    //   var formData = clone(config);
-    //
-    //   for (var j = 0; j < formData.length; j++) {
-    //     formData[j].answer = questions[j].getValue();
-    //   }
-    //
-    //   formWrapper.triggerSubmit(formData);
-    //
-    //   // e.preventDefault();
-    //   // e.stopPropagation();
-    //   console.log('Not blocking anything')
-    //   return false;
-    // });
+    form.addEventListener('submit', function submitBtnClick(e) {
+      var formData = clone(config);
+
+      for (var j = 0; j < formData.length; j++) {
+        formData[j].answer = questions[j].getValue();
+      }
+
+      formWrapper.triggerSubmit(formData);
+
+      e.preventDefault();
+      e.stopPropagation();
+      console.log('Not blocking anything')
+      return false;
+    });
 
     return formWrapper;
   }
