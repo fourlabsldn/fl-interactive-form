@@ -89,7 +89,7 @@ export default class FormField extends ReactBEM {
           {this.props.config.title}
         </p>
 
-        {React.createElement(inputTypes[reactElement], inputProps)}
+        {React.createElement(reactElement, inputProps)}
 
         {error}
 

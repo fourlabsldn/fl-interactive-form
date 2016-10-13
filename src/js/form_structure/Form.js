@@ -16,18 +16,6 @@ const exampleConfig = [{
   type: 'Text',
 }];
 
-/**
- * @pure
- * @method setAnswer
- * @param  {Object} qObj
- * @param  {Any} answer
- */
-function setAnswer(qObj, answer) {
-  const newQObj = clone(qObj);
-  newQObj.answer = answer;
-  return newQObj;
-}
-
 export default class Form extends ReactBEM {
   constructor(...args) {
     super(...args);
@@ -48,19 +36,22 @@ export default class Form extends ReactBEM {
    * @pure
    * @method importConfig
    * @param {Object} initialConfig - A configuration received as props.
-   * Possibly an object created by fl-form-builder
+   * Possibly an object created by fl-form-build
+   * @param {Array<Object>} customComponents
    * @return {Object}
    */
-  generateInitialState(initialConfig) {
-    const config = [];
-
-    // Add a random key to all questions and set their initial
-    // response to null
-    for (const q of initialConfig) {
-      const question = setAnswer(q, null); // This creates a new object
-      question.key = String(Date.now() + Math.random());
-      config.push(question);
-    }
+  generateInitialState(initialConfig, customComponents = []) {
+    const config = initialConfig
+      .map(q => {
+        const customConstructor = customComponents.find(c => c.type === q.type);
+        return customConstructor
+          ? customConstructor.initialState(q)
+          : q;
+      })
+      .map(q => Object.assign({}, q, {
+        answer: null,
+        key: String(Date.now() + Math.random()),
+      }));
 
     return { config };
   }
@@ -99,4 +90,5 @@ export default class Form extends ReactBEM {
 
 Form.PropTypes = {
   config: React.PropTypes.object.isRequired,
+  customComponents: React.PropTypes.array,
 };

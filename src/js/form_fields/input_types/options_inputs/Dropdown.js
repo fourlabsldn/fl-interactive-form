@@ -38,7 +38,7 @@ export default class Dropdown extends OptionsInput {
    * @return {Array<ReactDOMElements}
    */
   generateOptions(options) {
-    const disabledIndexes = this.props.config.disabledIndexes;
+    const disabledIndexes = this.props.config.disabledIndexes || [];
     const optionEls = options.map((option, index) => {
       const disabled = disabledIndexes.includes(index);
       return (
