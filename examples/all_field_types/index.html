@@ -94,11 +94,11 @@
         var answers = e.detail.answers;
         console.log('Answer:', answers);
         var targetUrl = 'http://10.0.2.2:5000'; // This will be needed for IE 9 and below
-        newpostReq(targetUrl, function (c) {console.log('Answer:', c); }, answers);
+        ie9ProofPost(targetUrl, function (c) {console.log('Answer:', c); }, answers);
 
 
         // Send post requests on IE9 and below
-        function newpostReq(url, callBack, data) {
+        function ie9ProofPost(url, callBack, data) {
             var xmlhttp;
             if (window.XDomainRequest)
             {
