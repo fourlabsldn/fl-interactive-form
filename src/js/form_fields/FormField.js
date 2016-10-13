@@ -6,18 +6,16 @@ import NumberBox from './input_types/text_inputs/NumberBox';
 import EmailBox from './input_types/text_inputs/EmailBox';
 import TextBox from './input_types/text_inputs/TextBox';
 import TextArea from './input_types/text_inputs/TextArea';
-import RadioBtns from './input_types/options_inputs/RadioBtns';
+import RadioButtons from './input_types/options_inputs/RadioButtons';
 import Checkboxes from './input_types/options_inputs/Checkboxes';
 import Dropdown from './input_types/options_inputs/Dropdown';
-import CountryDropdown from './input_types/options_inputs/CountryDropdown';
 
 const inputTypes = {
   TextBox,
   TextArea,
-  RadioBtns,
+  RadioButtons,
   Checkboxes,
   Dropdown,
-  CountryDropdown,
   EmailBox,
   NumberBox,
   TelephoneBox,
@@ -72,11 +70,16 @@ export default class FormField extends ReactBEM {
       key: this.props.config.key,
       ref: 'input',
     };
-    const inputType = this.props.config.type;
+
     const errorMsg = this.props.ui.error;
     const error = errorMsg
       ? <Error speechBubble> {errorMsg} </ Error>
       : null;
+
+
+    // We want to support new custom elements
+    const reactElement = inputTypes[this.props.config.type] ||
+                         inputTypes[this.props.config.primitiveType];
 
     return (
       <div className={classNames.join(' ')} onClick={this.handleClick}>
@@ -86,7 +89,7 @@ export default class FormField extends ReactBEM {
           {this.props.config.title}
         </p>
 
-        {React.createElement(inputTypes[inputType], inputProps)}
+        {React.createElement(inputTypes[reactElement], inputProps)}
 
         {error}
 

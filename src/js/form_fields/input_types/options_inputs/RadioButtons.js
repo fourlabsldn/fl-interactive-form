@@ -2,7 +2,7 @@ import React from 'react';
 import OptionsInput from './OptionsInput';
 import globals from '../../../utils/globals';
 
-export default class RadioBtns extends OptionsInput {
+export default class RadioButtons extends OptionsInput {
   /**
    * @method getResponse
    * @return {Int} Response index
