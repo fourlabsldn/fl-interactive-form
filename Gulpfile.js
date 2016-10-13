@@ -17,7 +17,6 @@ organiser.registerAll('./gulp-tasks', {
     dest,
     config: {
       external: ['react', 'react-dom'],
-      exports: 'named',
     },
   },
   'transpile-es3': {
