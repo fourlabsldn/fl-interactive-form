@@ -7,17 +7,19 @@ Generates a nice looking form that can be navigated using keyboard keys. Open So
   To create a form just call `flInteractiveForm.create` with the configuration
   object from `form-builder` and a target element to create the form.
 
-  Must use RequireJs.
+  You will need in your page:
+    - RequireJs with paths for `react` and `react-dom`
+    - `font-awesome.css`
 
 ``` html
-  <link rel="stylesheet" href="../dist/fl-interactive-form.css">
+  <!-- DEPENDENCIES -->
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
-
-  <!-- Where we will put the form -->
-  <div id="container" style="height: 100vh"></div>
-
-  <!-- RequireJS -->
   <script src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.3.2/require.min.js"></script>
+
+  <!-- MODULE STYLES -->
+  <link rel="stylesheet" href="../dist/fl-interactive-form.css">
+
+  <!-- REQUIREJS CONFIG-->
   <!--[if lte IE 9]>
     <script>
       requirejs.config({
@@ -39,23 +41,23 @@ Generates a nice looking form that can be navigated using keyboard keys. Open So
     </script>
   <!-- <![endif]-->
 
-  <!-- Build the form -->
+
+  <!-- OUR FORM CONTAINER -->
+  <div id="form-container" style="height: 100vh"></div>
+
+  <!-- BUILD THE FORM-->
   <script>
     require(['fl-interactive-form'], function (flInteractiveForm) {
       var config = [{ question: 'What is your name?', placeholder: 'My name is...', type: 'Text', }];
-      var targetUrl = 'http://google.com'; // This will be needed for IE 9 and below
-      // NOTE: In IE browsers 9 and below the submission will happen through
-      // form action. That means that the data may look a bit different.
-      // You can cancel the event and handle it in the `submit` event listener
-      // but that is discouraged as it is very error prone.
-      var form = flInteractiveForm.create(config, targetUrl);
+      var form = flInteractiveForm.create(config);
 
+      // We must take care of submission ourselves
       form.addEventListener('submit', function logSubmission(e) {
         var answers = e.detail.answers;
         console.log('Answer:', answers);
       })
 
-      var targetElement = document.querySelector('#formElement');
+      var targetElement = document.querySelector('#form-container');
       targetElement.appendChild(form);
     });
   </script>
@@ -79,7 +81,7 @@ Being derived from another component just means that the configuration object ha
 
 To be a valid derived type, the output of your `initialState` function must conform to its corresponding form field type signature. Here are the required fields in the two possible signatures:
 
-### text
+#### text
 
 
 This includes `TextBox`, `TextArea`, `EmailBox`, `TelephoneBox` and `NumberBox`.
@@ -94,7 +96,7 @@ This includes `TextBox`, `TextArea`, `EmailBox`, `TelephoneBox` and `NumberBox`.
 }
 ```
 
-## options
+### options
 
 
 This includes `Checkboxes`, `Dropdown` and `RadioButtons`.
@@ -107,4 +109,14 @@ This includes `Checkboxes`, `Dropdown` and `RadioButtons`.
  "type": "Dropdown",
  "options": ["Option number one", "Option number two"],
 }
+```
+
+### Including custom types
+
+Just get your `fl-form-builder` custom type objects, gather them in an array and give it to the interactive form creator function.
+
+``` javascript
+var customComponents = [ YearSelector, TimeSlots ]
+
+var form = flInteractiveForm.create(config, customComponents);
 ```

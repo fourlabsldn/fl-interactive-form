@@ -189,12 +189,8 @@ define(function () {
   // ----------- END OF FIELD FACTORY  ---------------//
   // =============== FORM STRUCTURE ===================//
 
-  function es3Form(config, targetUrl) {
+  function es3Form(config) {
     var form = document.createElement('form');
-    if (targetUrl) {
-      form.setAttribute('action', targetUrl);
-      form.setAttribute('method', 'POST');
-    }
     form.className = 'fl-if_FormUI';
 
     var questions = [];
@@ -259,11 +255,11 @@ define(function () {
 
   // START HERE
   var flInteractiveForm = {
-    create: function create(config, targetUrl) {
+    create: function create(config) {
       assert(config && config.length !== undefined,
         'The first argument must be a configuration array');
 
-      var form = es3Form(config, targetUrl);
+      var form = es3Form(config);
       return form;
     }
   };
