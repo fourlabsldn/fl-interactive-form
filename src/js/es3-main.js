@@ -72,7 +72,7 @@ define(function () {
     wrapper.className = 'fl-if_OptionsInput';
 
     var options = [];
-    var optionType = config.type === 'RadioBtns' ? 'radio' : 'checkbox';
+    var optionType = config.type === 'RadioButtons' ? 'radio' : 'checkbox';
     var optionName = config.title.replace(/\s'"/gi, '');
     var optionEl;
     var optionLegend;
@@ -80,7 +80,7 @@ define(function () {
     for (var i = 0; i < config.options.length; i++) {
       optionWrapper = document.createElement('label');
       optionWrapper.className = wrapper.className + '-option';
-      optionWrapper.className += config.type === 'RadioBtns'
+      optionWrapper.className += config.type === 'RadioButtons'
         ? ' fl-if_OptionsInput-radio'
         : ' fl-if_OptionsInput-checkbox';
 
@@ -167,7 +167,7 @@ define(function () {
     Checkboxes: createOptionsInput,
     Dropdown: createDropdownInput,
     CountryDropdown: createCountryDropdownInput,
-    RadioBtns: createOptionsInput
+    RadioButtons: createOptionsInput
   };
 
   function formField(config) {
