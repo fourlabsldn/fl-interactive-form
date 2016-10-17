@@ -42,7 +42,15 @@ const DEFAULT_CONFIG = {
     babel({
       exclude: 'node_modules/**',
       babelrc: false,
-      plugins: ['transform-async-to-generator', 'external-helpers-2'],
+      runtimeHelpers: true,
+      plugins: [
+        'transform-async-to-generator',
+        'external-helpers-2',
+        ["transform-runtime", {
+          "polyfill": true,
+          "regenerator": true
+        }]
+      ],
       presets: ['es2015-rollup', 'react'],
     }),
     // TODO: Change this from 'development' to 'production' during production
