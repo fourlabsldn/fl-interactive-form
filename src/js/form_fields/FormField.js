@@ -9,6 +9,7 @@ import TextArea from './input_types/text_inputs/TextArea';
 import RadioButtons from './input_types/options_inputs/RadioButtons';
 import Checkboxes from './input_types/options_inputs/Checkboxes';
 import Dropdown from './input_types/options_inputs/Dropdown';
+import CountryDropdown from './input_types/options_inputs/CountryDropdown';
 
 const inputTypes = {
   TextBox,
@@ -19,6 +20,7 @@ const inputTypes = {
   EmailBox,
   NumberBox,
   TelephoneBox,
+  CountryDropdown,
 };
 
 
