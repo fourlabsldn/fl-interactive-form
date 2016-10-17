@@ -2,6 +2,7 @@ const gulp = require('gulp');
 const es3ify = require('gulp-es3ify');
 const sourcemaps = require('gulp-sourcemaps');
 const organiser = require('gulp-organiser');
+const rename = require("gulp-rename");
 
 module.exports = organiser.register((task) => {
   // Copy es3 form builder.
@@ -9,6 +10,7 @@ module.exports = organiser.register((task) => {
     gulp.src(task.src)
       .pipe(sourcemaps.init({ loadMaps: true }))
       .pipe(es3ify())
+      .pipe(rename('fl-interactive-form-es3.js'))
       .pipe(gulp.dest(task.dest));
   });
 });

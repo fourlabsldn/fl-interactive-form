@@ -25,6 +25,7 @@ const commonjs = require('rollup-plugin-commonjs');
 const nodeResolve = require('rollup-plugin-node-resolve');
 const organiser = require('gulp-organiser');
 const { curry } = require('lodash/fp');
+const rename = require("gulp-rename");
 
 const DEFAULT_CONFIG = {
   sourceMap: true,
@@ -54,7 +55,7 @@ const DEFAULT_CONFIG = {
       presets: ['es2015-rollup', 'react'],
     }),
     // TODO: Change this from 'development' to 'production' during production
-    replace({ 'process.env.NODE_ENV': JSON.stringify('development') }),
+    replace({ 'process.env.NODE_ENV': JSON.stringify('production') }),
   ],
 };
 
@@ -73,7 +74,9 @@ const doTranspilation = curry((rollupConfig, stream, file) => {
 
   // .pipe(uglify())
 	// write the sourcemap alongside the output file.
-	.pipe(sourcemaps.write('.'));
+	.pipe(sourcemaps.write('.'))
+
+  .pipe(rename('fl-interactive-form.js'));
 });
 
 // Path resolution for these modules must be included in the pages' require.config

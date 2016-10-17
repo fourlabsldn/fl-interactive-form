@@ -6,6 +6,8 @@ const postcss = require('gulp-postcss');
 const autoprefixer = require('autoprefixer');
 const sourcemaps = require('gulp-sourcemaps');
 const organiser = require('gulp-organiser');
+const rename = require('gulp-rename');
+
 
 module.exports = organiser.register((task) => {
   gulp.task(task.name, () => {
@@ -14,6 +16,7 @@ module.exports = organiser.register((task) => {
     .pipe(sass().on('error', sass.logError))
     .pipe(postcss([autoprefixer({ browsers: ['last 15 versions'] })]))
     .pipe(sourcemaps.write('.'))
+    .pipe(rename('fl-interactive-form.css'))
     .pipe(gulp.dest(task.dest));
   });
 });
