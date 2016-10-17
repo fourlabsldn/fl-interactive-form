@@ -2,6 +2,8 @@
 
 Generates a nice looking form that can be navigated using keyboard keys. Open Source, **inspired by Typeform**.
 
+[Try it online.](https://fourlabsldn.github.io/fl-interactive-form/examples/all_field_types/index.html)
+
 ![usage demo](https://fourlabsldn.github.io/fl-interactive-form/examples/usage-demo.gif)
 
 ## Quickstart
