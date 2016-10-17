@@ -11,12 +11,317 @@ function createCommonjsModule(fn, module) {
 	return module = { exports: {} }, fn(module, module.exports), module.exports;
 }
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
+  return typeof obj;
+} : function (obj) {
+  return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+};
+
+
+
+
+
+var asyncGenerator = function () {
+  function AwaitValue(value) {
+    this.value = value;
+  }
+
+  function AsyncGenerator(gen) {
+    var front, back;
+
+    function send(key, arg) {
+      return new Promise(function (resolve, reject) {
+        var request = {
+          key: key,
+          arg: arg,
+          resolve: resolve,
+          reject: reject,
+          next: null
+        };
+
+        if (back) {
+          back = back.next = request;
+        } else {
+          front = back = request;
+          resume(key, arg);
+        }
+      });
+    }
+
+    function resume(key, arg) {
+      try {
+        var result = gen[key](arg);
+        var value = result.value;
+
+        if (value instanceof AwaitValue) {
+          Promise.resolve(value.value).then(function (arg) {
+            resume("next", arg);
+          }, function (arg) {
+            resume("throw", arg);
+          });
+        } else {
+          settle(result.done ? "return" : "normal", result.value);
+        }
+      } catch (err) {
+        settle("throw", err);
+      }
+    }
+
+    function settle(type, value) {
+      switch (type) {
+        case "return":
+          front.resolve({
+            value: value,
+            done: true
+          });
+          break;
+
+        case "throw":
+          front.reject(value);
+          break;
+
+        default:
+          front.resolve({
+            value: value,
+            done: false
+          });
+          break;
+      }
+
+      front = front.next;
+
+      if (front) {
+        resume(front.key, front.arg);
+      } else {
+        back = null;
+      }
+    }
+
+    this._invoke = send;
+
+    if (typeof gen.return !== "function") {
+      this.return = undefined;
+    }
+  }
+
+  if (typeof Symbol === "function" && Symbol.asyncIterator) {
+    AsyncGenerator.prototype[Symbol.asyncIterator] = function () {
+      return this;
+    };
+  }
+
+  AsyncGenerator.prototype.next = function (arg) {
+    return this._invoke("next", arg);
+  };
+
+  AsyncGenerator.prototype.throw = function (arg) {
+    return this._invoke("throw", arg);
+  };
+
+  AsyncGenerator.prototype.return = function (arg) {
+    return this._invoke("return", arg);
+  };
+
+  return {
+    wrap: function (fn) {
+      return function () {
+        return new AsyncGenerator(fn.apply(this, arguments));
+      };
+    },
+    await: function (value) {
+      return new AwaitValue(value);
+    }
+  };
+}();
+
+
+
+var asyncToGenerator = function (fn) {
+  return function () {
+    var gen = fn.apply(this, arguments);
+    return new Promise(function (resolve, reject) {
+      function step(key, arg) {
+        try {
+          var info = gen[key](arg);
+          var value = info.value;
+        } catch (error) {
+          reject(error);
+          return;
+        }
+
+        if (info.done) {
+          resolve(value);
+        } else {
+          return Promise.resolve(value).then(function (value) {
+            step("next", value);
+          }, function (err) {
+            step("throw", err);
+          });
+        }
+      }
+
+      return step("next");
+    });
+  };
+};
+
+var classCallCheck = function (instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+};
+
+var createClass = function () {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+
+  return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) defineProperties(Constructor, staticProps);
+    return Constructor;
+  };
+}();
+
+
+
+
+
+
+
+var _extends = Object.assign || function (target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i];
+
+    for (var key in source) {
+      if (Object.prototype.hasOwnProperty.call(source, key)) {
+        target[key] = source[key];
+      }
+    }
+  }
+
+  return target;
+};
+
+var get$1 = function get$1(object, property, receiver) {
+  if (object === null) object = Function.prototype;
+  var desc = Object.getOwnPropertyDescriptor(object, property);
+
+  if (desc === undefined) {
+    var parent = Object.getPrototypeOf(object);
+
+    if (parent === null) {
+      return undefined;
+    } else {
+      return get$1(parent, property, receiver);
+    }
+  } else if ("value" in desc) {
+    return desc.value;
+  } else {
+    var getter = desc.get;
+
+    if (getter === undefined) {
+      return undefined;
+    }
+
+    return getter.call(receiver);
+  }
+};
+
+var inherits = function (subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+  }
+
+  subClass.prototype = Object.create(superClass && superClass.prototype, {
+    constructor: {
+      value: subClass,
+      enumerable: false,
+      writable: true,
+      configurable: true
+    }
+  });
+  if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+};
+
+
+
+
+
+
+
+
+
+
+
+var possibleConstructorReturn = function (self, call) {
+  if (!self) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+
+  return call && (typeof call === "object" || typeof call === "function") ? call : self;
+};
+
+
+
+var set$1 = function set$1(object, property, value, receiver) {
+  var desc = Object.getOwnPropertyDescriptor(object, property);
+
+  if (desc === undefined) {
+    var parent = Object.getPrototypeOf(object);
+
+    if (parent !== null) {
+      set$1(parent, property, value, receiver);
+    }
+  } else if ("value" in desc && desc.writable) {
+    desc.value = value;
+  } else {
+    var setter = desc.set;
+
+    if (setter !== undefined) {
+      setter.call(receiver, value);
+    }
+  }
+
+  return value;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var toConsumableArray = function (arr) {
+  if (Array.isArray(arr)) {
+    for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
+
+    return arr2;
+  } else {
+    return Array.from(arr);
+  }
+};
+
 var ie8Polyfills = createCommonjsModule(function (module) {
   /*! (C) WebReflection Mit Style License */
   (function (e) {
     function w(e, t, n, r) {
       for (var i, s, o = n.slice(), u = x(t, e), a = 0, f = o.length; a < f; a++) {
-        i = o[a], typeof i == "object" ? typeof i.handleEvent == "function" && i.handleEvent(u) : i.call(e, u);if (u.stoppedImmediatePropagation) break;
+        i = o[a], (typeof i === "undefined" ? "undefined" : _typeof(i)) == "object" ? typeof i.handleEvent == "function" && i.handleEvent(u) : i.call(e, u);if (u.stoppedImmediatePropagation) break;
       }return s = !u.stoppedPropagation, r && s && e.parentNode ? e.parentNode.dispatchEvent(u) : !u.defaultPrevented;
     }function E(e, t) {
       return { configurable: !0, get: e, set: t };
@@ -29,10 +334,12 @@ var ie8Polyfills = createCommonjsModule(function (module) {
     }function x(e, t) {
       return e.currentTarget = t, e.eventPhase = e.target === e.currentTarget ? 2 : 3, e;
     }function T(e, t) {
-      var n = e.length;while (n-- && e[n] !== t);return n;
+      var n = e.length;while (n-- && e[n] !== t) {}return n;
     }function N() {
       if (this.tagName === "BR") return "\n";var e = this.firstChild,
-          t = [];while (e) e.nodeType !== 8 && e.nodeType !== 7 && t.push(e.textContent), e = e.nextSibling;return t.join("");
+          t = [];while (e) {
+        e.nodeType !== 8 && e.nodeType !== 7 && t.push(e.textContent), e = e.nextSibling;
+      }return t.join("");
     }function C(e) {
       return e.nodeType !== 9 && m.contains(e);
     }function k(e) {
@@ -48,7 +355,9 @@ var ie8Polyfills = createCommonjsModule(function (module) {
         return this[s] || (this[s] = this[n] + (m[i] || document.body && document.body[i] || 0) - m[r]);
       };
     }function O(e) {
-      var t;while (t = this.lastChild) this.removeChild(t);e != null && this.appendChild(document.createTextNode(e));
+      var t;while (t = this.lastChild) {
+        this.removeChild(t);
+      }e != null && this.appendChild(document.createTextNode(e));
     }function M(t, n) {
       return n || (n = e.event), n.target || (n.target = n.srcElement || n.fromElement || document), n.timeStamp || (n.timeStamp = new Date().getTime()), n;
     }if (document.createEvent) return;var t = !0,
@@ -60,10 +369,12 @@ var ie8Polyfills = createCommonjsModule(function (module) {
       e[t] = n.value;
     },
         u = Object.defineProperties || function (t, n) {
-      for (var r in n) if (f.call(n, r)) try {
-        o(t, r, n[r]);
-      } catch (i) {
-        e.console && console.log(r + " failed on object:", t, i.message);
+      for (var r in n) {
+        if (f.call(n, r)) try {
+          o(t, r, n[r]);
+        } catch (i) {
+          e.console && console.log(r + " failed on object:", t, i.message);
+        }
       }
     },
         a = Object.getOwnPropertyDescriptor,
@@ -77,7 +388,7 @@ var ie8Polyfills = createCommonjsModule(function (module) {
         m = document.documentElement,
         g = m.removeAttribute,
         y = m.setAttribute,
-        b = function (e) {
+        b = function b(e) {
       return { enumerable: !0, writable: !0, configurable: !0, value: e };
     };S(e.HTMLCommentElement.prototype, l, "nodeValue"), S(e.HTMLScriptElement.prototype, null, "text"), S(c, null, "nodeValue"), S(e.HTMLTitleElement.prototype, null, "text"), o(e.HTMLStyleElement.prototype, "textContent", function (e) {
       return E(function () {
@@ -85,22 +396,30 @@ var ie8Polyfills = createCommonjsModule(function (module) {
       }, function (t) {
         e.set.call(this.styleSheet, t);
       });
-    }(a(e.CSSStyleSheet.prototype, "cssText"))), u(l, { textContent: { get: N, set: O }, firstElementChild: { get: function () {
-          for (var e = this.childNodes || [], t = 0, n = e.length; t < n; t++) if (e[t].nodeType == 1) return e[t];
-        } }, lastElementChild: { get: function () {
-          for (var e = this.childNodes || [], t = e.length; t--;) if (e[t].nodeType == 1) return e[t];
-        } }, oninput: { get: function () {
+    }(a(e.CSSStyleSheet.prototype, "cssText"))), u(l, { textContent: { get: N, set: O }, firstElementChild: { get: function get() {
+          for (var e = this.childNodes || [], t = 0, n = e.length; t < n; t++) {
+            if (e[t].nodeType == 1) return e[t];
+          }
+        } }, lastElementChild: { get: function get() {
+          for (var e = this.childNodes || [], t = e.length; t--;) {
+            if (e[t].nodeType == 1) return e[t];
+          }
+        } }, oninput: { get: function get() {
           return this._oninput || null;
-        }, set: function (e) {
+        }, set: function set(e) {
           this._oninput && (this.removeEventListener("input", this._oninput), this._oninput = e, e && this.addEventListener("input", e));
-        } }, previousElementSibling: { get: function () {
-          var e = this.previousSibling;while (e && e.nodeType != 1) e = e.previousSibling;return e;
-        } }, nextElementSibling: { get: function () {
-          var e = this.nextSibling;while (e && e.nodeType != 1) e = e.nextSibling;return e;
-        } }, childElementCount: { get: function () {
-          for (var e = 0, t = this.childNodes || [], n = t.length; n--; e += t[n].nodeType == 1);return e;
+        } }, previousElementSibling: { get: function get() {
+          var e = this.previousSibling;while (e && e.nodeType != 1) {
+            e = e.previousSibling;
+          }return e;
+        } }, nextElementSibling: { get: function get() {
+          var e = this.nextSibling;while (e && e.nodeType != 1) {
+            e = e.nextSibling;
+          }return e;
+        } }, childElementCount: { get: function get() {
+          for (var e = 0, t = this.childNodes || [], n = t.length; n--; e += t[n].nodeType == 1) {}return e;
         } }, addEventListener: b(function (e, t, n) {
-        if (typeof t != "function" && typeof t != "object") return;var r = this,
+        if (typeof t != "function" && (typeof t === "undefined" ? "undefined" : _typeof(t)) != "object") return;var r = this,
             i = "on" + e,
             u = r[s] || o(r, s, { value: {} })[s],
             a = u[i] || (u[i] = {}),
@@ -113,7 +432,9 @@ var ie8Polyfills = createCommonjsModule(function (module) {
             try {
               c = document.createEventObject(), c[s] = !0, r.nodeType != 9 && (r.parentNode == null && v.appendChild(r), (p = r.getAttribute(i)) && g.call(r, i)), r.fireEvent(i, c), d[i] = !0;
             } catch (m) {
-              d[i] = !1;while (v.hasChildNodes()) v.removeChild(v.firstChild);
+              d[i] = !1;while (v.hasChildNodes()) {
+                v.removeChild(v.firstChild);
+              }
             }p != null && y.call(r, i, p);
           } else d[i] = !1;(a.n = d[i]) && r.attachEvent(i, a.w);
         }T(l, t) < 0 && l[n ? "unshift" : "push"](t), e === "input" && r.attachEvent("onkeyup", k);
@@ -125,7 +446,7 @@ var ie8Polyfills = createCommonjsModule(function (module) {
             o = !!i,
             u;return e.target || (e.target = t), o ? i.n ? t.fireEvent(n, e) : w(t, e, i.h, !0) : (u = t.parentNode) ? u.dispatchEvent(e) : !0, !e.defaultPrevented;
       }), removeEventListener: b(function (e, t, n) {
-        if (typeof t != "function" && typeof t != "object") return;var r = this,
+        if (typeof t != "function" && (typeof t === "undefined" ? "undefined" : _typeof(t)) != "object") return;var r = this,
             i = "on" + e,
             o = r[s],
             u = o && o[i],
@@ -153,11 +474,11 @@ var ie8Polyfills = createCommonjsModule(function (module) {
         this.stoppedImmediatePropagation = !0, this.stopPropagation();
       }), initEvent: b(function (e, t, n) {
         this.type = e, this.bubbles = !!t, this.cancelable = !!n, this.bubbles || this.stopPropagation();
-      }), pageX: { get: A("X") }, pageY: { get: A("Y") } }), u(e.HTMLDocument.prototype, { defaultView: { get: function () {
+      }), pageX: { get: A("X") }, pageY: { get: A("Y") } }), u(e.HTMLDocument.prototype, { defaultView: { get: function get() {
           return this.parentWindow;
-        } }, textContent: { get: function () {
+        } }, textContent: { get: function get() {
           return this.nodeType === 11 ? N.call(this) : null;
-        }, set: function (e) {
+        }, set: function set(e) {
           this.nodeType === 11 && O.call(this, e);
         } }, addEventListener: b(function (n, s, o) {
         var u = this;l.addEventListener.call(u, n, s, o), t && n === i && !p.test(u.readyState) && (t = !1, u.attachEvent(r, L), e == top && function a(e) {
@@ -175,7 +496,7 @@ var ie8Polyfills = createCommonjsModule(function (module) {
         }function s() {}var e = /^(?:[+-]?(?:\d*\.|)\d+(?:[eE][+-]?\d+|))(?!px)[a-z%]+$/,
             t = /^(top|right|bottom|left)$/,
             n = /\-([a-z])/g,
-            r = function (e, t) {
+            r = function r(e, t) {
           return t.toUpperCase();
         };return i.prototype.getPropertyValue = function (i) {
           var s = this._,
@@ -203,7 +524,9 @@ var ie8Polyfills = createCommonjsModule(function (module) {
             o = (e[i] || Object)[s],
             u = o ? T(o, n) : -1;-1 < u && o.splice(u, 1);
       }) }), function (e, t, n) {
-      for (n = 0; n < t.length; n++) document.createElement(t[n]);e.length || document.createStyleSheet(""), e[0].addRule(t.join(","), "display:block;");
+      for (n = 0; n < t.length; n++) {
+        document.createElement(t[n]);
+      }e.length || document.createStyleSheet(""), e[0].addRule(t.join(","), "display:block;");
     }(document.styleSheets, ["header", "nav", "section", "article", "aside", "footer"]);
   })(commonjsGlobal.window || commonjsGlobal);
 });
@@ -217,7 +540,7 @@ var ie8Polyfills = createCommonjsModule(function (module) {
   try {
     new window.CustomEvent("test");
   } catch (e) {
-    var CustomEvent = function (event, params) {
+    var CustomEvent = function CustomEvent(event, params) {
       var evt;
       params = params || {
         bubbles: false,
@@ -320,44 +643,94 @@ var globals = {
  * component, it should be created with <MyReactBEM cssPrefix={this.bemClass} />
  * @abstract @class ReactBEM
  */
-class ReactBEM extends React.Component {
-  constructor(props, ...args) {
-    super(props, ...args);
+
+var ReactBEM = function (_React$Component) {
+  inherits(ReactBEM, _React$Component);
+
+  function ReactBEM(props) {
+    var _ref;
+
+    classCallCheck(this, ReactBEM);
+
+    for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+      args[_key - 1] = arguments[_key];
+    }
+
+    var _this = possibleConstructorReturn(this, (_ref = ReactBEM.__proto__ || Object.getPrototypeOf(ReactBEM)).call.apply(_ref, [this, props].concat(args)));
+
     if (props.cssPrefix) {
-      this.bemClass = `${ props.cssPrefix }-${ lowerCaseFirstLetter(this.constructor.name) }`;
+      _this.bemClass = props.cssPrefix + '-' + lowerCaseFirstLetter(_this.constructor.name);
     } else {
-      this.bemClass = `${ globals.modulePrefix }_${ this.constructor.name }`;
+      _this.bemClass = globals.modulePrefix + '_' + _this.constructor.name;
     }
 
-    this.modulePrefix = globals.modulePrefix;
-    this.bemState = this.bemState.bind(this);
-    this.bemSubComponent = this.bemSubComponent.bind(this);
+    _this.modulePrefix = globals.modulePrefix;
+    _this.bemState = _this.bemState.bind(_this);
+    _this.bemSubComponent = _this.bemSubComponent.bind(_this);
+    return _this;
   }
 
-  bemState(state) {
-    return `${ this.bemClass }--${ state }`;
-  }
-
-  bemSubComponent(...componentTree) {
-    let className = `${ this.bemClass }`;
-    for (const componentName of componentTree) {
-      className += `-${ componentName }`;
+  createClass(ReactBEM, [{
+    key: 'bemState',
+    value: function bemState(state) {
+      return this.bemClass + '--' + state;
     }
-    return className;
-  }
+  }, {
+    key: 'bemSubComponent',
+    value: function bemSubComponent() {
+      var className = '' + this.bemClass;
 
-  bemSubComponentState(...args) {
-    const state = args.pop();
-    const subComponentClass = this.bemSubComponent(args);
-    const subComponentState = `${ subComponentClass }--${ state }`;
-    return subComponentState;
-  }
-}
+      for (var _len2 = arguments.length, componentTree = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+        componentTree[_key2] = arguments[_key2];
+      }
+
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
+
+      try {
+        for (var _iterator = componentTree[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var componentName = _step.value;
+
+          className += '-' + componentName;
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator.return) {
+            _iterator.return();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
+      }
+
+      return className;
+    }
+  }, {
+    key: 'bemSubComponentState',
+    value: function bemSubComponentState() {
+      for (var _len3 = arguments.length, args = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+        args[_key3] = arguments[_key3];
+      }
+
+      var state = args.pop();
+      var subComponentClass = this.bemSubComponent(args);
+      var subComponentState = subComponentClass + '--' + state;
+      return subComponentState;
+    }
+  }]);
+  return ReactBEM;
+}(React.Component);
 
 function lowerCaseFirstLetter(word) {
   if (word && word.charAt(0)) {
-    const wordHead = word.charAt(0).toLowerCase();
-    const wordTail = word.slice(1);
+    var wordHead = word.charAt(0).toLowerCase();
+    var wordTail = word.slice(1);
     return wordHead + wordTail;
   }
   return '';
@@ -367,38 +740,58 @@ ReactBEM.propTypes = {
   cssPrefix: React.PropTypes.string
 };
 
-class Error$1 extends ReactBEM {
+var Error$1 = function (_ReactBEM) {
+  inherits(Error, _ReactBEM);
 
-  render() {
-    const classes = [this.bemClass];
-    if (this.props.speechBubble) {
-      classes.push(this.bemState('speechBubble'));
+  function Error() {
+    classCallCheck(this, Error);
+    return possibleConstructorReturn(this, (Error.__proto__ || Object.getPrototypeOf(Error)).apply(this, arguments));
+  }
+
+  createClass(Error, [{
+    key: 'render',
+    value: function render() {
+      var classes = [this.bemClass];
+      if (this.props.speechBubble) {
+        classes.push(this.bemState('speechBubble'));
+      }
+
+      return React.createElement(
+        'div',
+        { className: classes.join(' ') },
+        ' ',
+        this.props.children,
+        ' '
+      );
+    }
+  }]);
+  return Error;
+}(ReactBEM);
+
+var InputField = function (_ReactBEM) {
+  inherits(InputField, _ReactBEM);
+
+  function InputField() {
+    var _ref;
+
+    classCallCheck(this, InputField);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
     }
 
-    return React.createElement(
-      'div',
-      { className: classes.join(' ') },
-      ' ',
-      this.props.children,
-      ' '
-    );
-  }
-}
+    var _this = possibleConstructorReturn(this, (_ref = InputField.__proto__ || Object.getPrototypeOf(InputField)).call.apply(_ref, [this].concat(args)));
 
-function _asyncToGenerator$2(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
-
-class InputField extends ReactBEM {
-  constructor(...args) {
-    super(...args);
-    this.keyListener = this.keyListener.bind(this);
-    this.getResponse = this.getResponse.bind(this);
-    this.validateResponse = this.validateResponse.bind(this);
-    this.saveResponse = this.saveResponse.bind(this);
-    this.saveResponseAndJumpToQuestion = this.saveResponseAndJumpToQuestion.bind(this);
-    this.isRequired = this.isRequired.bind(this);
-    this.keyPrev = this.keyPrev.bind(this);
-    this.keyNext = this.keyNext.bind(this);
-    this.keySelect = this.keySelect.bind(this);
+    _this.keyListener = _this.keyListener.bind(_this);
+    _this.getResponse = _this.getResponse.bind(_this);
+    _this.validateResponse = _this.validateResponse.bind(_this);
+    _this.saveResponse = _this.saveResponse.bind(_this);
+    _this.saveResponseAndJumpToQuestion = _this.saveResponseAndJumpToQuestion.bind(_this);
+    _this.isRequired = _this.isRequired.bind(_this);
+    _this.keyPrev = _this.keyPrev.bind(_this);
+    _this.keyNext = _this.keyNext.bind(_this);
+    _this.keySelect = _this.keySelect.bind(_this);
+    return _this;
   }
 
   /**
@@ -408,133 +801,226 @@ class InputField extends ReactBEM {
    * @param  {String} jumpDirection
    * @return {Promise}
    */
-  saveResponseAndJumpToQuestion(response, jumpDirection = 'next') {
-    var _this = this;
 
-    return _asyncToGenerator$2(function* () {
-      const previouslyCompletedState = _this.props.ui.completed;
-      yield _this.saveResponse(response);
 
-      // We will not move to the next question if there is an error.
-      const err = _this.validateResponse(response);
-      if (err) {
+  createClass(InputField, [{
+    key: 'saveResponseAndJumpToQuestion',
+    value: function () {
+      var _ref2 = asyncToGenerator(regeneratorRuntime.mark(function _callee(response) {
+        var _this2 = this;
+
+        var jumpDirection = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'next';
+        var previouslyCompletedState, err, animDuration;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                previouslyCompletedState = this.props.ui.completed;
+                _context.next = 3;
+                return this.saveResponse(response);
+
+              case 3:
+
+                // We will not move to the next question if there is an error.
+                err = this.validateResponse(response);
+
+                if (!err) {
+                  _context.next = 6;
+                  break;
+                }
+
+                return _context.abrupt('return');
+
+              case 6:
+
+                // Now there will be a render pass and this element will be set to completed
+                // we wait for the animation to finish before going to the next question.
+                animDuration = 0;
+
+                if (!previouslyCompletedState && this.props.ui.completed) {
+                  animDuration = 500;
+                }
+
+                setTimeout(function () {
+                  return _this2.props.appControl.goToField(jumpDirection);
+                }, animDuration);
+
+              case 9:
+              case 'end':
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function saveResponseAndJumpToQuestion(_x, _x2) {
+        return _ref2.apply(this, arguments);
+      }
+
+      return saveResponseAndJumpToQuestion;
+    }()
+
+    // To be overriden by subclasses
+
+  }, {
+    key: 'getResponse',
+    value: function getResponse() {
+      return this.props.config.answer;
+    }
+
+    /**
+     * @private
+     * @method isRequired
+     * @return {Boolean}
+     */
+
+  }, {
+    key: 'isRequired',
+    value: function isRequired() {
+      return this.props.config.required;
+    }
+
+    /**
+     * @private
+     * @method validateResponse
+     * @param  {Array | String | Int} response
+     * @return {String} Returns an error message, if there is an error.
+     * If there is no error it returns a falsy value.
+     */
+
+  }, {
+    key: 'validateResponse',
+    value: function validateResponse() {
+      var response = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.getResponse();
+
+      if (this.isRequired() && !response) {
+        return 'Field must be filled.';
+      }
+      return null;
+    }
+
+    /**
+     * Saves the response and sets the field as completed. No animation
+     * @method saveResponse
+     * @param  {Int | String | Array} response
+     * @return {Promise}
+     */
+
+  }, {
+    key: 'saveResponse',
+    value: function () {
+      var _ref3 = asyncToGenerator(regeneratorRuntime.mark(function _callee2() {
+        var response = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.getResponse();
+        var err;
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                this.props.appControl.setQuestionResponse(this.props.config.key, response);
+
+                // Show error if there is any
+                err = this.validateResponse(response);
+                _context2.next = 4;
+                return this.showError(err);
+
+              case 4:
+                _context2.next = 6;
+                return this.props.appControl.setQuestionCompleted(this.props.config.key, !err);
+
+              case 6:
+              case 'end':
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function saveResponse(_x5) {
+        return _ref3.apply(this, arguments);
+      }
+
+      return saveResponse;
+    }()
+  }, {
+    key: 'keyListener',
+    value: function keyListener(e) {
+      // eslint-disable-line complexity
+      var up = 38;
+      var down = 40;
+      var tab = 9;
+      var enter = 13;
+
+      if (e.ctrlKey) {
+        return;
+      }
+      if (e.shiftKey && e.keyCode !== tab) {
+        return;
+      }
+      if (e.keyCode === enter) {
+        this.keySelect();
+      } else if (e.keyCode === up) {
+        this.keyPrev();
+      } else if (e.keyCode === down) {
+        this.keyNext();
+      } else if (e.keyCode === tab && e.shiftKey) {
+        this.keyPrev();
+      } else if (e.keyCode === tab) {
+        this.keyNext();
+      } else {
         return;
       }
 
-      // Now there will be a render pass and this element will be set to completed
-      // we wait for the animation to finish before going to the next question.
-      let animDuration = 0;
-      if (!previouslyCompletedState && _this.props.ui.completed) {
-        animDuration = 500;
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  }, {
+    key: 'keyPrev',
+    value: function keyPrev() {
+      var response = this.getResponse();
+      this.saveResponseAndJumpToQuestion(response, 'prev');
+    }
+  }, {
+    key: 'keyNext',
+    value: function keyNext() {
+      var response = this.getResponse();
+      this.saveResponseAndJumpToQuestion(response, 'next');
+    }
+  }, {
+    key: 'keySelect',
+    value: function keySelect() {
+      this.keyNext();
+    }
+  }, {
+    key: 'showError',
+    value: function () {
+      var _ref4 = asyncToGenerator(regeneratorRuntime.mark(function _callee3(message) {
+        return regeneratorRuntime.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return this.props.appControl.setFieldError(this.props.config.key, message);
+
+              case 2:
+                return _context3.abrupt('return', _context3.sent);
+
+              case 3:
+              case 'end':
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      function showError(_x7) {
+        return _ref4.apply(this, arguments);
       }
 
-      setTimeout(function () {
-        return _this.props.appControl.goToField(jumpDirection);
-      }, animDuration);
-    })();
-  }
-
-  // To be overriden by subclasses
-  getResponse() {
-    return this.props.config.answer;
-  }
-
-  /**
-   * @private
-   * @method isRequired
-   * @return {Boolean}
-   */
-  isRequired() {
-    return this.props.config.required;
-  }
-
-  /**
-   * @private
-   * @method validateResponse
-   * @param  {Array | String | Int} response
-   * @return {String} Returns an error message, if there is an error.
-   * If there is no error it returns a falsy value.
-   */
-  validateResponse(response = this.getResponse()) {
-    if (this.isRequired() && !response) {
-      return 'Field must be filled.';
-    }
-    return null;
-  }
-
-  /**
-   * Saves the response and sets the field as completed. No animation
-   * @method saveResponse
-   * @param  {Int | String | Array} response
-   * @return {Promise}
-   */
-  saveResponse(response = this.getResponse()) {
-    var _this2 = this;
-
-    return _asyncToGenerator$2(function* () {
-      _this2.props.appControl.setQuestionResponse(_this2.props.config.key, response);
-
-      // Show error if there is any
-      const err = _this2.validateResponse(response);
-      yield _this2.showError(err);
-
-      yield _this2.props.appControl.setQuestionCompleted(_this2.props.config.key, !err);
-    })();
-  }
-
-  keyListener(e) {
-    // eslint-disable-line complexity
-    const up = 38;
-    const down = 40;
-    const tab = 9;
-    const enter = 13;
-
-    if (e.ctrlKey) {
-      return;
-    }
-    if (e.shiftKey && e.keyCode !== tab) {
-      return;
-    }
-    if (e.keyCode === enter) {
-      this.keySelect();
-    } else if (e.keyCode === up) {
-      this.keyPrev();
-    } else if (e.keyCode === down) {
-      this.keyNext();
-    } else if (e.keyCode === tab && e.shiftKey) {
-      this.keyPrev();
-    } else if (e.keyCode === tab) {
-      this.keyNext();
-    } else {
-      return;
-    }
-
-    e.preventDefault();
-    e.stopPropagation();
-  }
-
-  keyPrev() {
-    const response = this.getResponse();
-    this.saveResponseAndJumpToQuestion(response, 'prev');
-  }
-
-  keyNext() {
-    const response = this.getResponse();
-    this.saveResponseAndJumpToQuestion(response, 'next');
-  }
-
-  keySelect() {
-    this.keyNext();
-  }
-
-  showError(message) {
-    var _this3 = this;
-
-    return _asyncToGenerator$2(function* () {
-      return yield _this3.props.appControl.setFieldError(_this3.props.config.key, message);
-    })();
-  }
-}
+      return showError;
+    }()
+  }]);
+  return InputField;
+}(ReactBEM);
 
 InputField.PropTypes = {
   ui: React.PropTypes.object.isRequired,
@@ -545,296 +1031,466 @@ InputField.PropTypes = {
 /**
  * @abstract @class
  */
-class TextInput extends InputField {
-  constructor(...args) {
-    super(...args);
-    this.render = this.render.bind(this);
-    this.inputEl = null; // To be set by subclasses
+
+var TextInput = function (_InputField) {
+  inherits(TextInput, _InputField);
+
+  function TextInput() {
+    var _ref;
+
+    classCallCheck(this, TextInput);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    var _this = possibleConstructorReturn(this, (_ref = TextInput.__proto__ || Object.getPrototypeOf(TextInput)).call.apply(_ref, [this].concat(args)));
+
+    _this.render = _this.render.bind(_this);
+    _this.inputEl = null; // To be set by subclasses
 
     // Make sure we just trigger a revalidarion on blur when there has been
     // some change.
-    this.changedSinceLastUpdate = false;
+    _this.changedSinceLastUpdate = false;
 
     /** @override */
-    this.bemClass = `${ this.modulePrefix }_TextInput`;
+    _this.bemClass = _this.modulePrefix + '_TextInput';
+    return _this;
   }
 
-  getResponse() {
-    const response = ReactDOM.findDOMNode(this.refs.input).value;
-    return response.trim();
-  }
-
-  /**
-   * @override
-   */
-  validateResponse(response = this.getResponse()) {
-    if (this.isRequired() && !response) {
-      return 'This field must be completed.';
+  createClass(TextInput, [{
+    key: 'getResponse',
+    value: function getResponse() {
+      var response = ReactDOM.findDOMNode(this.refs.input).value;
+      return response.trim();
     }
 
-    return false;
-  }
+    /**
+     * @override
+     */
 
-  render() {
-    const InputEl = this.inputEl;
-    const handleInputChange = () => {
-      this.changedSinceLastUpdate = true;
-      if (this.props.ui.active) {
-        // set incomplete
-        this.props.appControl.setQuestionCompleted(this.props.config.key, false);
+  }, {
+    key: 'validateResponse',
+    value: function validateResponse() {
+      var response = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.getResponse();
+
+      if (this.isRequired() && !response) {
+        return 'This field must be completed.';
       }
 
-      if (this.props.ui.error) {
-        this.showError(this.validateResponse());
-      }
-    };
-
-    const handleBlur = () => {
-      if (!this.changedSinceLastUpdate) {
-        return;
-      }
-      this.changedSinceLastUpdate = false;
-      this.saveResponse();
-    };
-
-    return React.createElement(
-      'div',
-      { className: this.bemClass },
-      React.createElement(InputEl, {
-        className: `${ this.bemSubComponent('input') } ${ this.className } ${ globals.FOCUS_CLASS }`,
-        ref: 'input',
-        type: this.type,
-        defaultValue: this.props.config.answer,
-        placeholder: this.props.config.placeholder,
-
-        onKeyDown: this.keyListener,
-        onChange: handleInputChange,
-        onBlur: handleBlur,
-        disabled: !this.props.ui.active
-      })
-    );
-  }
-}
-
-const telRegex = /^\+?[0-9|\-|\s]{5,15}$/;
-class NumberBox extends TextInput {
-  /**
-   * @override
-   */
-  validateResponse(response = this.getResponse()) {
-    if (!this.isRequired() && !response) {
       return false;
     }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
 
-    if (this.isRequired() && !response) {
-      return 'This field must be completed';
+      var InputEl = this.inputEl;
+      var handleInputChange = function handleInputChange() {
+        _this2.changedSinceLastUpdate = true;
+        if (_this2.props.ui.active) {
+          // set incomplete
+          _this2.props.appControl.setQuestionCompleted(_this2.props.config.key, false);
+        }
+
+        if (_this2.props.ui.error) {
+          _this2.showError(_this2.validateResponse());
+        }
+      };
+
+      var handleBlur = function handleBlur() {
+        if (!_this2.changedSinceLastUpdate) {
+          return;
+        }
+        _this2.changedSinceLastUpdate = false;
+        _this2.saveResponse();
+      };
+
+      return React.createElement(
+        'div',
+        { className: this.bemClass },
+        React.createElement(InputEl, {
+          className: this.bemSubComponent('input') + ' ' + this.className + ' ' + globals.FOCUS_CLASS,
+          ref: 'input',
+          type: this.type,
+          defaultValue: this.props.config.answer,
+          placeholder: this.props.config.placeholder,
+
+          onKeyDown: this.keyListener,
+          onChange: handleInputChange,
+          onBlur: handleBlur,
+          disabled: !this.props.ui.active
+        })
+      );
     }
+  }]);
+  return TextInput;
+}(InputField);
 
-    if (!telRegex.test(response)) {
-      return 'Please insert a valid telephone number';
-    }
+var telRegex = /^\+?[0-9|\-|\s]{5,15}$/;
 
-    return false;
-  }
+var NumberBox = function (_TextInput) {
+  inherits(NumberBox, _TextInput);
+  createClass(NumberBox, [{
+    key: 'validateResponse',
 
-  constructor(...args) {
-    super(...args);
-    this.inputEl = 'input';
-    this.type = 'tel';
-  }
-}
+    /**
+     * @override
+     */
+    value: function validateResponse() {
+      var response = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.getResponse();
 
-const numberRegex = /^[0-9]+$/;
-class NumberBox$1 extends TextInput {
-  /**
-   * @override
-   */
-  validateResponse(response = this.getResponse()) {
-    if (!this.isRequired() && !response) {
+      if (!this.isRequired() && !response) {
+        return false;
+      }
+
+      if (this.isRequired() && !response) {
+        return 'This field must be completed';
+      }
+
+      if (!telRegex.test(response)) {
+        return 'Please insert a valid telephone number';
+      }
+
       return false;
     }
+  }]);
 
-    if (this.isRequired() && !response) {
-      return 'This field must be completed';
+  function NumberBox() {
+    var _ref;
+
+    classCallCheck(this, NumberBox);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
     }
 
-    if (!numberRegex.test(response)) {
-      return 'Invalid response. Please only insert number characters.';
+    var _this = possibleConstructorReturn(this, (_ref = NumberBox.__proto__ || Object.getPrototypeOf(NumberBox)).call.apply(_ref, [this].concat(args)));
+
+    _this.inputEl = 'input';
+    _this.type = 'tel';
+    return _this;
+  }
+
+  return NumberBox;
+}(TextInput);
+
+var numberRegex = /^[0-9]+$/;
+
+var NumberBox$1 = function (_TextInput) {
+  inherits(NumberBox, _TextInput);
+  createClass(NumberBox, [{
+    key: 'validateResponse',
+
+    /**
+     * @override
+     */
+    value: function validateResponse() {
+      var response = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.getResponse();
+
+      if (!this.isRequired() && !response) {
+        return false;
+      }
+
+      if (this.isRequired() && !response) {
+        return 'This field must be completed';
+      }
+
+      if (!numberRegex.test(response)) {
+        return 'Invalid response. Please only insert number characters.';
+      }
+
+      return false;
+    }
+  }]);
+
+  function NumberBox() {
+    var _ref;
+
+    classCallCheck(this, NumberBox);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
     }
 
-    return false;
+    var _this = possibleConstructorReturn(this, (_ref = NumberBox.__proto__ || Object.getPrototypeOf(NumberBox)).call.apply(_ref, [this].concat(args)));
+
+    _this.inputEl = 'input';
+    _this.type = 'email';
+    return _this;
   }
 
-  constructor(...args) {
-    super(...args);
-    this.inputEl = 'input';
-    this.type = 'email';
-  }
-}
+  return NumberBox;
+}(TextInput);
 
 /* RFC822 regex. see http://badsyntax.co/post/javascript-email-validation-rfc822 */
-const emailRegex = /^([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22))*\x40([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d))*$/;
+var emailRegex = /^([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22))*\x40([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d))*$/;
 
-class EmailBox extends TextInput {
-  /**
-   * @override
-   */
-  validateResponse(response = this.getResponse()) {
-    if (!this.isRequired() && !response) {
+var EmailBox = function (_TextInput) {
+  inherits(EmailBox, _TextInput);
+  createClass(EmailBox, [{
+    key: 'validateResponse',
+
+    /**
+     * @override
+     */
+    value: function validateResponse() {
+      var response = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.getResponse();
+
+      if (!this.isRequired() && !response) {
+        return false;
+      }
+
+      if (this.isRequired() && !response) {
+        return 'This field must be completed';
+      }
+
+      if (!emailRegex.test(response)) {
+        return 'Invalid email address.';
+      }
+
       return false;
     }
+  }]);
 
-    if (this.isRequired() && !response) {
-      return 'This field must be completed';
+  function EmailBox() {
+    var _ref;
+
+    classCallCheck(this, EmailBox);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
     }
 
-    if (!emailRegex.test(response)) {
-      return 'Invalid email address.';
+    var _this = possibleConstructorReturn(this, (_ref = EmailBox.__proto__ || Object.getPrototypeOf(EmailBox)).call.apply(_ref, [this].concat(args)));
+
+    _this.inputEl = 'input';
+    _this.type = 'email';
+    return _this;
+  }
+
+  return EmailBox;
+}(TextInput);
+
+var TextBox = function (_TextInput) {
+  inherits(TextBox, _TextInput);
+
+  function TextBox() {
+    var _ref;
+
+    classCallCheck(this, TextBox);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
     }
 
-    return false;
+    var _this = possibleConstructorReturn(this, (_ref = TextBox.__proto__ || Object.getPrototypeOf(TextBox)).call.apply(_ref, [this].concat(args)));
+
+    _this.inputEl = 'input';
+    _this.type = 'text';
+    return _this;
   }
 
-  constructor(...args) {
-    super(...args);
-    this.inputEl = 'input';
-    this.type = 'email';
-  }
-}
+  return TextBox;
+}(TextInput);
 
-class TextBox extends TextInput {
-  constructor(...args) {
-    super(...args);
-    this.inputEl = 'input';
-    this.type = 'text';
-  }
-}
+var TextArea = function (_TextInput) {
+  inherits(TextArea, _TextInput);
 
-class TextArea extends TextInput {
-  constructor(...args) {
-    super(...args);
-    this.inputEl = 'textarea';
+  function TextArea() {
+    var _ref;
+
+    classCallCheck(this, TextArea);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    var _this = possibleConstructorReturn(this, (_ref = TextArea.__proto__ || Object.getPrototypeOf(TextArea)).call.apply(_ref, [this].concat(args)));
+
+    _this.inputEl = 'textarea';
     // TODO: How to use this.bemSubComponent() corecctly?
-    this.className = 'fl-if_TextAreaInput-input';
+    _this.className = 'fl-if_TextAreaInput-input';
+    return _this;
   }
-}
 
-class OptionsInput extends InputField {
-  constructor(...args) {
-    super(...args);
-    this.render = this.render.bind(this);
-    this.generateOptions = this.generateOptions.bind(this);
+  return TextArea;
+}(TextInput);
+
+var OptionsInput = function (_InputField) {
+  inherits(OptionsInput, _InputField);
+
+  function OptionsInput() {
+    var _ref;
+
+    classCallCheck(this, OptionsInput);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    var _this = possibleConstructorReturn(this, (_ref = OptionsInput.__proto__ || Object.getPrototypeOf(OptionsInput)).call.apply(_ref, [this].concat(args)));
+
+    _this.render = _this.render.bind(_this);
+    _this.generateOptions = _this.generateOptions.bind(_this);
 
     /** @override */
-    this.bemClass = `${ this.modulePrefix }_OptionsInput`;
+    _this.bemClass = _this.modulePrefix + '_OptionsInput';
+    return _this;
   }
 
-  keyPrev() {
-    const container = ReactDOM.findDOMNode(this);
-    const options = Array.from(container.querySelectorAll(`.${ globals.FOCUS_CLASS }`));
-    const focusedIndex = options.findIndex(p => p === document.activeElement);
+  createClass(OptionsInput, [{
+    key: 'keyPrev',
+    value: function keyPrev() {
+      var container = ReactDOM.findDOMNode(this);
+      var options = Array.from(container.querySelectorAll('.' + globals.FOCUS_CLASS));
+      var focusedIndex = options.findIndex(function (p) {
+        return p === document.activeElement;
+      });
 
-    if (options[focusedIndex - 1]) {
-      this.props.appControl.focus(options[focusedIndex - 1]);
-    } else {
-      super.keyPrev();
-    }
-  }
-
-  keyNext() {
-    const container = ReactDOM.findDOMNode(this);
-    const options = Array.from(container.querySelectorAll(`.${ globals.FOCUS_CLASS }`));
-    const focusedIndex = options.findIndex(p => p === document.activeElement);
-
-    if (options[focusedIndex + 1]) {
-      this.props.appControl.focus(options[focusedIndex + 1]);
-    } else {
-      super.keyNext();
-    }
-  }
-
-  keySelect() {
-    const container = ReactDOM.findDOMNode(this);
-    const options = Array.from(container.querySelectorAll(`.${ globals.FOCUS_CLASS }`));
-    const focusedIndex = options.findIndex(p => p === document.activeElement);
-
-    if (options[focusedIndex]) {
-      options[focusedIndex].click();
-    } else {
-      super.keySelect();
-    }
-  }
-
-  /**
-   * To be overriden by subclasses
-   * @method generateOptions
-   * @param  {Array} optionsArray
-   * @return {Array<ReactElement>}
-   */
-  generateOptions(options) {
-    throw new Error('Should be implemented by subclass');
-  }
-
-  render() {
-    const options = this.generateOptions(this.props.config.options);
-
-    return React.createElement(
-      'div',
-      {
-        className: this.bemClass,
-        onKeyDown: this.keyListener
-      },
-      options
-    );
-  }
-}
-
-class RadioButtons extends OptionsInput {
-  /**
-   * @method getResponse
-   * @return {Int} Response index
-   */
-  getResponse() {
-    // Even though radio buttons only have one response, all option
-    // input elements hold their responses in an array.
-    const anwerArray = this.props.config.answer;
-    return anwerArray ? anwerArray[0] : undefined;
-  }
-
-  validateResponse(response) {
-    if (!this.isRequired() || this.props.config.options[response] !== undefined) {
-      return null;
-    }
-    return 'You must choose at lease one option';
-  }
-
-  generateOptions(options) {
-    return options.map((option, index) => {
-      const optionClasses = [this.bemSubComponent('option'), this.bemSubComponent('radio'), globals.FOCUS_CLASS];
-
-      const response = this.getResponse();
-      if (index === response) {
-        optionClasses.push(this.bemSubComponentState('option', 'selected'));
+      if (options[focusedIndex - 1]) {
+        this.props.appControl.focus(options[focusedIndex - 1]);
+      } else {
+        get$1(OptionsInput.prototype.__proto__ || Object.getPrototypeOf(OptionsInput.prototype), 'keyPrev', this).call(this);
       }
+    }
+  }, {
+    key: 'keyNext',
+    value: function keyNext() {
+      var container = ReactDOM.findDOMNode(this);
+      var options = Array.from(container.querySelectorAll('.' + globals.FOCUS_CLASS));
+      var focusedIndex = options.findIndex(function (p) {
+        return p === document.activeElement;
+      });
+
+      if (options[focusedIndex + 1]) {
+        this.props.appControl.focus(options[focusedIndex + 1]);
+      } else {
+        get$1(OptionsInput.prototype.__proto__ || Object.getPrototypeOf(OptionsInput.prototype), 'keyNext', this).call(this);
+      }
+    }
+  }, {
+    key: 'keySelect',
+    value: function keySelect() {
+      var container = ReactDOM.findDOMNode(this);
+      var options = Array.from(container.querySelectorAll('.' + globals.FOCUS_CLASS));
+      var focusedIndex = options.findIndex(function (p) {
+        return p === document.activeElement;
+      });
+
+      if (options[focusedIndex]) {
+        options[focusedIndex].click();
+      } else {
+        get$1(OptionsInput.prototype.__proto__ || Object.getPrototypeOf(OptionsInput.prototype), 'keySelect', this).call(this);
+      }
+    }
+
+    /**
+     * To be overriden by subclasses
+     * @method generateOptions
+     * @param  {Array} optionsArray
+     * @return {Array<ReactElement>}
+     */
+
+  }, {
+    key: 'generateOptions',
+    value: function generateOptions(options) {
+      throw new Error('Should be implemented by subclass');
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var options = this.generateOptions(this.props.config.options);
 
       return React.createElement(
         'div',
         {
-          className: optionClasses.join(' '),
-          key: `${ this.props.config.key }${ index }`,
-          onClick: () => this.saveResponseAndJumpToQuestion([index], 'next'),
-          tabIndex: '0'
+          className: this.bemClass,
+          onKeyDown: this.keyListener
         },
-        option
+        options
       );
-    });
-  }
-}
+    }
+  }]);
+  return OptionsInput;
+}(InputField);
 
-class Checkboxes extends OptionsInput {
-  constructor(...args) {
-    super(...args);
-    this.checkboxClick = this.checkboxClick.bind(this);
+var RadioButtons = function (_OptionsInput) {
+  inherits(RadioButtons, _OptionsInput);
+
+  function RadioButtons() {
+    classCallCheck(this, RadioButtons);
+    return possibleConstructorReturn(this, (RadioButtons.__proto__ || Object.getPrototypeOf(RadioButtons)).apply(this, arguments));
+  }
+
+  createClass(RadioButtons, [{
+    key: 'getResponse',
+
+    /**
+     * @method getResponse
+     * @return {Int} Response index
+     */
+    value: function getResponse() {
+      // Even though radio buttons only have one response, all option
+      // input elements hold their responses in an array.
+      var anwerArray = this.props.config.answer;
+      return anwerArray ? anwerArray[0] : undefined;
+    }
+  }, {
+    key: 'validateResponse',
+    value: function validateResponse(response) {
+      if (!this.isRequired() || this.props.config.options[response] !== undefined) {
+        return null;
+      }
+      return 'You must choose at lease one option';
+    }
+  }, {
+    key: 'generateOptions',
+    value: function generateOptions(options) {
+      var _this2 = this;
+
+      return options.map(function (option, index) {
+        var optionClasses = [_this2.bemSubComponent('option'), _this2.bemSubComponent('radio'), globals.FOCUS_CLASS];
+
+        var response = _this2.getResponse();
+        if (index === response) {
+          optionClasses.push(_this2.bemSubComponentState('option', 'selected'));
+        }
+
+        return React.createElement(
+          'div',
+          {
+            className: optionClasses.join(' '),
+            key: '' + _this2.props.config.key + index,
+            onClick: function onClick() {
+              return _this2.saveResponseAndJumpToQuestion([index], 'next');
+            },
+            tabIndex: '0'
+          },
+          option
+        );
+      });
+    }
+  }]);
+  return RadioButtons;
+}(OptionsInput);
+
+var Checkboxes = function (_OptionsInput) {
+  inherits(Checkboxes, _OptionsInput);
+
+  function Checkboxes() {
+    var _ref;
+
+    classCallCheck(this, Checkboxes);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    var _this = possibleConstructorReturn(this, (_ref = Checkboxes.__proto__ || Object.getPrototypeOf(Checkboxes)).call.apply(_ref, [this].concat(args)));
+
+    _this.checkboxClick = _this.checkboxClick.bind(_this);
+    return _this;
   }
 
   /**
@@ -843,13 +1499,131 @@ class Checkboxes extends OptionsInput {
    * @return {Array<Boolean>} Each index corresponds to an option index
    * selection value.
    */
-  getResponse() {
-    if (Array.isArray(this.props.config.answer)) {
-      return Array.from(this.props.config.answer);
+
+
+  createClass(Checkboxes, [{
+    key: 'getResponse',
+    value: function getResponse() {
+      if (Array.isArray(this.props.config.answer)) {
+        return Array.from(this.props.config.answer);
+      }
+
+      // Return array of same size as options but all elements as false
+      return this.props.config.options.map(function () {
+        return false;
+      });
     }
 
-    // Return array of same size as options but all elements as false
-    return this.props.config.options.map(() => false);
+    /**
+     * @override
+     * @method validateResponse
+     * @param  {Array<Bool>} response
+     * @return {String} - Error message.
+     */
+
+  }, {
+    key: 'validateResponse',
+    value: function validateResponse() {
+      var response = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.getResponse();
+
+      if (!this.isRequired()) {
+        return null;
+      }
+      if (!Array.isArray(response)) {
+        return 'This field must be filled';
+      }
+
+      assert(response.length === this.props.config.options.length, 'Invalid response array. Response of length ' + response.length + '\n       and options with length ' + this.props.config.options.length);
+
+      // All values are boolean
+      assert(response.reduce(function (valid, r) {
+        return valid && typeof r === 'boolean';
+      }, true), 'Response array has non-boolean values');
+
+      // If it is required, it must contain at least on checked opiton;
+      var checkedOptionCount = response.filter(function (r) {
+        return !!r;
+      }).length;
+
+      if (checkedOptionCount === 0) {
+        return 'You must check at least one option.';
+      }
+
+      return null;
+    }
+
+    /**
+     * @private
+     * @method checkboxClick
+     * @param  {Int} index - clicked option index
+     * @return {void}
+     */
+
+  }, {
+    key: 'checkboxClick',
+    value: function checkboxClick(index) {
+      var selectedOptions = this.getResponse();
+      // Toggle selection
+      selectedOptions[index] = !selectedOptions[index];
+      this.saveResponse(selectedOptions);
+    }
+
+    /**
+     * @override
+     * @method generateOptions
+     * @param  {Array<String>} options
+     * @return {Array<ReactDOMElements}
+     */
+
+  }, {
+    key: 'generateOptions',
+    value: function generateOptions(options) {
+      var _this2 = this;
+
+      var responses = this.getResponse();
+      return options.map(function (option, index) {
+        var optionClasses = [_this2.bemSubComponent('option'), _this2.bemSubComponent('checkbox'), globals.FOCUS_CLASS];
+
+        if (responses[index]) {
+          optionClasses.push(_this2.bemSubComponentState('option', 'selected'));
+        }
+
+        return React.createElement(
+          'div',
+          {
+            className: optionClasses.join(' '),
+            key: '' + _this2.props.config.key + index,
+            onClick: function onClick() {
+              return _this2.checkboxClick(index);
+            },
+            tabIndex: '0'
+          },
+          option
+        );
+      });
+    }
+  }]);
+  return Checkboxes;
+}(OptionsInput);
+
+var Dropdown = function (_OptionsInput) {
+  inherits(Dropdown, _OptionsInput);
+
+  function Dropdown() {
+    var _ref;
+
+    classCallCheck(this, Dropdown);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    var _this = possibleConstructorReturn(this, (_ref = Dropdown.__proto__ || Object.getPrototypeOf(Dropdown)).call.apply(_ref, [this].concat(args)));
+
+    _this.onChange = _this.onChange.bind(_this);
+    /** @override */
+    _this.bemClass = _this.bemClass + ' fl-if_Dropdown';
+    return _this;
   }
 
   /**
@@ -858,239 +1632,211 @@ class Checkboxes extends OptionsInput {
    * @param  {Array<Bool>} response
    * @return {String} - Error message.
    */
-  validateResponse(response = this.getResponse()) {
-    if (!this.isRequired()) {
-      return null;
+
+
+  createClass(Dropdown, [{
+    key: 'validateResponse',
+    value: function validateResponse() {
+      var response = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.getResponse();
+
+      if (this.isRequired() && !response) {
+        return 'Please choose an option';
+      }
+
+      return false;
     }
-    if (!Array.isArray(response)) {
-      return 'This field must be filled';
+  }, {
+    key: 'onChange',
+    value: function onChange() {
+      var selectedOption = this.refs.selectionBox.selectedIndex;
+      this.saveResponseAndJumpToQuestion(selectedOption, 'next');
     }
 
-    assert(response.length === this.props.config.options.length, `Invalid response array. Response of length ${ response.length }
-       and options with length ${ this.props.config.options.length }`);
+    /**
+     * @override
+     * @method generateOptions
+     * @param  {Array<String>} options
+     * @return {Array<ReactDOMElements}
+     */
 
-    // All values are boolean
-    assert(response.reduce((valid, r) => valid && typeof r === 'boolean', true), 'Response array has non-boolean values');
+  }, {
+    key: 'generateOptions',
+    value: function generateOptions(options) {
+      var _this2 = this;
 
-    // If it is required, it must contain at least on checked opiton;
-    const checkedOptionCount = response.filter(r => !!r).length;
+      var disabledIndexes = this.props.config.disabledIndexes || [];
+      var optionEls = options.map(function (option, index) {
+        var disabled = disabledIndexes.includes(index);
+        return React.createElement(
+          'option',
+          {
+            key: '' + _this2.props.config.key + index,
+            tabIndex: '0',
+            disabled: disabled
+          },
+          option
+        );
+      });
 
-    if (checkedOptionCount === 0) {
-      return 'You must check at least one option.';
-    }
+      var classes = [this.bemSubComponent('option'), globals.FOCUS_CLASS].join(' ');
 
-    return null;
-  }
+      var additionalProps = {};
 
-  /**
-   * @private
-   * @method checkboxClick
-   * @param  {Int} index - clicked option index
-   * @return {void}
-   */
-  checkboxClick(index) {
-    const selectedOptions = this.getResponse();
-    // Toggle selection
-    selectedOptions[index] = !selectedOptions[index];
-    this.saveResponse(selectedOptions);
-  }
-
-  /**
-   * @override
-   * @method generateOptions
-   * @param  {Array<String>} options
-   * @return {Array<ReactDOMElements}
-   */
-  generateOptions(options) {
-    const responses = this.getResponse();
-    return options.map((option, index) => {
-      const optionClasses = [this.bemSubComponent('option'), this.bemSubComponent('checkbox'), globals.FOCUS_CLASS];
-
-      if (responses[index]) {
-        optionClasses.push(this.bemSubComponentState('option', 'selected'));
+      // If no answer was given, let's force the first option as selected
+      // because it might be a placeholder, which is set to disabled and would
+      // normally not be selected.
+      var currResponse = this.getResponse();
+      if (currResponse === null || currResponse === undefined) {
+        additionalProps.value = 0;
       }
 
       return React.createElement(
-        'div',
-        {
-          className: optionClasses.join(' '),
-          key: `${ this.props.config.key }${ index }`,
-          onClick: () => this.checkboxClick(index),
-          tabIndex: '0'
-        },
-        option
+        'select',
+        _extends({
+          className: classes,
+          onChange: this.onChange,
+          ref: 'selectionBox'
+        }, additionalProps),
+        optionEls
       );
-    });
-  }
-}
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-class Dropdown extends OptionsInput {
-  constructor(...args) {
-    super(...args);
-
-    this.onChange = this.onChange.bind(this);
-    /** @override */
-    this.bemClass = `${ this.bemClass } fl-if_Dropdown`;
-  }
-
-  /**
-   * @override
-   * @method validateResponse
-   * @param  {Array<Bool>} response
-   * @return {String} - Error message.
-   */
-  validateResponse(response = this.getResponse()) {
-    if (this.isRequired() && !response) {
-      return 'Please choose an option';
     }
+  }]);
+  return Dropdown;
+}(OptionsInput);
 
-    return false;
-  }
-
-  onChange() {
-    const selectedOption = this.refs.selectionBox.selectedIndex;
-    this.saveResponseAndJumpToQuestion(selectedOption, 'next');
-  }
-
-  /**
-   * @override
-   * @method generateOptions
-   * @param  {Array<String>} options
-   * @return {Array<ReactDOMElements}
-   */
-  generateOptions(options) {
-    const disabledIndexes = this.props.config.disabledIndexes || [];
-    const optionEls = options.map((option, index) => {
-      const disabled = disabledIndexes.includes(index);
-      return React.createElement(
-        'option',
-        {
-          key: `${ this.props.config.key }${ index }`,
-          tabIndex: '0',
-          disabled: disabled
-        },
-        option
-      );
-    });
-
-    const classes = [this.bemSubComponent('option'), globals.FOCUS_CLASS].join(' ');
-
-    const additionalProps = {};
-
-    // If no answer was given, let's force the first option as selected
-    // because it might be a placeholder, which is set to disabled and would
-    // normally not be selected.
-    const currResponse = this.getResponse();
-    if (currResponse === null || currResponse === undefined) {
-      additionalProps.value = 0;
-    }
-
-    return React.createElement(
-      'select',
-      _extends({
-        className: classes,
-        onChange: this.onChange,
-        ref: 'selectionBox'
-      }, additionalProps),
-      optionEls
-    );
-  }
-}
-
-function _asyncToGenerator$1(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
-
-const inputTypes = {
-  TextBox,
-  TextArea,
-  RadioButtons,
-  Checkboxes,
-  Dropdown,
-  EmailBox,
+var inputTypes = {
+  TextBox: TextBox,
+  TextArea: TextArea,
+  RadioButtons: RadioButtons,
+  Checkboxes: Checkboxes,
+  Dropdown: Dropdown,
+  EmailBox: EmailBox,
   NumberBox: NumberBox$1,
   TelephoneBox: NumberBox
 };
 
-class FormField extends ReactBEM {
-  constructor(...args) {
-    super(...args);
-    this.handleClick = this.handleClick.bind(this);
-    this.validate = this.validate.bind(this);
-  }
+var FormField = function (_ReactBEM) {
+  inherits(FormField, _ReactBEM);
 
-  handleClick() {
-    if (!this.props.ui.active) {
-      this.props.appControl.setFieldActive(this.props.config.key);
+  function FormField() {
+    var _ref;
+
+    classCallCheck(this, FormField);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
     }
+
+    var _this = possibleConstructorReturn(this, (_ref = FormField.__proto__ || Object.getPrototypeOf(FormField)).call.apply(_ref, [this].concat(args)));
+
+    _this.handleClick = _this.handleClick.bind(_this);
+    _this.validate = _this.validate.bind(_this);
+    return _this;
   }
 
-  /**
-   * Shows error and returns error message
-   * @method validate
-   * @return {String} Error message
-   */
-  validate() {
-    var _this = this;
-
-    return _asyncToGenerator$1(function* () {
-      const response = _this.refs.input.getResponse();
-      const error = _this.refs.input.validateResponse(response);
-      if (error) {
-        yield _this.refs.input.showError(error);
+  createClass(FormField, [{
+    key: 'handleClick',
+    value: function handleClick() {
+      if (!this.props.ui.active) {
+        this.props.appControl.setFieldActive(this.props.config.key);
       }
-      return error;
-    })();
-  }
-
-  render() {
-    // assert(
-    //   typeof inputTypes[this.props.config.type] !== 'undefined',
-    //   `Invalid input type: ${this.props.config.type}`
-    // );
-
-    const classNames = [this.bemClass];
-    if (this.props.ui.active) {
-      classNames.push(this.bemState('active'));
-    }
-    if (this.props.ui.completed) {
-      classNames.push(this.bemState('completed'));
     }
 
-    const inputProps = {
-      ui: this.props.ui,
-      config: this.props.config,
-      appControl: this.props.appControl,
-      key: this.props.config.key,
-      ref: 'input'
-    };
+    /**
+     * Shows error and returns error message
+     * @method validate
+     * @return {String} Error message
+     */
 
-    const errorMsg = this.props.ui.error;
-    const error = errorMsg ? React.createElement(
-      Error$1,
-      { speechBubble: true },
-      ' ',
-      errorMsg,
-      ' '
-    ) : null;
+  }, {
+    key: 'validate',
+    value: function () {
+      var _ref2 = asyncToGenerator(regeneratorRuntime.mark(function _callee() {
+        var response, error;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                response = this.refs.input.getResponse();
+                error = this.refs.input.validateResponse(response);
 
-    // We want to support new custom elements
-    const reactElement = inputTypes[this.props.config.type] || inputTypes[this.props.config.primitiveType];
+                if (!error) {
+                  _context.next = 5;
+                  break;
+                }
 
-    return React.createElement(
-      'div',
-      { className: classNames.join(' '), onClick: this.handleClick },
-      React.createElement(
-        'p',
-        { className: this.bemSubComponent('legend') },
-        React.createElement('i', { className: `fa fa-check-circle ${ this.bemSubComponent('okIcon') }` }),
-        this.props.config.title
-      ),
-      React.createElement(reactElement, inputProps),
-      error
-    );
-  }
-}
+                _context.next = 5;
+                return this.refs.input.showError(error);
+
+              case 5:
+                return _context.abrupt('return', error);
+
+              case 6:
+              case 'end':
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function validate() {
+        return _ref2.apply(this, arguments);
+      }
+
+      return validate;
+    }()
+  }, {
+    key: 'render',
+    value: function render() {
+      // assert(
+      //   typeof inputTypes[this.props.config.type] !== 'undefined',
+      //   `Invalid input type: ${this.props.config.type}`
+      // );
+
+      var classNames = [this.bemClass];
+      if (this.props.ui.active) {
+        classNames.push(this.bemState('active'));
+      }
+      if (this.props.ui.completed) {
+        classNames.push(this.bemState('completed'));
+      }
+
+      var inputProps = {
+        ui: this.props.ui,
+        config: this.props.config,
+        appControl: this.props.appControl,
+        key: this.props.config.key,
+        ref: 'input'
+      };
+
+      var errorMsg = this.props.ui.error;
+      var error = errorMsg ? React.createElement(
+        Error$1,
+        { speechBubble: true },
+        ' ',
+        errorMsg,
+        ' '
+      ) : null;
+
+      // We want to support new custom elements
+      var reactElement = inputTypes[this.props.config.type] || inputTypes[this.props.config.primitiveType];
+
+      return React.createElement(
+        'div',
+        { className: classNames.join(' '), onClick: this.handleClick },
+        React.createElement(
+          'p',
+          { className: this.bemSubComponent('legend') },
+          React.createElement('i', { className: 'fa fa-check-circle ' + this.bemSubComponent('okIcon') }),
+          this.props.config.title
+        ),
+        React.createElement(reactElement, inputProps),
+        error
+      );
+    }
+  }]);
+  return FormField;
+}(ReactBEM);
 
 FormField.PropTypes = {
   ui: React.PropTypes.object.isRequired,
@@ -1098,80 +1844,100 @@ FormField.PropTypes = {
   appControl: React.PropTypes.object.isRequired
 };
 
-class NavigationBar extends ReactBEM {
+var NavigationBar = function (_ReactBEM) {
+  inherits(NavigationBar, _ReactBEM);
 
-  render() {
-    const completed = this.props.ui.questions.reduce((sum, q) => {
-      return q.completed ? sum + 1 : sum;
-    }, 0);
-
-    const activeQuestionIndex = this.props.ui.questions.findIndex(q => q.active);
-    const inactiveStyle = { pointerEvents: 'none', opacity: .5 };
-    const prevBtnStyle = activeQuestionIndex === 0 ? inactiveStyle : {};
-    const nextBtnStyle = activeQuestionIndex === -1 ? inactiveStyle : {};
-
-    const percentageCompleted = Math.floor(completed * 100 / this.props.ui.questions.length);
-
-    const btnClick = (e, nextPrev) => {
-      // Prevent button click from dismissing the keyboard on phones.
-      e.preventDefault();
-      e.stopPropagation();
-      this.props.appControl.goToField(nextPrev);
-    };
-
-    return React.createElement(
-      'div',
-      { className: this.bemClass },
-      React.createElement(
-        'div',
-        { className: this.bemSubComponent('progress') },
-        React.createElement(
-          'div',
-          { className: this.bemSubComponent('progress', 'percentage') },
-          percentageCompleted,
-          '% complete'
-        ),
-        React.createElement(
-          'div',
-          { className: this.bemSubComponent('progress', 'bar') },
-          React.createElement('div', {
-            className: this.bemSubComponent('progress', 'bar', 'fill'),
-            style: { width: `${ percentageCompleted }%` }
-          })
-        )
-      ),
-      React.createElement(
-        'div',
-        { className: this.bemSubComponent('buttons') },
-        React.createElement(
-          'button',
-          {
-            className: this.bemSubComponent('button'),
-            onClick: e => btnClick(e, 'prev'),
-            style: prevBtnStyle
-          },
-          'Prev'
-        ),
-        React.createElement(
-          'button',
-          {
-            className: this.bemSubComponent('button'),
-            onClick: e => btnClick(e, 'next'),
-            style: nextBtnStyle
-          },
-          'Next'
-        )
-      )
-    );
+  function NavigationBar() {
+    classCallCheck(this, NavigationBar);
+    return possibleConstructorReturn(this, (NavigationBar.__proto__ || Object.getPrototypeOf(NavigationBar)).apply(this, arguments));
   }
-}
+
+  createClass(NavigationBar, [{
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      var completed = this.props.ui.questions.reduce(function (sum, q) {
+        return q.completed ? sum + 1 : sum;
+      }, 0);
+
+      var activeQuestionIndex = this.props.ui.questions.findIndex(function (q) {
+        return q.active;
+      });
+      var inactiveStyle = { pointerEvents: 'none', opacity: .5 };
+      var prevBtnStyle = activeQuestionIndex === 0 ? inactiveStyle : {};
+      var nextBtnStyle = activeQuestionIndex === -1 ? inactiveStyle : {};
+
+      var percentageCompleted = Math.floor(completed * 100 / this.props.ui.questions.length);
+
+      var btnClick = function btnClick(e, nextPrev) {
+        // Prevent button click from dismissing the keyboard on phones.
+        e.preventDefault();
+        e.stopPropagation();
+        _this2.props.appControl.goToField(nextPrev);
+      };
+
+      return React.createElement(
+        'div',
+        { className: this.bemClass },
+        React.createElement(
+          'div',
+          { className: this.bemSubComponent('progress') },
+          React.createElement(
+            'div',
+            { className: this.bemSubComponent('progress', 'percentage') },
+            percentageCompleted,
+            '% complete'
+          ),
+          React.createElement(
+            'div',
+            { className: this.bemSubComponent('progress', 'bar') },
+            React.createElement('div', {
+              className: this.bemSubComponent('progress', 'bar', 'fill'),
+              style: { width: percentageCompleted + '%' }
+            })
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: this.bemSubComponent('buttons') },
+          React.createElement(
+            'button',
+            {
+              className: this.bemSubComponent('button'),
+              onClick: function onClick(e) {
+                return btnClick(e, 'prev');
+              },
+              style: prevBtnStyle
+            },
+            'Prev'
+          ),
+          React.createElement(
+            'button',
+            {
+              className: this.bemSubComponent('button'),
+              onClick: function onClick(e) {
+                return btnClick(e, 'next');
+              },
+              style: nextBtnStyle
+            },
+            'Next'
+          )
+        )
+      );
+    }
+  }]);
+  return NavigationBar;
+}(ReactBEM);
 
 NavigationBar.PropTypes = {
   appControl: React.PropTypes.object.isRequired,
   ui: React.PropTypes.object.isRequired
 };
 
-var clone = (a => JSON.parse(JSON.stringify(a)));
+var clone = (function (a) {
+  return JSON.parse(JSON.stringify(a));
+});
 
 /**
  * @public
@@ -1182,19 +1948,30 @@ var clone = (a => JSON.parse(JSON.stringify(a)));
  * @param  {Boolean} defer - whether to execute the callback after the delay has finished
  * @return {Function}
  */
-function throttle(fn, threshhold = 250, scope, defer = true) {
-  let last;
-  let deferTimer;
-  return (...args) => {
-    const context = scope || this;
+function throttle(fn) {
+  var threshhold = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 250;
 
-    const now = +new Date();
+  var _this = this;
+
+  var scope = arguments[2];
+  var defer = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
+
+  var last = void 0;
+  var deferTimer = void 0;
+  return function () {
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    var context = scope || _this;
+
+    var now = +new Date();
     if (last && now < last + threshhold) {
       // hold on to it
       clearTimeout(deferTimer);
 
       if (defer) {
-        deferTimer = setTimeout(() => {
+        deferTimer = setTimeout(function () {
           last = now;
           fn.apply(context, args);
         }, threshhold);
@@ -1249,8 +2026,11 @@ function mobileCheck() {
  * animation a reduced amount of frames per second by jumping frames.
  * @class AnimationManager
  */
-class AnimationManager {
-  constructor() {
+
+var AnimationManager = function () {
+  function AnimationManager() {
+    classCallCheck(this, AnimationManager);
+
     this.animations = {};
   }
 
@@ -1261,34 +2041,50 @@ class AnimationManager {
    * @param  {String} animationName Animation name set with scheduleAnimation
    * @return {void}
    */
-  cancel(animationName) {
-    cancelAnimationFrame(this.animations[animationName]);
-  }
 
-  /**
-   * Will call animationFunction after a frameDelay amount of frames.
-   * @public
-   * @method schedule
-   * @param  {Function} animationFunction
-   * @param  {String} animationName - Optional, but you need one if you want to
-   * be able to cancel it afterwards
-   * @param  {Int} frameDelay - Optional. animationFunction will be called
-   * immediately if it is not provided.
-   * @return {void}
-   */
-  schedule(animationFunction, animationName = Math.random().toString(), frameDelay = 0) {
-    this.cancel(animationName);
-    if (frameDelay > 0) {
-      this.animations[animationName] = requestAnimationFrame(() => this.schedule(animationFunction, animationName, frameDelay - 1));
-    } else {
-      this.animations[animationName] = requestAnimationFrame(animationFunction);
+
+  createClass(AnimationManager, [{
+    key: 'cancel',
+    value: function cancel(animationName) {
+      cancelAnimationFrame(this.animations[animationName]);
     }
-  }
-}
+
+    /**
+     * Will call animationFunction after a frameDelay amount of frames.
+     * @public
+     * @method schedule
+     * @param  {Function} animationFunction
+     * @param  {String} animationName - Optional, but you need one if you want to
+     * be able to cancel it afterwards
+     * @param  {Int} frameDelay - Optional. animationFunction will be called
+     * immediately if it is not provided.
+     * @return {void}
+     */
+
+  }, {
+    key: 'schedule',
+    value: function schedule(animationFunction) {
+      var _this = this;
+
+      var animationName = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : Math.random().toString();
+      var frameDelay = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+
+      this.cancel(animationName);
+      if (frameDelay > 0) {
+        this.animations[animationName] = requestAnimationFrame(function () {
+          return _this.schedule(animationFunction, animationName, frameDelay - 1);
+        });
+      } else {
+        this.animations[animationName] = requestAnimationFrame(animationFunction);
+      }
+    }
+  }]);
+  return AnimationManager;
+}();
 
 /* eslint-disable no-param-reassign */
 
-const animations = new AnimationManager();
+var animations = new AnimationManager();
 
 /**
  * @public
@@ -1298,37 +2094,41 @@ const animations = new AnimationManager();
  * @param  {Int} duration - Duration in milliseconds
  * @return {Promise} - To be fulfilled when transition ends
  */
-function scrollSlide(container, targetScroll, duration = 500) {
-  const initialScroll = container.scrollTop;
-  const scrollDistance = targetScroll - initialScroll;
+function scrollSlide(container, targetScroll) {
+  var duration = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 500;
+
+  var initialScroll = container.scrollTop;
+  var scrollDistance = targetScroll - initialScroll;
 
   // fps * duration / millisecondsPerSecond
-  const totalFrames = 60 * duration / 1000;
+  var totalFrames = 60 * duration / 1000;
 
-  let f = 0; // frame number
+  var f = 0; // frame number
 
-  const doSliding = callback => {
+  var doSliding = function doSliding(callback) {
     // scroll progress percentage from 0 to 1
-    const p = f / totalFrames;
+    var p = f / totalFrames;
 
     // ease-in-out formula
-    const displacementPercentage = p < 0.5 ? 2 * p * p : -1 + (4 - 2 * p) * p;
+    var displacementPercentage = p < 0.5 ? 2 * p * p : -1 + (4 - 2 * p) * p;
 
-    const displacement = scrollDistance * displacementPercentage;
+    var displacement = scrollDistance * displacementPercentage;
     container.scrollTop = initialScroll + displacement;
 
     f += 1;
 
     if (f < totalFrames) {
-      animations.schedule(() => doSliding(callback), 'scrollSlide', 0);
+      animations.schedule(function () {
+        return doSliding(callback);
+      }, 'scrollSlide', 0);
     } else {
       callback();
     }
   };
 
-  return new Promise((resolve, reject) => {
-    let resolved = false;
-    doSliding(() => {
+  return new Promise(function (resolve, reject) {
+    var resolved = false;
+    doSliding(function () {
       resolved = true;resolve();
     });
 
@@ -1344,91 +2144,138 @@ function scrollSlide(container, targetScroll, duration = 500) {
   });
 }
 
-function _asyncToGenerator$3(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+var SubmitButton = function (_InputField) {
+  inherits(SubmitButton, _InputField);
 
-class SubmitButton extends InputField {
-  constructor(...args) {
-    super(...args);
-    this.saveResponse = () => null;
-    this.getResponse = () => null;
-    this.onClick = this.onClick.bind(this);
-    this.onBlur = this.onBlur.bind(this);
-    this.initialState = {
+  function SubmitButton() {
+    var _ref;
+
+    classCallCheck(this, SubmitButton);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    var _this = possibleConstructorReturn(this, (_ref = SubmitButton.__proto__ || Object.getPrototypeOf(SubmitButton)).call.apply(_ref, [this].concat(args)));
+
+    _this.saveResponse = function () {
+      return null;
+    };
+    _this.getResponse = function () {
+      return null;
+    };
+    _this.onClick = _this.onClick.bind(_this);
+    _this.onBlur = _this.onBlur.bind(_this);
+    _this.initialState = {
       error: '',
       text: 'Submit'
     };
 
-    this.state = this.initialState;
+    _this.state = _this.initialState;
+    return _this;
   }
 
-  onClick() {
-    var _this = this;
+  createClass(SubmitButton, [{
+    key: 'onClick',
+    value: function () {
+      var _ref2 = asyncToGenerator(regeneratorRuntime.mark(function _callee() {
+        var errorFields;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                if (!this.state.error) {
+                  _context.next = 3;
+                  break;
+                }
 
-    return _asyncToGenerator$3(function* () {
-      // If there is already an error being shown.
-      if (_this.state.error) {
-        _this.props.appControl.slideToFirstWithError();
-        return;
+                this.props.appControl.slideToFirstWithError();
+                return _context.abrupt('return');
+
+              case 3:
+                _context.next = 5;
+                return this.props.validateAllFields();
+
+              case 5:
+                errorFields = _context.sent;
+
+                if (errorFields.length > 0) {
+                  this.setState({
+                    error: errorFields.length + ' answer' + (errorFields.length > 1 ? 's' : '') + ' need completing',
+                    text: 'Review'
+                  });
+                } else {
+                  this.props.appControl.triggerSubmit();
+                }
+
+              case 7:
+              case 'end':
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function onClick() {
+        return _ref2.apply(this, arguments);
       }
 
-      const errorFields = yield _this.props.validateAllFields();
-      if (errorFields.length > 0) {
-        _this.setState({
-          error: `${ errorFields.length } answer${ errorFields.length > 1 ? 's' : '' } need completing`,
-          text: 'Review'
-        });
-      } else {
-        _this.props.appControl.triggerSubmit();
-      }
-    })();
-  }
+      return onClick;
+    }()
+  }, {
+    key: 'keySelect',
+    value: function keySelect() {
+      this.onClick();
+    }
+  }, {
+    key: 'keyPrev',
+    value: function keyPrev() {
+      this.props.appControl.goToField('prev');
+    }
+  }, {
+    key: 'keyNext',
+    value: function keyNext() {
+      return;
+    }
+  }, {
+    key: 'onBlur',
+    value: function onBlur() {
+      this.setState(this.initialState);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var buttonClass = this.props.ui.active ? this.bemClass + ' ' + this.bemState('active') : '' + this.bemClass;
 
-  keySelect() {
-    this.onClick();
-  }
+      var error = this.state.error ? React.createElement(
+        Error$1,
+        null,
+        this.state.error
+      ) : null;
 
-  keyPrev() {
-    this.props.appControl.goToField('prev');
-  }
-
-  keyNext() {
-    return;
-  }
-
-  onBlur() {
-    this.setState(this.initialState);
-  }
-
-  render() {
-    const buttonClass = this.props.ui.active ? `${ this.bemClass } ${ this.bemState('active') }` : `${ this.bemClass }`;
-
-    const error = this.state.error ? React.createElement(
-      Error$1,
-      null,
-      this.state.error
-    ) : null;
-
-    return React.createElement(
-      'div',
-      {
-        className: buttonClass,
-        onKeyDown: this.keyListener
-      },
-      error,
-      React.createElement(
-        'button',
+      return React.createElement(
+        'div',
         {
-          className: `${ this.bemSubComponent('button') } ${ globals.FOCUS_CLASS }`,
-          ref: 'button',
-          onClick: this.onClick,
-          onBlur: this.onBlur,
-          tabIndex: '0'
+          className: buttonClass,
+          onKeyDown: this.keyListener
         },
-        this.state.text
-      )
-    );
-  }
-}
+        error,
+        React.createElement(
+          'button',
+          {
+            className: this.bemSubComponent('button') + ' ' + globals.FOCUS_CLASS,
+            ref: 'button',
+            onClick: this.onClick,
+            onBlur: this.onBlur,
+            tabIndex: '0'
+          },
+          this.state.text
+        )
+      );
+    }
+  }]);
+  return SubmitButton;
+}(InputField);
 
 SubmitButton.PropTypes = {
   appControl: React.PropTypes.object.isRequired,
@@ -1436,53 +2283,63 @@ SubmitButton.PropTypes = {
   validateAllFields: React.PropTypes.func.isRequired
 };
 
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
-
-const IS_TOUCH_DEVICE = mobileCheck();
+var IS_TOUCH_DEVICE = mobileCheck();
 // Takes care of the UI part of things.
-class FormUI extends ReactBEM {
-  constructor(...args) {
-    super(...args);
+
+var FormUI = function (_ReactBEM) {
+  inherits(FormUI, _ReactBEM);
+
+  function FormUI() {
+    var _ref;
+
+    classCallCheck(this, FormUI);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
 
     // private
-    this.onWheel = this.onWheel.bind(this);
-    this.onScroll = throttle(this.onScroll.bind(this), 250, this, true);
-    this.touchEnd = this.touchEnd.bind(this);
-    this.touchMove = this.touchMove.bind(this);
-    this.touchStart = this.touchStart.bind(this);
-    this.getFieldNode = this.getFieldNode.bind(this);
-    this.getFormFields = this.getFormFields.bind(this);
-    this.validateAllFields = this.validateAllFields.bind(this);
-    this.setFieldActive = this.setFieldActive.bind(this);
-    this.componentDidMount = this.componentDidMount.bind(this);
-    this.getActiveFieldKey = this.getActiveFieldKey.bind(this);
-    this.slideFieldToCenter = this.slideFieldToCenter.bind(this);
-    this.slideToFirstWithError = this.slideToFirstWithError.bind(this);
-    this.processTouchDisplacement = this.processTouchDisplacement.bind(this);
-    this.triggerSubmit = this.triggerSubmit.bind(this);
+    var _this = possibleConstructorReturn(this, (_ref = FormUI.__proto__ || Object.getPrototypeOf(FormUI)).call.apply(_ref, [this].concat(args)));
+
+    _this.onWheel = _this.onWheel.bind(_this);
+    _this.onScroll = throttle(_this.onScroll.bind(_this), 250, _this, true);
+    _this.touchEnd = _this.touchEnd.bind(_this);
+    _this.touchMove = _this.touchMove.bind(_this);
+    _this.touchStart = _this.touchStart.bind(_this);
+    _this.getFieldNode = _this.getFieldNode.bind(_this);
+    _this.getFormFields = _this.getFormFields.bind(_this);
+    _this.validateAllFields = _this.validateAllFields.bind(_this);
+    _this.setFieldActive = _this.setFieldActive.bind(_this);
+    _this.componentDidMount = _this.componentDidMount.bind(_this);
+    _this.getActiveFieldKey = _this.getActiveFieldKey.bind(_this);
+    _this.slideFieldToCenter = _this.slideFieldToCenter.bind(_this);
+    _this.slideToFirstWithError = _this.slideToFirstWithError.bind(_this);
+    _this.processTouchDisplacement = _this.processTouchDisplacement.bind(_this);
+    _this.triggerSubmit = _this.triggerSubmit.bind(_this);
 
     // public
-    this.focus = this.focus.bind(this);
-    this.goToField = throttle(this.goToField.bind(this), 250, this, false);
-    this.setFieldError = this.setFieldError.bind(this);
-    this.setQuestionCompleted = this.setQuestionCompleted.bind(this);
+    _this.focus = _this.focus.bind(_this);
+    _this.goToField = throttle(_this.goToField.bind(_this), 250, _this, false);
+    _this.setFieldError = _this.setFieldError.bind(_this);
+    _this.setQuestionCompleted = _this.setQuestionCompleted.bind(_this);
 
     // instance globals
-    this.initialTouchY = null;
-    this.animatingScroll = false;
-    this.animations = new AnimationManager();
+    _this.initialTouchY = null;
+    _this.animatingScroll = false;
+    _this.animations = new AnimationManager();
 
-    this.appControl = Object.assign(this.props.appControl, {
-      focus: this.focus,
-      goToField: this.goToField,
-      setQuestionCompleted: this.setQuestionCompleted,
-      setFieldActive: this.setFieldActive,
-      setFieldError: this.setFieldError,
-      triggerSubmit: this.triggerSubmit,
-      slideToFirstWithError: this.slideToFirstWithError
+    _this.appControl = Object.assign(_this.props.appControl, {
+      focus: _this.focus,
+      goToField: _this.goToField,
+      setQuestionCompleted: _this.setQuestionCompleted,
+      setFieldActive: _this.setFieldActive,
+      setFieldError: _this.setFieldError,
+      triggerSubmit: _this.triggerSubmit,
+      slideToFirstWithError: _this.slideToFirstWithError
     });
 
-    this.state = this.generateInitialState(this.props.config);
+    _this.state = _this.generateInitialState(_this.props.config);
+    return _this;
   }
 
   /**
@@ -1491,464 +2348,749 @@ class FormUI extends ReactBEM {
    * @method importConfig
    * @return {Object}
    */
-  generateInitialState() {
-    const createUiObj = objKey => {
-      return { key: objKey, active: false, complete: false };
-    };
 
-    // Create a ui object to control questions
-    const ui = {};
-    ui.submitButton = createUiObj('submit');
-    ui.questions = this.props.config.map(q => createUiObj(q.key));
-    return { ui };
-  }
 
-  /**
-   * Called once when the component is created.
-   * @private
-   * @method componentDidMount
-   * @return {void}
-   */
-  componentDidMount() {
-    // Make first question active.
-    this.animations.schedule(() => this.goToField('next'), '', 30);
+  createClass(FormUI, [{
+    key: 'generateInitialState',
+    value: function generateInitialState() {
+      var createUiObj = function createUiObj(objKey) {
+        return { key: objKey, active: false, complete: false };
+      };
 
-    const centerActiveQuestion = () => {
-      const active = this.getActiveFieldKey();
-      this.slideFieldToCenter(active);
-    };
-
-    window.addEventListener('resize', () => this.animations.schedule(centerActiveQuestion, 'formResize', 20));
-  }
-
-  /**
-   * Returns an array containing all form questions and the submit button.
-   * @method getFormFields
-   * @return {Array}
-   */
-  getFormFields() {
-    const formFields = [...this.state.ui.questions, this.state.ui.submitButton];
-    return formFields;
-  }
-
-  /**
-   * @private
-   * @return {String}
-   */
-  getActiveFieldKey() {
-    const formFields = this.getFormFields();
-    const active = formFields.find(f => f.active === true);
-    return active ? active.key : undefined;
-  }
-
-  /**
-   * @private
-   * @method getFieldNode
-   * @param  {String} key
-   * @return {HTMLElement}
-   */
-  getFieldNode(key) {
-    return ReactDOM.findDOMNode(this.refs[key]);
-  }
-
-  /**
-   * element.focus() but with some extras
-   * Focuses and prevent viewBox from scrolling
-   * @public
-   * @method focus
-   * @param  {HTMLElement} element
-   * @return {void}
-   */
-  focus(element) {
-    if (!element) {
-      return;
-    }
-    const currScrollPosition = this.refs.questionsViewBox.scrollTop;
-    const focus = () => {
-      element.focus();
-      this.refs.questionsViewBox.scrollTop = currScrollPosition;
-    };
-
-    setTimeout(focus, 10);
-  }
-
-  /**
-   * @public
-   * Moves the focus to the next or previous question by
-   * setting it as active and moving it to the center of the viewport.
-   * @method goToField
-   * @param  {String} prevNext
-   * @return {void}
-   */
-  goToField(prevNext) {
-    var _this = this;
-
-    return _asyncToGenerator(function* () {
-      const next = prevNext === 'next';
-      const formFields = _this.getFormFields();
-      const activeKey = _this.getActiveFieldKey();
-      const activeIndex = formFields.findIndex(function (f) {
-        return f.key === activeKey;
+      // Create a ui object to control questions
+      var ui = {};
+      ui.submitButton = createUiObj('submit');
+      ui.questions = this.props.config.map(function (q) {
+        return createUiObj(q.key);
       });
-      const changedIndex = activeIndex + (next ? +1 : -1);
-      const newActiveIndex = Math.max(0, Math.min(formFields.length - 1, changedIndex));
-      const newActiveKey = formFields[newActiveIndex].key;
-      _this.setFieldActive(newActiveKey);
+      return { ui: ui };
+    }
 
-      yield _this.slideFieldToCenter(newActiveKey);
-      const node = _this.getFieldNode(newActiveKey);
-      const focusEl = node.querySelector(`.${ globals.FOCUS_CLASS }`);
+    /**
+     * Called once when the component is created.
+     * @private
+     * @method componentDidMount
+     * @return {void}
+     */
 
-      // On mobile devices we don't focus on input elements because
-      // the keyboard keeps changing the screen width, which can be quite annoying.
-      const moduleJustLoaded = activeKey === undefined;
-      if (moduleJustLoaded || IS_TOUCH_DEVICE && focusEl.nodeName === 'INPUT') {
+  }, {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      // Make first question active.
+      this.animations.schedule(function () {
+        return _this2.goToField('next');
+      }, '', 30);
+
+      var centerActiveQuestion = function centerActiveQuestion() {
+        var active = _this2.getActiveFieldKey();
+        _this2.slideFieldToCenter(active);
+      };
+
+      window.addEventListener('resize', function () {
+        return _this2.animations.schedule(centerActiveQuestion, 'formResize', 20);
+      });
+    }
+
+    /**
+     * Returns an array containing all form questions and the submit button.
+     * @method getFormFields
+     * @return {Array}
+     */
+
+  }, {
+    key: 'getFormFields',
+    value: function getFormFields() {
+      var formFields = [].concat(toConsumableArray(this.state.ui.questions), [this.state.ui.submitButton]);
+      return formFields;
+    }
+
+    /**
+     * @private
+     * @return {String}
+     */
+
+  }, {
+    key: 'getActiveFieldKey',
+    value: function getActiveFieldKey() {
+      var formFields = this.getFormFields();
+      var active = formFields.find(function (f) {
+        return f.active === true;
+      });
+      return active ? active.key : undefined;
+    }
+
+    /**
+     * @private
+     * @method getFieldNode
+     * @param  {String} key
+     * @return {HTMLElement}
+     */
+
+  }, {
+    key: 'getFieldNode',
+    value: function getFieldNode(key) {
+      return ReactDOM.findDOMNode(this.refs[key]);
+    }
+
+    /**
+     * element.focus() but with some extras
+     * Focuses and prevent viewBox from scrolling
+     * @public
+     * @method focus
+     * @param  {HTMLElement} element
+     * @return {void}
+     */
+
+  }, {
+    key: 'focus',
+    value: function focus(element) {
+      var _this3 = this;
+
+      if (!element) {
         return;
       }
-      _this.focus(focusEl);
-    })();
-  }
+      var currScrollPosition = this.refs.questionsViewBox.scrollTop;
+      var focus = function focus() {
+        element.focus();
+        _this3.refs.questionsViewBox.scrollTop = currScrollPosition;
+      };
 
-  /**
-   * @private
-   */
-  slideFieldToCenter(key) {
-    var _this2 = this;
+      setTimeout(focus, 10);
+    }
 
-    return _asyncToGenerator(function* () {
-      _this2.animatingScroll = true;
-      const node = _this2.getFieldNode(key);
-      assert(node, `No field found with key: ${ key }`);
-      const viewBox = _this2.refs.questionsViewBox;
+    /**
+     * @public
+     * Moves the focus to the next or previous question by
+     * setting it as active and moving it to the center of the viewport.
+     * @method goToField
+     * @param  {String} prevNext
+     * @return {void}
+     */
 
-      const viewBoxheight = viewBox.clientHeight;
-      const distanceFromTop = Math.max(0, (viewBoxheight - node.clientHeight) / 2);
+  }, {
+    key: 'goToField',
+    value: function () {
+      var _ref2 = asyncToGenerator(regeneratorRuntime.mark(function _callee(prevNext) {
+        var next, formFields, activeKey, activeIndex, changedIndex, newActiveIndex, newActiveKey, node, focusEl, moduleJustLoaded;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                next = prevNext === 'next';
+                formFields = this.getFormFields();
+                activeKey = this.getActiveFieldKey();
+                activeIndex = formFields.findIndex(function (f) {
+                  return f.key === activeKey;
+                });
+                changedIndex = activeIndex + (next ? +1 : -1);
+                newActiveIndex = Math.max(0, Math.min(formFields.length - 1, changedIndex));
+                newActiveKey = formFields[newActiveIndex].key;
 
-      const targetScroll = node.offsetTop - distanceFromTop;
-      const animationDuration = 160;
+                this.setFieldActive(newActiveKey);
+
+                _context.next = 10;
+                return this.slideFieldToCenter(newActiveKey);
+
+              case 10:
+                node = this.getFieldNode(newActiveKey);
+                focusEl = node.querySelector('.' + globals.FOCUS_CLASS);
+
+                // On mobile devices we don't focus on input elements because
+                // the keyboard keeps changing the screen width, which can be quite annoying.
+
+                moduleJustLoaded = activeKey === undefined;
+
+                if (!(moduleJustLoaded || IS_TOUCH_DEVICE && focusEl.nodeName === 'INPUT')) {
+                  _context.next = 15;
+                  break;
+                }
+
+                return _context.abrupt('return');
+
+              case 15:
+                this.focus(focusEl);
+
+              case 16:
+              case 'end':
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function goToField(_x) {
+        return _ref2.apply(this, arguments);
+      }
+
+      return goToField;
+    }()
+
+    /**
+     * @private
+     */
+
+  }, {
+    key: 'slideFieldToCenter',
+    value: function () {
+      var _ref3 = asyncToGenerator(regeneratorRuntime.mark(function _callee2(key) {
+        var node, viewBox, viewBoxheight, distanceFromTop, targetScroll, animationDuration, focusEl;
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                this.animatingScroll = true;
+                node = this.getFieldNode(key);
+
+                assert(node, 'No field found with key: ' + key);
+                viewBox = this.refs.questionsViewBox;
+                viewBoxheight = viewBox.clientHeight;
+                distanceFromTop = Math.max(0, (viewBoxheight - node.clientHeight) / 2);
+                targetScroll = node.offsetTop - distanceFromTop;
+                animationDuration = 160;
+                _context2.prev = 8;
+                _context2.next = 11;
+                return scrollSlide(viewBox, targetScroll, animationDuration);
+
+              case 11:
+                focusEl = node.querySelector('.' + globals.FOCUS_CLASS);
+
+                if (focusEl) {
+                  // this.focus(focusEl);
+                }
+                _context2.next = 17;
+                break;
+
+              case 15:
+                _context2.prev = 15;
+                _context2.t0 = _context2['catch'](8);
+
+              case 17:
+                _context2.prev = 17;
+
+                this.animatingScroll = false;
+                return _context2.finish(17);
+
+              case 20:
+              case 'end':
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this, [[8, 15, 17, 20]]);
+      }));
+
+      function slideFieldToCenter(_x2) {
+        return _ref3.apply(this, arguments);
+      }
+
+      return slideFieldToCenter;
+    }()
+
+    /**
+     * Used by submit button. Shows error and returns arror ammount
+     * @public
+     * @method validateAllFields
+     * @return {Array<String>}  Object with keys of fields with error
+     */
+
+  }, {
+    key: 'validateAllFields',
+    value: function () {
+      var _ref4 = asyncToGenerator(regeneratorRuntime.mark(function _callee3() {
+        var errorFields, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, q, questionReactEl, err;
+
+        return regeneratorRuntime.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                errorFields = [];
+                _iteratorNormalCompletion = true;
+                _didIteratorError = false;
+                _iteratorError = undefined;
+                _context3.prev = 4;
+                _iterator = this.props.config[Symbol.iterator]();
+
+              case 6:
+                if (_iteratorNormalCompletion = (_step = _iterator.next()).done) {
+                  _context3.next = 16;
+                  break;
+                }
+
+                q = _step.value;
+                questionReactEl = this.refs[q.key];
+                _context3.next = 11;
+                return questionReactEl.validate();
+
+              case 11:
+                err = _context3.sent;
+
+                if (err) {
+                  errorFields.push(q.key);
+                }
+
+              case 13:
+                _iteratorNormalCompletion = true;
+                _context3.next = 6;
+                break;
+
+              case 16:
+                _context3.next = 22;
+                break;
+
+              case 18:
+                _context3.prev = 18;
+                _context3.t0 = _context3['catch'](4);
+                _didIteratorError = true;
+                _iteratorError = _context3.t0;
+
+              case 22:
+                _context3.prev = 22;
+                _context3.prev = 23;
+
+                if (!_iteratorNormalCompletion && _iterator.return) {
+                  _iterator.return();
+                }
+
+              case 25:
+                _context3.prev = 25;
+
+                if (!_didIteratorError) {
+                  _context3.next = 28;
+                  break;
+                }
+
+                throw _iteratorError;
+
+              case 28:
+                return _context3.finish(25);
+
+              case 29:
+                return _context3.finish(22);
+
+              case 30:
+                return _context3.abrupt('return', errorFields);
+
+              case 31:
+              case 'end':
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this, [[4, 18, 22, 30], [23,, 25, 29]]);
+      }));
+
+      function validateAllFields() {
+        return _ref4.apply(this, arguments);
+      }
+
+      return validateAllFields;
+    }()
+
+    /**
+     * @method slideToFirstWithError
+     * @return {Promise}
+     */
+
+  }, {
+    key: 'slideToFirstWithError',
+    value: function () {
+      var _ref5 = asyncToGenerator(regeneratorRuntime.mark(function _callee4() {
+        var errorFields;
+        return regeneratorRuntime.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _context4.next = 2;
+                return this.validateAllFields();
+
+              case 2:
+                errorFields = _context4.sent;
+
+                if (errorFields.length > 0) {
+                  this.setFieldActive(errorFields[0]);
+                  this.slideFieldToCenter(errorFields[0]);
+                }
+
+              case 4:
+              case 'end':
+                return _context4.stop();
+            }
+          }
+        }, _callee4, this);
+      }));
+
+      function slideToFirstWithError() {
+        return _ref5.apply(this, arguments);
+      }
+
+      return slideToFirstWithError;
+    }()
+  }, {
+    key: 'triggerSubmit',
+    value: function triggerSubmit() {
+      var formElement = ReactDOM.findDOMNode(this);
+      var submitEvent = new CustomEvent('submit', {
+        detail: { answers: this.props.config },
+        bubbles: true,
+        cancelable: true
+      });
+      formElement.dispatchEvent(submitEvent);
+    }
+
+    // ==============================================================
+    //                     STATE HANDLERS
+    // ==============================================================
+
+    /**
+     * Sets a question as completed.
+     * @private
+     * @method setQuestionCompleted
+     * @param  {String} questionKey
+     * @param  {Boolean} completed
+     * @return {Promise}
+     */
+
+  }, {
+    key: 'setQuestionCompleted',
+    value: function setQuestionCompleted(questionKey, completed) {
+      var _this4 = this;
+
+      var qIndex = this.state.ui.questions.findIndex(function (q) {
+        return q.key === questionKey;
+      });
+      assert(qIndex !== -1, 'Did not find question with key: ' + questionKey);
+
+      var ui = clone(this.state.ui);
+      ui.questions[qIndex].completed = !!completed;
+
+      return new Promise(function (resolve) {
+        return _this4.setState({ ui: ui }, resolve);
+      });
+    }
+
+    /**
+     * @private
+     * @method setFieldActive
+     * @param  {String} index
+     */
+
+  }, {
+    key: 'setFieldActive',
+    value: function setFieldActive(key) {
+      assert(this.refs[key], 'Invalid key: ' + key);
+      var ui = clone(this.state.ui);
+
+      // set everyone not active
+      ui.submitButton.active = false;
+      var _iteratorNormalCompletion2 = true;
+      var _didIteratorError2 = false;
+      var _iteratorError2 = undefined;
 
       try {
-        yield scrollSlide(viewBox, targetScroll, animationDuration);
-        const focusEl = node.querySelector(`.${ globals.FOCUS_CLASS }`);
-        if (focusEl) {
-          // this.focus(focusEl);
+        for (var _iterator2 = ui.questions[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+          var q = _step2.value;
+
+          q.active = false;
         }
-      } catch (e) {
-        // nothing
+      } catch (err) {
+        _didIteratorError2 = true;
+        _iteratorError2 = err;
       } finally {
-        _this2.animatingScroll = false;
-      }
-    })();
-  }
-
-  /**
-   * Used by submit button. Shows error and returns arror ammount
-   * @public
-   * @method validateAllFields
-   * @return {Array<String>}  Object with keys of fields with error
-   */
-  validateAllFields() {
-    var _this3 = this;
-
-    return _asyncToGenerator(function* () {
-      const errorFields = [];
-
-      for (const q of _this3.props.config) {
-        const questionReactEl = _this3.refs[q.key];
-        const err = yield questionReactEl.validate();
-        if (err) {
-          errorFields.push(q.key);
+        try {
+          if (!_iteratorNormalCompletion2 && _iterator2.return) {
+            _iterator2.return();
+          }
+        } finally {
+          if (_didIteratorError2) {
+            throw _iteratorError2;
+          }
         }
       }
 
-      return errorFields;
-    })();
-  }
-
-  /**
-   * @method slideToFirstWithError
-   * @return {Promise}
-   */
-  slideToFirstWithError() {
-    var _this4 = this;
-
-    return _asyncToGenerator(function* () {
-      const errorFields = yield _this4.validateAllFields();
-      if (errorFields.length > 0) {
-        _this4.setFieldActive(errorFields[0]);
-        _this4.slideFieldToCenter(errorFields[0]);
+      if (key === ui.submitButton.key) {
+        ui.submitButton.active = true;
+      } else {
+        var questionIndex = ui.questions.findIndex(function (q) {
+          return q.key === key;
+        });
+        assert(questionIndex !== -1, 'Invalid question index ' + questionIndex);
+        ui.questions[questionIndex].active = true;
       }
-    })();
-  }
 
-  triggerSubmit() {
-    const formElement = ReactDOM.findDOMNode(this);
-    const submitEvent = new CustomEvent('submit', {
-      detail: { answers: this.props.config },
-      bubbles: true,
-      cancelable: true
-    });
-    formElement.dispatchEvent(submitEvent);
-  }
-
-  // ==============================================================
-  //                     STATE HANDLERS
-  // ==============================================================
-
-  /**
-   * Sets a question as completed.
-   * @private
-   * @method setQuestionCompleted
-   * @param  {String} questionKey
-   * @param  {Boolean} completed
-   * @return {Promise}
-   */
-  setQuestionCompleted(questionKey, completed) {
-    const qIndex = this.state.ui.questions.findIndex(q => q.key === questionKey);
-    assert(qIndex !== -1, `Did not find question with key: ${ questionKey }`);
-
-    const ui = clone(this.state.ui);
-    ui.questions[qIndex].completed = !!completed;
-
-    return new Promise(resolve => this.setState({ ui }, resolve));
-  }
-
-  /**
-   * @private
-   * @method setFieldActive
-   * @param  {String} index
-   */
-  setFieldActive(key) {
-    assert(this.refs[key], `Invalid key: ${ key }`);
-    const ui = clone(this.state.ui);
-
-    // set everyone not active
-    ui.submitButton.active = false;
-    for (const q of ui.questions) {
-      q.active = false;
+      this.setState({ ui: ui });
     }
+  }, {
+    key: 'setFieldError',
+    value: function () {
+      var _ref6 = asyncToGenerator(regeneratorRuntime.mark(function _callee5(key, message) {
+        var _this5 = this;
 
-    if (key === ui.submitButton.key) {
-      ui.submitButton.active = true;
-    } else {
-      const questionIndex = ui.questions.findIndex(q => q.key === key);
-      assert(questionIndex !== -1, `Invalid question index ${ questionIndex }`);
-      ui.questions[questionIndex].active = true;
-    }
+        var ui, field;
+        return regeneratorRuntime.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                assert(this.refs[key], 'Invalid key: ' + key);
+                ui = clone(this.state.ui);
+                field = ui.questions.find(function (q) {
+                  return q.key === key;
+                });
 
-    this.setState({ ui });
-  }
+                field.error = message;
 
-  setFieldError(key, message) {
-    var _this5 = this;
+                _context5.next = 6;
+                return new Promise(function (resolve) {
+                  return _this5.setState({ ui: ui }, resolve);
+                });
 
-    return _asyncToGenerator(function* () {
-      assert(_this5.refs[key], `Invalid key: ${ key }`);
-      const ui = clone(_this5.state.ui);
-      const field = ui.questions.find(function (q) {
-        return q.key === key;
+              case 6:
+              case 'end':
+                return _context5.stop();
+            }
+          }
+        }, _callee5, this);
+      }));
+
+      function setFieldError(_x3, _x4) {
+        return _ref6.apply(this, arguments);
+      }
+
+      return setFieldError;
+    }()
+
+    // ==============================================================
+    //                     EVENT HANDLERS
+    // ==============================================================
+    /**
+     * Scroll envent on questionsViewBox
+     * @param  {Event} e
+     */
+
+  }, {
+    key: 'onScroll',
+    value: function onScroll() {
+      var _this6 = this;
+
+      if (this.animatingScroll) {
+        return;
+      }
+
+      var formFields = this.getFormFields();
+      var formNodes = formFields.map(function (f) {
+        return _this6.getFieldNode(f.key);
       });
-      field.error = message;
+      var viewBoxHeight = this.refs.questionsViewBox.clientHeight;
+      var viewBoxScroll = this.refs.questionsViewBox.scrollTop;
+      var viewBoxCenter = viewBoxScroll + viewBoxHeight / 2;
 
-      yield new Promise(function (resolve) {
-        return _this5.setState({ ui }, resolve);
-      });
-    })();
-  }
+      function distanceFromCenter(element) {
+        var elementCenter = element.clientHeight / 2 + element.offsetTop;
+        var elementDistance = viewBoxCenter - elementCenter;
+        var distance = Math.abs(elementDistance);
+        return distance;
+      }
 
-  // ==============================================================
-  //                     EVENT HANDLERS
-  // ==============================================================
-  /**
-   * Scroll envent on questionsViewBox
-   * @param  {Event} e
-   */
-  onScroll() {
-    if (this.animatingScroll) {
-      return;
+      var smallestDistance = distanceFromCenter(formNodes[0]);
+      var indexOfCenterNode = formNodes.reduce(function (closestIdx, node, nodeIdx) {
+        var nodeDistance = distanceFromCenter(formNodes[nodeIdx]);
+        var closestNodeIndex = nodeDistance < smallestDistance ? nodeIdx : closestIdx;
+        smallestDistance = nodeDistance < smallestDistance ? nodeDistance : smallestDistance;
+        return closestNodeIndex;
+      }, 0);
+
+      var closestKey = formFields[indexOfCenterNode].key;
+      this.setFieldActive(closestKey);
     }
 
-    const formFields = this.getFormFields();
-    const formNodes = formFields.map(f => this.getFieldNode(f.key));
-    const viewBoxHeight = this.refs.questionsViewBox.clientHeight;
-    const viewBoxScroll = this.refs.questionsViewBox.scrollTop;
-    const viewBoxCenter = viewBoxScroll + viewBoxHeight / 2;
+    /**
+     * Wheel envent on questionsViewBox
+     * @param  {Event} e
+     */
 
-    function distanceFromCenter(element) {
-      const elementCenter = element.clientHeight / 2 + element.offsetTop;
-      const elementDistance = viewBoxCenter - elementCenter;
-      const distance = Math.abs(elementDistance);
-      return distance;
+  }, {
+    key: 'onWheel',
+    value: function onWheel(e) {
+      var _this7 = this;
+
+      e.preventDefault();
+
+      // Let's dismiss moves that are too small. They come from things like
+      // Apple's scroll innertia, which can mess things up. We want to move
+      // just one question per scroll if possible.
+      if (!e.deltaY || Math.abs(e.deltaY) < 2) {
+        return;
+      }
+
+      // Throttle the second part to a minimum of 500 milliseconds
+      if (new Date() - this.lastWheelMove < 350) {
+        return;
+      }
+      this.lastWheelMove = new Date();
+
+      var wheelDelta = e.deltaY;
+      this.animations.schedule(function () {
+        if (wheelDelta > 0) {
+          _this7.goToField('next');
+        } else if (wheelDelta < 0) {
+          _this7.goToField('prev');
+        }
+      }, 'scroll', 0);
     }
 
-    let smallestDistance = distanceFromCenter(formNodes[0]);
-    const indexOfCenterNode = formNodes.reduce((closestIdx, node, nodeIdx) => {
-      const nodeDistance = distanceFromCenter(formNodes[nodeIdx]);
-      const closestNodeIndex = nodeDistance < smallestDistance ? nodeIdx : closestIdx;
-      smallestDistance = nodeDistance < smallestDistance ? nodeDistance : smallestDistance;
-      return closestNodeIndex;
-    }, 0);
+    /**
+     * Touch envent on questionsViewBox
+     * @param  {Event} e
+     */
 
-    const closestKey = formFields[indexOfCenterNode].key;
-    this.setFieldActive(closestKey);
-  }
-
-  /**
-   * Wheel envent on questionsViewBox
-   * @param  {Event} e
-   */
-  onWheel(e) {
-    e.preventDefault();
-
-    // Let's dismiss moves that are too small. They come from things like
-    // Apple's scroll innertia, which can mess things up. We want to move
-    // just one question per scroll if possible.
-    if (!e.deltaY || Math.abs(e.deltaY) < 2) {
-      return;
+  }, {
+    key: 'touchStart',
+    value: function touchStart(e) {
+      this.initialTouchY = e.changedTouches[0].pageY;
+      this.lastMoveY = this.initialTouchY;
+      this.lastMoveTime = new Date();
+      this.lastMoveScrollValue = this.refs.questionsViewBox.scrollTop;
+      this.currY = this.lastMoveY;
+      this.animatingScroll = true;
+      this.processTouchDisplacement();
     }
 
-    // Throttle the second part to a minimum of 500 milliseconds
-    if (new Date() - this.lastWheelMove < 350) {
-      return;
-    }
-    this.lastWheelMove = new Date();
+    /**
+     * Touch envent on questionsViewBox
+     * @param  {Event} e
+     */
 
-    const wheelDelta = e.deltaY;
-    this.animations.schedule(() => {
-      if (wheelDelta > 0) {
+  }, {
+    key: 'touchMove',
+    value: function touchMove(e) {
+      e.preventDefault();
+      // Track Y
+      this.currY = e.changedTouches[0].pageY;
+    }
+
+    /**
+     * Touch envent on questionsViewBox
+     * @param  {Event} e
+     */
+
+  }, {
+    key: 'touchEnd',
+    value: function touchEnd() {
+      this.animations.cancel('touchScroll');
+    }
+
+    /**
+     * @param  {Event} e
+     * @return {void}
+     */
+
+  }, {
+    key: 'processTouchDisplacement',
+    value: function processTouchDisplacement() {
+      var maxTouchSpeed = 0.9; // px/ms
+      var maxTotalDisplacement = 130;
+
+      var displacement = this.lastMoveY - this.currY;
+      var currTime = new Date();
+      // Make sure we never divide by 0
+      var timeElapsed = Math.max(1, currTime - this.lastMoveTime);
+      var touchSpeed = displacement / timeElapsed;
+      this.lastMoveY = this.currY;
+      this.lastMoveTime = new Date();
+
+      var totalDisplacement = Math.abs(this.initialTouchY - this.currY);
+      if (Math.abs(touchSpeed) < maxTouchSpeed && totalDisplacement < maxTotalDisplacement) {
+        var newScrollValue = this.lastMoveScrollValue + displacement;
+        this.lastMoveScrollValue = newScrollValue;
+        this.refs.questionsViewBox.scrollTop = newScrollValue;
+        this.animations.schedule(this.processTouchDisplacement, 'touchScroll', 0);
+        return;
+      }
+
+      this.animations.cancel('touchScroll');
+      this.animatingScroll = false;
+
+      if (displacement > 0) {
         this.goToField('next');
-      } else if (wheelDelta < 0) {
+      } else {
         this.goToField('prev');
       }
-    }, 'scroll', 0);
-  }
-
-  /**
-   * Touch envent on questionsViewBox
-   * @param  {Event} e
-   */
-  touchStart(e) {
-    this.initialTouchY = e.changedTouches[0].pageY;
-    this.lastMoveY = this.initialTouchY;
-    this.lastMoveTime = new Date();
-    this.lastMoveScrollValue = this.refs.questionsViewBox.scrollTop;
-    this.currY = this.lastMoveY;
-    this.animatingScroll = true;
-    this.processTouchDisplacement();
-  }
-
-  /**
-   * Touch envent on questionsViewBox
-   * @param  {Event} e
-   */
-  touchMove(e) {
-    e.preventDefault();
-    // Track Y
-    this.currY = e.changedTouches[0].pageY;
-  }
-
-  /**
-   * Touch envent on questionsViewBox
-   * @param  {Event} e
-   */
-  touchEnd() {
-    this.animations.cancel('touchScroll');
-  }
-
-  /**
-   * @param  {Event} e
-   * @return {void}
-   */
-  processTouchDisplacement() {
-    const maxTouchSpeed = 0.9; // px/ms
-    const maxTotalDisplacement = 130;
-
-    const displacement = this.lastMoveY - this.currY;
-    const currTime = new Date();
-    // Make sure we never divide by 0
-    const timeElapsed = Math.max(1, currTime - this.lastMoveTime);
-    const touchSpeed = displacement / timeElapsed;
-    this.lastMoveY = this.currY;
-    this.lastMoveTime = new Date();
-
-    const totalDisplacement = Math.abs(this.initialTouchY - this.currY);
-    if (Math.abs(touchSpeed) < maxTouchSpeed && totalDisplacement < maxTotalDisplacement) {
-      const newScrollValue = this.lastMoveScrollValue + displacement;
-      this.lastMoveScrollValue = newScrollValue;
-      this.refs.questionsViewBox.scrollTop = newScrollValue;
-      this.animations.schedule(this.processTouchDisplacement, 'touchScroll', 0);
-      return;
     }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this8 = this;
 
-    this.animations.cancel('touchScroll');
-    this.animatingScroll = false;
-
-    if (displacement > 0) {
-      this.goToField('next');
-    } else {
-      this.goToField('prev');
-    }
-  }
-
-  render() {
-    const questions = this.props.config.map((q, index) => {
-      return React.createElement(FormField, {
-        config: q,
-        ui: this.state.ui.questions[index],
-        appControl: this.appControl,
-        key: q.key,
-        ref: q.key
+      var questions = this.props.config.map(function (q, index) {
+        return React.createElement(FormField, {
+          config: q,
+          ui: _this8.state.ui.questions[index],
+          appControl: _this8.appControl,
+          key: q.key,
+          ref: q.key
+        });
       });
-    });
 
-    return React.createElement(
-      'div',
-      { className: this.bemClass },
-      React.createElement(
+      return React.createElement(
         'div',
-        {
-          className: this.bemSubComponent('questionsViewBox'),
-          ref: 'questionsViewBox',
-          onTouchStart: this.touchStart,
-          onTouchEnd: this.touchEnd,
-          onTouchMove: this.touchMove,
-          onWheel: this.onWheel,
-          onScroll: this.onScroll
-        },
+        { className: this.bemClass },
         React.createElement(
           'div',
-          { className: this.bemSubComponent('questions'), ref: 'questions' },
-          questions,
-          React.createElement(SubmitButton, {
-            ui: this.state.ui.submitButton,
-            appControl: this.appControl,
-            ref: this.state.ui.submitButton.key,
-            validateAllFields: this.validateAllFields
-          })
-        )
-      ),
-      React.createElement(NavigationBar, { appControl: this.appControl, ui: this.state.ui })
-    );
-  }
-}
+          {
+            className: this.bemSubComponent('questionsViewBox'),
+            ref: 'questionsViewBox',
+            onTouchStart: this.touchStart,
+            onTouchEnd: this.touchEnd,
+            onTouchMove: this.touchMove,
+            onWheel: this.onWheel,
+            onScroll: this.onScroll
+          },
+          React.createElement(
+            'div',
+            { className: this.bemSubComponent('questions'), ref: 'questions' },
+            questions,
+            React.createElement(SubmitButton, {
+              ui: this.state.ui.submitButton,
+              appControl: this.appControl,
+              ref: this.state.ui.submitButton.key,
+              validateAllFields: this.validateAllFields
+            })
+          )
+        ),
+        React.createElement(NavigationBar, { appControl: this.appControl, ui: this.state.ui })
+      );
+    }
+  }]);
+  return FormUI;
+}(ReactBEM);
 
 FormUI.PropTypes = {
   config: React.PropTypes.object.isRequired,
   appControl: React.PropTypes.object.isRequired
 };
 
-class Form extends ReactBEM {
-  constructor(...args) {
-    super(...args);
+var Form = function (_ReactBEM) {
+  inherits(Form, _ReactBEM);
+
+  function Form() {
+    var _ref;
+
+    classCallCheck(this, Form);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
 
     // private
-    this.generateInitialState = this.generateInitialState.bind(this);
-    this.exportConfig = this.exportConfig.bind(this);
+    var _this = possibleConstructorReturn(this, (_ref = Form.__proto__ || Object.getPrototypeOf(Form)).call.apply(_ref, [this].concat(args)));
+
+    _this.generateInitialState = _this.generateInitialState.bind(_this);
+    _this.exportConfig = _this.exportConfig.bind(_this);
 
     // public
-    this.setQuestionResponse = this.setQuestionResponse.bind(this);
+    _this.setQuestionResponse = _this.setQuestionResponse.bind(_this);
 
-    this.state = this.generateInitialState(this.props.config);
+    _this.state = _this.generateInitialState(_this.props.config);
+    return _this;
   }
 
   /**
@@ -1961,49 +3103,72 @@ class Form extends ReactBEM {
    * @param {Array<Object>} customComponents
    * @return {Object}
    */
-  generateInitialState(initialConfig, customComponents = []) {
-    const config = initialConfig.map(q => {
-      const customConstructor = customComponents.find(c => c.type === q.type);
-      return customConstructor ? customConstructor.initialState(q) : q;
-    }).map(q => Object.assign({}, q, {
-      answer: null,
-      key: String(Date.now() + Math.random())
-    }));
 
-    return { config };
-  }
 
-  exportConfig() {
-    console.log(this.state);
-    // To be implemented
-  }
+  createClass(Form, [{
+    key: 'generateInitialState',
+    value: function generateInitialState(initialConfig) {
+      var customComponents = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
 
-  /**
-   * @public
-   * @method setQuestionResponse
-   * @param  {String} questionKey
-   * @param  {} answerValue
-   * @return Promise - will be resolved after the status is updated.
-   */
-  setQuestionResponse(questionKey, answerValue) {
-    const qIndex = this.state.config.findIndex(q => q.key === questionKey);
-    assert(qIndex !== -1, `Did not find question with key: ${ questionKey }`);
+      var config = initialConfig.map(function (q) {
+        var customConstructor = customComponents.find(function (c) {
+          return c.type === q.type;
+        });
+        return customConstructor ? customConstructor.initialState(q) : q;
+      }).map(function (q) {
+        return Object.assign({}, q, {
+          answer: null,
+          key: String(Date.now() + Math.random())
+        });
+      });
 
-    const newConfig = clone(this.state.config);
-    newConfig[qIndex].answer = answerValue;
+      return { config: config };
+    }
+  }, {
+    key: 'exportConfig',
+    value: function exportConfig() {
+      console.log(this.state);
+      // To be implemented
+    }
 
-    return new Promise(resolve => this.setState({ config: newConfig }, resolve));
-  }
+    /**
+     * @public
+     * @method setQuestionResponse
+     * @param  {String} questionKey
+     * @param  {} answerValue
+     * @return Promise - will be resolved after the status is updated.
+     */
 
-  render() {
-    const appControl = {
-      setQuestionResponse: this.setQuestionResponse,
-      exportConfig: this.exportConfig
-    };
+  }, {
+    key: 'setQuestionResponse',
+    value: function setQuestionResponse(questionKey, answerValue) {
+      var _this2 = this;
 
-    return React.createElement(FormUI, { config: this.state.config, appControl: appControl });
-  }
-}
+      var qIndex = this.state.config.findIndex(function (q) {
+        return q.key === questionKey;
+      });
+      assert(qIndex !== -1, 'Did not find question with key: ' + questionKey);
+
+      var newConfig = clone(this.state.config);
+      newConfig[qIndex].answer = answerValue;
+
+      return new Promise(function (resolve) {
+        return _this2.setState({ config: newConfig }, resolve);
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var appControl = {
+        setQuestionResponse: this.setQuestionResponse,
+        exportConfig: this.exportConfig
+      };
+
+      return React.createElement(FormUI, { config: this.state.config, appControl: appControl });
+    }
+  }]);
+  return Form;
+}(ReactBEM);
 
 Form.PropTypes = {
   config: React.PropTypes.object.isRequired,
@@ -2012,11 +3177,11 @@ Form.PropTypes = {
 
 /* globals xController */
 // import 'babel-polyfill'; // Removing to avoid conflict in squarespace
-const flInteractiveForm = {
-  create: (config, customComponents) => {
+var flInteractiveForm = {
+  create: function create(config, customComponents) {
     assert(config && config.length !== undefined, 'The first argument must be a configuration array');
 
-    const targetElement = document.createElement('div');
+    var targetElement = document.createElement('div');
     targetElement.className = 'fl-if';
     ReactDOM.render(React.createElement(Form, { config: config, customComponents: customComponents }), targetElement);
 

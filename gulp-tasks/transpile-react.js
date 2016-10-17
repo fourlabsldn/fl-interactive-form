@@ -42,8 +42,8 @@ const DEFAULT_CONFIG = {
     babel({
       exclude: 'node_modules/**',
       babelrc: false,
-      plugins: [],
-      presets: ['es2017', 'react'],
+      plugins: ['transform-async-to-generator', 'external-helpers-2'],
+      presets: ['es2015-rollup', 'react'],
     }),
     // TODO: Change this from 'development' to 'production' during production
     replace({ 'process.env.NODE_ENV': JSON.stringify('development') }),
