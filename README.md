@@ -2,6 +2,8 @@
 
 Generates a nice looking form that can be navigated using keyboard keys. Open Source, **inspired by Typeform**.
 
+![usage demo](https://fourlabsldn.github.io/fl-interactive-form/examples/usage-demo.gif)
+
 ## Quickstart
 
   To create a form just call `flInteractiveForm.create` with the configuration
