@@ -5102,7 +5102,7 @@ var Dropdown = function (_OptionsInput) {
 
       var disabledIndexes = this.props.config.disabledIndexes || [];
       var optionEls = options.map(function (option, index) {
-        var disabled = disabledIndexes.includes(index);
+        var disabled = disabledIndexes.indefOf(index) !== -1;
         return React.createElement(
           'option',
           {
