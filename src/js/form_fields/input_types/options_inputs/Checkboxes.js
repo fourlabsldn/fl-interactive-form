@@ -94,8 +94,9 @@ export default class Checkboxes extends OptionsInput {
           key={`${this.props.config.key}${index}`}
           onClick={() => this.checkboxClick(index)}
           tabIndex="0"
+          value={option.value}
         >
-          {option}
+          {option.caption}
         </div>
       );
     });

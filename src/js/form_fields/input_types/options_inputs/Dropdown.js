@@ -46,8 +46,9 @@ export default class Dropdown extends OptionsInput {
           key={`${this.props.config.key}${index}`}
           tabIndex="0"
           disabled={disabled}
+          value={option.value}
         >
-          {option}
+          {option.caption}
         </option>
       );
     });

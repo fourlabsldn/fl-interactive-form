@@ -43,8 +43,9 @@ export default class RadioButtons extends OptionsInput {
           key={`${this.props.config.key}${index}`}
           onClick={() => this.saveResponseAndJumpToQuestion([index], 'next')}
           tabIndex="0"
+          value={option.value}
         >
-          {option}
+          {option.caption}
         </div>
       );
     });
