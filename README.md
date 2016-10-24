@@ -111,7 +111,10 @@ This includes `Checkboxes`, `Dropdown` and `RadioButtons`.
  "required": true,
  "title": "Would you like to choose a dropdown option? (Not optional)",
  "type": "Dropdown",
- "options": ["Option number one", "Option number two"],
+ "options": [
+   { value: 0, caption: "Option number one" },
+   { value: 1, caption: "Option number two" },
+ ],
 }
 ```
 
