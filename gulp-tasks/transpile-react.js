@@ -45,6 +45,7 @@ const DEFAULT_CONFIG = {
       babelrc: false,
       runtimeHelpers: true,
       plugins: [
+        'lodash',
         'transform-async-to-generator',
         'external-helpers-2',
         ["transform-runtime", {

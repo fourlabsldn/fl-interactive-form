@@ -79,6 +79,19 @@
     require(['fl-interactive-form'], function (flInteractiveForm) {
       var config = [
         {
+           "type": "DateField",
+           "displayName": "Date Field",
+           "group": "Text Components",
+           "required": false,
+           "title": "My date component",
+           "day": "",
+           "month": "",
+           "year": "",
+           "id": 1477402985935,
+           "configShowing": true,
+           "minDate": 1475798400000,
+           "maxDate": 1476921600000
+        }, {
           "type": "RadioButtons",
           "displayName": "Radio Button",
           "group": "Options Components",
@@ -215,7 +228,7 @@
           "id": 1477307318522,
           "configShowing": false
         }
-      ];;
+      ];
       var form = flInteractiveForm.create(config);
 
       form.addEventListener('submit', function logSubmission(e) {
