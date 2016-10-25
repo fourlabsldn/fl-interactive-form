@@ -5945,35 +5945,6 @@ var CountryDropdown = function (_Dropdown) {
   return CountryDropdown;
 }(Dropdown);
 
-var defineProperty$4 = createCommonjsModule(function (module, exports) {
-"use strict";
-
-exports.__esModule = true;
-
-var _defineProperty = interopDefault(require$$0$14);
-
-var _defineProperty2 = _interopRequireDefault(_defineProperty);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = function (obj, key, value) {
-  if (key in obj) {
-    (0, _defineProperty2.default)(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-};
-});
-
-var _defineProperty = interopDefault(defineProperty$4);
-
 var core_isIterable = createCommonjsModule(function (module) {
 var classof   = interopDefault(require$$3$7)
   , ITERATOR  = interopDefault(require$$2$4)('iterator')
@@ -6070,6 +6041,35 @@ exports.default = function () {
 });
 
 var _slicedToArray = interopDefault(slicedToArray);
+
+var defineProperty$4 = createCommonjsModule(function (module, exports) {
+"use strict";
+
+exports.__esModule = true;
+
+var _defineProperty = interopDefault(require$$0$14);
+
+var _defineProperty2 = _interopRequireDefault(_defineProperty);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function (obj, key, value) {
+  if (key in obj) {
+    (0, _defineProperty2.default)(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+};
+});
+
+var _defineProperty = interopDefault(defineProperty$4);
 
 var stringify$2 = createCommonjsModule(function (module) {
 var core  = interopDefault(require$$0$8)
@@ -14848,7 +14848,7 @@ var between = _curry(function (min, max, num) {
 });
 
 // toDigits : Number -> Number -> String
-var toDigits = _curry(function (digitCount, num) {
+var toDigits$1 = _curry(function (digitCount, num) {
   var charCount = num.toString().length;
   var zeroesCount = Math.max(0, digitCount - charCount); // make sure never negative
   return Array(zeroesCount).fill(0).join('') + num.toString();
@@ -14859,7 +14859,7 @@ var validateAndPrettify = _curry(function (min, max, stringValue) {
   var maxChars = max.toString().length;
   return _flow(function (s) {
     return parseInt(s, 10);
-  }, between(min, max), toDigits(maxChars))(stringValue);
+  }, between(min, max), toDigits$1(maxChars))(stringValue);
 });
 
 // updateDate : Number -> Number -> String -> String
@@ -14904,12 +14904,12 @@ var millisecondsToBreakdownDate = function millisecondsToBreakdownDate(ms) {
   };
 };
 
-var toDateString = function toDateString(d) {
-  return toDigits(4, d.year) + '-' + toDigits(2, d.month) + '-' + toDigits(2, d.day);
+var toDateString$1 = function toDateString$1(d) {
+  return toDigits$1(4, d.year) + '-' + toDigits$1(2, d.month) + '-' + toDigits$1(2, d.day);
 };
 
 var toMilliseconds = function toMilliseconds(d) {
-  return _flow(toDateString, Date.parse)(d);
+  return _flow(toDateString$1, Date.parse)(d);
 };
 
 // parseDate : (String | Number) -> (String | Number) -> (String | Number) -> { day, month, year }
@@ -14937,14 +14937,12 @@ function parseDate(dayString, monthString, yearString) {
   return initialDate;
 }
 
-var areAllFieldsFilled = function areAllFieldsFilled(day, month, year) {
-  return day.length === 2 && month.length === 2 && year.length === 4;
-};
-
 // Returns an object with date components that form a valid date
 // Int -> Int -> String -> String -> String -> { day, month, year }
 var validateDateComponents = function validateDateComponents(appMinDate, appMaxDate, day, month, year) {
-  if (!areAllFieldsFilled(day, month, year)) {
+  var areAllFieldsFilled = day.length === 2 && month.length === 2 && year.length === 4;
+
+  if (!areAllFieldsFilled) {
     return { day: day, month: month, year: year };
   }
   var minDate = appMinDate || minDateDefault; // 1900-01-01
@@ -14954,11 +14952,178 @@ var validateDateComponents = function validateDateComponents(appMinDate, appMaxD
     return parseDate(day, month, year);
   }, toMilliseconds, between(minDate, maxDate), millisecondsToBreakdownDate, function (d) {
     return {
-      day: toDigits(2, d.day),
-      month: toDigits(2, d.month),
-      year: toDigits(4, d.year)
+      day: toDigits$1(2, d.day),
+      month: toDigits$1(2, d.month),
+      year: toDigits$1(4, d.year)
     };
   })();
+};
+
+var typeInfo = {
+  // Compulsory
+  type: 'DateField',
+  displayName: 'Date Field',
+  group: 'Text Components',
+  required: false,
+
+  // Component specific fields
+  title: 'My date component',
+  day: '',
+  month: '',
+  year: '',
+  minDate: minDateDefault,
+  maxDate: maxDateDefault
+};
+
+// For Text Fields the initialState function will only return an object.
+var initialState = function initialState() {
+  return _Object$assign({}, typeInfo);
+};
+
+// When configuration is open, this is what is going to be displayed
+/**
+ * @method RenderConfigMode
+ * @param  {Object} state : State
+ * @param  {Function} update : State -> void // Will trigger a re-render
+ */
+var RenderEditor = function RenderEditor(_ref) {
+  var state = _ref.state;
+  var update = _ref.update;
+
+
+  // updateField : Object -> Object(the new state)
+  var updateState = function updateState(changedState) {
+    var newState = _Object$assign({}, state, changedState);
+    update(newState);
+    return newState;
+  };
+
+  // updateField : Object -> Event -> Object(the new state)
+  var updateField = _curry(function (fieldName, e) {
+    var value = e.target.value || initialState()[fieldName];
+    return updateState(_defineProperty({}, fieldName, value));
+  });
+
+  var dateOnChange = _curry(function (min, max, datePart, e) {
+    _flow(_get$1('target.value'), validate(min, max), function (v) {
+      return updateState(_defineProperty({}, datePart, v));
+    })(e);
+
+    focusNextIfFilled(max, e);
+  });
+
+  var dateOnBlur = _curry(function (appState, min, max, datePart, e) {
+    _flow(_get$1('target.value'), validateAndPrettify(min, max), function (v) {
+      return _Object$assign({}, appState, _defineProperty({}, datePart, v));
+    }, function (s) {
+      return validateDateComponents(s.minDate, s.maxDate, s.day, s.month, s.year);
+    }, function (s) {
+      return updateState(s);
+    })(e);
+  });
+
+  var setDateConstrain = _curry(function (minMax, e) {
+    var value = e.target.value;
+    var dateInMs = Date.parse(value);
+    var newConstrain = isNaN(dateInMs) ? undefined : dateInMs;
+    updateState(_defineProperty({}, minMax, newConstrain));
+  });
+
+  var msToDateString = _flow(millisecondsToBreakdownDate, toDateString$1);
+  var defaultMin = msToDateString(minDateDefault);
+  var defaultMax = msToDateString(maxDateDefault);
+
+  var configurationBar = React.createElement(
+    'div',
+    { className: 'fl-fb-Field-config' },
+    'From',
+    React.createElement('input', {
+      type: 'date',
+      onChange: setDateConstrain('minDate'),
+      className: 'fl-fb-Field-config-btn',
+      defaultValue: defaultMin
+    }),
+    'To',
+    React.createElement('input', {
+      type: 'date',
+      onChange: setDateConstrain('maxDate'),
+      className: 'fl-fb-Field-config-btn',
+      defaultValue: defaultMax
+    })
+  );
+
+  return React.createElement(
+    'div',
+    null,
+    state.configShowing ? React.createElement(
+      'h2',
+      null,
+      React.createElement('input', {
+        type: 'text',
+        className: 'fl-fb-Field-editable',
+        onChange: updateField('title'),
+        defaultValue: state.title
+      })
+    ) : React.createElement(
+      'h2',
+      null,
+      state.title
+    ),
+    React.createElement('input', {
+      type: 'text',
+      className: 'fl-fb-Field-editable fl-fb-Field-dateslot-day',
+      placeholder: 'DD',
+      value: state.day,
+      onChange: dateOnChange(1, 31, 'day'),
+      onBlur: dateOnBlur(state, 1, 31, 'day'),
+      pattern: '^.{2}$' // two characters required
+      , required: state.required
+    }),
+    '/',
+    React.createElement('input', {
+      type: 'text',
+      className: 'fl-fb-Field-editable fl-fb-Field-dateslot-month',
+      placeholder: 'MM',
+      value: state.month,
+      onChange: dateOnChange(1, 12, 'month'),
+      onBlur: dateOnBlur(state, 1, 12, 'month'),
+      pattern: '^.{2}$' // two characters required
+      , required: state.required
+    }),
+    '/',
+    React.createElement('input', {
+      type: 'text',
+      className: 'fl-fb-Field-editable fl-fb-Field-dateslot-year',
+      placeholder: 'YYYY',
+      value: state.year,
+      onChange: dateOnChange(1900, 2050, 'year'),
+      onBlur: dateOnBlur(state, 1900, 2050, 'year'),
+      pattern: '^.{4}$' // two characters required
+      , required: state.required
+    }),
+    state.configShowing ? configurationBar : null
+  );
+};
+
+var ImageCards = {
+  info: typeInfo,
+  initialState: initialState,
+  RenderEditor: RenderEditor
+};
+
+// toDigits : Number -> Number -> String
+var toDigits = function toDigits(digitCount, num) {
+  var charCount = num.toString().length;
+  var zeroesCount = Math.max(0, digitCount - charCount); // make sure never negative
+  return Array(zeroesCount).fill(0).join('') + num.toString();
+};
+
+var toDateString = function toDateString(d) {
+  return toDigits(4, d.year) + '-' + toDigits(2, d.month) + '-' + toDigits(2, d.day);
+};
+
+var areAllFieldsFilled = function areAllFieldsFilled(day, month, year) {
+  return day.length === 2 && month.length === 2 && year.length === 4;
 };
 
 var DateField = function (_InputField) {
@@ -14980,10 +15145,10 @@ var DateField = function (_InputField) {
     // some change.
     _this.changedSinceLastUpdate = false;
 
-    _this.state = _Object$assign({}, _this.props.config);
+    _this.state = _Object$assign({}, _this.props.config, { configShowing: false });
 
     /** @override */
-    _this.bemClass = _this.modulePrefix + '_TextInput';
+    _this.bemClass = _this.modulePrefix + '_DateField';
     return _this;
   }
 
@@ -15004,7 +15169,9 @@ var DateField = function (_InputField) {
 
   }, {
     key: 'validateResponse',
-    value: function validateResponse(response) {
+    value: function validateResponse() {
+      var response = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.getResponse();
+
       var _response$split = response.split('-');
 
       var _response$split2 = _slicedToArray(_response$split, 3);
@@ -15049,7 +15216,7 @@ var DateField = function (_InputField) {
         var year = _state.year;
 
         if (areAllFieldsFilled(day, month, year)) {
-          _this2.saveResponse();
+          _this2.saveResponseAndJumpToQuestion();
         }
       };
 
@@ -15059,68 +15226,15 @@ var DateField = function (_InputField) {
         return _this2.setState(newState);
       };
 
-      // updateField : Object -> Object(the new state)
-      var updateState = function updateState(changedState) {
-        var newState = _Object$assign({}, state, changedState);
-        update(newState);
-        return newState;
-      };
-
-      var dateOnChange = _curry(function (min, max, datePart, e) {
-        _flow(_get$1('target.value'), validate(min, max), function (v) {
-          return updateState(_defineProperty({}, datePart, v));
-        })(e);
-
-        focusNextIfFilled(max, e);
-        handleInputChange();
-      });
-
-      var dateOnBlur = _curry(function (appState, min, max, datePart, e) {
-        _flow(_get$1('target.value'), validateAndPrettify(min, max), function (v) {
-          return _Object$assign({}, appState, _defineProperty({}, datePart, v));
-        }, function (s) {
-          return validateDateComponents(s.minDate, s.maxDate, s.day, s.month, s.year);
-        }, function (s) {
-          return updateState(s);
-        })(e);
-        handleBlur();
-      });
-
       return React.createElement(
         'div',
-        { className: this.bemClass },
-        React.createElement('input', {
-          type: 'text',
-          className: 'fl-fb-Field-editable fl-fb-Field-dateslot-day',
-          placeholder: 'DD',
-          value: state.day,
-          onChange: dateOnChange(1, 31, 'day'),
-          onBlur: dateOnBlur(state, 1, 31, 'day'),
-          pattern: '^.{2}$' // two characters required
-          , required: state.required
-        }),
-        '/',
-        React.createElement('input', {
-          type: 'text',
-          className: 'fl-fb-Field-editable fl-fb-Field-dateslot-month',
-          placeholder: 'MM',
-          value: state.month,
-          onChange: dateOnChange(1, 12, 'month'),
-          onBlur: dateOnBlur(state, 1, 12, 'month'),
-          pattern: '^.{2}$' // two characters required
-          , required: state.required
-        }),
-        '/',
-        React.createElement('input', {
-          type: 'text',
-          className: 'fl-fb-Field-editable fl-fb-Field-dateslot-year',
-          placeholder: 'YYYY',
-          value: state.year,
-          onChange: dateOnChange(1900, 2050, 'year'),
-          onBlur: dateOnBlur(state, 1900, 2050, 'year'),
-          pattern: '^.{4}$' // two characters required
-          , required: state.required
-        })
+        {
+          className: this.bemClass,
+          onBlur: handleBlur,
+          onChange: handleInputChange,
+          onKeyDown: this.keyListener
+        },
+        ImageCards.RenderEditor({ state: state, update: update })
       );
     }
   }]);

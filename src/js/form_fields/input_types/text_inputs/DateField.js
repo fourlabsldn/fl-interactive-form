@@ -1,148 +1,19 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { curry, flow, get } from 'lodash/fp';
-import assert from 'fl-assert';
 import InputField from '../InputField';
-
-const minDateDefault = -2208988800000;
-const maxDateDefault = 4102444800000;
-
-// Returns a number. If num is NaN, returns min
-// between : Number -> Number -> Number
-const between = curry((min, max, num) => {
-  const constrained = Math.max(min, Math.min(num, max));
-  return isNaN(constrained)
-    ? min
-    : constrained;
-});
+import DateFieldFormBuilder from './DateField-form-builder';
 
 // toDigits : Number -> Number -> String
-const toDigits = curry((digitCount, num) => {
+const toDigits = (digitCount, num) => {
   const charCount = num.toString().length;
   const zeroesCount = Math.max(0, digitCount - charCount); // make sure never negative
   return Array(zeroesCount).fill(0).join('') + num.toString();
-});
-
-// validate : Number -> Number -> String -> String
-const validateAndPrettify = curry((min, max, stringValue) => {
-  const maxChars = max.toString().length;
-  return flow(
-    s => parseInt(s, 10),
-    between(min, max),
-    toDigits(maxChars),
-  )(stringValue);
-});
-
-
-// updateDate : Number -> Number -> String -> String
-const validate = curry((min, max, stringValue) => {
-  const maxChars = max.toString().length;
-  const value = stringValue.replace(/[^0-9]/g, '').slice(-maxChars);
-
-  const isFieldFilled = value.length === maxChars;
-  // If it doesn't even have enough characters, it's below max and the
-  // person might not have finished typing yet, so let's only really validate and
-  // prettify if maxChars is reached
-  return isFieldFilled
-    ? validateAndPrettify(min, max, stringValue)
-    : value;
-});
-
-// focusNextWhenFilled : Number -> Event -> Nothing
-const focusNextIfFilled = curry((max, e) => {
-  const maxChars = max.toString().length;
-  const isFieldFilled = e.target.value.toString().length === maxChars;
-
-  if (isFieldFilled) {
-    const nextField = ReactDOM.findDOMNode(e.target).nextElementSibling;
-    if (nextField && nextField.nodeName === 'INPUT') {
-      nextField.focus();
-    }
-  }
-});
-
-// parseAndConstrain : Number -> Number -> String -> Number
-const parseAndConstrain = (min, max, numString) => {
-  const parsed = parseInt(numString, 10);
-  const constrained = between(min, max, parsed);
-  assert.warn(!isNaN(constrained), `Error parsing ${numString}`);
-  return constrained;
-};
-
-const millisecondsToBreakdownDate = (ms) => {
-  const date = new Date(ms);
-  return {
-    day: date.getDate(),
-    month: date.getMonth() + 1,
-    year: date.getFullYear(),
-  };
 };
 
 const toDateString = d =>
   `${toDigits(4, d.year)}-${toDigits(2, d.month)}-${toDigits(2, d.day)}`;
 
-const toMilliseconds = (d) => {
-  return flow(
-    toDateString,
-    Date.parse
-  )(d);
-};
-
-// parseDate : (String | Number) -> (String | Number) -> (String | Number) -> { day, month, year }
-function parseDate(dayString, monthString, yearString) {
-  const initialDate = {
-    day: parseAndConstrain(1, 31, dayString),
-    month: parseAndConstrain(1, 12, monthString),
-    year: parseAndConstrain(1, 2500, yearString),
-  };
-
-  const dateIsValid = flow(
-    toMilliseconds,
-    millisecondsToBreakdownDate,
-    parsed => JSON.stringify(initialDate) === JSON.stringify(parsed),
-  )(initialDate);
-
-  if (!dateIsValid) {
-    // All values have been constrined to their allowed values, the only case
-    // in which date could be NaN is the one where the day value is greater than
-    // the maximum possible day value of the specified month. Like Feb 31
-    // So we will decrease the day and try to parse again. If the day is already
-    // quite low, then throw the error.
-    assert(
-      initialDate.day > 25,
-      `An unknown error occurred parsing the date ${
-      dayString}/${monthString}/${yearString}`
-    );
-    return parseDate(initialDate.day - 1, initialDate.month, initialDate.year);
-  }
-
-  return initialDate;
-}
-
 const areAllFieldsFilled = (day, month, year) =>
   day.length === 2 && month.length === 2 && year.length === 4;
-
-// Returns an object with date components that form a valid date
-// Int -> Int -> String -> String -> String -> { day, month, year }
-const validateDateComponents = (appMinDate, appMaxDate, day, month, year) => {
-  if (!areAllFieldsFilled(day, month, year)) {
-    return { day, month, year };
-  }
-  const minDate = appMinDate || minDateDefault; // 1900-01-01
-  const maxDate = appMaxDate || maxDateDefault; // 2100-01-01
-
-  return flow(
-    () => parseDate(day, month, year),
-    toMilliseconds,
-    between(minDate, maxDate),
-    millisecondsToBreakdownDate,
-    d => ({
-      day: toDigits(2, d.day),
-      month: toDigits(2, d.month),
-      year: toDigits(4, d.year),
-    })
-  )();
-};
 
 export default class DateField extends InputField {
   constructor(...args) {
@@ -152,10 +23,10 @@ export default class DateField extends InputField {
     // some change.
     this.changedSinceLastUpdate = false;
 
-    this.state = Object.assign({}, this.props.config);
+    this.state = Object.assign({}, this.props.config, { configShowing: false });
 
     /** @override */
-    this.bemClass = `${this.modulePrefix}_TextInput`;
+    this.bemClass = `${this.modulePrefix}_DateField`;
   }
 
   /**
@@ -168,7 +39,7 @@ export default class DateField extends InputField {
   /**
    * @override
    */
-  validateResponse(response) {
+  validateResponse(response = this.getResponse()) {
     const [year, month, day] = response.split('-');
     if (this.isRequired() && !areAllFieldsFilled(day, month, year)) {
       return 'This field must be completed.';
@@ -197,7 +68,7 @@ export default class DateField extends InputField {
 
       const { day, month, year } = this.state;
       if (areAllFieldsFilled(day, month, year)) {
-        this.saveResponse();
+        this.saveResponseAndJumpToQuestion();
       }
     };
 
@@ -205,70 +76,14 @@ export default class DateField extends InputField {
     const state = this.state;
     const update = (newState) => this.setState(newState);
 
-
-    // updateField : Object -> Object(the new state)
-    const updateState = changedState => {
-      const newState = Object.assign({}, state, changedState);
-      update(newState);
-      return newState;
-    };
-
-    const dateOnChange = curry((min, max, datePart, e) => {
-      flow(
-        get('target.value'),
-        validate(min, max),
-        v => updateState({ [datePart]: v }),
-      )(e);
-
-      focusNextIfFilled(max, e);
-      handleInputChange();
-    });
-
-    const dateOnBlur = curry((appState, min, max, datePart, e) => {
-      flow(
-        get('target.value'),
-        validateAndPrettify(min, max),
-        v => Object.assign({}, appState, { [datePart]: v }),
-        s => validateDateComponents(s.minDate, s.maxDate, s.day, s.month, s.year),
-        s => updateState(s)
-      )(e);
-      handleBlur();
-    });
-
     return (
-      <div className={this.bemClass}>
-        <input
-          type="text"
-          className="fl-fb-Field-editable fl-fb-Field-dateslot-day"
-          placeholder="DD"
-          value={state.day}
-          onChange={dateOnChange(1, 31, 'day')}
-          onBlur={dateOnBlur(state, 1, 31, 'day')}
-          pattern="^.{2}$" // two characters required
-          required={state.required}
-        />
-        /
-        <input
-          type="text"
-          className="fl-fb-Field-editable fl-fb-Field-dateslot-month"
-          placeholder="MM"
-          value={state.month}
-          onChange={dateOnChange(1, 12, 'month')}
-          onBlur={dateOnBlur(state, 1, 12, 'month')}
-          pattern="^.{2}$" // two characters required
-          required={state.required}
-        />
-        /
-        <input
-          type="text"
-          className="fl-fb-Field-editable fl-fb-Field-dateslot-year"
-          placeholder="YYYY"
-          value={state.year}
-          onChange={dateOnChange(1900, 2050, 'year')}
-          onBlur={dateOnBlur(state, 1900, 2050, 'year')}
-          pattern="^.{4}$" // two characters required
-          required={state.required}
-        />
+      <div
+        className={this.bemClass}
+        onBlur={handleBlur}
+        onChange={handleInputChange}
+        onKeyDown={this.keyListener}
+      >
+        {DateFieldFormBuilder.RenderEditor({ state, update })}
       </ div>
     );
   }
