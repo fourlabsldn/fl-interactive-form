@@ -119,14 +119,13 @@ function parseDate(dayString, monthString, yearString) {
   return initialDate;
 }
 
+const areAllFieldsFilled = (day, month, year) =>
+  day.length === 2 && month.length === 2 && year.length === 4;
+
 // Returns an object with date components that form a valid date
 // Int -> Int -> String -> String -> String -> { day, month, year }
 const validateDateComponents = (appMinDate, appMaxDate, day, month, year) => {
-  const areAllFieldsFilled = day.length === 2
-    && month.length === 2
-    && year.length === 4;
-
-  if (!areAllFieldsFilled) {
+  if (!areAllFieldsFilled(day, month, year)) {
     return { day, month, year };
   }
   const minDate = appMinDate || minDateDefault; // 1900-01-01
@@ -171,11 +170,7 @@ export default class DateField extends InputField {
    */
   validateResponse(response) {
     const [year, month, day] = response.split('-');
-    const areAllFieldsFilled = day.length === 2
-      && month.length === 2
-      && year.length === 4;
-
-    if (this.isRequired() && !areAllFieldsFilled) {
+    if (this.isRequired() && !areAllFieldsFilled(day, month, year)) {
       return 'This field must be completed.';
     }
 
@@ -199,7 +194,11 @@ export default class DateField extends InputField {
     const handleBlur = () => {
       if (!this.changedSinceLastUpdate) { return; }
       this.changedSinceLastUpdate = false;
-      this.saveResponse();
+
+      const { day, month, year } = this.state;
+      if (areAllFieldsFilled(day, month, year)) {
+        this.saveResponse();
+      }
     };
 
     // DATEFIELD SPECIFIG FUNCTIONS
