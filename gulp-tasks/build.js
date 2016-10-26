@@ -4,7 +4,7 @@ const organiser = require('gulp-organiser');
 const tasks = [
   require('./sass'),
   require('./transpile-react'),
-  require('./transpile-es3'),
+  require('./transpile-to-es3'),
 ].map(t => t.name);
 
 module.exports = organiser.register((task) => {

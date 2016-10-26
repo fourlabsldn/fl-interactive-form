@@ -19,13 +19,16 @@ organiser.registerAll('./gulp-tasks', {
       external: ['react', 'react-dom'],
     },
   },
-  'transpile-es3': {
-    src: path.join(src, 'js/es3-main.js'),
+  'transpile-to-es3': {
+    src: path.join(src, 'js-es3/main.js'),
     dest,
+    config: {
+      moduleName: 'flInteractiveForm',
+    },
   },
   'browser-sync': {
     src: '.', // it doesn't matter, it's just so the task object is not ignored.
-    reloadOn: ['transpile-react', 'transpile-es3'], // reload page when these tasks happen
+    reloadOn: ['transpile-react', 'transpile-to-es3'], // reload page when these tasks happen
     startPath: 'examples/all_field_types/index.html',
     baseDir: './',
   },

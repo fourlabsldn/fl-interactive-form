@@ -1,66 +1,3 @@
-(function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
-  typeof define === 'function' && define.amd ? define(factory) :
-  (global.flInteractiveForm = factory());
-}(this, (function () { 'use strict';
-
-function assert(condition, message) {
-  if (!condition) {
-    throw new Error(message);
-  }
-}
-
-function clone(obj) {
-  return JSON.parse(JSON.stringify(obj));
-}
-
-function fakeEvent(answers) {
-  return {
-    detail: {
-      answers: answers
-    }
-  };
-}
-
-function applyDataMask(field, fieldMask) {
-  var mask = fieldMask.split('');
-
-  // For now, this just strips everything that's not a number
-  function stripMask(maskedData) {
-    function isDigit(char) {
-      return (/\d/.test(char)
-      );
-    }
-    return maskedData.split('').filter(isDigit);
-  }
-
-  // Replace `_` characters with characters from `data`
-  function applyMask(data) {
-    return mask.map(function (char) {
-      if (char !== ' ') return char;
-      if (data.length == 0) return char;
-      return data.shift();
-    }).join('');
-  }
-
-  function reapplyMask(data) {
-    return applyMask(stripMask(data));
-  }
-
-  function changed() {
-    var oldStart = field.selectionStart;
-    var oldEnd = field.selectionEnd;
-
-    field.value = reapplyMask(field.value);
-
-    field.selectionStart = oldStart;
-    field.selectionEnd = oldEnd;
-  }
-
-  field.addEventListener('click', changed);
-  field.addEventListener('keyup', changed);
-}
-
 /* eslint-disable
   no-var,
   comma-dangle,
@@ -79,7 +16,9 @@ function applyDataMask(field, fieldMask) {
 //
 //
 
-var textInputTypes = {
+import { applyDataMask } from './utils';
+
+const textInputTypes = {
   TextArea: 'text',
   TextBox: 'text',
   EmailBox: 'email',
@@ -110,6 +49,7 @@ function createTextInput(config) {
 function createOptionsInput(config) {
   var wrapper = document.createElement('div');
 
+
   wrapper.className = 'fl-if_OptionsInput';
 
   var options = [];
@@ -121,7 +61,9 @@ function createOptionsInput(config) {
   for (var i = 0; i < config.options.length; i++) {
     optionWrapper = document.createElement('label');
     optionWrapper.className = wrapper.className + '-option';
-    optionWrapper.className += config.type === 'RadioButtons' ? ' fl-if_OptionsInput-radio' : ' fl-if_OptionsInput-checkbox';
+    optionWrapper.className += config.type === 'RadioButtons'
+      ? ' fl-if_OptionsInput-radio'
+      : ' fl-if_OptionsInput-checkbox';
 
     optionEl = document.createElement('input');
     optionEl.type = optionType;
@@ -189,26 +131,24 @@ function createCountryDropdownInput(config) {
   return createDropdownInput(config);
 }
 
-function createDateInput(config) {
-  // eslint-disable-line no-unused-vars
+function createDateInput(config) { // eslint-disable-line no-unused-vars
   var dateField = document.createElement('input');
   dateField.setAttribute('type', 'text');
   dateField.className = 'fl-if_TextInput-input';
   dateField.style.textAlign = 'center';
   dateField.value = 'DD/MM/YYYY';
   applyDataMask(dateField, '  /  /    ');
-  dateField.getValue = function () {
-    return dateField.value;
-  };
+  dateField.getValue = function () { return dateField.value; };
   return dateField;
 }
+
 
 // ================= FIELD FACTORY ===================//
 //
 //  Implements the `getValue` method to return the input value
 //
 
-var inputCreators = {
+const inputCreators = {
   EmailBox: createTextInput,
   NumberBox: createTextInput,
   TelephoneBox: createTextInput,
@@ -218,7 +158,7 @@ var inputCreators = {
   Dropdown: createDropdownInput,
   CountryDropdown: createCountryDropdownInput,
   RadioButtons: createOptionsInput,
-  DateField: createDateInput
+  DateField: createDateInput,
 };
 
 /**
@@ -226,7 +166,7 @@ var inputCreators = {
  * @param  {Object} config Question configuration object
  * @return {HTMLElement}
  */
-function formField(config) {
+export default function formField(config) {
   var wrapper = document.createElement('div');
   wrapper.className = 'fl-if_FormField fl-if_FormField--active';
 
@@ -240,83 +180,3 @@ function formField(config) {
   wrapper.getValue = inputEl.getValue;
   return wrapper;
 }
-
-// =============== FORM STRUCTURE ===================//
-
-function es3Form(config) {
-  var form = document.createElement('form');
-  form.className = 'fl-if_FormUI';
-
-  var questions = [];
-  var questionEl = void 0;
-  for (var i = 0; i < config.length; i++) {
-    questionEl = formField(config[i]);
-    questions.push(questionEl);
-    form.appendChild(questionEl);
-  }
-
-  var submitBtnContainer = document.createElement('div');
-  submitBtnContainer.className = 'fl-if_FormField fl-if_FormField--active';
-
-  var submitBtn = document.createElement('button');
-  submitBtn.setAttribute('type', 'submit');
-  submitBtn.innerHTML = 'Submit';
-  submitBtn.className = 'fl-if_NavigationBar-button';
-  submitBtnContainer.appendChild(submitBtn);
-  form.appendChild(submitBtnContainer);
-
-  var formWrapper = document.createElement('div');
-  formWrapper.className = 'fl-if';
-  formWrapper.appendChild(form);
-
-  var listeners = [];
-  formWrapper.addEventListener = function customAddEventListener(event, callback) {
-    if (event === 'submit') {
-      listeners.push(callback);
-    } else {
-      return form.addEventListener(event, callback);
-    }
-    return null;
-  };
-
-  formWrapper.triggerSubmit = function triggerSubmit(formData) {
-    var evt = fakeEvent(formData);
-    for (var j = 0; j < listeners.length; j++) {
-      listeners[j](evt);
-    }
-  };
-
-  form.addEventListener('submit', function submitBtnClick(e) {
-    var formData = clone(config);
-
-    for (var j = 0; j < formData.length; j++) {
-      formData[j].answer = questions[j].getValue();
-    }
-
-    formWrapper.triggerSubmit(formData);
-
-    e.preventDefault();
-    e.stopPropagation();
-    return false;
-  });
-
-  return formWrapper;
-}
-
-// =============== GLOBAL OBJECT ===================//
-
-// START HERE
-var flInteractiveForm = {
-  create: function create(config) {
-    assert(config && config.length !== undefined, 'The first argument must be a configuration array');
-
-    var form = es3Form(config);
-    return form;
-  }
-};
-
-return flInteractiveForm;
-
-})));
-
-//# sourceMappingURL=fl-interactive-form-es3.js.map
