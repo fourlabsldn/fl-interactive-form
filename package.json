@@ -10,6 +10,7 @@
   "author": "Lazamar @ FourLabs",
   "license": "ISC",
   "dependencies": {
+    "fl-form-builder": "git+https://github.com/fourlabsldn/fl-form-builder.git#5a5e0fcf49c3eb55b1be5483f331969a3e2b85e8",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
     "requirejs": "^2.3.2"

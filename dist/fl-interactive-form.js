@@ -14848,7 +14848,7 @@ var between = _curry(function (min, max, num) {
 });
 
 // toDigits : Number -> Number -> String
-var toDigits$1 = _curry(function (digitCount, num) {
+var toDigits = _curry(function (digitCount, num) {
   var charCount = num.toString().length;
   var zeroesCount = Math.max(0, digitCount - charCount); // make sure never negative
   return Array(zeroesCount).fill(0).join('') + num.toString();
@@ -14857,9 +14857,9 @@ var toDigits$1 = _curry(function (digitCount, num) {
 // validate : Number -> Number -> String -> String
 var validateAndPrettify = _curry(function (min, max, stringValue) {
   var maxChars = max.toString().length;
-  return _flow(function (s) {
+  return stringValue.length === 0 ? stringValue : _flow(function (s) {
     return parseInt(s, 10);
-  }, between(min, max), toDigits$1(maxChars))(stringValue);
+  }, between(min, max), toDigits(maxChars))(stringValue);
 });
 
 // updateDate : Number -> Number -> String -> String
@@ -14887,6 +14887,22 @@ var focusNextIfFilled = _curry(function (max, e) {
   }
 });
 
+// focusPreviousIfEmpty : Event -> Nothing
+var focusPreviousIfEmpty = function focusPreviousIfEmpty(e) {
+  var backspaceKeyCode = 8;
+  var backspacePressed = e.keyCode === backspaceKeyCode;
+  var fieldEmpty = e.target.value.length === 0;
+  if (!(backspacePressed && fieldEmpty)) {
+    return;
+  }
+  e.preventDefault();
+  e.stopPropagation();
+  var prevField = ReactDOM.findDOMNode(e.target).previousElementSibling;
+  if (prevField && prevField.nodeName === 'INPUT') {
+    prevField.focus();
+  }
+};
+
 // parseAndConstrain : Number -> Number -> String -> Number
 var parseAndConstrain = function parseAndConstrain(min, max, numString) {
   var parsed = parseInt(numString, 10);
@@ -14905,7 +14921,7 @@ var millisecondsToBreakdownDate = function millisecondsToBreakdownDate(ms) {
 };
 
 var toDateString$1 = function toDateString$1(d) {
-  return toDigits$1(4, d.year) + '-' + toDigits$1(2, d.month) + '-' + toDigits$1(2, d.day);
+  return toDigits(4, d.year) + '-' + toDigits(2, d.month) + '-' + toDigits(2, d.day);
 };
 
 var toMilliseconds = function toMilliseconds(d) {
@@ -14952,9 +14968,9 @@ var validateDateComponents = function validateDateComponents(appMinDate, appMaxD
     return parseDate(day, month, year);
   }, toMilliseconds, between(minDate, maxDate), millisecondsToBreakdownDate, function (d) {
     return {
-      day: toDigits$1(2, d.day),
-      month: toDigits$1(2, d.month),
-      year: toDigits$1(4, d.year)
+      day: toDigits(2, d.day),
+      month: toDigits(2, d.month),
+      year: toDigits(4, d.year)
     };
   })();
 };
@@ -15088,7 +15104,8 @@ var RenderEditor = function RenderEditor(_ref) {
       onChange: dateOnChange(1, 12, 'month'),
       onBlur: dateOnBlur(state, 1, 12, 'month'),
       pattern: '^.{2}$' // two characters required
-      , required: state.required
+      , required: state.required,
+      onKeyUp: focusPreviousIfEmpty
     }),
     '/',
     React.createElement('input', {
@@ -15099,7 +15116,8 @@ var RenderEditor = function RenderEditor(_ref) {
       onChange: dateOnChange(1900, 2050, 'year'),
       onBlur: dateOnBlur(state, 1900, 2050, 'year'),
       pattern: '^.{4}$' // two characters required
-      , required: state.required
+      , required: state.required,
+      onKeyUp: focusPreviousIfEmpty
     }),
     state.configShowing ? configurationBar : null
   );
@@ -15111,15 +15129,11 @@ var ImageCards = {
   RenderEditor: RenderEditor
 };
 
-// toDigits : Number -> Number -> String
-var toDigits = function toDigits(digitCount, num) {
-  var charCount = num.toString().length;
-  var zeroesCount = Math.max(0, digitCount - charCount); // make sure never negative
-  return Array(zeroesCount).fill(0).join('') + num.toString();
-};
-
+// This is causing transpilation issues. So, for now
+// we copy the form-builder file and include it here.
+// In the future we should include it directly from node_modules folder
 var toDateString = function toDateString(d) {
-  return toDigits(4, d.year) + '-' + toDigits(2, d.month) + '-' + toDigits(2, d.day);
+  return d.year + '-' + d.month + '-' + d.day;
 };
 
 var areAllFieldsFilled = function areAllFieldsFilled(day, month, year) {
@@ -15220,6 +15234,19 @@ var DateField = function (_InputField) {
         }
       };
 
+      var handleKeyDown = function handleKeyDown(e) {
+        var tabKeyCode = 9;
+        var tabPressed = e.keyCode === tabKeyCode;
+        var nextElementIsInput = e.target.nextElementSibling && e.target.nextElementSibling.nodeName === 'input';
+
+        if (tabPressed && nextElementIsInput) {
+          e.stopPropagation();
+          return;
+        }
+
+        _this2.keyListener(e);
+      };
+
       // DATEFIELD SPECIFIG FUNCTIONS
       var state = this.state;
       var update = function update(newState) {
@@ -15232,7 +15259,7 @@ var DateField = function (_InputField) {
           className: this.bemClass,
           onBlur: handleBlur,
           onChange: handleInputChange,
-          onKeyDown: this.keyListener
+          onKeyDown: handleKeyDown
         },
         ImageCards.RenderEditor({ state: state, update: update })
       );

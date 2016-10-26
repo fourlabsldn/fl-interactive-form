@@ -1,16 +1,12 @@
 import React from 'react';
 import InputField from '../InputField';
-import DateFieldFormBuilder from './DateField-form-builder';
-
-// toDigits : Number -> Number -> String
-const toDigits = (digitCount, num) => {
-  const charCount = num.toString().length;
-  const zeroesCount = Math.max(0, digitCount - charCount); // make sure never negative
-  return Array(zeroesCount).fill(0).join('') + num.toString();
-};
+// This is causing transpilation issues. So, for now
+// we copy the form-builder file and include it here.
+// In the future we should include it directly from node_modules folder
+import DateFieldFormBuilder from './DateField-form-builder'; // eslint-disable-line max-len
 
 const toDateString = d =>
-  `${toDigits(4, d.year)}-${toDigits(2, d.month)}-${toDigits(2, d.day)}`;
+  `${d.year}-${d.month}-${d.day}`;
 
 const areAllFieldsFilled = (day, month, year) =>
   day.length === 2 && month.length === 2 && year.length === 4;
@@ -72,6 +68,20 @@ export default class DateField extends InputField {
       }
     };
 
+    const handleKeyDown = e => {
+      const tabKeyCode = 9;
+      const tabPressed = e.keyCode === tabKeyCode;
+      const nextElementIsInput = e.target.nextElementSibling &&
+          e.target.nextElementSibling.nodeName === 'input';
+
+      if (tabPressed && nextElementIsInput) {
+        e.stopPropagation();
+        return;
+      }
+
+      this.keyListener(e);
+    };
+
     // DATEFIELD SPECIFIG FUNCTIONS
     const state = this.state;
     const update = (newState) => this.setState(newState);
@@ -81,7 +91,7 @@ export default class DateField extends InputField {
         className={this.bemClass}
         onBlur={handleBlur}
         onChange={handleInputChange}
-        onKeyDown={this.keyListener}
+        onKeyDown={handleKeyDown}
       >
         {DateFieldFormBuilder.RenderEditor({ state, update })}
       </ div>
