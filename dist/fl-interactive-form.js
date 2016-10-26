@@ -15045,9 +15045,14 @@ var RenderEditor = function RenderEditor(_ref) {
     updateState(_defineProperty({}, minMax, newConstrain));
   });
 
+  var minDateMilliseconds = state.minDate || minDateDefault;
+  var maxDateMilliseconds = state.maxDate || maxDateDefault;
   var msToDateString = _flow(millisecondsToBreakdownDate, toDateString$1);
-  var defaultMin = msToDateString(minDateDefault);
-  var defaultMax = msToDateString(maxDateDefault);
+
+  var minDateString = msToDateString(minDateMilliseconds);
+  var maxDateString = msToDateString(maxDateMilliseconds);
+  var minYear = millisecondsToBreakdownDate(minDateMilliseconds).year;
+  var maxYear = millisecondsToBreakdownDate(maxDateMilliseconds).year;
 
   var configurationBar = React.createElement(
     'div',
@@ -15057,14 +15062,14 @@ var RenderEditor = function RenderEditor(_ref) {
       type: 'date',
       onChange: setDateConstrain('minDate'),
       className: 'fl-fb-Field-config-btn',
-      defaultValue: defaultMin
+      defaultValue: minDateString
     }),
     'To',
     React.createElement('input', {
       type: 'date',
       onChange: setDateConstrain('maxDate'),
       className: 'fl-fb-Field-config-btn',
-      defaultValue: defaultMax
+      defaultValue: maxDateString
     })
   );
 
@@ -15113,8 +15118,8 @@ var RenderEditor = function RenderEditor(_ref) {
       className: 'fl-fb-Field-editable fl-fb-Field-dateslot-year',
       placeholder: 'YYYY',
       value: state.year,
-      onChange: dateOnChange(1900, 2050, 'year'),
-      onBlur: dateOnBlur(state, 1900, 2050, 'year'),
+      onChange: dateOnChange(minYear, maxYear, 'year'),
+      onBlur: dateOnBlur(state, minYear, maxYear, 'year'),
       pattern: '^.{4}$' // two characters required
       , required: state.required,
       onKeyUp: focusPreviousIfEmpty
