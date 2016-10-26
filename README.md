@@ -12,42 +12,23 @@ Generates a nice looking form that can be navigated using keyboard keys. Open So
   object from `form-builder` and a target element to create the form.
 
   You will need in your page:
-    - RequireJs with paths for `react` and `react-dom`
+    - react` and `react-dom`
     - `font-awesome.css`
 
 ``` html
   <!-- DEPENDENCIES -->
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
-  <script src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.3.2/require.min.js"></script>
   <script src='//cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react.min.js'></script>
   <script src='//cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react-dom.min.js'></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
 
-
-  <!-- MODULE STYLES -->
-  <link rel="stylesheet" href="../dist/fl-interactive-form.css">
-
-  <!-- REQUIREJS CONFIG-->
+  <!-- MODULE -->
+  <link rel="stylesheet" href="../../dist/fl-interactive-form.css">
   <!--[if lte IE 9]>
-    <script>
-      requirejs.config({
-        paths: {
-          'fl-interactive-form': '../../dist/fl-interactive-form-es3',
-        },
-      });
-    </script>
+  <script src="../../dist/fl-interactive-form-es3.js"></script>
   <![endif]-->
   <!--[if !lte IE 9]> -->
-    <script>
-      requirejs.config({
-        paths: {
-          'react': '//cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react.min',
-          'react-dom': '//cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react-dom.min',
-          'fl-interactive-form': '../../dist/fl-interactive-form',
-        },
-      });
-    </script>
+    <script src="../../dist/fl-interactive-form.js"></script>
   <!-- <![endif]-->
-
 
   <!-- OUR FORM CONTAINER -->
   <div id="form-container" style="height: 100vh"></div>
