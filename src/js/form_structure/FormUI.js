@@ -173,7 +173,7 @@ export default class FormUI extends ReactBEM {
 
     await this.slideFieldToCenter(newActiveKey);
     const node = this.getFieldNode(newActiveKey);
-    const focusEl = node.querySelector(`.${globals.FOCUS_CLASS}`);
+    const focusEl = node.querySelector(`.${globals.FOCUS_CLASS}`) || node.querySelector('input');
 
     // On mobile devices we don't focus on input elements because
     // the keyboard keeps changing the screen width, which can be quite annoying.
