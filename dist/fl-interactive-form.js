@@ -15132,6 +15132,14 @@ var ImageCards = {
 // This is causing transpilation issues. So, for now
 // we copy the form-builder file and include it here.
 // In the future we should include it directly from node_modules folder
+var breakdownResponse = function breakdownResponse(response) {
+  var breakdown = (response || '').split('-');
+  var year = breakdown[0] || '';
+  var month = breakdown[1] || '';
+  var day = breakdown[2] || '';
+  return { day: day, month: month, year: year };
+};
+
 var toDateString = function toDateString(d) {
   return d.year + '-' + d.month + '-' + d.day;
 };
@@ -15159,7 +15167,7 @@ var DateField = function (_InputField) {
     // some change.
     _this.changedSinceLastUpdate = false;
 
-    _this.state = _Object$assign({}, _this.props.config, { configShowing: false });
+    _this.state = _Object$assign({}, _this.props.config, { configShowing: false }, breakdownResponse(_this.props.config.answer));
 
     /** @override */
     _this.bemClass = _this.modulePrefix + '_DateField';
@@ -15218,20 +15226,29 @@ var DateField = function (_InputField) {
         }
       };
 
+      // this function is effectively executed at the correct time: after the component's
+      // onBlur listener, which handles date constrains. But when it is called,
+      // the state that was set in there has still not been updated. To remedy
+      // that we will add a setTimeout here to allow the state to be set.
       var handleBlur = function handleBlur() {
-        if (!_this2.changedSinceLastUpdate) {
-          return;
-        }
-        _this2.changedSinceLastUpdate = false;
+        setTimeout(function () {
+          _this2.changedSinceLastUpdate = false;
 
-        var _state = _this2.state;
-        var day = _state.day;
-        var month = _state.month;
-        var year = _state.year;
+          var _state = _this2.state;
+          var day = _state.day;
+          var month = _state.month;
+          var year = _state.year;
 
-        if (areAllFieldsFilled(day, month, year)) {
-          _this2.saveResponseAndJumpToQuestion();
-        }
+          if (!areAllFieldsFilled(day, month, year)) {
+            return;
+          }
+
+          if (_this2.changedSinceLastUpdate) {
+            _this2.saveResponseAndJumpToQuestion();
+          } else {
+            _this2.saveResponse();
+          }
+        }, 500);
       };
 
       var handleKeyDown = function handleKeyDown(e) {

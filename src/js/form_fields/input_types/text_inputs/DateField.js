@@ -5,6 +5,14 @@ import InputField from '../InputField';
 // In the future we should include it directly from node_modules folder
 import DateFieldFormBuilder from './DateField-form-builder'; // eslint-disable-line max-len
 
+const breakdownResponse = response => {
+  const breakdown = (response || '').split('-');
+  const year = breakdown[0] || '';
+  const month = breakdown[1] || '';
+  const day = breakdown[2] || '';
+  return { day, month, year };
+};
+
 const toDateString = d =>
   `${d.year}-${d.month}-${d.day}`;
 
@@ -19,7 +27,12 @@ export default class DateField extends InputField {
     // some change.
     this.changedSinceLastUpdate = false;
 
-    this.state = Object.assign({}, this.props.config, { configShowing: false });
+    this.state = Object.assign(
+      {},
+      this.props.config,
+      { configShowing: false },
+      breakdownResponse(this.props.config.answer)
+    );
 
     /** @override */
     this.bemClass = `${this.modulePrefix}_DateField`;
@@ -58,14 +71,25 @@ export default class DateField extends InputField {
       }
     };
 
+    // this function is effectively executed at the correct time: after the component's
+    // onBlur listener, which handles date constrains. But when it is called,
+    // the state that was set in there has still not been updated. To remedy
+    // that we will add a setTimeout here to allow the state to be set.
     const handleBlur = () => {
-      if (!this.changedSinceLastUpdate) { return; }
-      this.changedSinceLastUpdate = false;
+      setTimeout(() => {
+        this.changedSinceLastUpdate = false;
 
-      const { day, month, year } = this.state;
-      if (areAllFieldsFilled(day, month, year)) {
-        this.saveResponseAndJumpToQuestion();
-      }
+        const { day, month, year } = this.state;
+        if (!areAllFieldsFilled(day, month, year)) {
+          return;
+        }
+
+        if (this.changedSinceLastUpdate) {
+          this.saveResponseAndJumpToQuestion();
+        } else {
+          this.saveResponse();
+        }
+      }, 500);
     };
 
     const handleKeyDown = e => {
