@@ -1,4 +1,8 @@
-define(['react-dom', 'react'], function (ReactDOM, React) { 'use strict';
+(function (global, factory) {
+	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('react-dom'), require('react')) :
+	typeof define === 'function' && define.amd ? define(['react-dom', 'react'], factory) :
+	(global.flInteractiveForm = factory(global.ReactDOM,global.React));
+}(this, (function (ReactDOM,React) { 'use strict';
 
 ReactDOM = 'default' in ReactDOM ? ReactDOM['default'] : ReactDOM;
 React = 'default' in React ? React['default'] : React;
@@ -16787,6 +16791,6 @@ var flInteractiveForm = {
 
 return flInteractiveForm;
 
-});
+})));
 
 //# sourceMappingURL=react-main.js.map

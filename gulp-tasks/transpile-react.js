@@ -33,7 +33,7 @@ const DEFAULT_CONFIG = {
   // load them from the given paths
   external: [],
   // Let's use AMD format to serve our files to the front-end
-  format: 'amd',
+  format: 'umd',
   plugins: [
     // Import modules with jsnext:main
     nodeResolve({	jsnext: true, main: true }),

@@ -19,6 +19,9 @@ Generates a nice looking form that can be navigated using keyboard keys. Open So
   <!-- DEPENDENCIES -->
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
   <script src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.3.2/require.min.js"></script>
+  <script src='//cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react.min.js'></script>
+  <script src='//cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react-dom.min.js'></script>
+
 
   <!-- MODULE STYLES -->
   <link rel="stylesheet" href="../dist/fl-interactive-form.css">
