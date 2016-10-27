@@ -288,6 +288,10 @@
   padding-top: .7em;
   padding-bottom: .7em; }
 
+.fl-if_FormUI-es3 .fl-if_TextInput-input, .fl-if_FormUI-es3 .fl-if_DateField {
+  font-size: 16px;
+  min-height: 3em; }
+
 .fl-if_OptionsInput {
   display: inline-block;
   position: relative;
@@ -389,6 +393,10 @@
   padding: .1em 24px;
   font-family: Europa, Arial, sans-serif; }
 
+.fl-if_FormUI-es3 .fl-if_Dropdown-option {
+  font-size: 16px;
+  min-height: 3em; }
+
 .fl-if_DateField {
   display: -webkit-box;
   display: -webkit-flex;
@@ -420,6 +428,10 @@
     text-align: center; }
   .fl-if_DateField .fl-fb-Field-dateslot-year {
     width: 2.8em; }
+
+.fl-if_FormUI-es3 .fl-if_DateField {
+  font-size: 16px;
+  min-height: 3em; }
 
 .fl-if_NavigationBar {
   display: block;
