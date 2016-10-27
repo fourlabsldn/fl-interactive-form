@@ -103,6 +103,7 @@ function createDropdownInput(config) {
   wrapper.className = 'fl-if_Dropdown fl-if_OptionsInput';
 
   var select = document.createElement('select');
+  select.className = "fl-if_Dropdown-option";
   select.setAttribute('name', config.title);
   wrapper.appendChild(select);
 
