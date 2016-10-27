@@ -61,3 +61,7 @@ export function createErrorMessage(message) {
   err.innerHTML = message;
   return err;
 }
+
+export function trimSpaces(str) {
+  return str.replace(/\s+/g, ' ').replace(/^\s+/, '').replace(/\s+$/, '');
+}

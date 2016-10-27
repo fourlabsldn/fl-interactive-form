@@ -1,3 +1,4 @@
+import { trimSpaces } from '../utils';
 
 const textInputTypes = {
   TextArea: 'text',
@@ -6,6 +7,30 @@ const textInputTypes = {
   NumberBox: 'number',
   TelephoneBox: 'telephone',
 };
+
+const inputTypesRegex = {
+  text: /\w{1,}/,
+  // Simple and quite broad for basic validation.
+  email: /^(.+)@(.+){2,}\.(.+){2,}$/,
+  // matches (+23) 2343 - 2342
+  telephone: /^[\+0-9\-\(\)\s]{6,}$/,
+  number: /^[0-9]$/,
+};
+
+
+// Returns true if valid and false if not.
+// HTML -> Boolean
+function validate(field) {
+  const type = field.getAttribute('type');
+  const regex = inputTypesRegex[type];
+  const content = trimSpaces(field.value);
+  if (!regex || regex.test(content)) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 
 export default function createTextInput(config) {
   const tagName = config.type === 'TextArea' ? 'textarea' : 'input';
