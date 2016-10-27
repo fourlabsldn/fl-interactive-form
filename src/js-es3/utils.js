@@ -53,3 +53,11 @@ export function applyDataMask(field, fieldMask) {
   field.addEventListener('click', changed)
   field.addEventListener('keyup', changed)
 }
+
+// createErrorMessage: String -> HTML
+export function createErrorMessage(message) {
+  const err = document.createElement('div');
+  err.className = 'fl-if_Error fl-if_Error--speechBubble';
+  err.innerHTML = message;
+  return err;
+}

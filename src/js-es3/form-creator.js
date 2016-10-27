@@ -1,4 +1,4 @@
-import formField from './input-types';
+import formField from './input-creator';
 import { fakeEvent, clone } from './utils';
 
 // =============== FORM STRUCTURE ===================//
