@@ -104,7 +104,7 @@ var textInputTypes = {
 function createTextInput(config) {
   var tagName = config.type === 'TextArea' ? 'textarea' : 'input';
   var el = document.createElement(tagName);
-  el.className = 'fl-if_TextInput-input';
+  el.className = tagName === 'textarea' ? 'fl-if_TextInput-input fl-if_TextAreaInput-input' : 'fl-if_TextInput-input';
   el.setAttribute('name', config.title);
   el.setAttribute('type', textInputTypes[config.type]);
   el.placeholder = config.placeholder;
