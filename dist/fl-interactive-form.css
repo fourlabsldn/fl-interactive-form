@@ -14,6 +14,17 @@
   .fl-if_FormUI * {
     -webkit-box-sizing: border-box;
             box-sizing: border-box; }
+  .fl-if_FormUI::-webkit-scrollbar-track {
+    background-color: transparent; }
+  .fl-if_FormUI::-webkit-scrollbar {
+    width: 6px;
+    height: 3px;
+    background-color: transparent;
+    cursor: auto; }
+  .fl-if_FormUI::-webkit-scrollbar-thumb {
+    background-color: transparent; }
+  .fl-if_FormUI:hover::-webkit-scrollbar-thumb {
+    background-color: #1aaba4; }
 
 .fl-if_FormUI-questionsViewBox {
   display: block;
@@ -117,6 +128,9 @@
       min-width: 40em;
       max-width: none;
       width: 60%; } }
+
+.fl-if_FormUI-es3 .fl-if_FormField:first-child {
+  margin-top: 1em; }
 
 .fl-if_FormField-okIcon {
   position: absolute;
@@ -325,15 +339,30 @@
   .fl-if_OptionsInput-checkbox:before {
     -webkit-border-radius: 4px;
             border-radius: 4px; }
-  .fl-if_OptionsInput-option--selected {
+  .fl-if_OptionsInput-option--selected, .fl-if_OptionsInput input[type="radio"]:checked ~ label,
+  .fl-if_OptionsInput input[type="checkbox"]:checked ~ label {
     background-color: rgba(0, 212, 166, 0.2); }
-    .fl-if_OptionsInput-option--selected::before {
+    .fl-if_OptionsInput-option--selected::before, .fl-if_OptionsInput input[type="radio"]:checked ~ label::before,
+    .fl-if_OptionsInput input[type="checkbox"]:checked ~ label::before {
       background: #00bcd4;
       background: -webkit-gradient(linear, left top, left bottom, from(#00bcd4), to(#08e3ff));
       background: -webkit-linear-gradient(#00bcd4, #08e3ff);
       background: linear-gradient(#00bcd4, #08e3ff); }
-    .fl-if_OptionsInput-option--selected:hover, .fl-if_OptionsInput-option--selected:focus {
+    .fl-if_OptionsInput-option--selected:hover, .fl-if_OptionsInput input[type="radio"]:checked ~ label:hover,
+    .fl-if_OptionsInput input[type="checkbox"]:checked ~ label:hover, .fl-if_OptionsInput-option--selected:focus, .fl-if_OptionsInput input[type="radio"]:checked ~ label:focus,
+    .fl-if_OptionsInput input[type="checkbox"]:checked ~ label:focus {
       background-color: rgba(0, 161, 126, 0.2); }
+
+.fl-if_OptionsInput-optionWrapper {
+  position: relative; }
+
+.fl-if_OptionsInput input[type="radio"],
+.fl-if_OptionsInput input[type="checkbox"] {
+  position: absolute;
+  top: .6em;
+  left: .45em;
+  z-index: 2;
+  visibility: hidden; }
 
 .fl-if_Dropdown::before {
   content: ' ';

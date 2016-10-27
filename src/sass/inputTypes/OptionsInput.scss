@@ -74,6 +74,24 @@
   }
 }
 
+// es3 code
+.fl-if_OptionsInput-optionWrapper {
+  position: relative;
+}
+
+.fl-if_OptionsInput input[type="radio"],
+.fl-if_OptionsInput input[type="checkbox"] {
+  position: absolute;
+  top: .6em;
+  left: .45em;
+  z-index: 2;
+  visibility: hidden;
+
+  &:checked ~ label {
+    @extend .fl-if_OptionsInput-option--selected;
+  }
+}
+
 .fl-if_Dropdown {
 
   &::before {

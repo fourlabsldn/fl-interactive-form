@@ -7,7 +7,7 @@ const organiser = require('gulp-organiser');
 
 organiser.registerAll('./gulp-tasks', {
   sass: {
-    watch: path.join(src, 'sass/**/*.js'),
+    watch: path.join(src, 'sass/**/*'),
     src: path.join(src, 'sass/main.scss'),
     dest,
   },
@@ -21,6 +21,7 @@ organiser.registerAll('./gulp-tasks', {
     },
   },
   'transpile-to-es3': {
+    watch: path.join(src, 'js-es3', '/**/*'),
     src: path.join(src, 'js-es3/main.js'),
     dest,
     config: {

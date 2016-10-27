@@ -115,22 +115,26 @@ function createOptionsInput(config) {
   var options = [];
   var optionType = config.type === 'RadioButtons' ? 'radio' : 'checkbox';
   var optionName = config.title.replace(/\s'"/gi, '');
-  var optionEl;
-  var optionLegend;
-  var optionWrapper;
   for (var i = 0; i < config.options.length; i++) {
-    optionWrapper = document.createElement('label');
-    optionWrapper.className = wrapper.className + '-option';
-    optionWrapper.className += config.type === 'RadioButtons' ? ' fl-if_OptionsInput-radio' : ' fl-if_OptionsInput-checkbox';
+    var optionID = Date.now() + Math.random();
+    var optionWrapper = document.createElement('div');
+    optionWrapper.className = "fl-if_OptionsInput-optionWrapper";
 
-    optionEl = document.createElement('input');
+    var optionEl = document.createElement('input');
+    optionEl.id = optionID;
     optionEl.type = optionType;
     optionEl.setAttribute('value', config.options[i].value);
     optionEl.setAttribute('name', optionName);
     optionWrapper.appendChild(optionEl);
 
-    optionLegend = document.createTextNode(config.options[i].caption);
-    optionWrapper.appendChild(optionLegend);
+    var label = document.createElement('label');
+    label.setAttribute('for', optionID);
+    label.className = wrapper.className + '-option';
+    label.className += config.type === 'RadioButtons' ? ' fl-if_OptionsInput-radio' : ' fl-if_OptionsInput-checkbox';
+    optionWrapper.appendChild(label);
+
+    var optionLegend = document.createTextNode(config.options[i].caption);
+    label.appendChild(optionLegend);
 
     wrapper.appendChild(optionWrapper);
     options.push(optionEl);
@@ -245,7 +249,7 @@ function formField(config) {
 
 function es3Form(config) {
   var form = document.createElement('form');
-  form.className = 'fl-if_FormUI';
+  form.className = 'fl-if_FormUI fl-if_FormUI-es3';
 
   var questions = [];
   var questionEl = void 0;

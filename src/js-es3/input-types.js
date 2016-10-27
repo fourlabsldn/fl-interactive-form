@@ -52,27 +52,31 @@ function createOptionsInput(config) {
 
   wrapper.className = 'fl-if_OptionsInput';
 
-  var options = [];
-  var optionType = config.type === 'RadioButtons' ? 'radio' : 'checkbox';
-  var optionName = config.title.replace(/\s'"/gi, '');
-  var optionEl;
-  var optionLegend;
-  var optionWrapper;
+  const options = [];
+  const optionType = config.type === 'RadioButtons' ? 'radio' : 'checkbox';
+  const optionName = config.title.replace(/\s'"/gi, '');
   for (var i = 0; i < config.options.length; i++) {
-    optionWrapper = document.createElement('label');
-    optionWrapper.className = wrapper.className + '-option';
-    optionWrapper.className += config.type === 'RadioButtons'
-      ? ' fl-if_OptionsInput-radio'
-      : ' fl-if_OptionsInput-checkbox';
+    const optionID = Date.now() + Math.random();
+    const optionWrapper = document.createElement('div');
+    optionWrapper.className = "fl-if_OptionsInput-optionWrapper";
 
-    optionEl = document.createElement('input');
+    const optionEl = document.createElement('input');
+    optionEl.id = optionID;
     optionEl.type = optionType;
     optionEl.setAttribute('value', config.options[i].value);
     optionEl.setAttribute('name', optionName);
     optionWrapper.appendChild(optionEl);
 
-    optionLegend = document.createTextNode(config.options[i].caption);
-    optionWrapper.appendChild(optionLegend);
+    const label = document.createElement('label');
+    label.setAttribute('for', optionID);
+    label.className = wrapper.className + '-option';
+    label.className += config.type === 'RadioButtons'
+    ? ' fl-if_OptionsInput-radio'
+    : ' fl-if_OptionsInput-checkbox';
+    optionWrapper.appendChild(label);
+
+    const optionLegend = document.createTextNode(config.options[i].caption);
+    label.appendChild(optionLegend);
 
     wrapper.appendChild(optionWrapper);
     options.push(optionEl);

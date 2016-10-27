@@ -17,6 +17,26 @@
   & * {
     box-sizing: border-box;
   }
+
+  // Custom scrollbar
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 3px;
+    background-color: transparent;
+    cursor: auto;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: transparent;
+  }
+
+  &:hover::-webkit-scrollbar-thumb {
+    background-color: $c-accent;
+  }
 }
 
 .fl-if_FormUI-questionsViewBox {

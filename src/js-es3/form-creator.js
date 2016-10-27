@@ -5,7 +5,7 @@ import { fakeEvent, clone } from './utils';
 
 export default function es3Form(config) {
   const form = document.createElement('form');
-  form.className = 'fl-if_FormUI';
+  form.className = 'fl-if_FormUI fl-if_FormUI-es3';
 
   const questions = [];
   let questionEl;
