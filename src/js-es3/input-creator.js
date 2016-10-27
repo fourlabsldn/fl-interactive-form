@@ -33,6 +33,7 @@ export default function formField(config) {
   legend.className = 'fl-if_FormField-legend';
   legend.innerHTML = config.title;
 
+  console.log(config.type)
   const inputEl = inputCreators[config.type](config);
   wrapper.appendChild(legend);
   wrapper.appendChild(inputEl);
