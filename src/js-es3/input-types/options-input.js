@@ -84,7 +84,9 @@ export function createDropdownInput(config) {
 }
 
 export function createCountryDropdownInput(config) {
+  config.disabledIndexes = [0];
   config.options = [
+    { value: '', caption: 'Select an option' },
     { value: 1, caption: 'AFGHANISTAN' },
     { value: 2, caption: 'ALBANIA' },
     { value: 3, caption: 'ALGERIA' },
@@ -332,6 +334,5 @@ export function createCountryDropdownInput(config) {
     { value: 240, caption: 'ZAMBIA' },
     { value: 241, caption: 'ZIMBABWE' },
   ];
-  config.disabledIndexes = [];
   return createDropdownInput(config);
 }
