@@ -63,10 +63,8 @@ export function createErrorMessage(message) {
 }
 
 export function removeErrorMessage(field) {
-  Array.prototype.map.call(
-    field.querySelectorAll('.fl-if-Error'),
-    el => el.remove()
-  );
+  const errorMessages = Array.from(field.querySelectorAll('.fl-if_Error'));
+  errorMessages.forEach(er => er.remove());
 }
 
 export function trimSpaces(str) {

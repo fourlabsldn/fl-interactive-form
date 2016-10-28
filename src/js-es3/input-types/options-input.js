@@ -1,4 +1,32 @@
 // ---- RADIO AND CHECKBOX INPUT
+import { trimSpaces, createErrorMessage, removeErrorMessage } from '../utils';
+
+
+function validateDropdown(field, required) {
+  // TODO: Take required into consideration
+  const container = field.parentElement;
+  removeErrorMessage(container);
+  if (!trimSpaces(field.value)) {
+    container.appendChild(createErrorMessage('Please choose an option'));
+    return false;
+  }
+  return true;
+}
+
+function validateOptions(container, required) {
+  removeErrorMessage(container);
+
+  const oneChecked = Array.from(container.querySelectorAll('input'))
+    .map(r => r.checked)
+    .reduce((out, checked) => out || checked, false);
+
+  // TODO: Take required into consideration
+  if (!oneChecked) {
+    container.appendChild(createErrorMessage('Please choose an option'));
+    return false;
+  }
+  return true;
+}
 
 export function createOptionsInput(config) {
   const wrapper = document.createElement('div');
@@ -46,6 +74,8 @@ export function createOptionsInput(config) {
     return value;
   };
 
+  wrapper.validate = () => validateOptions(wrapper, config.required);
+
   return wrapper;
 }
 
@@ -83,6 +113,10 @@ export function createDropdownInput(config) {
   wrapper.getValue = function getValue() {
     return select.value;
   };
+
+  wrapper.validate = () => validateDropdown(select, config.required);
+
+  select.addEventListener('blur', wrapper.validate);
 
   return wrapper;
 }
