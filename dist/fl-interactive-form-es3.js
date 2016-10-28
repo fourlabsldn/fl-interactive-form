@@ -80,10 +80,9 @@ function trimSpaces(str) {
 
 // ---- RADIO AND CHECKBOX INPUT
 function validateDropdown(field, required) {
-  // TODO: Take required into consideration
   var container = field.parentElement;
   removeErrorMessage(container);
-  if (!trimSpaces(field.value)) {
+  if (required && !trimSpaces(field.value)) {
     container.appendChild(createErrorMessage('Please choose an option'));
     return false;
   }
@@ -99,8 +98,7 @@ function validateOptions(container, required) {
     return out || checked;
   }, false);
 
-  // TODO: Take required into consideration
-  if (!oneChecked) {
+  if (required && !oneChecked) {
     container.appendChild(createErrorMessage('Please choose an option'));
     return false;
   }
@@ -245,8 +243,7 @@ function validate(field, required, type) {
   var regex = textInputTypes[type].regex;
   var content = trimSpaces(field.value);
 
-  // TODO: use !config.required
-  if (!regex || regex.test(content)) {
+  if (!required || !regex || regex.test(content)) {
     return true;
   }
   field.parentElement.appendChild(createErrorMessage(textInputTypes[type].error));
@@ -282,7 +279,7 @@ function validate$1(field, required) {
   var container = field.parentElement;
   removeErrorMessage(container);
 
-  if (dateNumbers.length !== 8) {
+  if (required && dateNumbers.length !== 8) {
     createErrorMessage(container);
     return false;
   }

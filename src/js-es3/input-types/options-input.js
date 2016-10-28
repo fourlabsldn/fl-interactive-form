@@ -3,10 +3,9 @@ import { trimSpaces, createErrorMessage, removeErrorMessage } from '../utils';
 
 
 function validateDropdown(field, required) {
-  // TODO: Take required into consideration
   const container = field.parentElement;
   removeErrorMessage(container);
-  if (!trimSpaces(field.value)) {
+  if (required && !trimSpaces(field.value)) {
     container.appendChild(createErrorMessage('Please choose an option'));
     return false;
   }
@@ -20,8 +19,7 @@ function validateOptions(container, required) {
     .map(r => r.checked)
     .reduce((out, checked) => out || checked, false);
 
-  // TODO: Take required into consideration
-  if (!oneChecked) {
+  if (required && !oneChecked) {
     container.appendChild(createErrorMessage('Please choose an option'));
     return false;
   }

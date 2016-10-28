@@ -38,8 +38,7 @@ function validate(field, required, type) {
   const regex = textInputTypes[type].regex;
   const content = trimSpaces(field.value);
 
-  // TODO: use !config.required
-  if (!regex || regex.test(content)) {
+  if (!required || !regex || regex.test(content)) {
     return true;
   }
   field.parentElement.appendChild(createErrorMessage(textInputTypes[type].error));

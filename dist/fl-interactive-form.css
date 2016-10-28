@@ -283,6 +283,9 @@
     .fl-if_FormField--completed.fl-if_FormField--active .fl-if_TextInput-input, .fl-if_FormField--completed.fl-if_FormField--active .fl-if_DateField {
       border-color: #00bcd4; }
 
+input::-webkit-inner-spin-button {
+  display: none; }
+
 .fl-if_TextAreaInput-input {
   min-height: 8em;
   padding-top: .7em;

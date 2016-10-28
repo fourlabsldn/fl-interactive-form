@@ -5,7 +5,7 @@ function validate(field, required) {
   const container = field.parentElement;
   removeErrorMessage(container);
 
-  if (dateNumbers.length !== 8) {
+  if (required && dateNumbers.length !== 8) {
     createErrorMessage(container);
     return false;
   }

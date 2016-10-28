@@ -39,6 +39,11 @@
   }
 }
 
+input::-webkit-inner-spin-button {
+  display: none;
+}
+
+
 .fl-if_TextAreaInput-input {
   min-height: 8em;
   padding-top: .7em;
