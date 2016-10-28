@@ -277,6 +277,18 @@ function createTextInput(config) {
   return el;
 }
 
+function validate$1(field, required) {
+  var dateNumbers = trimSpaces(field.value).match(/[0-9]/g) || [];
+  var container = field.parentElement;
+  removeErrorMessage(container);
+
+  if (dateNumbers.length !== 8) {
+    createErrorMessage(container);
+    return false;
+  }
+  return true;
+}
+
 function createDateInput(config) {
   // eslint-disable-line no-unused-vars
   var dateField = document.createElement('input');
@@ -284,9 +296,15 @@ function createDateInput(config) {
   dateField.className = 'fl-if_TextInput-input';
   dateField.value = 'DD/MM/YYYY';
   applyDataMask(dateField, '  /  /    ');
+
   dateField.getValue = function () {
     return dateField.value;
   };
+
+  dateField.validate = function () {
+    return validate$1(dateField, config.required);
+  };
+
   return dateField;
 }
 
