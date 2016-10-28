@@ -65,6 +65,10 @@ export function createDropdownInput(config) {
     optionEl = document.createElement('option');
     optionEl.setAttribute('value', config.options[optionIndex].value);
     optionEl.innerHTML = config.options[optionIndex].caption;
+    if (optionIndex === 0) {
+      optionEl.setAttribute('selected', true);
+    }
+
 
     const disabledIndexes = config.disabledIndexes || [];
     for (let j = 0; j < disabledIndexes.length; j++) {

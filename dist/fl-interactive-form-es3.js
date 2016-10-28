@@ -69,6 +69,9 @@ function createDropdownInput(config) {
     optionEl = document.createElement('option');
     optionEl.setAttribute('value', config.options[optionIndex].value);
     optionEl.innerHTML = config.options[optionIndex].caption;
+    if (optionIndex === 0) {
+      optionEl.setAttribute('selected', true);
+    }
 
     var disabledIndexes = config.disabledIndexes || [];
     for (var j = 0; j < disabledIndexes.length; j++) {
