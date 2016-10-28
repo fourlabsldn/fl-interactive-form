@@ -18,6 +18,9 @@ export default function createDateInput(config) { // eslint-disable-line no-unus
   dateField.setAttribute('type', 'text');
   dateField.className = 'fl-if_TextInput-input';
   dateField.value = 'DD/MM/YYYY';
+  if (config.required) {
+    dateField.setAttribute('required', true);
+  }
   applyDataMask(dateField, '  /  /    ');
 
   dateField.getValue = function () { return dateField.value; };

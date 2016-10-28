@@ -86,6 +86,9 @@ export function createDropdownInput(config) {
   const select = document.createElement('select');
   select.className = 'fl-if_Dropdown-option';
   select.setAttribute('name', config.title);
+  if (config.required) {
+    select.setAttribute('required', true);
+  }
   wrapper.appendChild(select);
 
   let optionEl;

@@ -165,6 +165,9 @@ function createDropdownInput(config) {
   var select = document.createElement('select');
   select.className = 'fl-if_Dropdown-option';
   select.setAttribute('name', config.title);
+  if (config.required) {
+    select.setAttribute('required', true);
+  }
   wrapper.appendChild(select);
 
   var optionEl = void 0;
@@ -292,6 +295,9 @@ function createDateInput(config) {
   dateField.setAttribute('type', 'text');
   dateField.className = 'fl-if_TextInput-input';
   dateField.value = 'DD/MM/YYYY';
+  if (config.required) {
+    dateField.setAttribute('required', true);
+  }
   applyDataMask(dateField, '  /  /    ');
 
   dateField.getValue = function () {
