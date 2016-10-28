@@ -170,36 +170,48 @@ function trimSpaces(str) {
 }
 
 var textInputTypes = {
-  TextArea: 'text',
-  TextBox: 'text',
-  EmailBox: 'email',
-  NumberBox: 'number',
-  TelephoneBox: 'telephone'
-};
-
-var inputTypesRegex = {
-  text: /\w{1,}/,
-  // Simple and quite broad for basic validation.
-  email: /^(.+)@(.+){2,}\.(.+){2,}$/,
-  // matches (+23) 2343 - 2342
-  telephone: /^[\+0-9\-\(\)\s]{6,}$/,
-  number: /^[0-9]$/
+  TextArea: {
+    type: 'text',
+    regex: /\w{2,}/,
+    error: 'This field must be filled'
+  },
+  TextBox: {
+    type: 'text',
+    regex: /\w{2,}/,
+    error: 'This field must be filled'
+  },
+  EmailBox: {
+    type: 'email',
+    // Simple and quite broad for basic validation.
+    regex: /^(.+)@(.+){2,}\.(.+){2,}$/,
+    error: 'Please insert a valid email address'
+  },
+  NumberBox: {
+    type: 'number',
+    regex: /^[0-9]+$/,
+    error: 'Please insert a valid number'
+  },
+  TelephoneBox: {
+    type: 'tel',
+    // matches (+23) 2343 - 2342
+    regex: /^[\+0-9\-\(\)\s]{6,}$/,
+    error: 'Please insert a valid telephone number'
+  }
 };
 
 // Returns true if valid and false if not.
 // HTML -> Boolean
-function validate(field, required) {
+function validate(field, required, type) {
   // Remove errors
   removeErrorMessage(field.parentElement);
-  var type = field.getAttribute('type');
-  var regex = inputTypesRegex[type];
+  var regex = textInputTypes[type].regex;
   var content = trimSpaces(field.value);
 
   // TODO: use !config.required
   if (!regex || regex.test(content)) {
     return true;
   }
-  field.parentElement.appendChild(createErrorMessage('Please insert a valid ' + type + '.'));
+  field.parentElement.appendChild(createErrorMessage(textInputTypes[type].error));
   return false;
 }
 
@@ -208,7 +220,7 @@ function createTextInput(config) {
   var el = document.createElement(tagName);
   el.className = tagName === 'textarea' ? 'fl-if_TextInput-input fl-if_TextAreaInput-input' : 'fl-if_TextInput-input';
   el.setAttribute('name', config.title);
-  el.setAttribute('type', textInputTypes[config.type]);
+  el.setAttribute('type', textInputTypes[config.type].type);
   el.placeholder = config.placeholder;
   if (config.required) {
     el.setAttribute('required', true);
@@ -219,8 +231,11 @@ function createTextInput(config) {
   };
 
   el.validate = function () {
-    return validate(el, config.required);
+    return validate(el, config.required, config.type);
   };
+
+  el.addEventListener('blur', el.validate);
+
   return el;
 }
 
@@ -324,7 +339,7 @@ function es3Form(config) {
   form.addEventListener('submit', function submitBtnClick(e) {
     e.preventDefault();
     e.stopPropagation();
-    removeErrorMessage(form);
+    removeErrorMessage(submitBtnContainer);
     var notValidatedFields = questions.map(function (field) {
       if (field.validate) {
         return field.validate();
@@ -335,7 +350,7 @@ function es3Form(config) {
     });
 
     if (notValidatedFields.length > 0) {
-      form.appendChild(createErrorMessage(notValidatedFields.length + ' fields need to be completed.'));
+      submitBtnContainer.appendChild(createErrorMessage(notValidatedFields.length + ' fields need to be completed.'));
       return false;
     }
 

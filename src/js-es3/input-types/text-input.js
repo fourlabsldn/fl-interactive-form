@@ -1,37 +1,48 @@
 import { trimSpaces, createErrorMessage, removeErrorMessage } from '../utils';
 
 const textInputTypes = {
-  TextArea: 'text',
-  TextBox: 'text',
-  EmailBox: 'email',
-  NumberBox: 'number',
-  TelephoneBox: 'telephone',
+  TextArea: {
+    type: 'text',
+    regex: /\w{2,}/,
+    error: 'This field must be filled',
+  },
+  TextBox: {
+    type: 'text',
+    regex: /\w{2,}/,
+    error: 'This field must be filled',
+  },
+  EmailBox: {
+    type: 'email',
+    // Simple and quite broad for basic validation.
+    regex: /^(.+)@(.+){2,}\.(.+){2,}$/,
+    error: 'Please insert a valid email address',
+  },
+  NumberBox: {
+    type: 'number',
+    regex: /^[0-9]+$/,
+    error: 'Please insert a valid number',
+  },
+  TelephoneBox: {
+    type: 'tel',
+    // matches (+23) 2343 - 2342
+    regex: /^[\+0-9\-\(\)\s]{6,}$/,
+    error: 'Please insert a valid telephone number',
+  },
 };
-
-const inputTypesRegex = {
-  text: /\w{1,}/,
-  // Simple and quite broad for basic validation.
-  email: /^(.+)@(.+){2,}\.(.+){2,}$/,
-  // matches (+23) 2343 - 2342
-  telephone: /^[\+0-9\-\(\)\s]{6,}$/,
-  number: /^[0-9]$/,
-};
-
 
 // Returns true if valid and false if not.
 // HTML -> Boolean
-function validate(field, required) {
+function validate(field, required, type) {
   // Remove errors
   removeErrorMessage(field.parentElement);
-  const type = field.getAttribute('type');
-  const regex = inputTypesRegex[type];
+  const regex = textInputTypes[type].regex;
   const content = trimSpaces(field.value);
 
   // TODO: use !config.required
   if (!regex || regex.test(content)) {
     return true;
   }
-  field.parentElement.appendChild(createErrorMessage(`Please insert a valid ${type}.`));
+  field.parentElement.appendChild(createErrorMessage(textInputTypes[type].error));
   return false;
 }
 
@@ -43,7 +54,7 @@ export default function createTextInput(config) {
     ? 'fl-if_TextInput-input fl-if_TextAreaInput-input'
     : 'fl-if_TextInput-input';
   el.setAttribute('name', config.title);
-  el.setAttribute('type', textInputTypes[config.type]);
+  el.setAttribute('type', textInputTypes[config.type].type);
   el.placeholder = config.placeholder;
   if (config.required) {
     el.setAttribute('required', true);
@@ -53,6 +64,9 @@ export default function createTextInput(config) {
     return el.value;
   };
 
-  el.validate = () => validate(el, config.required);
+  el.validate = () => validate(el, config.required, config.type);
+
+  el.addEventListener('blur', el.validate);
+
   return el;
 }

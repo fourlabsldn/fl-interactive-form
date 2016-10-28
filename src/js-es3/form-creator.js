@@ -49,7 +49,7 @@ export default function es3Form(config) {
   form.addEventListener('submit', function submitBtnClick(e) {
     e.preventDefault();
     e.stopPropagation();
-    removeErrorMessage(form);
+    removeErrorMessage(submitBtnContainer);
     const notValidatedFields = questions
       .map(field => {
         if (field.validate) {
@@ -60,7 +60,7 @@ export default function es3Form(config) {
       .filter(v => !v);
 
     if (notValidatedFields.length > 0) {
-      form.appendChild(
+      submitBtnContainer.appendChild(
         createErrorMessage(`${notValidatedFields.length} fields need to be completed.`)
       );
       return false;
