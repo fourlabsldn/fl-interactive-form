@@ -1,3 +1,4 @@
+import './polyfills';
 import es3Form from './form-creator';
 import { assert } from './utils';
 
