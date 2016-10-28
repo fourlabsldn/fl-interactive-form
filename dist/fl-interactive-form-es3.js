@@ -102,9 +102,7 @@ function assert(condition, message) {
   }
 }
 
-function clone(obj) {
-  return JSON.parse(JSON.stringify(obj));
-}
+
 
 function fakeEvent(answers) {
   return {
@@ -154,7 +152,18 @@ function applyDataMask(field, fieldMask) {
 }
 
 // createErrorMessage: String -> HTML
+function createErrorMessage(message) {
+  var err = document.createElement('div');
+  err.className = 'fl-if_Error fl-if_Error--speechBubble';
+  err.innerHTML = message;
+  return err;
+}
 
+function removeErrorMessage(field) {
+  Array.prototype.map.call(field.querySelectorAll('.fl-if-Error'), function (el) {
+    return el.remove();
+  });
+}
 
 function trimSpaces(str) {
   return str.replace(/\s+/g, ' ').replace(/^\s+/, '').replace(/\s+$/, '');
@@ -177,6 +186,23 @@ var inputTypesRegex = {
   number: /^[0-9]$/
 };
 
+// Returns true if valid and false if not.
+// HTML -> Boolean
+function validate(field, required) {
+  // Remove errors
+  removeErrorMessage(field.parentElement);
+  var type = field.getAttribute('type');
+  var regex = inputTypesRegex[type];
+  var content = trimSpaces(field.value);
+
+  // TODO: use !config.required
+  if (!regex || regex.test(content)) {
+    return true;
+  }
+  field.parentElement.appendChild(createErrorMessage('Please insert a valid ' + type + '.'));
+  return false;
+}
+
 function createTextInput(config) {
   var tagName = config.type === 'TextArea' ? 'textarea' : 'input';
   var el = document.createElement(tagName);
@@ -192,6 +218,9 @@ function createTextInput(config) {
     return el.value;
   };
 
+  el.validate = function () {
+    return validate(el, config.required);
+  };
   return el;
 }
 
@@ -239,11 +268,11 @@ function formField(config) {
   legend.className = 'fl-if_FormField-legend';
   legend.innerHTML = config.title;
 
-  console.log(config.type);
   var inputEl = inputCreators[config.type](config);
   wrapper.appendChild(legend);
   wrapper.appendChild(inputEl);
   wrapper.getValue = inputEl.getValue;
+  wrapper.validate = inputEl.validate;
   return wrapper;
 }
 
@@ -293,11 +322,26 @@ function es3Form(config) {
   };
 
   form.addEventListener('submit', function submitBtnClick(e) {
-    var formData = clone(config);
+    e.preventDefault();
+    e.stopPropagation();
+    removeErrorMessage(form);
+    var notValidatedFields = questions.map(function (field) {
+      if (field.validate) {
+        return field.validate();
+      }
+      return true;
+    }).filter(function (v) {
+      return !v;
+    });
 
-    for (var j = 0; j < formData.length; j++) {
-      formData[j].answer = questions[j].getValue();
+    if (notValidatedFields.length > 0) {
+      form.appendChild(createErrorMessage(notValidatedFields.length + ' fields need to be completed.'));
+      return false;
     }
+
+    var formData = config.map(function (field, index) {
+      return Object.assign({}, field, { answer: questions[index].getValue() });
+    });
 
     formWrapper.triggerSubmit(formData);
 

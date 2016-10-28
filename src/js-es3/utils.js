@@ -62,6 +62,13 @@ export function createErrorMessage(message) {
   return err;
 }
 
+export function removeErrorMessage(field) {
+  Array.prototype.map.call(
+    field.querySelectorAll('.fl-if-Error'),
+    el => el.remove()
+  );
+}
+
 export function trimSpaces(str) {
   return str.replace(/\s+/g, ' ').replace(/^\s+/, '').replace(/\s+$/, '');
 }

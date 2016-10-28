@@ -1,5 +1,5 @@
 import formField from './input-creator';
-import { fakeEvent, clone } from './utils';
+import { fakeEvent, clone, createErrorMessage, removeErrorMessage } from './utils';
 
 // =============== FORM STRUCTURE ===================//
 
@@ -47,11 +47,28 @@ export default function es3Form(config) {
   };
 
   form.addEventListener('submit', function submitBtnClick(e) {
-    const formData = clone(config);
+    e.preventDefault();
+    e.stopPropagation();
+    removeErrorMessage(form);
+    const notValidatedFields = questions
+      .map(field => {
+        if (field.validate) {
+          return field.validate();
+        }
+        return true;
+      })
+      .filter(v => !v);
 
-    for (let j = 0; j < formData.length; j++) {
-      formData[j].answer = questions[j].getValue();
+    if (notValidatedFields.length > 0) {
+      form.appendChild(
+        createErrorMessage(`${notValidatedFields.length} fields need to be completed.`)
+      );
+      return false;
     }
+
+    const formData = config.map((field, index) =>
+      Object.assign({}, field, { answer: questions[index].getValue() })
+    );
 
     formWrapper.triggerSubmit(formData);
 

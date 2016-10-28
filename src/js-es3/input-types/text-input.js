@@ -1,4 +1,4 @@
-import { trimSpaces } from '../utils';
+import { trimSpaces, createErrorMessage, removeErrorMessage } from '../utils';
 
 const textInputTypes = {
   TextArea: 'text',
@@ -20,15 +20,19 @@ const inputTypesRegex = {
 
 // Returns true if valid and false if not.
 // HTML -> Boolean
-function validate(field) {
+function validate(field, required) {
+  // Remove errors
+  removeErrorMessage(field.parentElement);
   const type = field.getAttribute('type');
   const regex = inputTypesRegex[type];
   const content = trimSpaces(field.value);
+
+  // TODO: use !config.required
   if (!regex || regex.test(content)) {
     return true;
-  } else {
-    return false;
   }
+  field.parentElement.appendChild(createErrorMessage(`Please insert a valid ${type}.`));
+  return false;
 }
 
 
@@ -49,5 +53,6 @@ export default function createTextInput(config) {
     return el.value;
   };
 
+  el.validate = () => validate(el, config.required);
   return el;
 }
