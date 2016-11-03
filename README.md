@@ -35,19 +35,17 @@ Generates a nice looking form that can be navigated using keyboard keys. Open So
 
   <!-- BUILD THE FORM-->
   <script>
-    require(['fl-interactive-form'], function (flInteractiveForm) {
-      var config = [{ question: 'What is your name?', placeholder: 'My name is...', type: 'Text', }];
-      var form = flInteractiveForm.create(config);
+    var config = [{ question: 'What is your name?', placeholder: 'My name is...', type: 'Text', }];
+    var form = flInteractiveForm.create(config);
 
-      // We must take care of submission ourselves
-      form.addEventListener('submit', function logSubmission(e) {
-        var answers = e.detail.answers;
-        console.log('Answer:', answers);
-      })
-
-      var targetElement = document.querySelector('#form-container');
-      targetElement.appendChild(form);
+    // We must take care of submission ourselves
+    form.addEventListener('submit', function logSubmission(e) {
+      var answers = e.detail.answers;
+      console.log('Answer:', answers);
     });
+
+    var targetElement = document.querySelector('#form-container');
+    targetElement.appendChild(form);
   </script>
 ```
 
