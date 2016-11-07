@@ -8419,7 +8419,9 @@ function formField(config) {
   legend.className = 'fl-if_FormField-legend';
   legend.innerHTML = config.title;
 
-  var inputEl = inputCreators[config.type](config);
+  var elementType = inputCreators[config.type] || inputCreators[config.primitiveType];
+  var inputEl = elementType(config);
+
   wrapper.appendChild(legend);
   wrapper.appendChild(inputEl);
   wrapper.getValue = inputEl.getValue;
