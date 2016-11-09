@@ -1,5 +1,4 @@
 import assert from 'fl-assert';
-import { map, filter, flow } from 'lodash';
 
 /**
  * @method getState
@@ -8,17 +7,16 @@ import { map, filter, flow } from 'lodash';
  * @return {Object} state - A new state to be rendered
  */
 export default function getState(oldState, el) {
-  const checkboxes = el.querySelectorAll('input');
+  const checkboxes = Array.from(el.querySelectorAll('input'));
 
   assert(
     checkboxes && checkboxes.length > 0,
     'No checkboxes found. This should never happen, something went wrong.'
   );
 
-  const answer = flow(
-    filter(c => c.checked),
-    map(c => c.value)
-  )(checkboxes);
+  const answer = checkboxes
+    .filter(c => c.checked)
+    .map(c => c.value);
 
   const newState = Object.assign(
       {},

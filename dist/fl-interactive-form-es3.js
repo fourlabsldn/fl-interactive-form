@@ -17883,11 +17883,258 @@ var EmailBox = {
   }
 };
 
+var telRegex = /^[\+0-9\-\(\)\s]{6,}$/;
+
+/**
+ * @method validate
+ * @param  {Object} state
+ * @return {Stirng | null} Error
+ */
+function validate$3(state) {
+  if (state.required && (_isNil(state.answer) || !telRegex.test(state.answer))) {
+    return 'Please insert a valid telephone number';
+  }
+
+  return null;
+}
+
+var info$4 = {
+  // Compulsory
+  type: 'TelephoneBox',
+  displayName: 'Telephone Box',
+  group: 'Text Components',
+
+  // Field type specific
+  htmlElement: 'input',
+  htmlInputType: 'tel'
+};
+
+var initialState$6 = function initialState$6(state) {
+  return initialState(state).then(function (initialised) {
+    return Object.assign({}, initialised, info$4);
+  });
+};
+
+var TelephoneBox = {
+  initialState: initialState$6,
+  info: info$4,
+  es3: {
+    validate: validate$3,
+    getState: getState,
+    render: render
+  }
+};
+
+var numberRegex = /^[0-9]+$/;
+
+/**
+ * @method validate
+ * @param  {Object} state
+ * @return {Stirng | null} Error
+ */
+function validate$4(state) {
+  if (state.required && (_isNil(state.answer) || !numberRegex.test(state.answer))) {
+    return 'Please insert a valid number';
+  }
+
+  return null;
+}
+
+var info$5 = {
+  // Compulsory
+  type: 'NumberBox',
+  displayName: 'Number Box',
+  group: 'Text Components',
+
+  // Field type specific
+  htmlElement: 'input',
+  htmlInputType: 'number'
+};
+
+var initialState$7 = function initialState$7(state) {
+  return initialState(state).then(function (initialised) {
+    return Object.assign({}, initialised, info$5);
+  });
+};
+
+var NumberBox = {
+  initialState: initialState$7,
+  info: info$5,
+  es3: {
+    validate: validate$4,
+    getState: getState,
+    render: render
+  }
+};
+
+var info$6 = {
+  // Compulsory
+  type: 'Checkboxes',
+  displayName: 'Checkboxes',
+  group: 'Options Components',
+
+  // Field type specific
+  htmlInputType: 'checkbox'
+};
+
+// These are the fields that will end up being
+// changed on updates
+var componentFields$2 = {
+  // Compulsory fields
+  required: false,
+  // Component specific fields
+  title: 'Add a title',
+  options: [{ value: 0, caption: 'Insert an option' }],
+
+  // states needed to handle UI
+  newOptionValue: '',
+  newOptionCaption: ''
+};
+
+/**
+ * @method initialState
+ * @param  {Object} state - A past state. Usually the one created in form-builder
+ * @return {Object} newState - The state that will guide the creation of the field's HTMLElement
+ */
+var initialState$8 = function initialState$8(state) {
+  return Promise.resolve(Object.assign({}, componentFields$2, info$6, state));
+};
+
+/**
+ * @method getState
+ * @param  {Object} oldState
+ * @param  {HTMLElement} el - The element created from oldState
+ * @return {Object} state - A new state to be rendered
+ */
+function getState$2(oldState, el) {
+  var checkboxes = Array.from(el.querySelectorAll('input'));
+
+  assert(checkboxes && checkboxes.length > 0, 'No checkboxes found. This should never happen, something went wrong.');
+
+  var answer = checkboxes.filter(function (c) {
+    return c.checked;
+  }).map(function (c) {
+    return c.value;
+  });
+
+  var newState = Object.assign({}, oldState, { answer: answer });
+
+  return newState;
+}
+
+/**
+ * @method render
+ * @param  {Object} state
+ * @return {HTMLElement} field
+ */
+function render$3(state) {
+  var wrapper = document.createElement('div');
+
+  wrapper.className = 'fl-if_OptionsInput';
+
+  var options = [];
+  var optionType = state.htmlInputType;
+  var optionName = state.title.replace(/\s'"/gi, '');
+
+  for (var i = 0; i < state.options.length; i++) {
+    var optionID = Date.now() + Math.random();
+    var optionWrapper = document.createElement('div');
+    optionWrapper.className = 'fl-if_OptionsInput-optionWrapper';
+
+    var optionEl = document.createElement('input');
+    optionEl.id = optionID;
+    optionEl.type = optionType;
+    optionEl.setAttribute('value', state.options[i].value);
+    optionEl.setAttribute('name', optionName);
+    optionWrapper.appendChild(optionEl);
+
+    var label = document.createElement('label');
+    label.setAttribute('for', optionID);
+    label.className = wrapper.className + '-option fl-if_OptionsInput-' + state.htmlInputType;
+    optionWrapper.appendChild(label);
+
+    var optionLegend = document.createTextNode(state.options[i].caption);
+    label.appendChild(optionLegend);
+
+    wrapper.appendChild(optionWrapper);
+    options.push(optionEl);
+  }
+
+  return wrapper;
+}
+
+/**
+ * @method validate
+ * @param  {Object} state
+ * @return {Stirng | null} Error
+ */
+function validate$5(state) {
+  if (!state.required) {
+    return null;
+  }
+
+  if (_isNil(state.answer) || state.answer.length === 0) {
+    return 'Please choose at least one option.';
+  }
+
+  return null;
+}
+
+var Checkboxes = {
+  initialState: initialState$8,
+  es3: {
+    validate: validate$5,
+    getState: getState$2,
+    render: render$3
+  }
+};
+
+/**
+ * @method validate
+ * @param  {Object} state
+ * @return {Stirng | null} Error
+ */
+function validate$6(state) {
+  if (!state.required) {
+    return null;
+  }
+
+  if (_isNil(state.answer) || state.answer.length === 0) {
+    return 'Please choose one option.';
+  }
+
+  return null;
+}
+
+var info$7 = {
+  // Compulsory
+  type: 'RadioButtons',
+  displayName: 'Radio Buttons',
+  group: 'Options Components',
+
+  // Field type specific
+  htmlInputType: 'radio'
+};
+
+var RadioButtons = {
+  info: info$7,
+  initialState: initialState$8,
+  es3: {
+    validate: validate$6,
+    getState: getState$2,
+    render: render$3
+  }
+};
+
 var defaultConstructors = {
   TextBox: TextBox,
   TextArea: TextArea,
   Dropdown: Dropdown,
-  EmailBox: EmailBox
+  EmailBox: EmailBox,
+  TelephoneBox: TelephoneBox,
+  NumberBox: NumberBox,
+  Checkboxes: Checkboxes,
+  RadioButtons: RadioButtons
 };
 
 var getConstructor$2 = _curry(function (customConstructors, config) {

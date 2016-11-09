@@ -5,12 +5,20 @@ import TextBox from './form-fields/TextBox/main';
 import TextArea from './form-fields/TextArea/main';
 import Dropdown from './form-fields/Dropdown/main';
 import EmailBox from './form-fields/EmailBox/main';
+import TelephoneBox from './form-fields/TelephoneBox/main';
+import NumberBox from './form-fields/NumberBox/main';
+import Checkboxes from './form-fields/Checkboxes/main';
+import RadioButtons from './form-fields/RadioButtons/main';
 
 const defaultConstructors = {
   TextBox,
   TextArea,
   Dropdown,
   EmailBox,
+  TelephoneBox,
+  NumberBox,
+  Checkboxes,
+  RadioButtons,
 };
 
 const getConstructor = curry((customConstructors, config) => {
