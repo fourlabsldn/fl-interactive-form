@@ -1,14 +1,4 @@
-
-const info = {
-  // Compulsory
-  type: 'TextBox',
-  displayName: 'Text Box',
-  group: 'Text Components',
-
-  // Field type specific
-  htmlInputType: 'text',
-  htmlElement: 'input',
-};
+import info from './info';
 
 // These are the fields that will end up being
 // changed on updates

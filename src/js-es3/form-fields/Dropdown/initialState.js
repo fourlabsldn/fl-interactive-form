@@ -1,9 +1,4 @@
-const info = {
-  // Compulsory
-  type: 'Dropdown',
-  displayName: 'Dropdown',
-  group: 'Options Components',
-};
+import info from './info';
 
 // These are the fields that will end up being
 // changed on updates
