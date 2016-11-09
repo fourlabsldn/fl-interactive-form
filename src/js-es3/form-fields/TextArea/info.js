@@ -5,6 +5,6 @@ export default {
   group: 'Text Components',
 
   // Field type specific
-  htmlInputType: 'textarea',
-  htmlElement: 'input',
+  htmlElement: 'textarea',
+  htmlInputType: 'text',
 };

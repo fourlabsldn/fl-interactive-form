@@ -17249,36 +17249,6 @@ module.exports = func;
 
 var _curry = interopDefault(curry$2);
 
-var info = {
-  // Compulsory
-  type: 'TextBox',
-  displayName: 'Text Box',
-  group: 'Text Components',
-
-  // Field type specific
-  htmlInputType: 'text',
-  htmlElement: 'input'
-};
-
-// These are the fields that will end up being
-// changed on updates
-var componentFields = {
-  // Compulsory fields
-  required: false,
-  // Component specific fields
-  title: 'Add a title',
-  placeholder: 'Add a placeholder'
-};
-
-/**
- * @method initialState
- * @param  {Object} state - A past state. Usually the one created in form-builder
- * @return {Object} newState - The state that will guide the creation of the field's HTMLElement
- */
-var initialState = function initialState(state) {
-  return Promise.resolve(Object.assign({}, componentFields, info, state));
-};
-
 // Bug checking function that will throw an error whenever
 // the condition sent to it is evaluated to false
 /**
@@ -17351,6 +17321,36 @@ assert.warn = function warn(condition, errorMessage) {
   }
 };
 
+var info = {
+  // Compulsory
+  type: 'TextBox',
+  displayName: 'Text Box',
+  group: 'Text Components',
+
+  // Field type specific
+  htmlInputType: 'text',
+  htmlElement: 'input'
+};
+
+// These are the fields that will end up being
+// changed on updates
+var componentFields = {
+  // Compulsory fields
+  required: false,
+  // Component specific fields
+  title: 'Add a title',
+  placeholder: 'Add a placeholder'
+};
+
+/**
+ * @method initialState
+ * @param  {Object} state - A past state. Usually the one created in form-builder
+ * @return {Object} newState - The state that will guide the creation of the field's HTMLElement
+ */
+var initialState = function initialState(state) {
+  return Promise.resolve(Object.assign({}, componentFields, info, state));
+};
+
 /**
  * @method getState
  * @param  {Object} oldState
@@ -17358,7 +17358,7 @@ assert.warn = function warn(condition, errorMessage) {
  * @return {Object} state - A new state to be rendered
  */
 function getState(oldState, el) {
-  var input = el.querySelector('input');
+  var input = el.querySelector('input') || el.querySelector('textarea');
 
   assert(input, 'No input found in form element. This should never happen, something went wrong.');
 
@@ -17455,42 +17455,7 @@ module.exports = func;
 
 var _isNil = interopDefault(isNil);
 
-function assert$2(condition, message) {
-  if (!condition) {
-    throw new Error(message);
-  }
-}
-
-
-
-function fakeEvent(answers) {
-  return {
-    detail: {
-      answers: answers
-    }
-  };
-}
-
-
-
-// createErrorMessage: String -> HTML
-function createErrorMessage(message) {
-  var err = document.createElement('div');
-  err.className = 'fl-if_Error fl-if_Error--speechBubble';
-  err.innerHTML = message;
-  return err;
-}
-
-function removeErrorMessage(field) {
-  var errorMessages = Array.from(field.querySelectorAll('.fl-if_Error'));
-  errorMessages.forEach(function (er) {
-    return er.remove();
-  });
-}
-
-function trimSpaces(str) {
-  return str.replace(/\s+/g, ' ').replace(/^\s+/, '').replace(/\s+$/, '');
-}
+var textRegex = /\w{2,}/;
 
 /**
  * @method validate
@@ -17502,7 +17467,7 @@ function validate(state) {
     return null;
   }
 
-  if (_isNil(state.answer) || trimSpaces(state.answer).length < 1) {
+  if (_isNil(state.answer) || !textRegex.test(state.answer)) {
     return 'Please fill in this field.';
   }
 
@@ -17525,8 +17490,8 @@ var info$1 = {
   group: 'Text Components',
 
   // Field type specific
-  htmlInputType: 'textarea',
-  htmlElement: 'input'
+  htmlElement: 'textarea',
+  htmlInputType: 'text'
 };
 
 /**
@@ -17876,10 +17841,53 @@ var Dropdown = {
   }
 };
 
+var emailRegex = /^(.+)@(.+){2,}\.(.+){2,}$/;
+
+/**
+ * @method validate
+ * @param  {Object} state
+ * @return {Stirng | null} Error
+ */
+function validate$2(state) {
+  if (state.required && (_isNil(state.answer) || !emailRegex.test(state.answer))) {
+    return 'Please insert a valid email address';
+  }
+
+  return null;
+}
+
+var info$3 = {
+  // Compulsory
+  type: 'EmailBox',
+  displayName: 'Email Box',
+  group: 'Text Components',
+
+  // Field type specific
+  htmlElement: 'input',
+  htmlInputType: 'email'
+};
+
+var initialState$5 = function initialState$5(state) {
+  return initialState(state).then(function (initialised) {
+    return Object.assign({}, initialised, info$3);
+  });
+};
+
+var EmailBox = {
+  initialState: initialState$5,
+  info: info$3,
+  es3: {
+    validate: validate$2,
+    getState: getState,
+    render: render
+  }
+};
+
 var defaultConstructors = {
   TextBox: TextBox,
   TextArea: TextArea,
-  Dropdown: Dropdown
+  Dropdown: Dropdown,
+  EmailBox: EmailBox
 };
 
 var getConstructor$2 = _curry(function (customConstructors, config) {
@@ -17912,6 +17920,39 @@ function createField(fieldConstructor, initialState) {
   wrapper.getValue = inputEl.getValue;
   wrapper.validate = inputEl.validate;
   return wrapper;
+}
+
+function assert$2(condition, message) {
+  if (!condition) {
+    throw new Error(message);
+  }
+}
+
+
+
+function fakeEvent(answers) {
+  return {
+    detail: {
+      answers: answers
+    }
+  };
+}
+
+
+
+// createErrorMessage: String -> HTML
+function createErrorMessage(message) {
+  var err = document.createElement('div');
+  err.className = 'fl-if_Error fl-if_Error--speechBubble';
+  err.innerHTML = message;
+  return err;
+}
+
+function removeErrorMessage(field) {
+  var errorMessages = Array.from(field.querySelectorAll('.fl-if_Error'));
+  errorMessages.forEach(function (er) {
+    return er.remove();
+  });
 }
 
 var forEach$2 = createCommonjsModule(function (module) {

@@ -7,7 +7,7 @@ import assert from 'fl-assert';
  * @return {Object} state - A new state to be rendered
  */
 export default function getState(oldState, el) {
-  const input = el.querySelector('input');
+  const input = el.querySelector('input') || el.querySelector('textarea');
 
   assert(input, 'No input found in form element. This should never happen, something went wrong.');
 

@@ -1,5 +1,6 @@
 import _ from 'lodash/fp';
-import { trimSpaces } from '../../utils';
+
+const textRegex = /\w{2,}/;
 
 /**
  * @method validate
@@ -11,7 +12,7 @@ export default function validate(state) {
     return null;
   }
 
-  if (_.isNil(state.answer) || trimSpaces(state.answer).length < 1) {
+  if (_.isNil(state.answer) || !textRegex.test(state.answer)) {
     return 'Please fill in this field.';
   }
 
