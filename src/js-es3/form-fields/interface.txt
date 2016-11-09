@@ -1,0 +1,30 @@
+{
+  info: {
+    type: String,
+    group: String, // name of button group where this type will be in the form-builder
+    displayName: String, // component button legend
+  },
+
+  initialState: Object -> Promise(Object),
+
+  RenderEditor: Object -> ReactElement // React render function
+
+  es3 : {
+    isValid: HTMLElement -> Boolean
+    getState: HTMLElement -> Object
+    render: Object -> HTMLElement
+    showErrors: Boolean -> Object -> HTMLElement
+  }
+};
+
+/**
+ * The initial State function returns:
+ * {
+   type: String,
+   group: String,
+   displayName: String,
+
+   required: Boolean,
+   configShowing: Boolean,
+ }
+ */
