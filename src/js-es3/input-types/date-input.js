@@ -27,5 +27,5 @@ export default function createDateInput(config) { // eslint-disable-line no-unus
 
   dateField.validate = () => validate(dateField, config.required);
 
-  return dateField;
+  return Promise.resolve(dateField);
 }

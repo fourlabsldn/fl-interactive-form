@@ -74,7 +74,7 @@ export function createOptionsInput(config) {
 
   wrapper.validate = () => validateOptions(wrapper, config.required);
 
-  return wrapper;
+  return Promise.resolve(wrapper);
 }
 
 // ---- DROPDOWN INPUT
@@ -119,7 +119,7 @@ export function createDropdownInput(config) {
 
   select.addEventListener('blur', wrapper.validate);
 
-  return wrapper;
+  return Promise.resolve(wrapper);
 }
 
 export function createCountryDropdownInput(config) {

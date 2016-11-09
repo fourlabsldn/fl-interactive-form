@@ -10,8 +10,7 @@ const flInteractiveForm = {
     assert(config && config.length !== undefined,
       'The first argument must be a configuration array');
 
-    const form = es3Form(config);
-    return form;
+    return es3Form(config);
   },
 };
 

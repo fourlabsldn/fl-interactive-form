@@ -23,7 +23,7 @@ const inputCreators = {
 /**
  * @method formField
  * @param  {Object} config Question configuration object
- * @return {HTMLElement}
+ * @return {Promise<HTMLElement>}
  */
 export default function formField(config) {
   const wrapper = document.createElement('div');
@@ -34,11 +34,13 @@ export default function formField(config) {
   legend.innerHTML = config.title;
 
   const elementType = inputCreators[config.type] || inputCreators[config.primitiveType];
-  const inputEl = elementType(config);
 
-  wrapper.appendChild(legend);
-  wrapper.appendChild(inputEl);
-  wrapper.getValue = inputEl.getValue;
-  wrapper.validate = inputEl.validate;
-  return wrapper;
+  return elementType(config)
+    .then(inputEl => {
+      wrapper.appendChild(legend);
+      wrapper.appendChild(inputEl);
+      wrapper.getValue = inputEl.getValue;
+      wrapper.validate = inputEl.validate;
+      return wrapper;
+    });
 }

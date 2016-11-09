@@ -67,5 +67,5 @@ export default function createTextInput(config) {
 
   el.addEventListener('blur', el.validate);
 
-  return el;
+  return Promise.resolve(el);
 }
