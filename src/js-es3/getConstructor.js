@@ -22,7 +22,10 @@ const defaultConstructors = {
 };
 
 const getConstructor = curry((customConstructors, config) => {
-  const allConstructors = Object.assign({}, defaultConstructors, customConstructors);
+  const customConstr = customConstructors
+    .reduce((out, c) => Object.assign({}, out, { [c.info.type]: c }), {});
+
+  const allConstructors = Object.assign({}, defaultConstructors, customConstr);
 
   const fieldConstructor = allConstructors[config.type] || allConstructors[config.primitiveType];
 
