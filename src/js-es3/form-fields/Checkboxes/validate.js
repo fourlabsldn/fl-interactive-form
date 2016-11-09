@@ -1,15 +1,17 @@
 import _ from 'lodash/fp';
 
-const numberRegex = /^[0-9]+$/;
-
 /**
  * @method validate
  * @param  {Object} state
  * @return {Stirng | null} Error
  */
 export default function validate(state) {
-  if (state.required && (_.isNil(state.answer) || !numberRegex.test(state.answer))) {
-    return 'Please insert a valid number';
+  if (!state.required) {
+    return null;
+  }
+
+  if (_.isNil(state.answer) || state.answer.length === 0) {
+    return 'Please choose at least one option.';
   }
 
   return null;
