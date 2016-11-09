@@ -9,10 +9,10 @@ import { fakeEvent, clone, createErrorMessage, removeErrorMessage } from './util
  * @param  {Object} config
  * @return {Array<HTMLElement>} questions
  */
-function createFormFields(config) {
+function createFormFields(config, customFields) {
   const questions = [];
   for (let i = 0; i < config.length; i++) {
-    const questionEl = formField(config[i]);
+    const questionEl = formField(config[i], customFields);
     questions.push(questionEl);
   }
 
@@ -20,11 +20,11 @@ function createFormFields(config) {
 }
 
 
-export default function es3Form(config) {
+export default function es3Form(config, customFields) {
   const form = document.createElement('form');
   form.className = 'fl-if_FormUI fl-if_FormUI-es3';
 
-  return createFormFields(config)
+  return createFormFields(config, customFields)
   .then(questions => {
     _.forEach(question => form.appendChild(question), questions);
 

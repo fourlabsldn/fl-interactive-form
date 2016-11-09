@@ -223,9 +223,39 @@
         "placeholder": "Add a placeholder",
         "id": 1477307318522,
         "configShowing": false
+      },
+      {
+        "type": "CustomType",
+        "group": "Text Components",
+        "displayName": "Text Area",
+        "htmlInputType": "text",
+        "htmlElement": "textarea",
+        "required": true,
+        "title": "A text area",
+        "placeholder": "Add a placeholder",
+        "id": 1477307318522,
+        "configShowing": false
       }
     ];
-    flInteractiveForm.create(config)
+
+    const customType = () => {
+      const el = document.createElement('input')
+      el.setAttribute('type', 'text');
+      el.setAttribute('placeholder', 'Custom!!');
+
+      el.getValue = () => el.value;
+
+      
+      return new Promise(resolve => {
+        setTimeout(() => resolve(el), 2000);
+      })
+    }
+
+    customTypes = {
+      CustomType: customType
+    };
+
+    flInteractiveForm.create(config, customTypes)
     .then(function (form) {
       form.addEventListener('submit', function logSubmission(e) {
         var answers = e.detail.answers;

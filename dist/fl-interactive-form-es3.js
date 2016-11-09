@@ -17193,7 +17193,7 @@ function createDateInput(config) {
 //  Implements the `getValue` method to return the input value
 //
 
-var inputCreators = {
+var defaultInputCreators = {
   EmailBox: createTextInput,
   NumberBox: createTextInput,
   TelephoneBox: createTextInput,
@@ -17212,6 +17212,8 @@ var inputCreators = {
  * @return {Promise<HTMLElement>}
  */
 function formField(config) {
+  var customFields = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
   var wrapper = document.createElement('div');
   wrapper.className = 'fl-if_FormField fl-if_FormField--active';
 
@@ -17219,6 +17221,7 @@ function formField(config) {
   legend.className = 'fl-if_FormField-legend';
   legend.innerHTML = config.title;
 
+  var inputCreators = Object.assign({}, defaultInputCreators, customFields);
   var elementType = inputCreators[config.type] || inputCreators[config.primitiveType];
 
   return elementType(config).then(function (inputEl) {
@@ -17237,21 +17240,21 @@ function formField(config) {
  * @param  {Object} config
  * @return {Array<HTMLElement>} questions
  */
-function createFormFields(config) {
+function createFormFields(config, customFields) {
   var questions = [];
   for (var i = 0; i < config.length; i++) {
-    var questionEl = formField(config[i]);
+    var questionEl = formField(config[i], customFields);
     questions.push(questionEl);
   }
 
   return Promise.all(questions);
 }
 
-function es3Form(config) {
+function es3Form(config, customFields) {
   var form = document.createElement('form');
   form.className = 'fl-if_FormUI fl-if_FormUI-es3';
 
-  return createFormFields(config).then(function (questions) {
+  return createFormFields(config, customFields).then(function (questions) {
     _forEach(function (question) {
       return form.appendChild(question);
     }, questions);
@@ -17324,12 +17327,10 @@ function es3Form(config) {
 
 // START HERE
 var flInteractiveForm = {
-  create: function create(config) {
+  create: function create(config, customFields) {
     assert(config && config.length !== undefined, 'The first argument must be a configuration array');
 
-    var container = document.createElement('div');
-
-    return es3Form(config);
+    return es3Form(config, customFields);
   }
 };
 

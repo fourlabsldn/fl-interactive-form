@@ -6,11 +6,11 @@ import { assert } from './utils';
 
 // START HERE
 const flInteractiveForm = {
-  create: function create(config) {
+  create: function create(config, customFields) {
     assert(config && config.length !== undefined,
       'The first argument must be a configuration array');
 
-    return es3Form(config);
+    return es3Form(config, customFields);
   },
 };
 
