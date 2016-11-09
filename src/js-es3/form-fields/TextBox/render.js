@@ -15,7 +15,9 @@ export default function render(state) {
 
   el.placeholder = state.placeholder;
 
-  el.setAttribute('required', !!state.required);
+  if (state.required) {
+    el.setAttribute('required', true);
+  }
 
   return el;
 }

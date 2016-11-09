@@ -10,7 +10,11 @@ export default function render(state) {
   const select = document.createElement('select');
   select.className = 'fl-if_Dropdown-option';
   select.setAttribute('name', state.title);
-  select.setAttribute('required', !!state.required);
+
+  if (state.required) {
+    select.setAttribute('required', true);
+  }
+
   wrapper.appendChild(select);
 
   let optionEl;

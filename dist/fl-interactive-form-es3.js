@@ -17386,7 +17386,9 @@ function render(state) {
 
   el.placeholder = state.placeholder;
 
-  el.setAttribute('required', !!state.required);
+  if (state.required) {
+    el.setAttribute('required', true);
+  }
 
   return el;
 }
@@ -17619,7 +17621,11 @@ function render$2(state) {
   var select = document.createElement('select');
   select.className = 'fl-if_Dropdown-option';
   select.setAttribute('name', state.title);
-  select.setAttribute('required', !!state.required);
+
+  if (state.required) {
+    select.setAttribute('required', true);
+  }
+
   wrapper.appendChild(select);
 
   var optionEl = void 0;
