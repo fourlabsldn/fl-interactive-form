@@ -24,7 +24,7 @@ const componentFields = {
  * @return {Object} newState - The state that will guide the creation of the field's HTMLElement
  */
 const initialState = state => {
-  Promise.resolve(
+  return Promise.resolve(
     Object.assign({}, componentFields, info, state)
   );
 };

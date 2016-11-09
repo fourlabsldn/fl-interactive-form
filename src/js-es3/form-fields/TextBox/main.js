@@ -3,7 +3,7 @@ import getState from './getState';
 import render from './render';
 import validate from './validate';
 
-const TextField = {
+const TextBox = {
   initialState,
   es3: {
     validate,
@@ -12,4 +12,4 @@ const TextField = {
   },
 };
 
-export default TextField;
+export default TextBox;

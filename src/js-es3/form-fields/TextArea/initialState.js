@@ -1,5 +1,5 @@
 import info from './info';
-import textFieldInitialState from '../TextField/initialState';
+import textFieldInitialState from '../TextBox/initialState';
 
 /**
  * @method initialState

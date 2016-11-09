@@ -1,6 +1,6 @@
 import initialState from './initialState';
-import getState from '../TextField/getState';
-import validate from '../TextField/validate';
+import getState from '../TextBox/getState';
+import validate from '../TextBox/validate';
 import info from './info';
 import render from './render';
 

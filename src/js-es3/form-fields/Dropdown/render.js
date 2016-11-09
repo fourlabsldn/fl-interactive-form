@@ -33,5 +33,5 @@ export default function render(state) {
     select.appendChild(optionEl);
   }
 
-  return Promise.resolve(wrapper);
+  return wrapper;
 }

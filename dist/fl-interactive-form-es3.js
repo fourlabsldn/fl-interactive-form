@@ -9966,7 +9966,7 @@ module.exports = isArray;
 var isArray$2 = interopDefault(isArray$1);
 
 
-var require$$0$58 = Object.freeze({
+var require$$1$35 = Object.freeze({
 	"default": isArray$2
 });
 
@@ -10005,7 +10005,7 @@ module.exports = isObjectLike;
 var isObjectLike$1 = interopDefault(isObjectLike);
 
 
-var require$$0$59 = Object.freeze({
+var require$$0$58 = Object.freeze({
 	"default": isObjectLike$1
 });
 
@@ -10068,7 +10068,7 @@ module.exports = wrapperClone;
 var _wrapperClone$1 = interopDefault(_wrapperClone);
 
 
-var require$$0$60 = Object.freeze({
+var require$$0$59 = Object.freeze({
 	"default": _wrapperClone$1
 });
 
@@ -10076,9 +10076,9 @@ var wrapperLodash = createCommonjsModule(function (module) {
 var LazyWrapper = interopDefault(require$$2$19),
     LodashWrapper = interopDefault(require$$1$34),
     baseLodash = interopDefault(require$$0$54),
-    isArray = interopDefault(require$$0$58),
-    isObjectLike = interopDefault(require$$0$59),
-    wrapperClone = interopDefault(require$$0$60);
+    isArray = interopDefault(require$$1$35),
+    isObjectLike = interopDefault(require$$0$58),
+    wrapperClone = interopDefault(require$$0$59);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -10310,13 +10310,13 @@ module.exports = shortOut;
 var _shortOut$1 = interopDefault(_shortOut);
 
 
-var require$$0$61 = Object.freeze({
+var require$$0$60 = Object.freeze({
 	"default": _shortOut$1
 });
 
 var _setData = createCommonjsModule(function (module) {
 var baseSetData = interopDefault(require$$1$26),
-    shortOut = interopDefault(require$$0$61);
+    shortOut = interopDefault(require$$0$60);
 
 /**
  * Sets metadata for `func`.
@@ -10340,7 +10340,7 @@ module.exports = setData;
 var _setData$1 = interopDefault(_setData);
 
 
-var require$$1$35 = Object.freeze({
+var require$$1$36 = Object.freeze({
 	"default": _setData$1
 });
 
@@ -10457,13 +10457,13 @@ module.exports = defineProperty;
 var _defineProperty$1 = interopDefault(_defineProperty);
 
 
-var require$$0$64 = Object.freeze({
+var require$$0$63 = Object.freeze({
 	"default": _defineProperty$1
 });
 
 var _baseSetToString = createCommonjsModule(function (module) {
 var constant = interopDefault(require$$2$22),
-    defineProperty = interopDefault(require$$0$64),
+    defineProperty = interopDefault(require$$0$63),
     identity = interopDefault(require$$2$13);
 
 /**
@@ -10489,13 +10489,13 @@ module.exports = baseSetToString;
 var _baseSetToString$1 = interopDefault(_baseSetToString);
 
 
-var require$$1$36 = Object.freeze({
+var require$$1$37 = Object.freeze({
 	"default": _baseSetToString$1
 });
 
 var _setToString = createCommonjsModule(function (module) {
-var baseSetToString = interopDefault(require$$1$36),
-    shortOut = interopDefault(require$$0$61);
+var baseSetToString = interopDefault(require$$1$37),
+    shortOut = interopDefault(require$$0$60);
 
 /**
  * Sets the `toString` method of `func` to return `string`.
@@ -10513,7 +10513,7 @@ module.exports = setToString;
 var _setToString$1 = interopDefault(_setToString);
 
 
-var require$$0$63 = Object.freeze({
+var require$$0$62 = Object.freeze({
 	"default": _setToString$1
 });
 
@@ -10601,7 +10601,7 @@ module.exports = baseIsNaN;
 var _baseIsNaN$1 = interopDefault(_baseIsNaN);
 
 
-var require$$1$37 = Object.freeze({
+var require$$1$38 = Object.freeze({
 	"default": _baseIsNaN$1
 });
 
@@ -10634,14 +10634,14 @@ module.exports = strictIndexOf;
 var _strictIndexOf$1 = interopDefault(_strictIndexOf);
 
 
-var require$$0$68 = Object.freeze({
+var require$$0$66 = Object.freeze({
 	"default": _strictIndexOf$1
 });
 
 var _baseIndexOf = createCommonjsModule(function (module) {
 var baseFindIndex = interopDefault(require$$2$23),
-    baseIsNaN = interopDefault(require$$1$37),
-    strictIndexOf = interopDefault(require$$0$68);
+    baseIsNaN = interopDefault(require$$1$38),
+    strictIndexOf = interopDefault(require$$0$66);
 
 /**
  * The base implementation of `_.indexOf` without `fromIndex` bounds checks.
@@ -10664,12 +10664,12 @@ module.exports = baseIndexOf;
 var _baseIndexOf$1 = interopDefault(_baseIndexOf);
 
 
-var require$$0$67 = Object.freeze({
+var require$$4$12 = Object.freeze({
 	"default": _baseIndexOf$1
 });
 
 var _arrayIncludes$2 = createCommonjsModule(function (module) {
-var baseIndexOf = interopDefault(require$$0$67);
+var baseIndexOf = interopDefault(require$$4$12);
 
 /**
  * A specialized version of `_.includes` for arrays without support for
@@ -10691,13 +10691,13 @@ module.exports = arrayIncludes;
 var _arrayIncludes$3 = interopDefault(_arrayIncludes$2);
 
 
-var require$$0$66 = Object.freeze({
+var require$$0$65 = Object.freeze({
 	"default": _arrayIncludes$3
 });
 
 var _updateWrapDetails = createCommonjsModule(function (module) {
 var arrayEach = interopDefault(require$$3$12),
-    arrayIncludes = interopDefault(require$$0$66);
+    arrayIncludes = interopDefault(require$$0$65);
 
 /** Used to compose bitmasks for function metadata. */
 var BIND_FLAG = 1,
@@ -10747,15 +10747,15 @@ module.exports = updateWrapDetails;
 var _updateWrapDetails$1 = interopDefault(_updateWrapDetails);
 
 
-var require$$0$65 = Object.freeze({
+var require$$0$64 = Object.freeze({
 	"default": _updateWrapDetails$1
 });
 
 var _setWrapToString = createCommonjsModule(function (module) {
 var getWrapDetails = interopDefault(require$$3$11),
     insertWrapDetails = interopDefault(require$$2$21),
-    setToString = interopDefault(require$$0$63),
-    updateWrapDetails = interopDefault(require$$0$65);
+    setToString = interopDefault(require$$0$62),
+    updateWrapDetails = interopDefault(require$$0$64);
 
 /**
  * Sets the `toString` method of `wrapper` to mimic the source of `reference`
@@ -10778,14 +10778,14 @@ module.exports = setWrapToString;
 var _setWrapToString$1 = interopDefault(_setWrapToString);
 
 
-var require$$0$62 = Object.freeze({
+var require$$0$61 = Object.freeze({
 	"default": _setWrapToString$1
 });
 
 var _createRecurry = createCommonjsModule(function (module) {
 var isLaziable = interopDefault(require$$2$18),
-    setData = interopDefault(require$$1$35),
-    setWrapToString = interopDefault(require$$0$62);
+    setData = interopDefault(require$$1$36),
+    setWrapToString = interopDefault(require$$0$61);
 
 /** Used to compose bitmasks for function metadata. */
 var BIND_FLAG = 1,
@@ -10977,7 +10977,7 @@ module.exports = replaceHolders;
 var _replaceHolders$1 = interopDefault(_replaceHolders);
 
 
-var require$$0$69 = Object.freeze({
+var require$$0$67 = Object.freeze({
 	"default": _replaceHolders$1
 });
 
@@ -10989,7 +10989,7 @@ var composeArgs = interopDefault(require$$2$17),
     createRecurry = interopDefault(require$$4$10),
     getHolder = interopDefault(require$$3$13),
     reorder = interopDefault(require$$2$24),
-    replaceHolders = interopDefault(require$$0$69),
+    replaceHolders = interopDefault(require$$0$67),
     root = interopDefault(require$$0$50);
 
 /** Used to compose bitmasks for function metadata. */
@@ -11089,7 +11089,7 @@ var apply = interopDefault(require$$4$8),
     createHybrid = interopDefault(require$$4$9),
     createRecurry = interopDefault(require$$4$10),
     getHolder = interopDefault(require$$3$13),
-    replaceHolders = interopDefault(require$$0$69),
+    replaceHolders = interopDefault(require$$0$67),
     root = interopDefault(require$$0$50);
 
 /**
@@ -11195,7 +11195,7 @@ var require$$5$4 = Object.freeze({
 var _mergeData = createCommonjsModule(function (module) {
 var composeArgs = interopDefault(require$$2$17),
     composeArgsRight = interopDefault(require$$1$32),
-    replaceHolders = interopDefault(require$$0$69);
+    replaceHolders = interopDefault(require$$0$67);
 
 /** Used as the internal argument placeholder. */
 var PLACEHOLDER = '__lodash_placeholder__';
@@ -11293,7 +11293,7 @@ var require$$3$15 = Object.freeze({
 });
 
 var isSymbol = createCommonjsModule(function (module) {
-var isObjectLike = interopDefault(require$$0$59);
+var isObjectLike = interopDefault(require$$0$58);
 
 /** `Object#toString` result references. */
 var symbolTag = '[object Symbol]';
@@ -11412,12 +11412,12 @@ module.exports = toNumber;
 var toNumber$1 = interopDefault(toNumber);
 
 
-var require$$0$72 = Object.freeze({
+var require$$0$69 = Object.freeze({
 	"default": toNumber$1
 });
 
 var toFinite = createCommonjsModule(function (module) {
-var toNumber = interopDefault(require$$0$72);
+var toNumber = interopDefault(require$$0$69);
 
 /** Used as references for various `Number` constants. */
 var INFINITY = 1 / 0,
@@ -11464,12 +11464,12 @@ module.exports = toFinite;
 var toFinite$1 = interopDefault(toFinite);
 
 
-var require$$0$71 = Object.freeze({
+var require$$0$68 = Object.freeze({
 	"default": toFinite$1
 });
 
 var toInteger = createCommonjsModule(function (module) {
-var toFinite = interopDefault(require$$0$71);
+var toFinite = interopDefault(require$$0$68);
 
 /**
  * Converts `value` to an integer.
@@ -11510,7 +11510,7 @@ module.exports = toInteger;
 var toInteger$1 = interopDefault(toInteger);
 
 
-var require$$0$70 = Object.freeze({
+var require$$1$39 = Object.freeze({
 	"default": toInteger$1
 });
 
@@ -11522,9 +11522,9 @@ var baseSetData = interopDefault(require$$1$26),
     createPartial = interopDefault(require$$5$4),
     getData = interopDefault(require$$2$20),
     mergeData = interopDefault(require$$3$15),
-    setData = interopDefault(require$$1$35),
-    setWrapToString = interopDefault(require$$0$62),
-    toInteger = interopDefault(require$$0$70);
+    setData = interopDefault(require$$1$36),
+    setWrapToString = interopDefault(require$$0$61),
+    toInteger = interopDefault(require$$1$39);
 
 /** Error message constants. */
 var FUNC_ERROR_TEXT = 'Expected a function';
@@ -11671,7 +11671,7 @@ var require$$12$1 = Object.freeze({
 });
 
 var _baseAssignValue = createCommonjsModule(function (module) {
-var defineProperty = interopDefault(require$$0$64);
+var defineProperty = interopDefault(require$$0$63);
 
 /**
  * The base implementation of `assignValue` and `assignMergeValue` without
@@ -11701,7 +11701,7 @@ module.exports = baseAssignValue;
 var _baseAssignValue$1 = interopDefault(_baseAssignValue);
 
 
-var require$$1$39 = Object.freeze({
+var require$$1$41 = Object.freeze({
 	"default": _baseAssignValue$1
 });
 
@@ -11753,7 +11753,7 @@ var require$$3$16 = Object.freeze({
 });
 
 var _assignValue = createCommonjsModule(function (module) {
-var baseAssignValue = interopDefault(require$$1$39),
+var baseAssignValue = interopDefault(require$$1$41),
     eq = interopDefault(require$$3$16);
 
 /** Used for built-in method references. */
@@ -11792,7 +11792,7 @@ var require$$13$1 = Object.freeze({
 
 var _copyObject = createCommonjsModule(function (module) {
 var assignValue = interopDefault(require$$13$1),
-    baseAssignValue = interopDefault(require$$1$39);
+    baseAssignValue = interopDefault(require$$1$41);
 
 /**
  * Copies properties of `source` to `object`.
@@ -11836,7 +11836,7 @@ module.exports = copyObject;
 var _copyObject$1 = interopDefault(_copyObject);
 
 
-var require$$1$38 = Object.freeze({
+var require$$1$40 = Object.freeze({
 	"default": _copyObject$1
 });
 
@@ -11871,7 +11871,7 @@ var require$$5$5 = Object.freeze({
 });
 
 var _baseIsArguments = createCommonjsModule(function (module) {
-var isObjectLike = interopDefault(require$$0$59);
+var isObjectLike = interopDefault(require$$0$58);
 
 /** `Object#toString` result references. */
 var argsTag = '[object Arguments]';
@@ -11903,13 +11903,13 @@ module.exports = baseIsArguments;
 var _baseIsArguments$1 = interopDefault(_baseIsArguments);
 
 
-var require$$1$41 = Object.freeze({
+var require$$1$43 = Object.freeze({
 	"default": _baseIsArguments$1
 });
 
 var isArguments = createCommonjsModule(function (module) {
-var baseIsArguments = interopDefault(require$$1$41),
-    isObjectLike = interopDefault(require$$0$59);
+var baseIsArguments = interopDefault(require$$1$43),
+    isObjectLike = interopDefault(require$$0$58);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -11949,7 +11949,7 @@ module.exports = isArguments;
 var isArguments$1 = interopDefault(isArguments);
 
 
-var require$$1$40 = Object.freeze({
+var require$$1$42 = Object.freeze({
 	"default": isArguments$1
 });
 
@@ -11977,13 +11977,13 @@ module.exports = stubFalse;
 var stubFalse$1 = interopDefault(stubFalse);
 
 
-var require$$0$74 = Object.freeze({
+var require$$0$71 = Object.freeze({
 	"default": stubFalse$1
 });
 
 var isBuffer = createCommonjsModule(function (module, exports) {
 var root = interopDefault(require$$0$50),
-    stubFalse = interopDefault(require$$0$74);
+    stubFalse = interopDefault(require$$0$71);
 
 /** Detect free variable `exports`. */
 var freeExports = typeof exports == 'object' && exports && !exports.nodeType && exports;
@@ -12025,7 +12025,7 @@ module.exports = isBuffer;
 var isBuffer$1 = interopDefault(isBuffer);
 
 
-var require$$1$42 = Object.freeze({
+var require$$1$44 = Object.freeze({
 	"default": isBuffer$1
 });
 
@@ -12070,13 +12070,13 @@ module.exports = isLength;
 var isLength$1 = interopDefault(isLength);
 
 
-var require$$1$43 = Object.freeze({
+var require$$1$45 = Object.freeze({
 	"default": isLength$1
 });
 
 var _baseIsTypedArray = createCommonjsModule(function (module) {
-var isLength = interopDefault(require$$1$43),
-    isObjectLike = interopDefault(require$$0$59);
+var isLength = interopDefault(require$$1$45),
+    isObjectLike = interopDefault(require$$0$58);
 
 /** `Object#toString` result references. */
 var argsTag = '[object Arguments]',
@@ -12173,7 +12173,7 @@ module.exports = baseUnary;
 var _baseUnary$1 = interopDefault(_baseUnary);
 
 
-var require$$1$44 = Object.freeze({
+var require$$1$46 = Object.freeze({
 	"default": _baseUnary$1
 });
 
@@ -12205,14 +12205,14 @@ module.exports = nodeUtil;
 var _nodeUtil$1 = interopDefault(_nodeUtil);
 
 
-var require$$0$76 = Object.freeze({
+var require$$0$73 = Object.freeze({
 	"default": _nodeUtil$1
 });
 
 var isTypedArray = createCommonjsModule(function (module) {
 var baseIsTypedArray = interopDefault(require$$2$27),
-    baseUnary = interopDefault(require$$1$44),
-    nodeUtil = interopDefault(require$$0$76);
+    baseUnary = interopDefault(require$$1$46),
+    nodeUtil = interopDefault(require$$0$73);
 
 /* Node.js helper references. */
 var nodeIsTypedArray = nodeUtil && nodeUtil.isTypedArray;
@@ -12242,17 +12242,17 @@ module.exports = isTypedArray;
 var isTypedArray$1 = interopDefault(isTypedArray);
 
 
-var require$$0$75 = Object.freeze({
+var require$$0$72 = Object.freeze({
 	"default": isTypedArray$1
 });
 
 var _arrayLikeKeys = createCommonjsModule(function (module) {
 var baseTimes = interopDefault(require$$5$5),
-    isArguments = interopDefault(require$$1$40),
-    isArray = interopDefault(require$$0$58),
-    isBuffer = interopDefault(require$$1$42),
+    isArguments = interopDefault(require$$1$42),
+    isArray = interopDefault(require$$1$35),
+    isBuffer = interopDefault(require$$1$44),
     isIndex = interopDefault(require$$3$14),
-    isTypedArray = interopDefault(require$$0$75);
+    isTypedArray = interopDefault(require$$0$72);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -12329,7 +12329,7 @@ module.exports = isPrototype;
 var _isPrototype$1 = interopDefault(_isPrototype);
 
 
-var require$$0$77 = Object.freeze({
+var require$$0$74 = Object.freeze({
 	"default": _isPrototype$1
 });
 
@@ -12354,12 +12354,12 @@ module.exports = overArg;
 var _overArg$1 = interopDefault(_overArg);
 
 
-var require$$0$79 = Object.freeze({
+var require$$0$76 = Object.freeze({
 	"default": _overArg$1
 });
 
 var _nativeKeys = createCommonjsModule(function (module) {
-var overArg = interopDefault(require$$0$79);
+var overArg = interopDefault(require$$0$76);
 
 /* Built-in method references for those with the same name as other `lodash` methods. */
 var nativeKeys = overArg(Object.keys, Object);
@@ -12370,13 +12370,13 @@ module.exports = nativeKeys;
 var _nativeKeys$1 = interopDefault(_nativeKeys);
 
 
-var require$$0$78 = Object.freeze({
+var require$$0$75 = Object.freeze({
 	"default": _nativeKeys$1
 });
 
 var _baseKeys = createCommonjsModule(function (module) {
-var isPrototype = interopDefault(require$$0$77),
-    nativeKeys = interopDefault(require$$0$78);
+var isPrototype = interopDefault(require$$0$74),
+    nativeKeys = interopDefault(require$$0$75);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -12410,13 +12410,13 @@ module.exports = baseKeys;
 var _baseKeys$1 = interopDefault(_baseKeys);
 
 
-var require$$1$45 = Object.freeze({
+var require$$1$47 = Object.freeze({
 	"default": _baseKeys$1
 });
 
 var isArrayLike = createCommonjsModule(function (module) {
 var isFunction = interopDefault(require$$1$30),
-    isLength = interopDefault(require$$1$43);
+    isLength = interopDefault(require$$1$45);
 
 /**
  * Checks if `value` is array-like. A value is considered array-like if it's
@@ -12453,14 +12453,14 @@ module.exports = isArrayLike;
 var isArrayLike$1 = interopDefault(isArrayLike);
 
 
-var require$$0$80 = Object.freeze({
+var require$$3$17 = Object.freeze({
 	"default": isArrayLike$1
 });
 
 var keys$2 = createCommonjsModule(function (module) {
 var arrayLikeKeys = interopDefault(require$$2$26),
-    baseKeys = interopDefault(require$$1$45),
-    isArrayLike = interopDefault(require$$0$80);
+    baseKeys = interopDefault(require$$1$47),
+    isArrayLike = interopDefault(require$$3$17);
 
 /**
  * Creates an array of the own enumerable property names of `object`.
@@ -12500,13 +12500,13 @@ module.exports = keys;
 var keys$3 = interopDefault(keys$2);
 
 
-var require$$0$73 = Object.freeze({
+var require$$0$70 = Object.freeze({
 	"default": keys$3
 });
 
 var _baseAssign = createCommonjsModule(function (module) {
-var copyObject = interopDefault(require$$1$38),
-    keys = interopDefault(require$$0$73);
+var copyObject = interopDefault(require$$1$40),
+    keys = interopDefault(require$$0$70);
 
 /**
  * The base implementation of `_.assign` without support for multiple sources
@@ -12550,7 +12550,7 @@ module.exports = listCacheClear;
 var _listCacheClear$1 = interopDefault(_listCacheClear);
 
 
-var require$$4$12 = Object.freeze({
+var require$$4$13 = Object.freeze({
 	"default": _listCacheClear$1
 });
 
@@ -12581,12 +12581,12 @@ module.exports = assocIndexOf;
 var _assocIndexOf$1 = interopDefault(_assocIndexOf);
 
 
-var require$$0$81 = Object.freeze({
+var require$$0$77 = Object.freeze({
 	"default": _assocIndexOf$1
 });
 
 var _listCacheDelete = createCommonjsModule(function (module) {
-var assocIndexOf = interopDefault(require$$0$81);
+var assocIndexOf = interopDefault(require$$0$77);
 
 /** Used for built-in method references. */
 var arrayProto = Array.prototype;
@@ -12626,12 +12626,12 @@ module.exports = listCacheDelete;
 var _listCacheDelete$1 = interopDefault(_listCacheDelete);
 
 
-var require$$3$17 = Object.freeze({
+var require$$3$18 = Object.freeze({
 	"default": _listCacheDelete$1
 });
 
 var _listCacheGet = createCommonjsModule(function (module) {
-var assocIndexOf = interopDefault(require$$0$81);
+var assocIndexOf = interopDefault(require$$0$77);
 
 /**
  * Gets the list cache value for `key`.
@@ -12660,7 +12660,7 @@ var require$$2$28 = Object.freeze({
 });
 
 var _listCacheHas = createCommonjsModule(function (module) {
-var assocIndexOf = interopDefault(require$$0$81);
+var assocIndexOf = interopDefault(require$$0$77);
 
 /**
  * Checks if a list cache value for `key` exists.
@@ -12681,12 +12681,12 @@ module.exports = listCacheHas;
 var _listCacheHas$1 = interopDefault(_listCacheHas);
 
 
-var require$$1$48 = Object.freeze({
+var require$$1$50 = Object.freeze({
 	"default": _listCacheHas$1
 });
 
 var _listCacheSet = createCommonjsModule(function (module) {
-var assocIndexOf = interopDefault(require$$0$81);
+var assocIndexOf = interopDefault(require$$0$77);
 
 /**
  * Sets the list cache `key` to `value`.
@@ -12717,16 +12717,16 @@ module.exports = listCacheSet;
 var _listCacheSet$1 = interopDefault(_listCacheSet);
 
 
-var require$$0$82 = Object.freeze({
+var require$$0$78 = Object.freeze({
 	"default": _listCacheSet$1
 });
 
 var _ListCache = createCommonjsModule(function (module) {
-var listCacheClear = interopDefault(require$$4$12),
-    listCacheDelete = interopDefault(require$$3$17),
+var listCacheClear = interopDefault(require$$4$13),
+    listCacheDelete = interopDefault(require$$3$18),
     listCacheGet = interopDefault(require$$2$28),
-    listCacheHas = interopDefault(require$$1$48),
-    listCacheSet = interopDefault(require$$0$82);
+    listCacheHas = interopDefault(require$$1$50),
+    listCacheSet = interopDefault(require$$0$78);
 
 /**
  * Creates an list cache object.
@@ -12759,12 +12759,12 @@ module.exports = ListCache;
 var _ListCache$1 = interopDefault(_ListCache);
 
 
-var require$$1$47 = Object.freeze({
+var require$$1$49 = Object.freeze({
 	"default": _ListCache$1
 });
 
 var _stackClear = createCommonjsModule(function (module) {
-var ListCache = interopDefault(require$$1$47);
+var ListCache = interopDefault(require$$1$49);
 
 /**
  * Removes all key-value entries from the stack.
@@ -12784,7 +12784,7 @@ module.exports = stackClear;
 var _stackClear$1 = interopDefault(_stackClear);
 
 
-var require$$4$13 = Object.freeze({
+var require$$4$14 = Object.freeze({
 	"default": _stackClear$1
 });
 
@@ -12812,7 +12812,7 @@ module.exports = stackDelete;
 var _stackDelete$1 = interopDefault(_stackDelete);
 
 
-var require$$3$18 = Object.freeze({
+var require$$3$19 = Object.freeze({
 	"default": _stackDelete$1
 });
 
@@ -12860,7 +12860,7 @@ module.exports = stackHas;
 var _stackHas$1 = interopDefault(_stackHas);
 
 
-var require$$1$49 = Object.freeze({
+var require$$1$51 = Object.freeze({
 	"default": _stackHas$1
 });
 
@@ -12893,12 +12893,12 @@ module.exports = nativeCreate;
 var _nativeCreate$1 = interopDefault(_nativeCreate);
 
 
-var require$$0$85 = Object.freeze({
+var require$$0$81 = Object.freeze({
 	"default": _nativeCreate$1
 });
 
 var _hashClear = createCommonjsModule(function (module) {
-var nativeCreate = interopDefault(require$$0$85);
+var nativeCreate = interopDefault(require$$0$81);
 
 /**
  * Removes all key-value entries from the hash.
@@ -12918,7 +12918,7 @@ module.exports = hashClear;
 var _hashClear$1 = interopDefault(_hashClear);
 
 
-var require$$4$15 = Object.freeze({
+var require$$4$16 = Object.freeze({
 	"default": _hashClear$1
 });
 
@@ -12945,12 +12945,12 @@ module.exports = hashDelete;
 var _hashDelete$1 = interopDefault(_hashDelete);
 
 
-var require$$3$19 = Object.freeze({
+var require$$3$20 = Object.freeze({
 	"default": _hashDelete$1
 });
 
 var _hashGet = createCommonjsModule(function (module) {
-var nativeCreate = interopDefault(require$$0$85);
+var nativeCreate = interopDefault(require$$0$81);
 
 /** Used to stand-in for `undefined` hash values. */
 var HASH_UNDEFINED = '__lodash_hash_undefined__';
@@ -12990,7 +12990,7 @@ var require$$2$31 = Object.freeze({
 });
 
 var _hashHas = createCommonjsModule(function (module) {
-var nativeCreate = interopDefault(require$$0$85);
+var nativeCreate = interopDefault(require$$0$81);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -13018,12 +13018,12 @@ module.exports = hashHas;
 var _hashHas$1 = interopDefault(_hashHas);
 
 
-var require$$1$50 = Object.freeze({
+var require$$1$52 = Object.freeze({
 	"default": _hashHas$1
 });
 
 var _hashSet = createCommonjsModule(function (module) {
-var nativeCreate = interopDefault(require$$0$85);
+var nativeCreate = interopDefault(require$$0$81);
 
 /** Used to stand-in for `undefined` hash values. */
 var HASH_UNDEFINED = '__lodash_hash_undefined__';
@@ -13051,16 +13051,16 @@ module.exports = hashSet;
 var _hashSet$1 = interopDefault(_hashSet);
 
 
-var require$$0$86 = Object.freeze({
+var require$$0$82 = Object.freeze({
 	"default": _hashSet$1
 });
 
 var _Hash = createCommonjsModule(function (module) {
-var hashClear = interopDefault(require$$4$15),
-    hashDelete = interopDefault(require$$3$19),
+var hashClear = interopDefault(require$$4$16),
+    hashDelete = interopDefault(require$$3$20),
     hashGet = interopDefault(require$$2$31),
-    hashHas = interopDefault(require$$1$50),
-    hashSet = interopDefault(require$$0$86);
+    hashHas = interopDefault(require$$1$52),
+    hashSet = interopDefault(require$$0$82);
 
 /**
  * Creates a hash object.
@@ -13099,7 +13099,7 @@ var require$$2$30 = Object.freeze({
 
 var _mapCacheClear = createCommonjsModule(function (module) {
 var Hash = interopDefault(require$$2$30),
-    ListCache = interopDefault(require$$1$47),
+    ListCache = interopDefault(require$$1$49),
     Map = interopDefault(require$$5$6);
 
 /**
@@ -13124,7 +13124,7 @@ module.exports = mapCacheClear;
 var _mapCacheClear$1 = interopDefault(_mapCacheClear);
 
 
-var require$$4$14 = Object.freeze({
+var require$$4$15 = Object.freeze({
 	"default": _mapCacheClear$1
 });
 
@@ -13149,12 +13149,12 @@ module.exports = isKeyable;
 var _isKeyable$1 = interopDefault(_isKeyable);
 
 
-var require$$0$88 = Object.freeze({
+var require$$0$84 = Object.freeze({
 	"default": _isKeyable$1
 });
 
 var _getMapData = createCommonjsModule(function (module) {
-var isKeyable = interopDefault(require$$0$88);
+var isKeyable = interopDefault(require$$0$84);
 
 /**
  * Gets the data for `map`.
@@ -13177,12 +13177,12 @@ module.exports = getMapData;
 var _getMapData$1 = interopDefault(_getMapData);
 
 
-var require$$0$87 = Object.freeze({
+var require$$0$83 = Object.freeze({
 	"default": _getMapData$1
 });
 
 var _mapCacheDelete = createCommonjsModule(function (module) {
-var getMapData = interopDefault(require$$0$87);
+var getMapData = interopDefault(require$$0$83);
 
 /**
  * Removes `key` and its value from the map.
@@ -13205,12 +13205,12 @@ module.exports = mapCacheDelete;
 var _mapCacheDelete$1 = interopDefault(_mapCacheDelete);
 
 
-var require$$3$20 = Object.freeze({
+var require$$3$21 = Object.freeze({
 	"default": _mapCacheDelete$1
 });
 
 var _mapCacheGet = createCommonjsModule(function (module) {
-var getMapData = interopDefault(require$$0$87);
+var getMapData = interopDefault(require$$0$83);
 
 /**
  * Gets the map value for `key`.
@@ -13236,7 +13236,7 @@ var require$$2$32 = Object.freeze({
 });
 
 var _mapCacheHas = createCommonjsModule(function (module) {
-var getMapData = interopDefault(require$$0$87);
+var getMapData = interopDefault(require$$0$83);
 
 /**
  * Checks if a map value for `key` exists.
@@ -13257,12 +13257,12 @@ module.exports = mapCacheHas;
 var _mapCacheHas$1 = interopDefault(_mapCacheHas);
 
 
-var require$$1$51 = Object.freeze({
+var require$$1$53 = Object.freeze({
 	"default": _mapCacheHas$1
 });
 
 var _mapCacheSet = createCommonjsModule(function (module) {
-var getMapData = interopDefault(require$$0$87);
+var getMapData = interopDefault(require$$0$83);
 
 /**
  * Sets the map `key` to `value`.
@@ -13289,16 +13289,16 @@ module.exports = mapCacheSet;
 var _mapCacheSet$1 = interopDefault(_mapCacheSet);
 
 
-var require$$0$89 = Object.freeze({
+var require$$0$85 = Object.freeze({
 	"default": _mapCacheSet$1
 });
 
 var _MapCache = createCommonjsModule(function (module) {
-var mapCacheClear = interopDefault(require$$4$14),
-    mapCacheDelete = interopDefault(require$$3$20),
+var mapCacheClear = interopDefault(require$$4$15),
+    mapCacheDelete = interopDefault(require$$3$21),
     mapCacheGet = interopDefault(require$$2$32),
-    mapCacheHas = interopDefault(require$$1$51),
-    mapCacheSet = interopDefault(require$$0$89);
+    mapCacheHas = interopDefault(require$$1$53),
+    mapCacheSet = interopDefault(require$$0$85);
 
 /**
  * Creates a map cache object to store key-value pairs.
@@ -13331,14 +13331,14 @@ module.exports = MapCache;
 var _MapCache$1 = interopDefault(_MapCache);
 
 
-var require$$0$84 = Object.freeze({
+var require$$0$80 = Object.freeze({
 	"default": _MapCache$1
 });
 
 var _stackSet = createCommonjsModule(function (module) {
-var ListCache = interopDefault(require$$1$47),
+var ListCache = interopDefault(require$$1$49),
     Map = interopDefault(require$$5$6),
-    MapCache = interopDefault(require$$0$84);
+    MapCache = interopDefault(require$$0$80);
 
 /** Used as the size to enable large array optimizations. */
 var LARGE_ARRAY_SIZE = 200;
@@ -13375,17 +13375,17 @@ module.exports = stackSet;
 var _stackSet$1 = interopDefault(_stackSet);
 
 
-var require$$0$83 = Object.freeze({
+var require$$0$79 = Object.freeze({
 	"default": _stackSet$1
 });
 
 var _Stack = createCommonjsModule(function (module) {
-var ListCache = interopDefault(require$$1$47),
-    stackClear = interopDefault(require$$4$13),
-    stackDelete = interopDefault(require$$3$18),
+var ListCache = interopDefault(require$$1$49),
+    stackClear = interopDefault(require$$4$14),
+    stackDelete = interopDefault(require$$3$19),
     stackGet = interopDefault(require$$2$29),
-    stackHas = interopDefault(require$$1$49),
-    stackSet = interopDefault(require$$0$83);
+    stackHas = interopDefault(require$$1$51),
+    stackSet = interopDefault(require$$0$79);
 
 /**
  * Creates a stack cache object to store key-value pairs.
@@ -13490,13 +13490,13 @@ module.exports = stubArray;
 var stubArray$1 = interopDefault(stubArray);
 
 
-var require$$0$90 = Object.freeze({
+var require$$0$86 = Object.freeze({
 	"default": stubArray$1
 });
 
 var _getSymbols = createCommonjsModule(function (module) {
-var overArg = interopDefault(require$$0$79),
-    stubArray = interopDefault(require$$0$90);
+var overArg = interopDefault(require$$0$76),
+    stubArray = interopDefault(require$$0$86);
 
 /* Built-in method references for those with the same name as other `lodash` methods. */
 var nativeGetSymbols = Object.getOwnPropertySymbols;
@@ -13516,13 +13516,13 @@ module.exports = getSymbols;
 var _getSymbols$1 = interopDefault(_getSymbols);
 
 
-var require$$1$52 = Object.freeze({
+var require$$1$54 = Object.freeze({
 	"default": _getSymbols$1
 });
 
 var _copySymbols = createCommonjsModule(function (module) {
-var copyObject = interopDefault(require$$1$38),
-    getSymbols = interopDefault(require$$1$52);
+var copyObject = interopDefault(require$$1$40),
+    getSymbols = interopDefault(require$$1$54);
 
 /**
  * Copies own symbol properties of `source` to `object`.
@@ -13572,13 +13572,13 @@ module.exports = arrayPush;
 var _arrayPush$1 = interopDefault(_arrayPush);
 
 
-var require$$3$21 = Object.freeze({
+var require$$3$22 = Object.freeze({
 	"default": _arrayPush$1
 });
 
 var _baseGetAllKeys = createCommonjsModule(function (module) {
-var arrayPush = interopDefault(require$$3$21),
-    isArray = interopDefault(require$$0$58);
+var arrayPush = interopDefault(require$$3$22),
+    isArray = interopDefault(require$$1$35);
 
 /**
  * The base implementation of `getAllKeys` and `getAllKeysIn` which uses
@@ -13608,8 +13608,8 @@ var require$$2$33 = Object.freeze({
 
 var _getAllKeys = createCommonjsModule(function (module) {
 var baseGetAllKeys = interopDefault(require$$2$33),
-    getSymbols = interopDefault(require$$1$52),
-    keys = interopDefault(require$$0$73);
+    getSymbols = interopDefault(require$$1$54),
+    keys = interopDefault(require$$0$70);
 
 /**
  * Creates an array of own enumerable property names and symbols of `object`.
@@ -13662,7 +13662,7 @@ module.exports = Promise;
 var _Promise$1 = interopDefault(_Promise);
 
 
-var require$$4$16 = Object.freeze({
+var require$$4$17 = Object.freeze({
 	"default": _Promise$1
 });
 
@@ -13679,7 +13679,7 @@ module.exports = Set;
 var _Set$1 = interopDefault(_Set);
 
 
-var require$$3$23 = Object.freeze({
+var require$$3$24 = Object.freeze({
 	"default": _Set$1
 });
 
@@ -13711,17 +13711,17 @@ module.exports = baseGetTag;
 var _baseGetTag$1 = interopDefault(_baseGetTag);
 
 
-var require$$1$53 = Object.freeze({
+var require$$1$55 = Object.freeze({
 	"default": _baseGetTag$1
 });
 
 var _getTag = createCommonjsModule(function (module) {
 var DataView = interopDefault(require$$6$3),
     Map = interopDefault(require$$5$6),
-    Promise = interopDefault(require$$4$16),
-    Set = interopDefault(require$$3$23),
+    Promise = interopDefault(require$$4$17),
+    Set = interopDefault(require$$3$24),
     WeakMap = interopDefault(require$$2$14),
-    baseGetTag = interopDefault(require$$1$53),
+    baseGetTag = interopDefault(require$$1$55),
     toSource = interopDefault(require$$0$52);
 
 /** `Object#toString` result references. */
@@ -13789,7 +13789,7 @@ module.exports = getTag;
 var _getTag$1 = interopDefault(_getTag);
 
 
-var require$$3$22 = Object.freeze({
+var require$$3$23 = Object.freeze({
 	"default": _getTag$1
 });
 
@@ -13841,12 +13841,12 @@ module.exports = Uint8Array;
 var _Uint8Array$1 = interopDefault(_Uint8Array);
 
 
-var require$$4$17 = Object.freeze({
+var require$$4$18 = Object.freeze({
 	"default": _Uint8Array$1
 });
 
 var _cloneArrayBuffer = createCommonjsModule(function (module) {
-var Uint8Array = interopDefault(require$$4$17);
+var Uint8Array = interopDefault(require$$4$18);
 
 /**
  * Creates a clone of `arrayBuffer`.
@@ -13867,12 +13867,12 @@ module.exports = cloneArrayBuffer;
 var _cloneArrayBuffer$1 = interopDefault(_cloneArrayBuffer);
 
 
-var require$$0$91 = Object.freeze({
+var require$$0$87 = Object.freeze({
 	"default": _cloneArrayBuffer$1
 });
 
 var _cloneDataView = createCommonjsModule(function (module) {
-var cloneArrayBuffer = interopDefault(require$$0$91);
+var cloneArrayBuffer = interopDefault(require$$0$87);
 
 /**
  * Creates a clone of `dataView`.
@@ -13954,7 +13954,7 @@ module.exports = arrayReduce;
 var _arrayReduce$3 = interopDefault(_arrayReduce$2);
 
 
-var require$$1$54 = Object.freeze({
+var require$$1$56 = Object.freeze({
 	"default": _arrayReduce$3
 });
 
@@ -13982,14 +13982,14 @@ module.exports = mapToArray;
 var _mapToArray$1 = interopDefault(_mapToArray);
 
 
-var require$$1$55 = Object.freeze({
+var require$$1$57 = Object.freeze({
 	"default": _mapToArray$1
 });
 
 var _cloneMap = createCommonjsModule(function (module) {
 var addMapEntry = interopDefault(require$$2$34),
-    arrayReduce = interopDefault(require$$1$54),
-    mapToArray = interopDefault(require$$1$55);
+    arrayReduce = interopDefault(require$$1$56),
+    mapToArray = interopDefault(require$$1$57);
 
 /**
  * Creates a clone of `map`.
@@ -14011,7 +14011,7 @@ module.exports = cloneMap;
 var _cloneMap$1 = interopDefault(_cloneMap);
 
 
-var require$$4$18 = Object.freeze({
+var require$$4$19 = Object.freeze({
 	"default": _cloneMap$1
 });
 
@@ -14038,7 +14038,7 @@ module.exports = cloneRegExp;
 var _cloneRegExp$1 = interopDefault(_cloneRegExp);
 
 
-var require$$3$24 = Object.freeze({
+var require$$3$25 = Object.freeze({
 	"default": _cloneRegExp$1
 });
 
@@ -14091,14 +14091,14 @@ module.exports = setToArray;
 var _setToArray$1 = interopDefault(_setToArray);
 
 
-var require$$0$92 = Object.freeze({
+var require$$0$88 = Object.freeze({
 	"default": _setToArray$1
 });
 
 var _cloneSet = createCommonjsModule(function (module) {
 var addSetEntry = interopDefault(require$$2$36),
-    arrayReduce = interopDefault(require$$1$54),
-    setToArray = interopDefault(require$$0$92);
+    arrayReduce = interopDefault(require$$1$56),
+    setToArray = interopDefault(require$$0$88);
 
 /**
  * Creates a clone of `set`.
@@ -14164,12 +14164,12 @@ module.exports = cloneSymbol;
 var _cloneSymbol$1 = interopDefault(_cloneSymbol);
 
 
-var require$$1$56 = Object.freeze({
+var require$$1$58 = Object.freeze({
 	"default": _cloneSymbol$1
 });
 
 var _cloneTypedArray = createCommonjsModule(function (module) {
-var cloneArrayBuffer = interopDefault(require$$0$91);
+var cloneArrayBuffer = interopDefault(require$$0$87);
 
 /**
  * Creates a clone of `typedArray`.
@@ -14190,18 +14190,18 @@ module.exports = cloneTypedArray;
 var _cloneTypedArray$1 = interopDefault(_cloneTypedArray);
 
 
-var require$$0$93 = Object.freeze({
+var require$$0$89 = Object.freeze({
 	"default": _cloneTypedArray$1
 });
 
 var _initCloneByTag = createCommonjsModule(function (module) {
-var cloneArrayBuffer = interopDefault(require$$0$91),
+var cloneArrayBuffer = interopDefault(require$$0$87),
     cloneDataView = interopDefault(require$$5$8),
-    cloneMap = interopDefault(require$$4$18),
-    cloneRegExp = interopDefault(require$$3$24),
+    cloneMap = interopDefault(require$$4$19),
+    cloneRegExp = interopDefault(require$$3$25),
     cloneSet = interopDefault(require$$2$35),
-    cloneSymbol = interopDefault(require$$1$56),
-    cloneTypedArray = interopDefault(require$$0$93);
+    cloneSymbol = interopDefault(require$$1$58),
+    cloneTypedArray = interopDefault(require$$0$89);
 
 /** `Object#toString` result references. */
 var boolTag = '[object Boolean]',
@@ -14285,7 +14285,7 @@ var require$$5$7 = Object.freeze({
 });
 
 var _getPrototype = createCommonjsModule(function (module) {
-var overArg = interopDefault(require$$0$79);
+var overArg = interopDefault(require$$0$76);
 
 /** Built-in value references. */
 var getPrototype = overArg(Object.getPrototypeOf, Object);
@@ -14296,14 +14296,14 @@ module.exports = getPrototype;
 var _getPrototype$1 = interopDefault(_getPrototype);
 
 
-var require$$1$57 = Object.freeze({
+var require$$1$59 = Object.freeze({
 	"default": _getPrototype$1
 });
 
 var _initCloneObject = createCommonjsModule(function (module) {
 var baseCreate = interopDefault(require$$2$16),
-    getPrototype = interopDefault(require$$1$57),
-    isPrototype = interopDefault(require$$0$77);
+    getPrototype = interopDefault(require$$1$59),
+    isPrototype = interopDefault(require$$0$74);
 
 /**
  * Initializes an object clone.
@@ -14324,7 +14324,7 @@ module.exports = initCloneObject;
 var _initCloneObject$1 = interopDefault(_initCloneObject);
 
 
-var require$$4$19 = Object.freeze({
+var require$$4$20 = Object.freeze({
 	"default": _initCloneObject$1
 });
 
@@ -14337,14 +14337,14 @@ var Stack = interopDefault(require$$7$1),
     copyArray = interopDefault(require$$4$11),
     copySymbols = interopDefault(require$$9),
     getAllKeys = interopDefault(require$$8$3),
-    getTag = interopDefault(require$$3$22),
+    getTag = interopDefault(require$$3$23),
     initCloneArray = interopDefault(require$$6$4),
     initCloneByTag = interopDefault(require$$5$7),
-    initCloneObject = interopDefault(require$$4$19),
-    isArray = interopDefault(require$$0$58),
-    isBuffer = interopDefault(require$$1$42),
+    initCloneObject = interopDefault(require$$4$20),
+    isArray = interopDefault(require$$1$35),
+    isBuffer = interopDefault(require$$1$44),
     isObject = interopDefault(require$$0$48),
-    keys = interopDefault(require$$0$73);
+    keys = interopDefault(require$$0$70);
 
 /** `Object#toString` result references. */
 var argsTag = '[object Arguments]',
@@ -14467,12 +14467,12 @@ module.exports = baseClone;
 var _baseClone$1 = interopDefault(_baseClone);
 
 
-var require$$1$46 = Object.freeze({
+var require$$1$48 = Object.freeze({
 	"default": _baseClone$1
 });
 
 var clone = createCommonjsModule(function (module) {
-var baseClone = interopDefault(require$$1$46);
+var baseClone = interopDefault(require$$1$48);
 
 /**
  * Creates a shallow clone of `value`.
@@ -14606,7 +14606,7 @@ module.exports = setCacheAdd;
 var _setCacheAdd$1 = interopDefault(_setCacheAdd);
 
 
-var require$$1$59 = Object.freeze({
+var require$$1$61 = Object.freeze({
 	"default": _setCacheAdd$1
 });
 
@@ -14630,14 +14630,14 @@ module.exports = setCacheHas;
 var _setCacheHas$1 = interopDefault(_setCacheHas);
 
 
-var require$$0$94 = Object.freeze({
+var require$$0$90 = Object.freeze({
 	"default": _setCacheHas$1
 });
 
 var _SetCache = createCommonjsModule(function (module) {
-var MapCache = interopDefault(require$$0$84),
-    setCacheAdd = interopDefault(require$$1$59),
-    setCacheHas = interopDefault(require$$0$94);
+var MapCache = interopDefault(require$$0$80),
+    setCacheAdd = interopDefault(require$$1$61),
+    setCacheHas = interopDefault(require$$0$90);
 
 /**
  *
@@ -14700,7 +14700,7 @@ module.exports = arraySome;
 var _arraySome$1 = interopDefault(_arraySome);
 
 
-var require$$1$60 = Object.freeze({
+var require$$1$62 = Object.freeze({
 	"default": _arraySome$1
 });
 
@@ -14723,14 +14723,14 @@ module.exports = cacheHas;
 var _cacheHas$1 = interopDefault(_cacheHas);
 
 
-var require$$0$95 = Object.freeze({
+var require$$0$91 = Object.freeze({
 	"default": _cacheHas$1
 });
 
 var _equalArrays = createCommonjsModule(function (module) {
 var SetCache = interopDefault(require$$2$41),
-    arraySome = interopDefault(require$$1$60),
-    cacheHas = interopDefault(require$$0$95);
+    arraySome = interopDefault(require$$1$62),
+    cacheHas = interopDefault(require$$0$91);
 
 /** Used to compose bitmasks for comparison styles. */
 var UNORDERED_COMPARE_FLAG = 1,
@@ -14823,11 +14823,11 @@ var require$$2$40 = Object.freeze({
 
 var _equalByTag = createCommonjsModule(function (module) {
 var Symbol = interopDefault(require$$2$37),
-    Uint8Array = interopDefault(require$$4$17),
+    Uint8Array = interopDefault(require$$4$18),
     eq = interopDefault(require$$3$16),
     equalArrays = interopDefault(require$$2$40),
-    mapToArray = interopDefault(require$$1$55),
-    setToArray = interopDefault(require$$0$92);
+    mapToArray = interopDefault(require$$1$57),
+    setToArray = interopDefault(require$$0$88);
 
 /** Used to compose bitmasks for comparison styles. */
 var UNORDERED_COMPARE_FLAG = 1,
@@ -14945,7 +14945,7 @@ var require$$5$10 = Object.freeze({
 });
 
 var _equalObjects = createCommonjsModule(function (module) {
-var keys = interopDefault(require$$0$73);
+var keys = interopDefault(require$$0$70);
 
 /** Used to compose bitmasks for comparison styles. */
 var PARTIAL_COMPARE_FLAG = 2;
@@ -15040,7 +15040,7 @@ module.exports = equalObjects;
 var _equalObjects$1 = interopDefault(_equalObjects);
 
 
-var require$$4$21 = Object.freeze({
+var require$$4$22 = Object.freeze({
 	"default": _equalObjects$1
 });
 
@@ -15048,11 +15048,11 @@ var _baseIsEqualDeep = createCommonjsModule(function (module) {
 var Stack = interopDefault(require$$7$1),
     equalArrays = interopDefault(require$$2$40),
     equalByTag = interopDefault(require$$5$10),
-    equalObjects = interopDefault(require$$4$21),
-    getTag = interopDefault(require$$3$22),
-    isArray = interopDefault(require$$0$58),
-    isBuffer = interopDefault(require$$1$42),
-    isTypedArray = interopDefault(require$$0$75);
+    equalObjects = interopDefault(require$$4$22),
+    getTag = interopDefault(require$$3$23),
+    isArray = interopDefault(require$$1$35),
+    isBuffer = interopDefault(require$$1$44),
+    isTypedArray = interopDefault(require$$0$72);
 
 /** Used to compose bitmasks for comparison styles. */
 var PARTIAL_COMPARE_FLAG = 2;
@@ -15146,7 +15146,7 @@ var require$$2$39 = Object.freeze({
 var _baseIsEqual = createCommonjsModule(function (module) {
 var baseIsEqualDeep = interopDefault(require$$2$39),
     isObject = interopDefault(require$$0$48),
-    isObjectLike = interopDefault(require$$0$59);
+    isObjectLike = interopDefault(require$$0$58);
 
 /**
  * The base implementation of `_.isEqual` which supports partial comparisons
@@ -15282,7 +15282,7 @@ var require$$2$42 = Object.freeze({
 
 var _getMatchData = createCommonjsModule(function (module) {
 var isStrictComparable = interopDefault(require$$2$42),
-    keys = interopDefault(require$$0$73);
+    keys = interopDefault(require$$0$70);
 
 /**
  * Gets the property names, values, and compare flags of `object`.
@@ -15310,7 +15310,7 @@ module.exports = getMatchData;
 var _getMatchData$1 = interopDefault(_getMatchData);
 
 
-var require$$1$61 = Object.freeze({
+var require$$1$63 = Object.freeze({
 	"default": _getMatchData$1
 });
 
@@ -15340,14 +15340,14 @@ module.exports = matchesStrictComparable;
 var _matchesStrictComparable$1 = interopDefault(_matchesStrictComparable);
 
 
-var require$$1$62 = Object.freeze({
+var require$$1$64 = Object.freeze({
 	"default": _matchesStrictComparable$1
 });
 
 var _baseMatches = createCommonjsModule(function (module) {
 var baseIsMatch = interopDefault(require$$2$38),
-    getMatchData = interopDefault(require$$1$61),
-    matchesStrictComparable = interopDefault(require$$1$62);
+    getMatchData = interopDefault(require$$1$63),
+    matchesStrictComparable = interopDefault(require$$1$64);
 
 /**
  * The base implementation of `_.matches` which doesn't clone `source`.
@@ -15372,12 +15372,12 @@ module.exports = baseMatches;
 var _baseMatches$1 = interopDefault(_baseMatches);
 
 
-var require$$4$20 = Object.freeze({
+var require$$4$21 = Object.freeze({
 	"default": _baseMatches$1
 });
 
 var memoize = createCommonjsModule(function (module) {
-var MapCache = interopDefault(require$$0$84);
+var MapCache = interopDefault(require$$0$80);
 
 /** Error message constants. */
 var FUNC_ERROR_TEXT = 'Expected a function';
@@ -15455,12 +15455,12 @@ module.exports = memoize;
 var memoize$1 = interopDefault(memoize);
 
 
-var require$$0$97 = Object.freeze({
+var require$$0$93 = Object.freeze({
 	"default": memoize$1
 });
 
 var _memoizeCapped = createCommonjsModule(function (module) {
-var memoize = interopDefault(require$$0$97);
+var memoize = interopDefault(require$$0$93);
 
 /** Used as the maximum memoize cache size. */
 var MAX_MEMOIZE_SIZE = 500;
@@ -15491,7 +15491,7 @@ module.exports = memoizeCapped;
 var _memoizeCapped$1 = interopDefault(_memoizeCapped);
 
 
-var require$$1$64 = Object.freeze({
+var require$$1$66 = Object.freeze({
 	"default": _memoizeCapped$1
 });
 
@@ -15522,14 +15522,14 @@ module.exports = arrayMap;
 var _arrayMap$1 = interopDefault(_arrayMap);
 
 
-var require$$5$12 = Object.freeze({
+var require$$0$96 = Object.freeze({
 	"default": _arrayMap$1
 });
 
 var _baseToString = createCommonjsModule(function (module) {
 var Symbol = interopDefault(require$$2$37),
-    arrayMap = interopDefault(require$$5$12),
-    isArray = interopDefault(require$$0$58),
+    arrayMap = interopDefault(require$$0$96),
+    isArray = interopDefault(require$$1$35),
     isSymbol = interopDefault(require$$2$25);
 
 /** Used as references for various `Number` constants. */
@@ -15569,12 +15569,12 @@ module.exports = baseToString;
 var _baseToString$1 = interopDefault(_baseToString);
 
 
-var require$$0$99 = Object.freeze({
+var require$$0$95 = Object.freeze({
 	"default": _baseToString$1
 });
 
 var toString$1 = createCommonjsModule(function (module) {
-var baseToString = interopDefault(require$$0$99);
+var baseToString = interopDefault(require$$0$95);
 
 /**
  * Converts `value` to a string. An empty string is returned for `null`
@@ -15607,13 +15607,13 @@ module.exports = toString;
 var toString$2 = interopDefault(toString$1);
 
 
-var require$$0$98 = Object.freeze({
+var require$$0$94 = Object.freeze({
 	"default": toString$2
 });
 
 var _stringToPath = createCommonjsModule(function (module) {
-var memoizeCapped = interopDefault(require$$1$64),
-    toString = interopDefault(require$$0$98);
+var memoizeCapped = interopDefault(require$$1$66),
+    toString = interopDefault(require$$0$94);
 
 /** Used to match property names within property paths. */
 var reLeadingDot = /^\./,
@@ -15648,13 +15648,13 @@ module.exports = stringToPath;
 var _stringToPath$1 = interopDefault(_stringToPath);
 
 
-var require$$1$63 = Object.freeze({
+var require$$1$65 = Object.freeze({
 	"default": _stringToPath$1
 });
 
 var _castPath = createCommonjsModule(function (module) {
-var isArray = interopDefault(require$$0$58),
-    stringToPath = interopDefault(require$$1$63);
+var isArray = interopDefault(require$$1$35),
+    stringToPath = interopDefault(require$$1$65);
 
 /**
  * Casts `value` to a path array if it's not one.
@@ -15678,7 +15678,7 @@ var require$$6$6 = Object.freeze({
 });
 
 var _isKey = createCommonjsModule(function (module) {
-var isArray = interopDefault(require$$0$58),
+var isArray = interopDefault(require$$1$35),
     isSymbol = interopDefault(require$$2$25);
 
 /** Used to match property names within property paths. */
@@ -15712,7 +15712,7 @@ module.exports = isKey;
 var _isKey$1 = interopDefault(_isKey);
 
 
-var require$$1$65 = Object.freeze({
+var require$$1$67 = Object.freeze({
 	"default": _isKey$1
 });
 
@@ -15743,14 +15743,14 @@ module.exports = toKey;
 var _toKey$1 = interopDefault(_toKey);
 
 
-var require$$0$100 = Object.freeze({
+var require$$0$97 = Object.freeze({
 	"default": _toKey$1
 });
 
 var _baseGet = createCommonjsModule(function (module) {
 var castPath = interopDefault(require$$6$6),
-    isKey = interopDefault(require$$1$65),
-    toKey = interopDefault(require$$0$100);
+    isKey = interopDefault(require$$1$67),
+    toKey = interopDefault(require$$0$97);
 
 /**
  * The base implementation of `_.get` without support for default values.
@@ -15778,12 +15778,12 @@ module.exports = baseGet;
 var _baseGet$1 = interopDefault(_baseGet);
 
 
-var require$$0$96 = Object.freeze({
+var require$$0$92 = Object.freeze({
 	"default": _baseGet$1
 });
 
 var get$2 = createCommonjsModule(function (module) {
-var baseGet = interopDefault(require$$0$96);
+var baseGet = interopDefault(require$$0$92);
 
 /**
  * Gets the value at `path` of `object`. If the resolved value is
@@ -15844,18 +15844,18 @@ module.exports = baseHasIn;
 var _baseHasIn$1 = interopDefault(_baseHasIn);
 
 
-var require$$1$66 = Object.freeze({
+var require$$1$68 = Object.freeze({
 	"default": _baseHasIn$1
 });
 
 var _hasPath = createCommonjsModule(function (module) {
 var castPath = interopDefault(require$$6$6),
-    isArguments = interopDefault(require$$1$40),
-    isArray = interopDefault(require$$0$58),
+    isArguments = interopDefault(require$$1$42),
+    isArray = interopDefault(require$$1$35),
     isIndex = interopDefault(require$$3$14),
-    isKey = interopDefault(require$$1$65),
-    isLength = interopDefault(require$$1$43),
-    toKey = interopDefault(require$$0$100);
+    isKey = interopDefault(require$$1$67),
+    isLength = interopDefault(require$$1$45),
+    toKey = interopDefault(require$$0$97);
 
 /**
  * Checks if `path` exists on `object`.
@@ -15894,13 +15894,13 @@ module.exports = hasPath;
 var _hasPath$1 = interopDefault(_hasPath);
 
 
-var require$$0$101 = Object.freeze({
+var require$$0$98 = Object.freeze({
 	"default": _hasPath$1
 });
 
 var hasIn = createCommonjsModule(function (module) {
-var baseHasIn = interopDefault(require$$1$66),
-    hasPath = interopDefault(require$$0$101);
+var baseHasIn = interopDefault(require$$1$68),
+    hasPath = interopDefault(require$$0$98);
 
 /**
  * Checks if `path` is a direct or inherited property of `object`.
@@ -15938,18 +15938,18 @@ module.exports = hasIn;
 var hasIn$1 = interopDefault(hasIn);
 
 
-var require$$4$22 = Object.freeze({
+var require$$4$23 = Object.freeze({
 	"default": hasIn$1
 });
 
 var _baseMatchesProperty = createCommonjsModule(function (module) {
 var baseIsEqual = interopDefault(require$$6$5),
     get = interopDefault(require$$5$11),
-    hasIn = interopDefault(require$$4$22),
-    isKey = interopDefault(require$$1$65),
+    hasIn = interopDefault(require$$4$23),
+    isKey = interopDefault(require$$1$67),
     isStrictComparable = interopDefault(require$$2$42),
-    matchesStrictComparable = interopDefault(require$$1$62),
-    toKey = interopDefault(require$$0$100);
+    matchesStrictComparable = interopDefault(require$$1$64),
+    toKey = interopDefault(require$$0$97);
 
 /** Used to compose bitmasks for comparison styles. */
 var UNORDERED_COMPARE_FLAG = 1,
@@ -15981,7 +15981,7 @@ module.exports = baseMatchesProperty;
 var _baseMatchesProperty$1 = interopDefault(_baseMatchesProperty);
 
 
-var require$$3$25 = Object.freeze({
+var require$$3$26 = Object.freeze({
 	"default": _baseMatchesProperty$1
 });
 
@@ -16005,12 +16005,12 @@ module.exports = baseProperty;
 var _baseProperty$1 = interopDefault(_baseProperty);
 
 
-var require$$3$26 = Object.freeze({
+var require$$3$27 = Object.freeze({
 	"default": _baseProperty$1
 });
 
 var _basePropertyDeep = createCommonjsModule(function (module) {
-var baseGet = interopDefault(require$$0$96);
+var baseGet = interopDefault(require$$0$92);
 
 /**
  * A specialized version of `baseProperty` which supports deep paths.
@@ -16036,10 +16036,10 @@ var require$$2$43 = Object.freeze({
 });
 
 var property = createCommonjsModule(function (module) {
-var baseProperty = interopDefault(require$$3$26),
+var baseProperty = interopDefault(require$$3$27),
     basePropertyDeep = interopDefault(require$$2$43),
-    isKey = interopDefault(require$$1$65),
-    toKey = interopDefault(require$$0$100);
+    isKey = interopDefault(require$$1$67),
+    toKey = interopDefault(require$$0$97);
 
 /**
  * Creates a function that returns the value at `path` of a given object.
@@ -16073,16 +16073,16 @@ module.exports = property;
 var property$1 = interopDefault(property);
 
 
-var require$$0$102 = Object.freeze({
+var require$$0$99 = Object.freeze({
 	"default": property$1
 });
 
 var _baseIteratee = createCommonjsModule(function (module) {
-var baseMatches = interopDefault(require$$4$20),
-    baseMatchesProperty = interopDefault(require$$3$25),
+var baseMatches = interopDefault(require$$4$21),
+    baseMatchesProperty = interopDefault(require$$3$26),
     identity = interopDefault(require$$2$13),
-    isArray = interopDefault(require$$0$58),
-    property = interopDefault(require$$0$102);
+    isArray = interopDefault(require$$1$35),
+    property = interopDefault(require$$0$99);
 
 /**
  * The base implementation of `_.iteratee`.
@@ -16114,13 +16114,13 @@ module.exports = baseIteratee;
 var _baseIteratee$1 = interopDefault(_baseIteratee);
 
 
-var require$$1$58 = Object.freeze({
+var require$$1$60 = Object.freeze({
 	"default": _baseIteratee$1
 });
 
 var iteratee = createCommonjsModule(function (module) {
-var baseClone = interopDefault(require$$1$46),
-    baseIteratee = interopDefault(require$$1$58);
+var baseClone = interopDefault(require$$1$48),
+    baseIteratee = interopDefault(require$$1$60);
 
 /**
  * Creates a function that invokes `func` with the arguments of the created
@@ -16180,8 +16180,8 @@ var require$$5$9 = Object.freeze({
 
 var _isFlattenable = createCommonjsModule(function (module) {
 var Symbol = interopDefault(require$$2$37),
-    isArguments = interopDefault(require$$1$40),
-    isArray = interopDefault(require$$0$58);
+    isArguments = interopDefault(require$$1$42),
+    isArray = interopDefault(require$$1$35);
 
 /** Built-in value references. */
 var spreadableSymbol = Symbol ? Symbol.isConcatSpreadable : undefined;
@@ -16204,13 +16204,13 @@ module.exports = isFlattenable;
 var _isFlattenable$1 = interopDefault(_isFlattenable);
 
 
-var require$$0$105 = Object.freeze({
+var require$$0$102 = Object.freeze({
 	"default": _isFlattenable$1
 });
 
 var _baseFlatten = createCommonjsModule(function (module) {
-var arrayPush = interopDefault(require$$3$21),
-    isFlattenable = interopDefault(require$$0$105);
+var arrayPush = interopDefault(require$$3$22),
+    isFlattenable = interopDefault(require$$0$102);
 
 /**
  * The base implementation of `_.flatten` with support for restricting flattening.
@@ -16252,12 +16252,12 @@ module.exports = baseFlatten;
 var _baseFlatten$1 = interopDefault(_baseFlatten);
 
 
-var require$$0$104 = Object.freeze({
+var require$$0$101 = Object.freeze({
 	"default": _baseFlatten$1
 });
 
 var flatten = createCommonjsModule(function (module) {
-var baseFlatten = interopDefault(require$$0$104);
+var baseFlatten = interopDefault(require$$0$101);
 
 /**
  * Flattens `array` a single level deep.
@@ -16330,14 +16330,14 @@ module.exports = overRest;
 var _overRest$1 = interopDefault(_overRest);
 
 
-var require$$1$67 = Object.freeze({
+var require$$1$69 = Object.freeze({
 	"default": _overRest$1
 });
 
 var _flatRest = createCommonjsModule(function (module) {
 var flatten = interopDefault(require$$2$44),
-    overRest = interopDefault(require$$1$67),
-    setToString = interopDefault(require$$0$63);
+    overRest = interopDefault(require$$1$69),
+    setToString = interopDefault(require$$0$62);
 
 /**
  * A specialized version of `baseRest` which flattens the rest array.
@@ -16356,13 +16356,13 @@ module.exports = flatRest;
 var _flatRest$1 = interopDefault(_flatRest);
 
 
-var require$$0$103 = Object.freeze({
+var require$$0$100 = Object.freeze({
 	"default": _flatRest$1
 });
 
 var rearg = createCommonjsModule(function (module) {
 var createWrap = interopDefault(require$$1$25),
-    flatRest = interopDefault(require$$0$103);
+    flatRest = interopDefault(require$$0$100);
 
 /** Used to compose bitmasks for function metadata. */
 var REARG_FLAG = 256;
@@ -16399,14 +16399,14 @@ module.exports = rearg;
 var rearg$1 = interopDefault(rearg);
 
 
-var require$$3$27 = Object.freeze({
+var require$$3$28 = Object.freeze({
 	"default": rearg$1
 });
 
 var _baseRest = createCommonjsModule(function (module) {
 var identity = interopDefault(require$$2$13),
-    overRest = interopDefault(require$$1$67),
-    setToString = interopDefault(require$$0$63);
+    overRest = interopDefault(require$$1$69),
+    setToString = interopDefault(require$$0$62);
 
 /**
  * The base implementation of `_.rest` which doesn't validate or coerce arguments.
@@ -16467,12 +16467,12 @@ module.exports = baseSlice;
 var _baseSlice$1 = interopDefault(_baseSlice);
 
 
-var require$$0$106 = Object.freeze({
+var require$$0$103 = Object.freeze({
 	"default": _baseSlice$1
 });
 
 var _castSlice = createCommonjsModule(function (module) {
-var baseSlice = interopDefault(require$$0$106);
+var baseSlice = interopDefault(require$$0$103);
 
 /**
  * Casts `array` to a slice if it's needed.
@@ -16495,16 +16495,16 @@ module.exports = castSlice;
 var _castSlice$1 = interopDefault(_castSlice);
 
 
-var require$$1$68 = Object.freeze({
+var require$$1$70 = Object.freeze({
 	"default": _castSlice$1
 });
 
 var spread = createCommonjsModule(function (module) {
 var apply = interopDefault(require$$4$8),
-    arrayPush = interopDefault(require$$3$21),
+    arrayPush = interopDefault(require$$3$22),
     baseRest = interopDefault(require$$2$46),
-    castSlice = interopDefault(require$$1$68),
-    toInteger = interopDefault(require$$0$70);
+    castSlice = interopDefault(require$$1$70),
+    toInteger = interopDefault(require$$1$39);
 
 /** Error message constants. */
 var FUNC_ERROR_TEXT = 'Expected a function';
@@ -16573,12 +16573,12 @@ var require$$2$45 = Object.freeze({
 });
 
 var toPath = createCommonjsModule(function (module) {
-var arrayMap = interopDefault(require$$5$12),
+var arrayMap = interopDefault(require$$0$96),
     copyArray = interopDefault(require$$4$11),
-    isArray = interopDefault(require$$0$58),
+    isArray = interopDefault(require$$1$35),
     isSymbol = interopDefault(require$$2$25),
-    stringToPath = interopDefault(require$$1$63),
-    toKey = interopDefault(require$$0$100);
+    stringToPath = interopDefault(require$$1$65),
+    toKey = interopDefault(require$$0$97);
 
 /**
  * Converts `value` to a property path array.
@@ -16610,7 +16610,7 @@ module.exports = toPath;
 var toPath$1 = interopDefault(toPath);
 
 
-var require$$0$107 = Object.freeze({
+var require$$0$104 = Object.freeze({
 	"default": toPath$1
 });
 
@@ -16621,14 +16621,14 @@ module.exports = {
   'clone': interopDefault(require$$10$1),
   'curry': interopDefault(require$$9$1),
   'forEach': interopDefault(require$$3$12),
-  'isArray': interopDefault(require$$0$58),
+  'isArray': interopDefault(require$$1$35),
   'isFunction': interopDefault(require$$1$30),
   'iteratee': interopDefault(require$$5$9),
-  'keys': interopDefault(require$$1$45),
-  'rearg': interopDefault(require$$3$27),
+  'keys': interopDefault(require$$1$47),
+  'rearg': interopDefault(require$$3$28),
   'spread': interopDefault(require$$2$45),
-  'toInteger': interopDefault(require$$0$70),
-  'toPath': interopDefault(require$$0$107)
+  'toInteger': interopDefault(require$$1$39),
+  'toPath': interopDefault(require$$0$104)
 };
 });
 
@@ -16698,12 +16698,12 @@ module.exports = createBaseFor;
 var _createBaseFor$1 = interopDefault(_createBaseFor);
 
 
-var require$$0$108 = Object.freeze({
+var require$$0$105 = Object.freeze({
 	"default": _createBaseFor$1
 });
 
 var _baseFor = createCommonjsModule(function (module) {
-var createBaseFor = interopDefault(require$$0$108);
+var createBaseFor = interopDefault(require$$0$105);
 
 /**
  * The base implementation of `baseForOwn` which iterates over `object`
@@ -16724,13 +16724,13 @@ module.exports = baseFor;
 var _baseFor$1 = interopDefault(_baseFor);
 
 
-var require$$1$71 = Object.freeze({
+var require$$1$73 = Object.freeze({
 	"default": _baseFor$1
 });
 
 var _baseForOwn = createCommonjsModule(function (module) {
-var baseFor = interopDefault(require$$1$71),
-    keys = interopDefault(require$$0$73);
+var baseFor = interopDefault(require$$1$73),
+    keys = interopDefault(require$$0$70);
 
 /**
  * The base implementation of `_.forOwn` without support for iteratee shorthands.
@@ -16750,12 +16750,12 @@ module.exports = baseForOwn;
 var _baseForOwn$1 = interopDefault(_baseForOwn);
 
 
-var require$$1$70 = Object.freeze({
+var require$$1$72 = Object.freeze({
 	"default": _baseForOwn$1
 });
 
 var _createBaseEach = createCommonjsModule(function (module) {
-var isArrayLike = interopDefault(require$$0$80);
+var isArrayLike = interopDefault(require$$3$17);
 
 /**
  * Creates a `baseEach` or `baseEachRight` function.
@@ -16792,13 +16792,13 @@ module.exports = createBaseEach;
 var _createBaseEach$1 = interopDefault(_createBaseEach);
 
 
-var require$$0$109 = Object.freeze({
+var require$$0$106 = Object.freeze({
 	"default": _createBaseEach$1
 });
 
 var _baseEach = createCommonjsModule(function (module) {
-var baseForOwn = interopDefault(require$$1$70),
-    createBaseEach = interopDefault(require$$0$109);
+var baseForOwn = interopDefault(require$$1$72),
+    createBaseEach = interopDefault(require$$0$106);
 
 /**
  * The base implementation of `_.forEach` without support for iteratee shorthands.
@@ -16823,8 +16823,8 @@ var require$$2$47 = Object.freeze({
 var forEach$2 = createCommonjsModule(function (module) {
 var arrayEach = interopDefault(require$$3$12),
     baseEach = interopDefault(require$$2$47),
-    baseIteratee = interopDefault(require$$1$58),
-    isArray = interopDefault(require$$0$58);
+    baseIteratee = interopDefault(require$$1$60),
+    isArray = interopDefault(require$$1$35);
 
 /**
  * Iterates over elements of `collection` and invokes `iteratee` for each element.
@@ -16867,13 +16867,13 @@ module.exports = forEach;
 var forEach$3 = interopDefault(forEach$2);
 
 
-var require$$1$69 = Object.freeze({
+var require$$1$71 = Object.freeze({
 	"default": forEach$3
 });
 
 var forEach$1 = createCommonjsModule(function (module) {
 var convert = interopDefault(require$$2$12),
-    func = convert('forEach', interopDefault(require$$1$69));
+    func = convert('forEach', interopDefault(require$$1$71));
 
 func.placeholder = interopDefault(require$$0$46);
 module.exports = func;
@@ -16881,7 +16881,211 @@ module.exports = func;
 
 var _forEach = interopDefault(forEach$1);
 
-function assert(condition, message) {
+var info = {
+  // Compulsory
+  type: 'TextBox',
+  displayName: 'Text Box',
+  group: 'Text Components',
+
+  // Field type specific
+  htmlInputType: 'text',
+  htmlElement: 'input'
+};
+
+// These are the fields that will end up being
+// changed on updates
+var componentFields = {
+  // Compulsory fields
+  required: false,
+  // Component specific fields
+  title: 'Add a title',
+  placeholder: 'Add a placeholder'
+};
+
+/**
+ * @method initialState
+ * @param  {Object} state - A past state. Usually the one created in form-builder
+ * @return {Object} newState - The state that will guide the creation of the field's HTMLElement
+ */
+var initialState = function initialState(state) {
+  return Promise.resolve(Object.assign({}, componentFields, info, state));
+};
+
+// Bug checking function that will throw an error whenever
+// the condition sent to it is evaluated to false
+/**
+ * Processes the message and outputs the correct message if the condition
+ * is false. Otherwise it outputs null.
+ * @api private
+ * @method processCondition
+ * @param  {Boolean} condition - Result of the evaluated condition
+ * @param  {String} errorMessage - Message explainig the error in case it is thrown
+ * @return {String | null}  - Error message if there is an error, nul otherwise.
+ */
+function processCondition(condition, errorMessage) {
+  if (!condition) {
+    var completeErrorMessage = '';
+    var re = /at ([^\s]+)\s\(/g;
+    var stackTrace = new Error().stack;
+    var stackFunctions = [];
+
+    var funcName = re.exec(stackTrace);
+    while (funcName && funcName[1]) {
+      stackFunctions.push(funcName[1]);
+      funcName = re.exec(stackTrace);
+    }
+
+    // Number 0 is processCondition itself,
+    // Number 1 is assert,
+    // Number 2 is the caller function.
+    if (stackFunctions[2]) {
+      completeErrorMessage = stackFunctions[2] + ': ' + completeErrorMessage;
+    }
+
+    completeErrorMessage += errorMessage;
+    return completeErrorMessage;
+  }
+
+  return null;
+}
+
+/**
+ * Throws an error if the boolean passed to it evaluates to false.
+ * To be used like this:
+ * 		assert(myDate !== undefined, "Date cannot be undefined.");
+ * @api public
+ * @method assert
+ * @param  {Boolean} condition - Result of the evaluated condition
+ * @param  {String} errorMessage - Message explainig the error in case it is thrown
+ * @return void
+ */
+function assert(condition, errorMessage) {
+  var error = processCondition(condition, errorMessage);
+  if (typeof error === 'string') {
+    throw new Error(error);
+  }
+}
+
+/**
+ * Logs a warning if the boolean passed to it evaluates to false.
+ * To be used like this:
+ * 		assert.warn(myDate !== undefined, "No date provided.");
+ * @api public
+ * @method warn
+ * @param  {Boolean} condition - Result of the evaluated condition
+ * @param  {String} errorMessage - Message explainig the error in case it is thrown
+ * @return void
+ */
+assert.warn = function warn(condition, errorMessage) {
+  var error = processCondition(condition, errorMessage);
+  if (typeof error === 'string') {
+    console.warn(error);
+  }
+};
+
+/**
+ * @method getState
+ * @param  {Object} oldState
+ * @param  {HTMLElement} el - The element created from oldState
+ * @return {Object} state - A new state to be rendered
+ */
+function getState(oldState, el) {
+  var input = el.querySelector('input');
+
+  assert(input, 'No input found in form element. This should never happen, something went wrong.');
+
+  var answer = input.value;
+
+  var newState = Object.assign({}, oldState, { answer: answer });
+
+  return newState;
+}
+
+/**
+ * @method render
+ * @param  {Object} state
+ * @return {HTMLElement} field
+ */
+function render(state) {
+  var tagName = state.htmlElement;
+  var el = document.createElement(tagName);
+
+  el.className = 'fl-if_TextInput-input';
+
+  el.setAttribute('name', state.title);
+
+  el.setAttribute('type', state.htmlInputType);
+
+  el.placeholder = state.placeholder;
+
+  el.setAttribute('required', !!state.required);
+
+  return el;
+}
+
+var isNil$1 = createCommonjsModule(function (module) {
+/**
+ * Checks if `value` is `null` or `undefined`.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is nullish, else `false`.
+ * @example
+ *
+ * _.isNil(null);
+ * // => true
+ *
+ * _.isNil(void 0);
+ * // => true
+ *
+ * _.isNil(NaN);
+ * // => false
+ */
+function isNil(value) {
+  return value == null;
+}
+
+module.exports = isNil;
+});
+
+var isNil$2 = interopDefault(isNil$1);
+
+
+var require$$2$48 = Object.freeze({
+	"default": isNil$2
+});
+
+var _falseOptions = createCommonjsModule(function (module) {
+module.exports = {
+  'cap': false,
+  'curry': false,
+  'fixed': false,
+  'immutable': false,
+  'rearg': false
+};
+});
+
+var _falseOptions$1 = interopDefault(_falseOptions);
+
+
+var require$$1$74 = Object.freeze({
+	"default": _falseOptions$1
+});
+
+var isNil = createCommonjsModule(function (module) {
+var convert = interopDefault(require$$2$12),
+    func = convert('isNil', interopDefault(require$$2$48), interopDefault(require$$1$74));
+
+func.placeholder = interopDefault(require$$0$46);
+module.exports = func;
+});
+
+var _isNil = interopDefault(isNil);
+
+function assert$2(condition, message) {
   if (!condition) {
     throw new Error(message);
   }
@@ -16897,44 +17101,7 @@ function fakeEvent(answers) {
   };
 }
 
-function applyDataMask(field, fieldMask) {
-  var mask = fieldMask.split('');
 
-  // For now, this just strips everything that's not a number
-  function stripMask(maskedData) {
-    function isDigit(char) {
-      return (/\d/.test(char)
-      );
-    }
-    return maskedData.split('').filter(isDigit);
-  }
-
-  // Replace `_` characters with characters from `data`
-  function applyMask(data) {
-    return mask.map(function (char) {
-      if (char !== ' ') return char;
-      if (data.length == 0) return char;
-      return data.shift();
-    }).join('');
-  }
-
-  function reapplyMask(data) {
-    return applyMask(stripMask(data));
-  }
-
-  function changed() {
-    var oldStart = field.selectionStart;
-    var oldEnd = field.selectionEnd;
-
-    field.value = reapplyMask(field.value);
-
-    field.selectionStart = oldStart;
-    field.selectionEnd = oldEnd;
-  }
-
-  field.addEventListener('click', changed);
-  field.addEventListener('keyup', changed);
-}
 
 // createErrorMessage: String -> HTML
 function createErrorMessage(message) {
@@ -16955,110 +17122,150 @@ function trimSpaces(str) {
   return str.replace(/\s+/g, ' ').replace(/^\s+/, '').replace(/\s+$/, '');
 }
 
-// ---- RADIO AND CHECKBOX INPUT
-function validateDropdown(field, required) {
-  var container = field.parentElement;
-  removeErrorMessage(container);
-  if (required && !trimSpaces(field.value)) {
-    container.appendChild(createErrorMessage('Please choose an option'));
-    return false;
-  }
-  return true;
-}
-
-function validateOptions(container, required) {
-  removeErrorMessage(container);
-
-  var oneChecked = Array.from(container.querySelectorAll('input')).map(function (r) {
-    return r.checked;
-  }).reduce(function (out, checked) {
-    return out || checked;
-  }, false);
-
-  if (required && !oneChecked) {
-    container.appendChild(createErrorMessage('Please choose an option'));
-    return false;
-  }
-  return true;
-}
-
-function createOptionsInput(config) {
-  var wrapper = document.createElement('div');
-
-  wrapper.className = 'fl-if_OptionsInput';
-
-  var options = [];
-  var optionType = config.type === 'RadioButtons' ? 'radio' : 'checkbox';
-  var optionName = config.title.replace(/\s'"/gi, '');
-  for (var i = 0; i < config.options.length; i++) {
-    var optionID = Date.now() + Math.random();
-    var optionWrapper = document.createElement('div');
-    optionWrapper.className = 'fl-if_OptionsInput-optionWrapper';
-
-    var optionEl = document.createElement('input');
-    optionEl.id = optionID;
-    optionEl.type = optionType;
-    optionEl.setAttribute('value', config.options[i].value);
-    optionEl.setAttribute('name', optionName);
-    optionWrapper.appendChild(optionEl);
-
-    var label = document.createElement('label');
-    label.setAttribute('for', optionID);
-    label.className = wrapper.className + '-option';
-    label.className += config.type === 'RadioButtons' ? ' fl-if_OptionsInput-radio' : ' fl-if_OptionsInput-checkbox';
-    optionWrapper.appendChild(label);
-
-    var optionLegend = document.createTextNode(config.options[i].caption);
-    label.appendChild(optionLegend);
-
-    wrapper.appendChild(optionWrapper);
-    options.push(optionEl);
+/**
+ * @method validate
+ * @param  {Object} state
+ * @return {Stirng | null} Error
+ */
+function validate(state) {
+  if (!state.required) {
+    return null;
   }
 
-  wrapper.getValue = function getValue() {
-    var value = [];
-    for (var j = 0; j < options.length; j++) {
-      if (options[j].checked) {
-        value.push(config.options[j]);
-      }
-    }
+  if (_isNil(state.answer) || trimSpaces(state.answer).length < 1) {
+    return 'Please fill in this field.';
+  }
 
-    return value;
-  };
-
-  wrapper.validate = function () {
-    return validateOptions(wrapper, config.required);
-  };
-
-  return Promise.resolve(wrapper);
+  return null;
 }
 
-// ---- DROPDOWN INPUT
+var TextBox = {
+  initialState: initialState,
+  es3: {
+    validate: validate,
+    getState: getState,
+    render: render
+  }
+};
 
-function createDropdownInput(config) {
+var info$1 = {
+  // Compulsory
+  type: 'TextArea',
+  displayName: 'Text Area',
+  group: 'Text Components',
+
+  // Field type specific
+  htmlInputType: 'textarea',
+  htmlElement: 'input'
+};
+
+/**
+ * @method initialState
+ * @param  {Object} state - A past state. Usually the one created in form-builder
+ * @return {Object} newState - The state that will guide the creation of the field's HTMLElement
+ */
+var initialState$1 = function initialState$1(state) {
+  return initialState(state).then(function (initialised) {
+    return Object.assign({}, initialised, info$1);
+  });
+};
+
+/**
+ * @method render
+ * @param  {Object} state
+ * @return {HTMLElement} field
+ */
+function render$1(state) {
+  var el = render(state);
+  el.className = el.className + ' fl-if_TextAreaInput-input';
+  return el;
+}
+
+var TextArea = {
+  initialState: initialState$1,
+  info: info$1,
+  es3: {
+    validate: validate,
+    getState: getState,
+    render: render$1
+  }
+};
+
+var info$2 = {
+  // Compulsory
+  type: 'Dropdown',
+  displayName: 'Dropdown',
+  group: 'Options Components'
+};
+
+// These are the fields that will end up being
+// changed on updates
+var componentFields$1 = {
+  // Compulsory fields
+  required: false,
+  // Component specific fields
+  title: 'Add a title',
+  options: [{ value: 0, caption: 'Insert an option' }],
+
+  // states needed to handle UI
+  newOptionValue: '',
+  newOptionCaption: '',
+  errorShowing: null
+};
+
+/**
+ * @method initialState
+ * @param  {Object} state - A past state. Usually the one created in form-builder
+ * @return {Object} newState - The state that will guide the creation of the field's HTMLElement
+ */
+var initialState$3 = function initialState$3(state) {
+  return Promise.resolve(Object.assign({}, componentFields$1, info$2, state));
+};
+
+/**
+ * @method getState
+ * @param  {Object} oldState
+ * @param  {HTMLElement} el - The element created from oldState
+ * @return {Object} state - A new state to be rendered
+ */
+function getState$1(oldState, el) {
+  var dropdown = el.querySelector('select');
+  var selected = dropdown.selectedIndex;
+
+  assert(!_isNil(oldState.options[selected]), 'Option ' + selected + ' is out of range. Maximum otions is ' + oldState.options.length);
+
+  var newState = Object.assign({}, oldState, { answer: oldState.options[selected] });
+
+  return newState;
+}
+
+/**
+ * @method render
+ * @param  {Object} state
+ * @return {HTMLElement} field
+ */
+function render$2(state) {
   var wrapper = document.createElement('div');
   wrapper.className = 'fl-if_Dropdown fl-if_OptionsInput';
 
   var select = document.createElement('select');
   select.className = 'fl-if_Dropdown-option';
-  select.setAttribute('name', config.title);
-  if (config.required) {
-    select.setAttribute('required', true);
-  }
+  select.setAttribute('name', state.title);
+  select.setAttribute('required', !!state.required);
   wrapper.appendChild(select);
 
   var optionEl = void 0;
-  for (var optionIndex = 0; optionIndex < config.options.length; optionIndex++) {
+  for (var optionIndex = 0; optionIndex < state.options.length; optionIndex++) {
     optionEl = document.createElement('option');
-    optionEl.setAttribute('value', config.options[optionIndex].value);
-    optionEl.innerHTML = config.options[optionIndex].caption;
+    optionEl.setAttribute('value', state.options[optionIndex].value);
+    optionEl.innerHTML = state.options[optionIndex].caption;
     if (optionIndex === 0) {
       optionEl.setAttribute('selected', true);
     }
 
-    var disabledIndexes = config.disabledIndexes || [];
+    var disabledIndexes = state.disabledIndexes || [];
     for (var j = 0; j < disabledIndexes.length; j++) {
-      if (optionIndex === config.disabledIndexes[j]) {
+      if (optionIndex === state.disabledIndexes[j]) {
         optionEl.setAttribute('disabled', true);
       }
     }
@@ -17066,127 +17273,234 @@ function createDropdownInput(config) {
     select.appendChild(optionEl);
   }
 
-  wrapper.getValue = function getValue() {
-    return select.value;
-  };
-
-  wrapper.validate = function () {
-    return validateDropdown(select, config.required);
-  };
-
-  select.addEventListener('blur', wrapper.validate);
-
-  return Promise.resolve(wrapper);
+  return wrapper;
 }
 
-function createCountryDropdownInput(config) {
-  config.disabledIndexes = [0];
-  config.options = [{ value: '', caption: 'Select an option' }, { value: 1, caption: 'AFGHANISTAN' }, { value: 2, caption: 'ALBANIA' }, { value: 3, caption: 'ALGERIA' }, { value: 4, caption: 'AMERICAN SAMOA' }, { value: 5, caption: 'ANDORRA' }, { value: 6, caption: 'ANGOLA' }, { value: 7, caption: 'ANGUILLA' }, { value: 8, caption: 'ANTARCTICA' }, { value: 9, caption: 'ANTIGUA AND BARBUDA' }, { value: 10, caption: 'ARGENTINA' }, { value: 11, caption: 'ARMENIA' }, { value: 12, caption: 'ARUBA' }, { value: 13, caption: 'AUSTRALIA' }, { value: 14, caption: 'AUSTRIA' }, { value: 15, caption: 'AZERBAIJAN' }, { value: 16, caption: 'BAHAMAS' }, { value: 17, caption: 'BAHRAIN' }, { value: 18, caption: 'BANGLADESH' }, { value: 19, caption: 'BARBADOS' }, { value: 20, caption: 'BELARUS' }, { value: 21, caption: 'BELGIUM' }, { value: 22, caption: 'BELIZE' }, { value: 23, caption: 'BENIN' }, { value: 24, caption: 'BERMUDA' }, { value: 25, caption: 'BHUTAN' }, { value: 26, caption: 'BOLIVIA' }, { value: 27, caption: 'BOSNIA AND HERZEGOWINA' }, { value: 28, caption: 'BOTSWANA' }, { value: 29, caption: 'BOUVET ISLAND' }, { value: 30, caption: 'BRAZIL' }, { value: 31, caption: 'BRITISH INDIAN OCEAN TERRITORY' }, { value: 32, caption: 'BRUNEI DARUSSALAM' }, { value: 33, caption: 'BULGARIA' }, { value: 34, caption: 'BURKINA FASO' }, { value: 35, caption: 'BURUNDI' }, { value: 36, caption: 'CAMBODIA' }, { value: 37, caption: 'CAMEROON' }, { value: 38, caption: 'CANADA' }, { value: 39, caption: 'CAPE VERDE' }, { value: 40, caption: 'CAYMAN ISLANDS' }, { value: 41, caption: 'CENTRAL AFRICAN REPUBLIC' }, { value: 42, caption: 'CHAD' }, { value: 43, caption: 'CHILE' }, { value: 44, caption: 'CHINA' }, { value: 45, caption: 'CHRISTMAS ISLAND' }, { value: 46, caption: 'COCOS (KEELING) ISLANDS' }, { value: 47, caption: 'COLOMBIA' }, { value: 48, caption: 'COMOROS' }, { value: 49, caption: 'CONGO' }, { value: 50, caption: 'CONGO, THE DRC' }, { value: 51, caption: 'COOK ISLANDS' }, { value: 52, caption: 'COSTA RICA' }, { value: 53, caption: 'COTE D\'IVOIRE' }, { value: 54, caption: 'CROATIA (local{ value: nam, caption: \'Hrvatska)' }, { value: 55, caption: 'CUBA' }, { value: 56, caption: 'CYPRUS' }, { value: 57, caption: 'CZECH REPUBLIC' }, { value: 58, caption: 'DENMARK' }, { value: 59, caption: 'DJIBOUTI' }, { value: 60, caption: 'DOMINICA' }, { value: 61, caption: 'DOMINICAN REPUBLIC' }, { value: 62, caption: 'EAST TIMOR' }, { value: 63, caption: 'ECUADOR' }, { value: 64, caption: 'EGYPT' }, { value: 65, caption: 'EL SALVADOR' }, { value: 242, caption: 'ENGLAND' }, { value: 66, caption: 'EQUATORIAL GUINEA' }, { value: 67, caption: 'ERITREA' }, { value: 68, caption: 'ESTONIA' }, { value: 69, caption: 'ETHIOPIA' }, { value: 70, caption: 'FALKLAND ISLANDS (MALVINAS)' }, { value: 71, caption: 'FAROE ISLANDS' }, { value: 72, caption: 'FIJI' }, { value: 73, caption: 'FINLAND' }, { value: 74, caption: 'FRANCE' }, { value: 75, caption: 'FRANCE, METROPOLITAN' }, { value: 76, caption: 'FRENCH GUIANA' }, { value: 77, caption: 'FRENCH POLYNESIA' }, { value: 78, caption: 'FRENCH SOUTHERN TERRITORIES' }, { value: 79, caption: 'GABON' }, { value: 246, caption: 'GALAPAGOS' }, { value: 80, caption: 'GAMBIA' }, { value: 81, caption: 'GEORGIA' }, { value: 82, caption: 'GERMANY' }, { value: 83, caption: 'GHANA' }, { value: 84, caption: 'GIBRALTAR' }, { value: 85, caption: 'GREECE' }, { value: 86, caption: 'GREENLAND' }, { value: 87, caption: 'GRENADA' }, { value: 88, caption: 'GUADELOUPE' }, { value: 89, caption: 'GUAM' }, { value: 90, caption: 'GUATEMALA' }, { value: 91, caption: 'GUINEA' }, { value: 92, caption: 'GUINEA-BISSAU' }, { value: 93, caption: 'GUYANA' }, { value: 94, caption: 'HAITI' }, { value: 245, caption: 'HAWAII' }, { value: 95, caption: 'HEARD AND MC DONALD ISLANDS' }, { value: 96, caption: 'HOLY SEE (VATICAN CITY STATE)' }, { value: 97, caption: 'HONDURAS' }, { value: 98, caption: 'HONG KONG' }, { value: 99, caption: 'HUNGARY' }, { value: 100, caption: 'ICELAND' }, { value: 101, caption: 'INDIA' }, { value: 102, caption: 'INDONESIA' }, { value: 103, caption: 'IRAN (ISLAMIC REPUBLIC OF)' }, { value: 104, caption: 'IRAQ' }, { value: 105, caption: 'IRELAND' }, { value: 106, caption: 'ISRAEL' }, { value: 107, caption: 'ITALY' }, { value: 108, caption: 'JAMAICA' }, { value: 109, caption: 'JAPAN' }, { value: 110, caption: 'JORDAN' }, { value: 111, caption: 'KAZAKHSTAN' }, { value: 112, caption: 'KENYA' }, { value: 113, caption: 'KIRIBATI' }, { value: 114, caption: 'KOREA, D.P.R.O.' }, { value: 115, caption: 'KOREA, REPUBLIC OF' }, { value: 116, caption: 'KUWAIT' }, { value: 117, caption: 'KYRGYZSTAN' }, { value: 118, caption: 'LAOS' }, { value: 119, caption: 'LATVIA' }, { value: 120, caption: 'LEBANON' }, { value: 121, caption: 'LESOTHO' }, { value: 122, caption: 'LIBERIA' }, { value: 123, caption: 'LIBYAN ARAB JAMAHIRIYA' }, { value: 124, caption: 'LIECHTENSTEIN' }, { value: 125, caption: 'LITHUANIA' }, { value: 126, caption: 'LUXEMBOURG' }, { value: 127, caption: 'MACAU' }, { value: 128, caption: 'MACEDONIA' }, { value: 129, caption: 'MADAGASCAR' }, { value: 130, caption: 'MALAWI' }, { value: 131, caption: 'MALAYSIA' }, { value: 132, caption: 'MALDIVES' }, { value: 133, caption: 'MALI' }, { value: 134, caption: 'MALTA' }, { value: 135, caption: 'MARSHALL ISLANDS' }, { value: 136, caption: 'MARTINIQUE' }, { value: 137, caption: 'MAURITANIA' }, { value: 138, caption: 'MAURITIUS' }, { value: 139, caption: 'MAYOTTE' }, { value: 140, caption: 'MEXICO' }, { value: 141, caption: 'MICRONESIA, FEDERATED STATES OF' }, { value: 142, caption: 'MOLDOVA, REPUBLIC OF' }, { value: 143, caption: 'MONACO' }, { value: 144, caption: 'MONGOLIA' }, { value: 145, caption: 'MONTENEGRO' }, { value: 146, caption: 'MONTSERRAT' }, { value: 147, caption: 'MOROCCO' }, { value: 148, caption: 'MOZAMBIQUE' }, { value: 244, caption: 'MULTI COUNTRY' }, { value: 149, caption: 'MYANMAR (Burma)' }, { value: 150, caption: 'NAMIBIA' }, { value: 151, caption: 'NAURU' }, { value: 152, caption: 'NEPAL' }, { value: 153, caption: 'NETHERLANDS' }, { value: 154, caption: 'NETHERLANDS ANTILLES' }, { value: 155, caption: 'NEW CALEDONIA' }, { value: 156, caption: 'NEW ZEALAND' }, { value: 157, caption: 'NICARAGUA' }, { value: 158, caption: 'NIGER' }, { value: 159, caption: 'NIGERIA' }, { value: 160, caption: 'NIUE' }, { value: 161, caption: 'NORFOLK ISLAND' }, { value: 162, caption: 'NORTHERN MARIANA ISLANDS' }, { value: 163, caption: 'NORWAY' }, { value: 164, caption: 'OMAN' }, { value: 165, caption: 'PAKISTAN' }, { value: 166, caption: 'PALAU' }, { value: 167, caption: 'PANAMA' }, { value: 168, caption: 'PAPUA NEW GUINEA' }, { value: 169, caption: 'PARAGUAY' }, { value: 170, caption: 'PERU' }, { value: 171, caption: 'PHILIPPINES' }, { value: 172, caption: 'PITCAIRN' }, { value: 173, caption: 'POLAND' }, { value: 174, caption: 'PORTUGAL' }, { value: 175, caption: 'PUERTO RICO' }, { value: 176, caption: 'QATAR' }, { value: 177, caption: 'REUNION' }, { value: 178, caption: 'ROMANIA' }, { value: 179, caption: 'RUSSIAN FEDERATION' }, { value: 180, caption: 'RWANDA' }, { value: 181, caption: 'SAINT KITTS AND NEVIS' }, { value: 182, caption: 'SAINT LUCIA' }, { value: 183, caption: 'SAINT VINCENT AND THE GRENADINES' }, { value: 184, caption: 'SAMOA' }, { value: 185, caption: 'SAN MARINO' }, { value: 186, caption: 'SAO TOME AND PRINCIPE' }, { value: 187, caption: 'SAUDI ARABIA' }, { value: 243, caption: 'SCOTLAND' }, { value: 188, caption: 'SENEGAL' }, { value: 189, caption: 'SERBIA' }, { value: 190, caption: 'SEYCHELLES' }, { value: 191, caption: 'SIERRA LEONE' }, { value: 192, caption: 'SINGAPORE' }, { value: 193, caption: 'SLOVAKIA (Slovak Republic)' }, { value: 194, caption: 'SLOVENIA' }, { value: 195, caption: 'SOLOMON ISLANDS' }, { value: 196, caption: 'SOMALIA' }, { value: 197, caption: 'SOUTH AFRICA' }, { value: 198, caption: 'SOUTH GEORGIA AND SOUTH S.S.' }, { value: 199, caption: 'SOUTH SUDAN' }, { value: 200, caption: 'SPAIN' }, { value: 201, caption: 'SRI LANKA' }, { value: 202, caption: 'ST. HELENA' }, { value: 203, caption: 'ST. PIERRE AND MIQUELON' }, { value: 204, caption: 'SUDAN' }, { value: 205, caption: 'SURINAME' }, { value: 206, caption: 'SVALBARD AND JAN MAYEN ISLANDS' }, { value: 207, caption: 'SWAZILAND' }, { value: 208, caption: 'SWEDEN' }, { value: 209, caption: 'SWITZERLAND' }, { value: 210, caption: 'SYRIAN ARAB REPUBLIC' }, { value: 211, caption: 'TAIWAN, PROVINCE OF CHINA' }, { value: 212, caption: 'TAJIKISTAN' }, { value: 213, caption: 'TANZANIA, UNITED REPUBLIC OF' }, { value: 214, caption: 'THAILAND' }, { value: 215, caption: 'TOGO' }, { value: 216, caption: 'TOKELAU' }, { value: 217, caption: 'TONGA' }, { value: 218, caption: 'TRINIDAD AND TOBAGO' }, { value: 219, caption: 'TUNISIA' }, { value: 220, caption: 'TURKEY' }, { value: 221, caption: 'TURKMENISTAN' }, { value: 222, caption: 'TURKS AND CAICOS ISLANDS' }, { value: 223, caption: 'TUVALU' }, { value: 224, caption: 'U.S. MINOR ISLANDS' }, { value: 225, caption: 'UGANDA' }, { value: 226, caption: 'UKRAINE' }, { value: 227, caption: 'UNITED ARAB EMIRATES' }, { value: 228, caption: 'UNITED KINGDOM' }, { value: 229, caption: 'UNITED STATES' }, { value: 230, caption: 'URUGUAY' }, { value: 231, caption: 'UZBEKISTAN' }, { value: 232, caption: 'VANUATU' }, { value: 233, caption: 'VENEZUELA' }, { value: 234, caption: 'VIETNAM' }, { value: 235, caption: 'VIRGIN ISLANDS (BRITISH)' }, { value: 236, caption: 'VIRGIN ISLANDS (U.S.)' }, { value: 237, caption: 'WALLIS AND FUTUNA ISLANDS' }, { value: 238, caption: 'WESTERN SAHARA' }, { value: 239, caption: 'YEMEN' }, { value: 240, caption: 'ZAMBIA' }, { value: 241, caption: 'ZIMBABWE' }];
-  return createDropdownInput(config);
+var isString = createCommonjsModule(function (module) {
+var isArray = interopDefault(require$$1$35),
+    isObjectLike = interopDefault(require$$0$58);
+
+/** `Object#toString` result references. */
+var stringTag = '[object String]';
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+
+/**
+ * Used to resolve the
+ * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+ * of values.
+ */
+var objectToString = objectProto.toString;
+
+/**
+ * Checks if `value` is classified as a `String` primitive or object.
+ *
+ * @static
+ * @since 0.1.0
+ * @memberOf _
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a string, else `false`.
+ * @example
+ *
+ * _.isString('abc');
+ * // => true
+ *
+ * _.isString(1);
+ * // => false
+ */
+function isString(value) {
+  return typeof value == 'string' ||
+    (!isArray(value) && isObjectLike(value) && objectToString.call(value) == stringTag);
 }
 
-var textInputTypes = {
-  TextArea: {
-    type: 'text',
-    regex: /\w{2,}/,
-    error: 'This field must be filled'
-  },
-  TextBox: {
-    type: 'text',
-    regex: /\w{2,}/,
-    error: 'This field must be filled'
-  },
-  EmailBox: {
-    type: 'email',
-    // Simple and quite broad for basic validation.
-    regex: /^(.+)@(.+){2,}\.(.+){2,}$/,
-    error: 'Please insert a valid email address'
-  },
-  NumberBox: {
-    type: 'number',
-    regex: /^[0-9]+$/,
-    error: 'Please insert a valid number'
-  },
-  TelephoneBox: {
-    type: 'tel',
-    // matches (+23) 2343 - 2342
-    regex: /^[\+0-9\-\(\)\s]{6,}$/,
-    error: 'Please insert a valid telephone number'
+module.exports = isString;
+});
+
+var isString$1 = interopDefault(isString);
+
+
+var require$$2$49 = Object.freeze({
+	"default": isString$1
+});
+
+var _baseValues = createCommonjsModule(function (module) {
+var arrayMap = interopDefault(require$$0$96);
+
+/**
+ * The base implementation of `_.values` and `_.valuesIn` which creates an
+ * array of `object` property values corresponding to the property names
+ * of `props`.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @param {Array} props The property names to get values for.
+ * @returns {Object} Returns the array of property values.
+ */
+function baseValues(object, props) {
+  return arrayMap(props, function(key) {
+    return object[key];
+  });
+}
+
+module.exports = baseValues;
+});
+
+var _baseValues$1 = interopDefault(_baseValues);
+
+
+var require$$1$76 = Object.freeze({
+	"default": _baseValues$1
+});
+
+var values$1 = createCommonjsModule(function (module) {
+var baseValues = interopDefault(require$$1$76),
+    keys = interopDefault(require$$0$70);
+
+/**
+ * Creates an array of the own enumerable string keyed property values of `object`.
+ *
+ * **Note:** Non-object values are coerced to objects.
+ *
+ * @static
+ * @since 0.1.0
+ * @memberOf _
+ * @category Object
+ * @param {Object} object The object to query.
+ * @returns {Array} Returns the array of property values.
+ * @example
+ *
+ * function Foo() {
+ *   this.a = 1;
+ *   this.b = 2;
+ * }
+ *
+ * Foo.prototype.c = 3;
+ *
+ * _.values(new Foo);
+ * // => [1, 2] (iteration order is not guaranteed)
+ *
+ * _.values('hi');
+ * // => ['h', 'i']
+ */
+function values(object) {
+  return object ? baseValues(object, keys(object)) : [];
+}
+
+module.exports = values;
+});
+
+var values$2 = interopDefault(values$1);
+
+
+var require$$0$107 = Object.freeze({
+	"default": values$2
+});
+
+var includes$2 = createCommonjsModule(function (module) {
+var baseIndexOf = interopDefault(require$$4$12),
+    isArrayLike = interopDefault(require$$3$17),
+    isString = interopDefault(require$$2$49),
+    toInteger = interopDefault(require$$1$39),
+    values = interopDefault(require$$0$107);
+
+/* Built-in method references for those with the same name as other `lodash` methods. */
+var nativeMax = Math.max;
+
+/**
+ * Checks if `value` is in `collection`. If `collection` is a string, it's
+ * checked for a substring of `value`, otherwise
+ * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
+ * is used for equality comparisons. If `fromIndex` is negative, it's used as
+ * the offset from the end of `collection`.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Collection
+ * @param {Array|Object|string} collection The collection to inspect.
+ * @param {*} value The value to search for.
+ * @param {number} [fromIndex=0] The index to search from.
+ * @param- {Object} [guard] Enables use as an iteratee for methods like `_.reduce`.
+ * @returns {boolean} Returns `true` if `value` is found, else `false`.
+ * @example
+ *
+ * _.includes([1, 2, 3], 1);
+ * // => true
+ *
+ * _.includes([1, 2, 3], 1, 2);
+ * // => false
+ *
+ * _.includes({ 'a': 1, 'b': 2 }, 1);
+ * // => true
+ *
+ * _.includes('abcd', 'bc');
+ * // => true
+ */
+function includes(collection, value, fromIndex, guard) {
+  collection = isArrayLike(collection) ? collection : values(collection);
+  fromIndex = (fromIndex && !guard) ? toInteger(fromIndex) : 0;
+
+  var length = collection.length;
+  if (fromIndex < 0) {
+    fromIndex = nativeMax(length + fromIndex, 0);
+  }
+  return isString(collection)
+    ? (fromIndex <= length && collection.indexOf(value, fromIndex) > -1)
+    : (!!length && baseIndexOf(collection, value, fromIndex) > -1);
+}
+
+module.exports = includes;
+});
+
+var includes$3 = interopDefault(includes$2);
+
+
+var require$$1$75 = Object.freeze({
+	"default": includes$3
+});
+
+var includes$1 = createCommonjsModule(function (module) {
+var convert = interopDefault(require$$2$12),
+    func = convert('includes', interopDefault(require$$1$75));
+
+func.placeholder = interopDefault(require$$0$46);
+module.exports = func;
+});
+
+var _includes = interopDefault(includes$1);
+
+/**
+ * @method validate
+ * @param  {Object} state
+ * @return {Stirng | null} Error
+ */
+function validate$1(state) {
+  if (_isNil(state.answer)) {
+    return 'Please select an option';
+  }
+
+  if (!state.disabledIndexes) {
+    return null;
+  }
+
+  if (_includes(state.answer, state.disabledIndexes)) {
+    return 'Please select a valid option';
+  }
+
+  return null;
+}
+
+var Dropdown = {
+  info: info$2,
+  initialState: initialState$3,
+  es3: {
+    validate: validate$1,
+    getState: getState$1,
+    render: render$2
   }
 };
-
-// Returns true if valid and false if not.
-// HTML -> Boolean
-function validate(field, required, type) {
-  // Remove errors
-  removeErrorMessage(field.parentElement);
-  var regex = textInputTypes[type].regex;
-  var content = trimSpaces(field.value);
-
-  if (!required || !regex || regex.test(content)) {
-    return true;
-  }
-  field.parentElement.appendChild(createErrorMessage(textInputTypes[type].error));
-  return false;
-}
-
-function createTextInput(config) {
-  var tagName = config.type === 'TextArea' ? 'textarea' : 'input';
-  var el = document.createElement(tagName);
-  el.className = tagName === 'textarea' ? 'fl-if_TextInput-input fl-if_TextAreaInput-input' : 'fl-if_TextInput-input';
-  el.setAttribute('name', config.title);
-  el.setAttribute('type', textInputTypes[config.type].type);
-  el.placeholder = config.placeholder;
-  if (config.required) {
-    el.setAttribute('required', true);
-  }
-
-  el.getValue = function getValue() {
-    return el.value;
-  };
-
-  el.validate = function () {
-    return validate(el, config.required, config.type);
-  };
-
-  el.addEventListener('blur', el.validate);
-
-  return Promise.resolve(el);
-}
-
-function validate$1(field, required) {
-  var dateNumbers = trimSpaces(field.value).match(/[0-9]/g) || [];
-  var container = field.parentElement;
-  removeErrorMessage(container);
-
-  if (required && dateNumbers.length !== 8) {
-    createErrorMessage(container);
-    return false;
-  }
-  return true;
-}
-
-function createDateInput(config) {
-  // eslint-disable-line no-unused-vars
-  var dateField = document.createElement('input');
-  dateField.setAttribute('type', 'text');
-  dateField.className = 'fl-if_TextInput-input';
-  dateField.value = 'DD/MM/YYYY';
-  if (config.required) {
-    dateField.setAttribute('required', true);
-  }
-  applyDataMask(dateField, '  /  /    ');
-
-  dateField.getValue = function () {
-    return dateField.value;
-  };
-
-  dateField.validate = function () {
-    return validate$1(dateField, config.required);
-  };
-
-  return Promise.resolve(dateField);
-}
 
 // ================= FIELD FACTORY ===================//
 //
@@ -17194,16 +17508,9 @@ function createDateInput(config) {
 //
 
 var defaultInputCreators = {
-  EmailBox: createTextInput,
-  NumberBox: createTextInput,
-  TelephoneBox: createTextInput,
-  TextBox: createTextInput,
-  TextArea: createTextInput,
-  Checkboxes: createOptionsInput,
-  Dropdown: createDropdownInput,
-  CountryDropdown: createCountryDropdownInput,
-  RadioButtons: createOptionsInput,
-  DateField: createDateInput
+  TextBox: TextBox,
+  TextArea: TextArea,
+  Dropdown: Dropdown
 };
 
 /**
@@ -17222,9 +17529,11 @@ function formField(config) {
   legend.innerHTML = config.title;
 
   var inputCreators = Object.assign({}, defaultInputCreators, customFields);
-  var elementType = inputCreators[config.type] || inputCreators[config.primitiveType];
 
-  return elementType(config).then(function (inputEl) {
+  var fieldConstructor = inputCreators[config.type] || inputCreators[config.primitiveType];
+
+  return fieldConstructor.initialState(config).then(function (initialState) {
+    var inputEl = fieldConstructor.es3.render(initialState);
     wrapper.appendChild(legend);
     wrapper.appendChild(inputEl);
     wrapper.getValue = inputEl.getValue;
@@ -17328,7 +17637,7 @@ function es3Form(config, customFields) {
 // START HERE
 var flInteractiveForm = {
   create: function create(config, customFields) {
-    assert(config && config.length !== undefined, 'The first argument must be a configuration array');
+    assert$2(config && config.length !== undefined, 'The first argument must be a configuration array');
 
     return es3Form(config, customFields);
   }

@@ -1,4 +1,4 @@
-import textFieldRender from '../TextField/render';
+import textFieldRender from '../TextBox/render';
 
 /**
  * @method render

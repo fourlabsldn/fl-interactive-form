@@ -17,5 +17,5 @@ export default function render(state) {
 
   el.setAttribute('required', !!state.required);
 
-  return Promise.resolve(el);
+  return el;
 }

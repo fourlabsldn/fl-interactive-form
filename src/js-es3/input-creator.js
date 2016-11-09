@@ -1,6 +1,6 @@
-import { createOptionsInput, createDropdownInput, createCountryDropdownInput } from './input-types/options-input';
-import createTextInput from './input-types/text-input';
-import createDateInput from './input-types/date-input';
+import TextBox from './form-fields/TextBox/main';
+import TextArea from './form-fields/TextArea/main';
+import Dropdown from './form-fields/Dropdown/main';
 
 // ================= FIELD FACTORY ===================//
 //
@@ -8,16 +8,9 @@ import createDateInput from './input-types/date-input';
 //
 
 const defaultInputCreators = {
-  EmailBox: createTextInput,
-  NumberBox: createTextInput,
-  TelephoneBox: createTextInput,
-  TextBox: createTextInput,
-  TextArea: createTextInput,
-  Checkboxes: createOptionsInput,
-  Dropdown: createDropdownInput,
-  CountryDropdown: createCountryDropdownInput,
-  RadioButtons: createOptionsInput,
-  DateField: createDateInput,
+  TextBox,
+  TextArea,
+  Dropdown,
 };
 
 /**
@@ -34,10 +27,12 @@ export default function formField(config, customFields = {}) {
   legend.innerHTML = config.title;
 
   const inputCreators = Object.assign({}, defaultInputCreators, customFields);
-  const elementType = inputCreators[config.type] || inputCreators[config.primitiveType];
 
-  return elementType(config)
-    .then(inputEl => {
+  const fieldConstructor = inputCreators[config.type] || inputCreators[config.primitiveType];
+
+  return fieldConstructor.initialState(config)
+    .then(initialState => {
+      const inputEl = fieldConstructor.es3.render(initialState);
       wrapper.appendChild(legend);
       wrapper.appendChild(inputEl);
       wrapper.getValue = inputEl.getValue;
