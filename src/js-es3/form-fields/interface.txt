@@ -10,10 +10,9 @@
   RenderEditor: Object -> ReactElement // React render function
 
   es3 : {
-    isValid: HTMLElement -> Boolean
+    validate: Object -> Boolean
     getState: HTMLElement -> Object
     render: Object -> HTMLElement
-    showErrors: Boolean -> Object -> HTMLElement
   }
 };
 
