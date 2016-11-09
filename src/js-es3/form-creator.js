@@ -7,12 +7,13 @@ import { flow, zip, map } from 'lodash/fp';
 
 function addListeners(formWrapper, questions, fieldConstructors, initialStates) {
   const listeners = [];
+  const form = formWrapper.querySelector('form');
 
   formWrapper.addEventListener = function customAddEventListener(event, callback) { // eslint-disable-line max-len, no-param-reassign
     if (event === 'submit') {
       listeners.push(callback);
     } else {
-      return formWrapper.addEventListener(event, callback);
+      return form.addEventListener(event, callback);
     }
     return null;
   };
@@ -24,7 +25,7 @@ function addListeners(formWrapper, questions, fieldConstructors, initialStates) 
     }
   };
 
-  formWrapper.addEventListener('submit', e => {
+  form.addEventListener('submit', e => {
     e.preventDefault();
     e.stopPropagation();
     const submitBtnContainer = formWrapper.querySelector('button[type=submit]').parentElement;
