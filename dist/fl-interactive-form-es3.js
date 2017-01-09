@@ -8248,15 +8248,20 @@ function createDropdownInput(config) {
   wrapper.appendChild(select);
 
   var optionEl = void 0;
+
+  // default placeholder
+  optionEl = document.createElement('option');
+  optionEl.innerHTML = 'Please select an option';
+  optionEl.setAttribute('selected', true);
+  optionEl.setAttribute('disabled', true);
+  select.appendChild(optionEl);
+
+  var disabledIndexes = config.disabledIndexes || [];
   for (var optionIndex = 0; optionIndex < config.options.length; optionIndex++) {
     optionEl = document.createElement('option');
-    optionEl.setAttribute('value', config.options[optionIndex].value);
+    optionEl.setAttribute('value', config.options[optionIndex].caption);
     optionEl.innerHTML = config.options[optionIndex].caption;
-    if (optionIndex === 0) {
-      optionEl.setAttribute('selected', true);
-    }
 
-    var disabledIndexes = config.disabledIndexes || [];
     for (var j = 0; j < disabledIndexes.length; j++) {
       if (optionIndex === config.disabledIndexes[j]) {
         optionEl.setAttribute('disabled', true);

@@ -92,16 +92,20 @@ export function createDropdownInput(config) {
   wrapper.appendChild(select);
 
   let optionEl;
+
+  // default placeholder
+  optionEl = document.createElement('option');
+  optionEl.innerHTML = 'Please select an option';
+  optionEl.setAttribute('selected', true);
+  optionEl.setAttribute('disabled', true);
+  select.appendChild(optionEl);
+
+  const disabledIndexes = config.disabledIndexes || [];
   for (let optionIndex = 0; optionIndex < config.options.length; optionIndex++) {
     optionEl = document.createElement('option');
-    optionEl.setAttribute('value', config.options[optionIndex].value);
+    optionEl.setAttribute('value', config.options[optionIndex].caption);
     optionEl.innerHTML = config.options[optionIndex].caption;
-    if (optionIndex === 0) {
-      optionEl.setAttribute('selected', true);
-    }
 
-
-    const disabledIndexes = config.disabledIndexes || [];
     for (let j = 0; j < disabledIndexes.length; j++) {
       if (optionIndex === config.disabledIndexes[j]) {
         optionEl.setAttribute('disabled', true);

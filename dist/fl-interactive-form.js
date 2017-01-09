@@ -5095,7 +5095,9 @@ var Dropdown = function (_OptionsInput) {
   }, {
     key: 'onChange',
     value: function onChange() {
-      var selectedOption = this.refs.selectionBox.selectedIndex;
+      // We subtract one because we are adding a placeholder option which
+      // should not count in the response
+      var selectedOption = this.refs.selectionBox.selectedIndex - 1;
       this.saveResponseAndJumpToQuestion(selectedOption, 'next');
     }
 
@@ -5112,8 +5114,7 @@ var Dropdown = function (_OptionsInput) {
       var _this2 = this;
 
       var disabledIndexes = this.props.config.disabledIndexes || [];
-      var optionEls = options.map(function (option, index) {
-        var disabled = disabledIndexes.indexOf(index) !== -1;
+      var generateOptionElement = function generateOptionElement(option, disabled, index) {
         return React.createElement(
           'option',
           {
@@ -5124,7 +5125,15 @@ var Dropdown = function (_OptionsInput) {
           },
           option.caption
         );
+      };
+
+      var optionEls = options.map(function (option, index) {
+        return generateOptionElement(option, disabledIndexes.indexOf(index) !== -1, index);
       });
+
+      var placeholderOption = generateOptionElement({ caption: "Select an option", value: "Select an option" }, true, -1);
+
+      var optionElsWithPlaceholder = [placeholderOption].concat(_toConsumableArray(optionEls));
 
       var classes = [this.bemSubComponent('option'), globals.FOCUS_CLASS].join(' ');
 
@@ -5145,7 +5154,7 @@ var Dropdown = function (_OptionsInput) {
           onChange: this.onChange,
           ref: 'selectionBox'
         }, additionalProps),
-        optionEls
+        optionElsWithPlaceholder
       );
     }
   }]);
