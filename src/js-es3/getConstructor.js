@@ -21,7 +21,7 @@ const defaultConstructors = {
   RadioButtons,
 };
 
-const getConstructor = curry((customConstructors, config) => {
+const getConstructor = curry((customConstructors = [], config) => {
   const customConstr = customConstructors
     .reduce((out, c) => Object.assign({}, out, { [c.info.type]: c }), {});
 

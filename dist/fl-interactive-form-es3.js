@@ -18378,7 +18378,10 @@ var defaultConstructors = {
   RadioButtons: RadioButtons
 };
 
-var getConstructor$2 = _curry(function (customConstructors, config) {
+var getConstructor$2 = _curry(function () {
+  var customConstructors = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var config = arguments[1];
+
   var customConstr = customConstructors.reduce(function (out, c) {
     return Object.assign({}, out, defineProperty$1({}, c.info.type, c));
   }, {});

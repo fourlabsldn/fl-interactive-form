@@ -26,7 +26,9 @@ export default class Dropdown extends OptionsInput {
   }
 
   onChange() {
-    const selectedOption = this.refs.selectionBox.selectedIndex;
+    // We subtract one because we are adding a placeholder option which
+    // should not count in the response
+    const selectedOption = this.refs.selectionBox.selectedIndex - 1;
     this.saveResponseAndJumpToQuestion(selectedOption, 'next');
   }
 
@@ -39,19 +41,34 @@ export default class Dropdown extends OptionsInput {
    */
   generateOptions(options) {
     const disabledIndexes = this.props.config.disabledIndexes || [];
-    const optionEls = options.map((option, index) => {
-      const disabled = disabledIndexes.indexOf(index) !== -1;
-      return (
-        <option
-          key={`${this.props.config.key}${index}`}
-          tabIndex="0"
-          disabled={disabled}
-          value={option.value}
-        >
-          {option.caption}
-        </option>
+    const generateOptionElement = (option, disabled, index) =>
+    (
+      <option
+        key={`${this.props.config.key}${index}`}
+        tabIndex="0"
+        disabled={disabled}
+        value={option.value}
+      >
+        {option.caption}
+      </option>
+    );
+
+    const optionEls = options.map(
+      (option, index) =>
+        generateOptionElement(
+          option,
+          disabledIndexes.indexOf(index) !== -1,
+          index
+        )
       );
-    });
+
+    const placeholderOption = generateOptionElement(
+      { caption: "Select an option", value: "Select an option" },
+      true,
+      -1
+    );
+
+    const optionElsWithPlaceholder = [placeholderOption, ...optionEls];
 
     const classes = [
       this.bemSubComponent('option'),
@@ -75,7 +92,7 @@ export default class Dropdown extends OptionsInput {
         ref="selectionBox"
         {...additionalProps}
       >
-        {optionEls}
+        {optionElsWithPlaceholder}
       </ select>
     );
   }
