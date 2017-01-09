@@ -1,0 +1,106 @@
+
+.fl-if_FormField {
+  display: block;
+  min-width: 13em;
+  max-width: 40em;
+  margin: 1em auto 45px;
+  padding-right: $s-right-padding;
+  padding-left: $s-left-padding;
+
+  transform: scale(.98);
+  transition: all .3s ease-in-out;
+
+  text-align: left;
+  //Inactive styles
+  opacity: .2;
+
+  &:first-child {
+    margin-top: 300px;
+  }
+
+  &--active {
+    pointer-events: all;
+    opacity: 1;
+    // margin: 5em auto;
+    transform: scale(1);
+  }
+
+  @include large-screen {
+    min-width: 40em;
+    max-width: none;
+    width: 60%;
+  }
+}
+
+.fl-if_FormUI-es3 {
+  .fl-if_FormField:first-child {
+    margin-top: 1em;
+  }
+}
+
+.fl-if_FormField-okIcon {
+  position: absolute;
+  left: - 1.3em;
+  top: .12em;
+  color: $c-valid-2;
+  opacity: 0;
+  transition: opacity .2s ease-in-out;
+
+  .fl-if_FormField--completed & {
+    opacity: 1;
+  }
+}
+
+.fl-if_FormField-legend {
+  font-size: $s-font-medium-large;
+  padding: 0;
+  text-align: left;
+  position: relative;
+
+  margin: 0 0 17px;
+
+  @media(max-height: $screen-tiny-height) {
+    margin: 0 0 10px;
+  }
+}
+
+@keyframes bounce-in {
+  0% { transform: scale(0); }
+  30% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+.fl-if_FormField-error {
+  background-color: $c-error;
+  color: $c-error-text;
+  padding: .3em .5em;
+  border-radius: 4px;
+  position: absolute;
+  display: block;
+  margin-top: 1em;
+  font-size: .8em;
+  transform-origin: top left;
+  font-smoothing: antialiased;
+  text-shadow: rgba(0,0,0,.01) 0 0 1px;
+
+  border-color: darken($c-error, 15%);
+  border-style: solid;
+  border-width: 0 1px 3px;
+
+  animation: bounce-in .3s ease-in-out forwards;
+  &::before {
+    $s-triangle-width: .5em;
+    $s-triangle-height: .5em;
+
+    content: '';
+    position: absolute;
+    background-color: transparent;
+    display: block;
+    width: 0;
+    top: .1em - $s-triangle-height;
+    left: 1em;
+    border-style: solid;
+    border-color: $c-error transparent;
+    border-width: 0 $s-triangle-width $s-triangle-height;
+  }
+}

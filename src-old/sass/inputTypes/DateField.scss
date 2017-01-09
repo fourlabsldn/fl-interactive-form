@@ -1,0 +1,41 @@
+.fl-if_DateField {
+  @extend .fl-if_TextInput-input;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  h2 {
+    display: none;
+  }
+
+  input {
+    background-color: inherit;
+    border: inherit;
+    font-size: inherit;
+
+    &:focus:active,
+    &:focus,
+    &:active {
+      outline: none;
+    }
+  }
+
+  .fl-fb-Field-dateslot-day,
+  .fl-fb-Field-dateslot-month,
+  .fl-fb-Field-dateslot-year {
+    width: 1.8em;
+    display: inline-block;
+    min-width: 0;
+    margin: 0 .1em;
+    text-align: center;
+  }
+
+  .fl-fb-Field-dateslot-year {
+    width: 2.8em;
+  }
+}
+
+.fl-if_FormUI-es3 .fl-if_DateField {
+  font-size: 16px;
+  min-height: 3em;
+}
