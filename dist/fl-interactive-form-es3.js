@@ -8213,7 +8213,7 @@ function createOptionsInput(config) {
     var optionEl = document.createElement('input');
     optionEl.id = optionID;
     optionEl.type = optionType;
-    optionEl.setAttribute('value', config.options[i].value);
+    optionEl.setAttribute('value', config.options[i].value || config.options[i].caption);
     optionEl.setAttribute('name', optionName);
     optionWrapper.appendChild(optionEl);
 
@@ -8274,7 +8274,9 @@ function createDropdownInput(config) {
   var disabledIndexes = config.disabledIndexes || [];
   for (var optionIndex = 0; optionIndex < config.options.length; optionIndex++) {
     optionEl = document.createElement('option');
-    optionEl.setAttribute('value', config.options[optionIndex].caption);
+
+    var optionValue = config.options[optionIndex].value || config.options[optionIndex].caption;
+    optionEl.setAttribute('value', optionValue);
     optionEl.innerHTML = config.options[optionIndex].caption;
 
     for (var j = 0; j < disabledIndexes.length; j++) {
