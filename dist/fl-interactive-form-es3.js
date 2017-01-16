@@ -185,6 +185,7 @@ function createDropdownInput(config) {
   optionEl.innerHTML = 'Please select an option';
   optionEl.setAttribute('selected', true);
   optionEl.setAttribute('disabled', true);
+  optionEl.setAttribute('value', ''); // required for form validation to function
   select.appendChild(optionEl);
 
   var disabledIndexes = config.disabledIndexes || [];
