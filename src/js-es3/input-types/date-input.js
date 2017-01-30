@@ -6,7 +6,7 @@ function validate(field, required) {
   removeErrorMessage(container);
 
   if (required && dateNumbers.length !== 8) {
-    createErrorMessage(container);
+    container.appendChild(createErrorMessage("Please insert a valid date of type DD/MM/YYYY"));
     return false;
   }
   return true;

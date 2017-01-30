@@ -1,0 +1,75 @@
+.fl-if_FormUI {
+  display: block;
+  position: relative;
+
+  background-color: $c-primary;
+  max-width: 100vw;
+  overflow: auto;
+
+  width: 100%;
+  height: 100%;
+
+  font-family: Europa, Arial, sans-serif;
+  font-size: 16px;
+  padding: 0;
+  box-sizing: border-box;
+
+  & * {
+    box-sizing: border-box;
+  }
+
+  // Custom scrollbar
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 3px;
+    background-color: transparent;
+    cursor: auto;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: transparent;
+  }
+
+  &:hover::-webkit-scrollbar-thumb {
+    background-color: $c-accent;
+  }
+}
+
+.fl-if_FormUI-questionsViewBox {
+  display: block;
+  width: 100%;
+  max-height: calc(100% - #{$s-navigation-height});
+  overflow: auto;
+
+  // Custom scrollbar
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 3px;
+    background-color: transparent;
+    cursor: auto;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: transparent;
+  }
+
+  &:hover::-webkit-scrollbar-thumb {
+    background-color: $c-accent;
+  }
+}
+
+.fl-if_FormUI-questions {
+  display: block;
+  width: 100%;
+  text-align: right;
+  padding: 1px 1px; // Get rid of margin collapsing
+  // transition: transform .4s ease-in-out;
+}

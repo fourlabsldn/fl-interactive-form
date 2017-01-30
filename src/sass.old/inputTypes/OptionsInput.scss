@@ -1,0 +1,129 @@
+.fl-if_OptionsInput {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  pointer-events: none;
+
+  .fl-if_FormField--active & {
+    pointer-events: all;
+  }
+
+  $c-radio-checked-bg: rgba($c-valid-2, .2);
+  $c-radio-checked-hover-bg: darken($c-radio-checked-bg, 10%);
+
+  &-option {
+    display: inline-block;
+
+    position: relative;
+    background-color: transparent;
+    width: 100%;
+    padding: .2em .5em .2em 2em;
+    margin: .2em 0;
+    border: 1px solid $c-primary-border;
+    border-radius: 4px;
+
+    font-size: $s-font-small;
+    font-family: $f-main;
+    text-align: left;
+    white-space: normal;
+    line-height: 1.4em;
+
+    appearance: none;
+    cursor: pointer;
+    user-select: none;
+
+    &::before {
+      content: ' ';
+      display: inline-block;
+      position: absolute;
+      top: .27em;
+      left: .4em;
+      width: 1em;
+      height: 1em;
+      background: linear-gradient(lighten($c-secondary-text, 20%), lighten($c-secondary-text, 10%));
+      border: 1px solid $c-primary-border;
+    }
+
+    &:hover,
+    &:focus {
+      outline: 0;
+      background-color: rgba($c-secondary, .1);
+    }
+  }
+
+  &-radio:before {
+    border-radius: 50%;
+  }
+
+  &-checkbox:before {
+    border-radius: 4px;
+  }
+
+  &-option--selected {
+    background-color: $c-radio-checked-bg;
+
+    &::before {
+      background: $c-valid;
+      background: linear-gradient($c-valid, lighten($c-valid, 10%));
+    }
+
+    &:hover,
+    &:focus {
+      background-color: $c-radio-checked-hover-bg;
+    }
+  }
+}
+
+// es3 code
+.fl-if_OptionsInput-optionWrapper {
+  position: relative;
+}
+
+.fl-if_OptionsInput input[type="radio"],
+.fl-if_OptionsInput input[type="checkbox"] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  display: block;
+  width: 8em;
+  height: 2.5em;
+  cursor: pointer;
+  opacity: 0;
+
+  &:checked ~ label {
+    @extend .fl-if_OptionsInput-option--selected;
+  }
+}
+
+.fl-if_Dropdown {
+
+  &::before {
+    content: ' ';
+    display: block;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-color: grey transparent;
+    border-width: .5em .4em 0;
+    position: absolute;
+    right: .8em;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+  }
+
+  &-option {
+    @extend .fl-if_OptionsInput-option;
+    border: 2px dashed $c-secondary-text;
+    color: $c-primary-text;
+    min-height: 4em;
+    padding: .1em 24px;
+    font-family: Europa, Arial, sans-serif;
+  }
+}
+
+.fl-if_FormUI-es3 .fl-if_Dropdown-option {
+  font-size: 16px;
+  min-height: 3em;
+}

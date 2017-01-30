@@ -1,0 +1,47 @@
+
+@keyframes bounce-in {
+  0% { transform: scale(0); }
+  30% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+.fl-if_Error {
+  background-color: $c-error;
+  color: $c-error-text;
+  padding: .3em .5em;
+  border-radius: 4px;
+  position: absolute;
+  display: block;
+  margin-top: .6em;
+  font-smoothing: antialiased;
+  text-shadow: rgba(0,0,0,.01) 0 0 1px;
+
+  max-width: 25em;
+  border-color: darken($c-error, 15%);
+  border-style: solid;
+  border-width: 0 1px 3px;
+
+  animation: bounce-in .3s ease-in-out forwards;
+
+
+  &--speechBubble{
+    transform-origin: top left;
+    font-size: .8em;
+
+    &::before {
+      $s-triangle-width: .5em;
+      $s-triangle-height: .5em;
+
+      content: '';
+      position: absolute;
+      background-color: transparent;
+      display: block;
+      width: 0;
+      top: .1em - $s-triangle-height;
+      left: 1em;
+      border-style: solid;
+      border-color: $c-error transparent;
+      border-width: 0 $s-triangle-width $s-triangle-height;
+    }
+  }
+}
