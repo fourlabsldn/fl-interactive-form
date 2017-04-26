@@ -1,7 +1,7 @@
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
-  typeof define === 'function' && define.amd ? define(factory) :
-  (global.flInteractiveForm = factory());
+	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+	typeof define === 'function' && define.amd ? define(factory) :
+	(global.flInteractiveForm = factory());
 }(this, (function () { 'use strict';
 
 function assert(condition, message) {
@@ -241,6 +241,9 @@ var textInputTypes = {
     // matches (+23) 2343 - 2342
     regex: /^[\+0-9\-\(\)\s]{6,}$/,
     error: 'Please insert a valid telephone number'
+  },
+  DateBox: {
+    type: 'date'
   }
 };
 
@@ -327,6 +330,7 @@ var inputCreators = {
   NumberBox: createTextInput,
   TelephoneBox: createTextInput,
   TextBox: createTextInput,
+  DateBox: createTextInput,
   TextArea: createTextInput,
   Checkboxes: createOptionsInput,
   Dropdown: createDropdownInput,
@@ -348,6 +352,7 @@ function formField(config) {
   legend.className = 'fl-if_FormField-legend';
   legend.innerHTML = config.title;
 
+  console.log(config.type, inputCreators);
   var elementType = inputCreators[config.type] || inputCreators[config.primitiveType];
   var inputEl = elementType(config);
 

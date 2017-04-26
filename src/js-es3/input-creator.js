@@ -12,6 +12,7 @@ const inputCreators = {
   NumberBox: createTextInput,
   TelephoneBox: createTextInput,
   TextBox: createTextInput,
+  DateBox: createTextInput,
   TextArea: createTextInput,
   Checkboxes: createOptionsInput,
   Dropdown: createDropdownInput,
@@ -33,6 +34,7 @@ export default function formField(config) {
   legend.className = 'fl-if_FormField-legend';
   legend.innerHTML = config.title;
 
+  console.log(config.type, inputCreators);
   const elementType = inputCreators[config.type] || inputCreators[config.primitiveType];
   const inputEl = elementType(config);
 
