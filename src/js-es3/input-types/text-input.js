@@ -28,7 +28,7 @@ const textInputTypes = {
     regex: /^[\+0-9\-\(\)\s]{6,}$/,
     error: 'Please insert a valid telephone number',
   },
-  DateBox: {
+  DateField: {
     type: 'date',
   },
 };

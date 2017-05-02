@@ -20,44 +20,7 @@ function fakeEvent(answers) {
   };
 }
 
-function applyDataMask(field, fieldMask) {
-  var mask = fieldMask.split('');
 
-  // For now, this just strips everything that's not a number
-  function stripMask(maskedData) {
-    function isDigit(char) {
-      return (/\d/.test(char)
-      );
-    }
-    return maskedData.split('').filter(isDigit);
-  }
-
-  // Replace `_` characters with characters from `data`
-  function applyMask(data) {
-    return mask.map(function (char) {
-      if (char !== ' ') return char;
-      if (data.length == 0) return char;
-      return data.shift();
-    }).join('');
-  }
-
-  function reapplyMask(data) {
-    return applyMask(stripMask(data));
-  }
-
-  function changed() {
-    var oldStart = field.selectionStart;
-    var oldEnd = field.selectionEnd;
-
-    field.value = reapplyMask(field.value);
-
-    field.selectionStart = oldStart;
-    field.selectionEnd = oldEnd;
-  }
-
-  field.addEventListener('click', changed);
-  field.addEventListener('keyup', changed);
-}
 
 // createErrorMessage: String -> HTML
 function createErrorMessage(message) {
@@ -242,7 +205,7 @@ var textInputTypes = {
     regex: /^[\+0-9\-\(\)\s]{6,}$/,
     error: 'Please insert a valid telephone number'
   },
-  DateBox: {
+  DateField: {
     type: 'date'
   }
 };
@@ -286,40 +249,6 @@ function createTextInput(config) {
   return el;
 }
 
-function validate$1(field, required) {
-  var dateNumbers = trimSpaces(field.value).match(/[0-9]/g) || [];
-  var container = field.parentElement;
-  removeErrorMessage(container);
-
-  if (required && dateNumbers.length !== 8) {
-    container.appendChild(createErrorMessage("Please insert a valid date of type DD/MM/YYYY"));
-    return false;
-  }
-  return true;
-}
-
-function createDateInput(config) {
-  // eslint-disable-line no-unused-vars
-  var dateField = document.createElement('input');
-  dateField.setAttribute('type', 'text');
-  dateField.className = 'fl-if_TextInput-input';
-  dateField.value = 'DD/MM/YYYY';
-  if (config.required) {
-    dateField.setAttribute('required', true);
-  }
-  applyDataMask(dateField, '  /  /    ');
-
-  dateField.getValue = function () {
-    return dateField.value;
-  };
-
-  dateField.validate = function () {
-    return validate$1(dateField, config.required);
-  };
-
-  return dateField;
-}
-
 // ================= FIELD FACTORY ===================//
 //
 //  Implements the `getValue` method to return the input value
@@ -330,13 +259,12 @@ var inputCreators = {
   NumberBox: createTextInput,
   TelephoneBox: createTextInput,
   TextBox: createTextInput,
-  DateBox: createTextInput,
+  DateField: createTextInput,
   TextArea: createTextInput,
   Checkboxes: createOptionsInput,
   Dropdown: createDropdownInput,
   CountryDropdown: createCountryDropdownInput,
-  RadioButtons: createOptionsInput,
-  DateField: createDateInput
+  RadioButtons: createOptionsInput
 };
 
 /**

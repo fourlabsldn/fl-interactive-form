@@ -254,7 +254,7 @@
 
 .fl-if_TextInput {
   padding: 0 0 .4em; }
-  .fl-if_TextInput-input, .fl-if_DateField {
+  .fl-if_TextInput-input {
     min-height: 4em;
     width: 100%;
     margin: 0;
@@ -276,11 +276,11 @@
             user-select: text;
     -webkit-transition: border-color .4s ease-in-out;
     transition: border-color .4s ease-in-out; }
-    .fl-if_TextInput-input:focus, .fl-if_DateField:focus {
+    .fl-if_TextInput-input:focus {
       outline: 0; }
-    .fl-if_FormField--active .fl-if_TextInput-input, .fl-if_FormField--active .fl-if_DateField {
+    .fl-if_FormField--active .fl-if_TextInput-input {
       outline: 0; }
-    .fl-if_FormField--completed.fl-if_FormField--active .fl-if_TextInput-input, .fl-if_FormField--completed.fl-if_FormField--active .fl-if_DateField {
+    .fl-if_FormField--completed.fl-if_FormField--active .fl-if_TextInput-input {
       border-color: #00bcd4; }
 
 input::-webkit-inner-spin-button {
@@ -291,7 +291,7 @@ input::-webkit-inner-spin-button {
   padding-top: .7em;
   padding-bottom: .7em; }
 
-.fl-if_FormUI-es3 .fl-if_TextInput-input, .fl-if_FormUI-es3 .fl-if_DateField {
+.fl-if_FormUI-es3 .fl-if_TextInput-input {
   font-size: 16px;
   min-height: 3em; }
 
@@ -397,42 +397,6 @@ input::-webkit-inner-spin-button {
   font-family: Europa, Arial, sans-serif; }
 
 .fl-if_FormUI-es3 .fl-if_Dropdown-option {
-  font-size: 16px;
-  min-height: 3em; }
-
-.fl-if_DateField {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-      -ms-flex-align: center;
-          align-items: center; }
-  .fl-if_DateField h2 {
-    display: none; }
-  .fl-if_DateField input {
-    background-color: inherit;
-    border: inherit;
-    font-size: inherit; }
-    .fl-if_DateField input:focus:active, .fl-if_DateField input:focus, .fl-if_DateField input:active {
-      outline: none; }
-  .fl-if_DateField .fl-fb-Field-dateslot-day,
-  .fl-if_DateField .fl-fb-Field-dateslot-month,
-  .fl-if_DateField .fl-fb-Field-dateslot-year {
-    width: 1.8em;
-    display: inline-block;
-    min-width: 0;
-    margin: 0 .1em;
-    text-align: center; }
-  .fl-if_DateField .fl-fb-Field-dateslot-year {
-    width: 2.8em; }
-
-.fl-if_FormUI-es3 .fl-if_DateField {
   font-size: 16px;
   min-height: 3em; }
 

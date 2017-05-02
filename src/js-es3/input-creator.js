@@ -1,6 +1,5 @@
 import { createOptionsInput, createDropdownInput, createCountryDropdownInput } from './input-types/options-input';
 import createTextInput from './input-types/text-input';
-import createDateInput from './input-types/date-input';
 
 // ================= FIELD FACTORY ===================//
 //
@@ -12,13 +11,12 @@ const inputCreators = {
   NumberBox: createTextInput,
   TelephoneBox: createTextInput,
   TextBox: createTextInput,
-  DateBox: createTextInput,
+  DateField: createTextInput,
   TextArea: createTextInput,
   Checkboxes: createOptionsInput,
   Dropdown: createDropdownInput,
   CountryDropdown: createCountryDropdownInput,
   RadioButtons: createOptionsInput,
-  DateField: createDateInput,
 };
 
 /**
