@@ -32,7 +32,6 @@ export default function formField(config) {
   legend.className = 'fl-if_FormField-legend';
   legend.innerHTML = config.title;
 
-  console.log(config.type, inputCreators);
   const elementType = inputCreators[config.type] || inputCreators[config.primitiveType];
   const inputEl = elementType(config);
 

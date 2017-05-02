@@ -280,7 +280,6 @@ function formField(config) {
   legend.className = 'fl-if_FormField-legend';
   legend.innerHTML = config.title;
 
-  console.log(config.type, inputCreators);
   var elementType = inputCreators[config.type] || inputCreators[config.primitiveType];
   var inputEl = elementType(config);
 
