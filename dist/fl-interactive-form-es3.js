@@ -208,6 +208,9 @@ var textInputTypes = {
   },
   DateField: {
     type: 'date'
+  },
+  TimeField: {
+    type: 'time'
   }
 };
 
@@ -261,6 +264,7 @@ var inputCreators = {
   TelephoneBox: createTextInput,
   TextBox: createTextInput,
   DateField: createTextInput,
+  TimeField: createTextInput,
   TextArea: createTextInput,
   Checkboxes: createOptionsInput,
   Dropdown: createDropdownInput,

@@ -12,6 +12,7 @@ const inputCreators = {
   TelephoneBox: createTextInput,
   TextBox: createTextInput,
   DateField: createTextInput,
+  TimeField: createTextInput,
   TextArea: createTextInput,
   Checkboxes: createOptionsInput,
   Dropdown: createDropdownInput,

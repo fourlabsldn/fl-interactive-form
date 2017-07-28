@@ -31,6 +31,9 @@ const textInputTypes = {
   DateField: {
     type: 'date',
   },
+  TimeField: {
+      type: 'time',
+  },
 };
 
 // Returns true if valid and false if not.
