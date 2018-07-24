@@ -42,7 +42,7 @@ const DEFAULT_CONFIG = {
       exclude: 'node_modules/**',
       babelrc: false,
       plugins: ['lodash'],
-      presets: ['es2015-rollup', 'es2017'],
+      presets: [['env', { targets: { browsers: ['ie >= 7'] }, modules: false }], 'react'],
     }),
   ],
 };
